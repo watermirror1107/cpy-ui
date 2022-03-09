@@ -8,7 +8,7 @@ import {
   // Pagination,
   // ConfigProvider,
   // Layout,
-  // Input,
+  Input,
   // InputNumber,
   // Button,
   // Radio,
@@ -16,13 +16,13 @@ import {
   // Select,
   // Card,
   // Form,
-  // FormModel,
+  FormModel,
   // Modal,
   // Table,
   // Tabs,
   // Icon,
   // Badge,
-  // Popover,
+  Popover,
   // Dropdown,
   // Breadcrumb,
   // Spin,
@@ -57,7 +57,7 @@ import {
 // Vue.use(Empty);
 // Vue.use(ConfigProvider);
 // Vue.use(Layout);
-// Vue.use(Input);
+Vue.use(Input);
 // Vue.use(InputNumber);
 // Vue.use(Button);
 // Vue.use(Radio);
@@ -65,7 +65,7 @@ import {
 // Vue.use(Select);
 // Vue.use(Card);
 // Vue.use(Form);
-// Vue.use(FormModel);
+Vue.use(FormModel);
 Vue.use(Row);
 Vue.use(Col);
 // Vue.use(Modal);
@@ -73,7 +73,7 @@ Vue.use(Col);
 // Vue.use(Tabs);
 // Vue.use(Icon);
 // Vue.use(Badge);
-// Vue.use(Popover);
+Vue.use(Popover);
 // Vue.use(Dropdown);
 // Vue.use(Breadcrumb);
 // Vue.use(Spin);

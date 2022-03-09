@@ -9,12 +9,19 @@
 <!--      </template>-->
 <!--      adsf-->
 <!--    </c-card>-->
-    <c-card-item :data="{title:'h1',value:'vlaue'}"></c-card-item>
+<!--    <c-card-item :data="{title:'h1',value:'vlaue'}"></c-card-item>-->
+<!--    <div style="width: 100px;margin-top: 100px;margin-left: 200px;">-->
+<!--      <c-ellipsis text="test test test test test test test test test test test test test test"></c-ellipsis>-->
+<!--      <c-editable-cell emptyPlaceholder="emptyPlaceholder"></c-editable-cell>-->
+<!--    </div>-->
+
   </div>
 </template>
 
 <script>
 export default  {
+  components: {},
+
   methods:{
     clickMore(){
       console.log('more')
