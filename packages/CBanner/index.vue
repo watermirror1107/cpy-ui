@@ -1,5 +1,5 @@
 <template>
-  <div class="cpy-banner">
+  <div class="c-banner">
     <slot></slot>
   </div>
 </template>
@@ -10,7 +10,7 @@ export default {
 };
 </script>
 <style lang="less">
-.cpy-banner {
+.c-banner {
   font-size: 16px;
   font-family: Source Han Sans CN;
   color: #323232;

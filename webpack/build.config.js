@@ -20,10 +20,15 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.less$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader',{
+                test: /\.css$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader']
+            },
+            {
+                test: /\.less$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', {
                     loader: 'less-loader', options: {
                         additionalData: fs.readFileSync(path.resolve(__dirname, '../ant-design-vue/color.less'), {encoding: 'utf-8'}) +
-                            fs.readFileSync(path.resolve(__dirname, '../ant-design-vue/color.less'), {encoding: 'utf-8'})
+                            fs.readFileSync(path.resolve(__dirname, '../ant-design-vue/theme.less'), {encoding: 'utf-8'}) +
+                            fs.readFileSync(path.resolve(__dirname, '../ant-design-vue/common.less'), {encoding: 'utf-8'})
                     }
                 }]
             },

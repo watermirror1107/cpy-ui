@@ -66,7 +66,8 @@ const devConfig = {
                 use: ['style-loader', 'css-loader', {
                     loader: 'less-loader', options: {
                         additionalData: fs.readFileSync(path.resolve(__dirname, '../ant-design-vue/color.less'), {encoding: 'utf-8'}) +
-                            fs.readFileSync(path.resolve(__dirname, '../ant-design-vue/color.less'), {encoding: 'utf-8'})
+                            fs.readFileSync(path.resolve(__dirname, '../ant-design-vue/theme.less'), {encoding: 'utf-8'})+
+                            fs.readFileSync(path.resolve(__dirname, '../ant-design-vue/common.less'), {encoding: 'utf-8'})
                     }
                 }],
                 // exclude: /node_modules/ //不能忽略node-modules的因为ant-design-vue中的theme.less被用到

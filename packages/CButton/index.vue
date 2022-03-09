@@ -1,17 +1,21 @@
 <!--按钮-->
 <template>
   <button
-      class="cpy_button"
+      class="c_button"
       :class="[type+(isSolid?'-solid':''),size]">
-    <!--    <icon-svg-->
-    <!--        v-if="icon"-->
-    <!--        :class="{'cpy_button_iconSvg': $slots.default}"-->
-    <!--        :name='icon'></icon-svg>-->
+        <icon
+            v-if="icon"
+            :class="{'c_button_iconSvg': $slots.default}"
+            :name='icon'></icon>
     <slot></slot>
   </button>
 </template>
 <script>
+import Icon from '../CIcon/index'
 export default {
+  components:{
+    Icon
+  },
   name: 'CButton',
   props: {
     icon: {
@@ -35,7 +39,7 @@ export default {
 </script>
 <style lang="less">
 
-.cpy_button {
+.c_button {
   display: flex;
   align-items: center;
   outline: none;

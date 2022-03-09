@@ -4,8 +4,10 @@
   "private": false,
   "main": "./lib/cpy-ui.min.js",
   "license": "MIT",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "prepublish": "node prepublish.js",
     "serve": "webpack-dev-server --config webpack/dev.config.js --mode development",
     "lib": "webpack --config webpack/build.config.js",
     "test:unit:all": "mochapack --webpack-config webpack/test.config.js --require test/setup.js test/**/*.spec.js"
@@ -16,10 +18,10 @@
   },
   "dependencies": {
     "ant-design-vue": "^1.6.5",
-    "core-js": "^3.6.5",
     "vue": "^2.6.12"
   },
   "devDependencies": {
+    "core-js": "2.6.5",
     "@babel/core": "^7.15.8",
     "@babel/plugin-proposal-decorators": "^7.15.8",
     "@babel/plugin-proposal-object-rest-spread": "^7.12.1",

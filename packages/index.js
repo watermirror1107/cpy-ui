@@ -1,11 +1,16 @@
-import CBanner from './CBanner/index.vue'
-import CButton from './CButton/index.vue'
+//先导入字体库
+import './font/font_2142578_45182ujwnjc.js'
+import './font/font_2631791_umj4vo54h.js'
+//导入第三方UI库
+import '../ant-design-vue/index'
 
-const components = [
-    CBanner,
-    CButton
-]
-
+const components = []
+//导入组件
+const req = require.context('./', true, /\.vue$/);
+req.keys().forEach((item) => {
+    const exports = req(item).default;
+    components.push(exports);
+});
 
 function install(Vue) {
     if (!install.installed) {
@@ -20,5 +25,5 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 export default {
     install,
-    version:'0.1.2'
+    version: '0.1.2'
 }
