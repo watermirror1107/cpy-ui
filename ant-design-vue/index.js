@@ -33,7 +33,7 @@ import {
   // DatePicker,
   // TimePicker,
   // message,
-  // Empty,
+  Empty,
   // Result,
   // Steps,
   // Upload,
@@ -54,7 +54,7 @@ import {
 // Vue.use(Slider);
 // Vue.use(Statistic);
 // Vue.use(Pagination);
-// Vue.use(Empty);
+Vue.use(Empty);
 // Vue.use(ConfigProvider);
 // Vue.use(Layout);
 Vue.use(Input);

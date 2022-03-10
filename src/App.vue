@@ -15,20 +15,29 @@
 <!--      <c-editable-cell emptyPlaceholder="emptyPlaceholder"></c-editable-cell>-->
 <!--    </div>-->
 <!--  <c-input label="asdf"  v-model="text"></c-input>-->
+<!--    <c-empty></c-empty>-->
+<!--    <c-input-number v-model="num"></c-input-number>-->
+<!--    <c-radio-group v-model="num">-->
+<!--      <c-radio value="one">one</c-radio>-->
+<!--      <c-radio value="two">two</c-radio>-->
+<!--    </c-radio-group>-->
   </div>
 </template>
 
 <script>
 export default  {
+
   data(){
     return{
+      num:'one',
+      type:1,
       text:'text'
     }
   },
   watch:{
-    // text(nv){
-    //   console.log(nv)
-    // }
+    num(nv){
+      console.log(nv)
+    }
   },
   methods:{
     clickMore(){
