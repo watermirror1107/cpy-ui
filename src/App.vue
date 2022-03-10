@@ -14,14 +14,22 @@
 <!--      <c-ellipsis text="test test test test test test test test test test test test test test"></c-ellipsis>-->
 <!--      <c-editable-cell emptyPlaceholder="emptyPlaceholder"></c-editable-cell>-->
 <!--    </div>-->
-
+<!--  <c-input label="asdf"  v-model="text"></c-input>-->
   </div>
 </template>
 
 <script>
 export default  {
-  components: {},
-
+  data(){
+    return{
+      text:'text'
+    }
+  },
+  watch:{
+    // text(nv){
+    //   console.log(nv)
+    // }
+  },
   methods:{
     clickMore(){
       console.log('more')
@@ -36,6 +44,8 @@ export default  {
   padding: 0;
 }
 #app {
+  padding: 20px;
+  margin-top: 100px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
