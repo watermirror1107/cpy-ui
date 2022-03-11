@@ -67,7 +67,8 @@ module.exports = {
             commonjs2: "vue",
             amd: "vue"
         },
-        antd: 'ant-design-vue'
+        antd: 'ant-design-vue',
+        moment:'moment'
     },
     optimization: {//分离压缩，test-min的才压缩
         minimize: true,

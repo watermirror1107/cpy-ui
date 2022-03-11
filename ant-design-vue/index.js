@@ -11,15 +11,15 @@ import {
   Input,
   // InputNumber,
   // Button,
-  // Radio,
+  Radio,
   // Checkbox,
-  // Select,
+  Select,
   // Card,
   // Form,
   FormModel,
   // Modal,
   // Table,
-  // Tabs,
+  Tabs,
   // Icon,
   // Badge,
   Popover,
@@ -30,8 +30,7 @@ import {
   // Drawer,
   // Tooltip,
   // Divider,
-  // DatePicker,
-  // TimePicker,
+  DatePicker,
   // message,
   Empty,
   // Result,
@@ -60,9 +59,9 @@ Vue.use(Empty);
 Vue.use(Input);
 // Vue.use(InputNumber);
 // Vue.use(Button);
-// Vue.use(Radio);
+Vue.use(Radio);
 // Vue.use(Checkbox);
-// Vue.use(Select);
+Vue.use(Select);
 // Vue.use(Card);
 // Vue.use(Form);
 Vue.use(FormModel);
@@ -70,7 +69,7 @@ Vue.use(Row);
 Vue.use(Col);
 // Vue.use(Modal);
 // Vue.use(Table);
-// Vue.use(Tabs);
+Vue.use(Tabs);
 // Vue.use(Icon);
 // Vue.use(Badge);
 Vue.use(Popover);
@@ -81,8 +80,7 @@ Vue.use(Popover);
 // Vue.use(Drawer);
 // Vue.use(Tooltip);
 // Vue.use(Divider);
-// Vue.use(DatePicker);
-// Vue.use(TimePicker);
+Vue.use(DatePicker);
 // Vue.use(Result);
 // Vue.use(Steps);
 // Vue.use(Upload);
