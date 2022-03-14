@@ -95,7 +95,7 @@ const webpackConfig = {
         modules: [path.resolve(__dirname, '../node_modules')],
         extensions: ['.js', '.json', '.vue', '.css', '.less'],
         alias: {
-            '@': path.resolve(__dirname, 'src')
+            '@': path.resolve(__dirname, '../src')
         },
         fallback: {
             path: require.resolve('path-browserify')// 填补webpack移除的node polyfill坑

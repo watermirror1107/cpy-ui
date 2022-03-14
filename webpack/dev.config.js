@@ -93,7 +93,7 @@ const devConfig = {
     resolve: {
         extensions: ['.js', '.json', '.vue', '.css', '.less'],
         alias: {
-            '@': path.resolve(__dirname, '../src')
+            '@': path.resolve(__dirname, '../')
         },
         fallback: {
             path: require.resolve('path-browserify')// 填补webpack移除的node polyfill坑

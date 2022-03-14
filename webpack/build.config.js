@@ -57,7 +57,7 @@ module.exports = {
         modules: [path.resolve(__dirname, '../node_modules')],
         extensions: ['.js', '.json', '.vue', '.css', '.less'],
         alias: {
-            '@': path.resolve(__dirname, '../src')
+            '@': path.resolve(__dirname, '../')
         }
     },
     externals: {

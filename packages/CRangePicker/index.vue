@@ -66,7 +66,7 @@
 
 <script>
 import moment from 'moment';
-import {debounce} from "../../utils/index";
+import {debounce} from "@/utils";
 import Icon from "../CIcon/index.vue";
 
 export default {
@@ -75,7 +75,6 @@ export default {
     Icon
   },
   data() {
-    this.emitChange = debounce(this.emitChange)
     return {
       dateValue: [],
       type: 2,
@@ -98,7 +97,7 @@ export default {
       }
     }
   },
-  beforeMount() {
+  created() {
     if (!this.$T) {
       this.$T = this.translateText
     }
@@ -139,9 +138,9 @@ export default {
     /**
      * @description:触发emit
      */
-    emitChange(val) {
+    emitChange:debounce(function(val) {
       this.$emit('change', val);
-    },
+    }),
     /**
      * @description:清空实时的定时器
      */
