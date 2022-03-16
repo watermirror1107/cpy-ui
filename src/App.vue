@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <!--    <c-banner>123</c-banner>-->
-    <!--    <c-button icon="icon-jingxiang">CTMD</c-button>-->
+    <!--        <c-button disabled type="success" @click="clickHandler(1)" icon="icon-jingxiang">CTMD</c-button>-->
+    <!--        <c-button type="danger"  size="large" tip="giao">CTMD</c-button>-->
     <!--    <c-icon name="icon-shijian"></c-icon>-->
     <!--    <c-card  title="giao" @more="clickMore">-->
     <!--      <template #more>-->
@@ -16,7 +17,7 @@
     <!--    </div>-->
     <!--  <c-input label="asdf"  v-model="text"></c-input>-->
     <!--    <c-empty></c-empty>-->
-    <!--    <c-input-number v-model="num"></c-input-number>-->
+    <!--        <c-input-number v-model="num" size="small"></c-input-number>-->
     <!--    <c-radio-group v-model="num">-->
     <!--      <c-radio value="one">one</c-radio>-->
     <!--      <c-radio value="two">two</c-radio>-->
@@ -53,21 +54,47 @@
     <!--      </template>-->
     <!--    </c-form>-->
     <!--    <button @click="changeType(2)">test debounce</button>-->
-<!--            <c-search-select  :queryPromise="queryOptions"-->
-<!--                              placeholder="测试一下"-->
-<!--                              v-model="tabIndex"-->
-<!--                              style="width:320px;margin: 0 auto;"-->
-<!--            ></c-search-select>-->
-    <c-table ref="table"
-             :filterOptions="filterOptions"
-             :columns="columns"
-             :data="queryList"
-             @filterChange="handleFilterChange"
-             rowKey="id">
-      <template #id="{ text }">
-        <span>{{ text }}</span>
-      </template>
-    </c-table>
+    <!--                <c-search-select  :queryPromise="queryOptions"-->
+    <!--                                  placeholder="测试一下"-->
+    <!--                                  v-model="tabIndex"-->
+    <!--                                  style="width:320px;margin: 0 auto;"-->
+    <!--                >-->
+    <!--                    <p slot='extraContent' style="text-align:center;">extraContent</p>-->
+    <!--                </c-search-select>-->
+    <!--    <c-table ref="table"-->
+    <!--             :filterOptions="filterOptions"-->
+    <!--             :columns="columns"-->
+    <!--             :data="queryList"-->
+    <!--             @filterChange="handleFilterChange"-->
+    <!--             rowKey="id">-->
+    <!--      <template #id="{ text }">-->
+    <!--        <span>{{ text }}</span>-->
+    <!--      </template>-->
+    <!--      <c-btn-wrap slot='operate' slot-scope="{text,record}">-->
+    <!--        <c-table-btn-->
+    <!--            type="danger"-->
+    <!--            tip="giao11"-->
+    <!--            @click="clickHandler(text,record)"-->
+    <!--        >-->
+    <!--        </c-table-btn>-->
+    <!--        <c-table-btn-->
+    <!--            tip="giao2"-->
+    <!--            @click="clickHandler(2)"-->
+    <!--        >-->
+    <!--        </c-table-btn>-->
+    <!--        <c-table-btn-->
+    <!--            tip="giao3"-->
+    <!--            @click="clickHandler(3)"-->
+    <!--        >-->
+    <!--        </c-table-btn>-->
+    <!--        <c-table-btn-->
+    <!--            tip="giao4"-->
+    <!--            @click="clickHandler(4)"-->
+    <!--        >-->
+    <!--          <span style="color:blue">giao4</span>-->
+    <!--        </c-table-btn>-->
+    <!--      </c-btn-wrap>-->
+    <!--    </c-table>-->
   </div>
 </template>
 
@@ -133,7 +160,7 @@ export default {
         queryName: '',
         type: undefined
       },
-      filterOptions:[],
+      filterOptions: [],
       formOptions: [
         {
           key: 'queryName',
@@ -150,11 +177,11 @@ export default {
       num: 'one',
       type: 1,
       text: 'text',
-      dateOptions:[
-          {id:1,name:'10-20'},
-          {id:2,name:'30-40'}
+      dateOptions: [
+        {id: 1, name: '10-20'},
+        {id: 2, name: '30-40'}
       ],
-      dataFilterValue:'',
+      dataFilterValue: '',
       columns: [
         {
           title: 'id',
@@ -171,7 +198,6 @@ export default {
           title: 'content',
           dataIndex: 'content',
           key: 'content',
-          scopedSlots: {customRender: 'content'}
         },
         {
           title: 'createTime',
@@ -186,6 +212,12 @@ export default {
             }
           }
         },
+        {
+          title: 'operate',
+          key: 'operate',
+          width: 300,
+          scopedSlots: {customRender: 'operate'}
+        }
       ]
     }
   },
@@ -196,7 +228,7 @@ export default {
   },
   mounted() {
     // this.queryOptions()
-    this.$refs.table.refresh()
+    // this.$refs.table.refresh()
   },
   methods: {
     handleFilterChange(val, confirm) {
@@ -206,11 +238,11 @@ export default {
     queryOptions() {
       return axios.get('/getoptions?ID=12345')
     },
-    queryList(params){
+    queryList(params) {
       // const data = Object.assign({}, params, this.formData, result);
       return axios({
-        url:'/getoptions',
-        method:'get',
+        url: '/getoptions',
+        method: 'get',
         params
       })
     },
@@ -223,6 +255,9 @@ export default {
     },
     clickMore() {
       console.log('more')
+    },
+    clickHandler(text, record) {
+      console.log(text)
     }
   }
 }

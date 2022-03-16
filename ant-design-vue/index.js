@@ -1,21 +1,25 @@
 import Vue from 'vue';
 import {
-  Row,
-  Col,
-  Input,
-  Radio,
-  Select,
-  FormModel,
-  Table,
-  Tabs,
-  Popover,
-  Tooltip,
-  DatePicker,
-  Empty,
-  Pagination
+    Button,
+    Row,
+    Col,
+    Input,
+    Spin,
+    Radio,
+    Select,
+    FormModel,
+    Table,
+    Tabs,
+    Popover,
+    Tooltip,
+    DatePicker,
+    Empty,
+    Pagination
 } from 'ant-design-vue';
 // 设置 table 的 size 默认值为 small
 Table.props.size.default = 'small';
+Vue.use(Spin);
+Vue.use(Button);
 Vue.use(Empty);
 Vue.use(Pagination);
 Vue.use(Input);

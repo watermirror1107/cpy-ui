@@ -6,8 +6,8 @@
         :layout="layout"
         :colon="isColon"
         :labelAlign="labelAlign"
-        :label-col="{ span: 6 }"
-        :wrapper-col="{ span: 18 }"
+        :label-col="{ span: labelCol ,offset: 40}"
+        :wrapper-col="{ span: 24-labelCol }"
         :model="formData"
         :validateOnRuleChange="isValidateOnRuleChange"
         @submit.native.prevent>
@@ -18,7 +18,7 @@
             :key="index"
             :label="item.label"
             :prop="item.key"
-            v-if="!item.isShow">
+            v-if="item.isShow === undefined || item.isShow !== false">
           <slot
               :name="item.key"
               :scope="{value:formData[item.key],option:item}">
@@ -101,6 +101,7 @@ export default {
     formOptions: {type: Array, default: []},
     rules: {type: Object},
     isValidateOnRuleChange: {type: Boolean, default: true},
+    labelCol: {type: Number, default: 6},
     isColon: {type: Boolean, default: false},
     layout: {type: String, default: 'horizontal'},
     labelAlign: {type: String, default: 'left'}

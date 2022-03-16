@@ -119,6 +119,15 @@ export default {
 </script>
 
 <style lang="less">
+.c_inputNumber_large {
+  height: 40px;
+  line-height: 40px;
+}
+
+.c_inputNumber_small {
+  height: 32px;
+  line-height: 32px;
+}
 .c_inputNumber {
   display: block;
   font-size: 14px;

@@ -1,6 +1,7 @@
 <!--搜索下拉框-->
 <template>
   <a-select
+      :disabled="disabled"
       :size="size"
       show-search
       :mode="mode"
@@ -14,10 +15,18 @@
       :not-found-content="isFetching ? undefined : null"
       :class="{empty:!value||value===''}"
   >
-    <a-spin
-        v-if="isFetching"
-        slot="notFoundContent"
-        size="small"/>
+    <div
+        slot="dropdownRender"
+        slot-scope="menu">
+      <v-nodes :vnodes="menu" />
+      <slot name="extraContent">
+        拓展内容
+      </slot>
+    </div>
+    <!--    <a-spin-->
+    <!--        v-if="isFetching"-->
+    <!--        slot="notFoundContent"-->
+    <!--        size="small"/>-->
     <a-select-option
         v-if="mode!=='multiple'&&options.length!==0"
         value="">
@@ -50,8 +59,15 @@
 </template>
 <script>
 import {debounce} from "@/utils";
+
 export default {
   name: 'CSearchSelect',
+  components: {
+    VNodes: {
+      functional: true,
+      render: (h, ctx) => ctx.props.vnodes
+    }
+  },
   data() {
     return {
       selectId: '',
@@ -66,8 +82,9 @@ export default {
   },
   props: {
     mode: {default: 'default', type: String},//单选还是多选
-    queryPromise: {type: Function,required:true},
+    queryPromise: {type: Function, required: true},
     placeholder: {type: String},
+    disabled: {default: false, type: Boolean},
     size: {default: 'large', type: String},
     value: {default: ''}
   },
@@ -83,7 +100,7 @@ export default {
       immediate: true
     }
   },
-  beforeMount(){
+  beforeMount() {
     if (!this.$T) {
       this.$T = this.translateText
     }
@@ -98,12 +115,12 @@ export default {
      */
     translateText(code) {
       //console端没有字典翻译兼容
-      let textObj={
-        'public.Dontchoose':'不选择',
-        'public.queryNoOption':'查无对应选项',
-        'public.Loading':'加载中'
+      let textObj = {
+        'public.Dontchoose': '不选择',
+        'public.queryNoOption': '查无对应选项',
+        'public.Loading': '加载中'
       }
-      return textObj[code]||code
+      return textObj[code] || code
     },
     /**
      * @description:选项容器张开关闭监听
@@ -182,7 +199,7 @@ export default {
      * @description: 通过搜索获取实例列表
      * @param {Object} params 输入框参数
      */
-    searchOptions:debounce(function(params) {
+    searchOptions: debounce(function (params) {
       if (!params) {
         this.options = this.loadedList;
         return;

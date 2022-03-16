@@ -1,19 +1,9 @@
 <!--按钮-->
-<template>
-  <button
-      class="c_button"
-      :class="[type+(isSolid?'-solid':''),size]">
-        <icon
-            v-if="icon"
-            :class="{'c_button_iconSvg': $slots.default}"
-            :name='icon'></icon>
-    <slot></slot>
-  </button>
-</template>
 <script>
 import Icon from '../CIcon/index'
 export default {
-  components:{
+  inheritAttrs:false,
+  components: {
     Icon
   },
   name: 'CButton',
@@ -22,19 +12,38 @@ export default {
       default: '',
       type: String
     },
-    isSolid: {
-      default: false,
-      type: Boolean
-    },
-    type: {
-      default: 'primary',
+    tip: {
+      default: '',
       type: String
     },
-    size: {
-      default: 'default',
+    placement: {
+      default: 'top',
       type: String
-    },
+    }
   },
+  render(h) {
+    let children = [h('div',this.$slots.default)]
+    if (this.icon) {
+      let icon=h(Icon, {class: {'c_button_iconSvg': this.$slots.default}, props: {name: this.icon}})
+      children.unshift(icon)
+    }
+    let vnode = h('a-button', {
+      class: 'c_button',
+      props:this.$attrs,
+      on:this.$listeners
+    }, children)
+    if (this.tip) {
+      vnode = h('a-tooltip', {
+        props: {
+          placement: this.placement
+        }
+      }, [
+        h('p', {slot: 'title'}, this.tip),
+        vnode
+      ])
+    }
+    return vnode
+  }
 };
 </script>
 <style lang="less">
@@ -49,85 +58,6 @@ export default {
 
   &_iconSvg {
     margin-right: 8px;
-  }
-}
-
-.large {
-  height: 40px;
-  border-radius: 3px;
-  padding: 0 16px;
-}
-
-.default {
-  height: 32px;
-  border-radius: 3px;
-  padding: 0 8px;
-}
-
-.small {
-  height: 24px;
-  border-radius: 3px;
-  padding: 0 8px;
-}
-
-.solid {
-  color: #fff;
-}
-
-.primary {
-  .button-color(@--main-blue, @--main-blue-1, @--main-blue-3)
-}
-
-.success {
-  .button-color(@--main-green, @--main-green-1, @--main-green-3)
-}
-
-.warning {
-  .button-color(@--main-yellow, @--main-yellow-1, @--main-yellow-3)
-}
-
-.danger {
-  .button-color(@--main-red, @--main-red-1, @--main-red-3)
-}
-
-.primary-solid {
-  .button-color-solid(@--main-blue, @--main-blue-8)
-}
-
-.success-solid {
-  .button-color-solid(@--main-green, @--main-green-8)
-}
-
-.warning-solid {
-  .button-color-solid(@--main-yellow, @--main-yellow-8)
-}
-
-.danger-solid {
-  .button-color-solid(@--main-red, @--main-red-8)
-}
-
-.button-color-solid(@color:--main-blue,@hoverColor:--main-blue-8) {
-  color: #fff;
-  background-color: @color;
-  border: 0;
-
-  &:hover {
-    background-color: @hoverColor;
-  }
-}
-
-.button-color(@color:@--main-blue, @hoverColor:@--main-blue-1, @activeColor:@--main-blue-3) {
-  color: @color;
-  background-color: #fff;
-  border: 1px solid @color;
-
-  &:hover {
-    background-color: @hoverColor;
-    border: 1px solid @color;
-  }
-  &:active {
-    background-color: @activeColor;
-    border: 1px solid @color;
   }
 }
 

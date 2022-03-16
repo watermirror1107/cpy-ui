@@ -287,7 +287,7 @@ export default {
   &_action_bar {
     //margin-left: 70px;
 
-    /deep/ .ant-btn {
+     .ant-btn {
       margin-right: 16px;
 
       svg {

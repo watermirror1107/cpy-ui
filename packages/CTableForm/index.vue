@@ -2,9 +2,8 @@
   <div class="c_table_form">
     <a-form-model
         layout="inline"
-        :rules="rules"
         :model="formData"
-        @submit="$emit('submit');"
+        @submit="handleSubmit"
         @submit.native.prevent>
       <a-form-model-item
           v-for="(item,index) in formOptions"
@@ -38,6 +37,7 @@
             </a-select-option>
           </a-select>
           <a-range-picker
+              class="max-width"
               v-else-if="item.type === 'range-picker'"
               :placeholder="item.placeholder"
               @change="handleRangePickerChange(item.key, $event)"/>
@@ -49,16 +49,20 @@
 
 <script>
 import icon from '../CIcon/index'
+import {debounce} from "../../utils";
+
 export default {
   name: 'CTableForm',
-  components:{icon},
+  components: {icon},
   data() {
     return {
       formData: {}
     }
   },
   props: {
-    formOptions: {type: Array, default: []}, rules: {type: Object}, data: {type: Object}
+    delay: {type: Number, default: 500},
+    formOptions: {type: Array, default: []},
+    data: {type: Object}
   },
   model: {
     event: 'change',
@@ -71,12 +75,15 @@ export default {
     formData: {
       handler(nv) {
         this.$emit('change', nv);
-        this.$emit('submit');
+        this.handleSubmit();
       },
       deep: true
     }
   },
   methods: {
+    handleSubmit: debounce(function () {
+      this.$emit('submit')
+    }, this.delay),
     /**
      * @description:日期范围选择回调
      */
@@ -116,6 +123,12 @@ export default {
 
     .ant-form-item-control {
       line-height: 0;
+    }
+  }
+
+  .max-width {
+    .ant-input {
+      width: 296px !important;
     }
   }
 }
