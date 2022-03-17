@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <!--    <c-banner>123</c-banner>-->
+<!--    <c-banner title="title"></c-banner>-->
+<!--    <c-banner>123</c-banner>-->
     <!--        <c-button disabled type="success" @click="clickHandler(1)" icon="icon-jingxiang">CTMD</c-button>-->
     <!--        <c-button type="danger"  size="large" tip="giao">CTMD</c-button>-->
     <!--    <c-icon name="icon-shijian"></c-icon>-->

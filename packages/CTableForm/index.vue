@@ -55,6 +55,7 @@ export default {
   name: 'CTableForm',
   components: {icon},
   data() {
+    this.handleSubmit=debounce(this.handleSubmit,this.delay)
     return {
       formData: {}
     }
@@ -81,9 +82,9 @@ export default {
     }
   },
   methods: {
-    handleSubmit: debounce(function () {
+    handleSubmit() {
       this.$emit('submit')
-    }, this.delay),
+    },
     /**
      * @description:日期范围选择回调
      */
