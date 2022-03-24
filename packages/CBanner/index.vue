@@ -33,7 +33,7 @@ export default {
   font-family: Source Han Sans CN;
   color: #323232;
   line-height: 44px;
-  height: 44px;
+  min-height: 44px;
   padding: 0 24px;
   text-align: left;
   background-color: #fff;
