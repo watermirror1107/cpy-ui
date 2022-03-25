@@ -155,7 +155,6 @@ export default {
 }
 
 .c_form {
-  margin: 24px;
 
   .ant-form-item-children {
     display: block;
