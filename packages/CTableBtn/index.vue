@@ -52,9 +52,6 @@ export default {
 
 .c_table_btn {
   &_text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     margin-bottom: 0;
   }
 }
@@ -64,8 +61,18 @@ export default {
   overflow: hidden;
   height: 60px;
 
-  &_text {
+  p {
     width: 100%;
+    white-space: break-spaces;
+    word-break: break-all;
+    text-align: left;
+    line-height: 16px;
+    height: 32px;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 }
 
@@ -79,10 +86,15 @@ export default {
   border-radius: 0;
   .c_icon {
     margin-right: 8px;
+    flex-shrink: 0;
   }
 
-  &_text {
-    flex: 1;
+  p {
+    white-space: nowrap;
+    flex:1;
+    text-align: left;
+    overflow : hidden;
+    text-overflow: ellipsis;
   }
   &:last-child{
     border-bottom: unset!important;

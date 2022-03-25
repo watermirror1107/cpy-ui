@@ -1,5 +1,6 @@
 <script>
 import CTableBtn from "../CTableBtn";
+import {debounce} from "../../utils";
 
 export default {
   name: "CBtnWrap",
@@ -24,25 +25,31 @@ export default {
     if (!this.$T) {
       this.$T = this.translateText
     }
+    const _this=this
+    window.onresize=debounce(function (){
+        _this.$forceUpdate()
+    },200)
   },
   render(h, context) {
-    //只能放 c-table-btn组件
     let width = 0;//获取父容器宽度
     if (this.$parent.$el) {
       width = parseInt(window.getComputedStyle(this.$parent.$el, null).width)
     }
     let showNum = Math.floor(width / 90)//c-table-btn的最大宽度为90,计算最多能展示几个
     let children = this.$slots.default.filter(item => {
-      return item.componentOptions && item.componentOptions.tag === 'c-table-btn'
+      if(item.componentOptions && item.componentOptions.tag === 'c-table-btn') {//只能放 c-table-btn组件
+        item.componentOptions.propsData.show_type='vertical'//切换成竖直排列因为宽度被调整之后变成水平按钮模式要改回原来的
+        return true
+      }
+      return false
     })
+    console.log(showNum)
     //超过的截取放到更多按钮里面
-    if (showNum < children.length) {
+    if (showNum < children.length||showNum===0) {//最多显示一个的时候显示更多
       //前面不需要隐藏的
-      let showChildren = children.slice(0, showNum - 1)
-      let hiddenChildren = children.slice(showNum - 1)
-      showChildren.forEach(item=>{
-        // item.componentOptions.propsData.show_type='vertical'//切换成竖直排列
-      })
+      let midIndex=showNum===0?0:(showNum-1)
+      let showChildren = children.slice(0,  midIndex)
+      let hiddenChildren = children.slice(midIndex)
       hiddenChildren.forEach(item=>{
         item.componentOptions.propsData.show_type='horizontal'//切换成水平排列
       })
@@ -79,6 +86,13 @@ export default {
 .c_btn_wrap {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-width: 92px;//最小宽度可以显示一个按钮
+  overflow: hidden;
+
   &::after {
     clear: both;
     display: block;

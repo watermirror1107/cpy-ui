@@ -11,7 +11,7 @@
 <!--      </p>-->
 <!--    </c-banner>-->
     <!--        <c-button disabled type="success" @click="clickHandler(1)" icon="icon-jingxiang">CTMD</c-button>-->
-            <c-button type="warning" ghost size="large" tip="giao">CTMD</c-button>
+<!--            <c-button type="warning" ghost size="large" tip="giao">CTMD</c-button>-->
     <!--    <c-icon name="icon-shijian"></c-icon>-->
     <!--    <c-card  title="giao" @more="clickMore">-->
     <!--      <template #more>-->
@@ -79,30 +79,34 @@
     <!--      <template #id="{ text }">-->
     <!--        <span>{{ text }}</span>-->
     <!--      </template>-->
-    <!--      <c-btn-wrap slot='operate' slot-scope="{text,record}">-->
-    <!--        <c-table-btn-->
-    <!--            type="danger"-->
-    <!--            tip="giao11"-->
-    <!--            @click="clickHandler(text,record)"-->
-    <!--        >-->
-    <!--        </c-table-btn>-->
-    <!--        <c-table-btn-->
-    <!--            tip="giao2"-->
-    <!--            @click="clickHandler(2)"-->
-    <!--        >-->
-    <!--        </c-table-btn>-->
-    <!--        <c-table-btn-->
-    <!--            tip="giao3"-->
-    <!--            @click="clickHandler(3)"-->
-    <!--        >-->
-    <!--        </c-table-btn>-->
-    <!--        <c-table-btn-->
-    <!--            tip="giao4"-->
-    <!--            @click="clickHandler(4)"-->
-    <!--        >-->
-    <!--          <span style="color:blue">giao4</span>-->
-    <!--        </c-table-btn>-->
-    <!--      </c-btn-wrap>-->
+    <c-card style="width: 50vw;border:1px solid red" >
+      <c-btn-wrap >
+        <c-table-btn
+            type="danger"
+            tip="giao11"
+            text="123asdfasdfasdfasdfsda"
+            @click="clickHandler(1,3)"
+        >
+        </c-table-btn>
+        <c-table-btn
+            tip="giao2"
+            @click="clickHandler(2)"
+        >
+        </c-table-btn>
+        <c-table-btn
+            tip="giao3"
+            @click="clickHandler(3)"
+        >
+        </c-table-btn>
+        <c-table-btn
+            tip="giao4"
+            text="giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4"
+            @click="clickHandler(4)"
+        >
+        </c-table-btn>
+      </c-btn-wrap>
+    </c-card>
+
     <!--    </c-table>-->
   </div>
 </template>
