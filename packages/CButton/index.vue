@@ -27,8 +27,12 @@ export default {
       let icon=h(Icon, {class: {'c_button_iconSvg': this.$slots.default}, props: {name: this.icon}})
       children.unshift(icon)
     }
+    let classNameList=['c_button']
+    if(this.$attrs.type==='warning'){
+      classNameList.push(`c_button_warning${this.$attrs.ghost!==undefined?'_g':''}`)
+    }
     let vnode = h('a-button', {
-      class: 'c_button',
+      class:classNameList,
       props:this.$attrs,
       on:this.$listeners
     }, children)
@@ -59,6 +63,16 @@ export default {
   &_iconSvg {
     margin-right: 8px;
   }
+}
+.c_button_warning{
+  border-color: @--main-yellow!important;
+  color: white!important;
+  background-color: @--main-yellow!important ;
+}
+.c_button_warning_g{
+  border-color: @--main-yellow!important;
+  color: @--main-yellow!important;
+  background-color: transparent!important ;
 }
 
 </style>
