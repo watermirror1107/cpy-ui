@@ -41,9 +41,9 @@
     margin: 0 0 0 16px;
   }
 }
- .ant-card {
-   margin: 20px 16px 0 24px;
- }
+.ant-card {
+  margin: 20px 16px 0 24px;
+}
 .ant-card-body {
   padding: 0; // 卡片内容边距
 }
@@ -69,14 +69,68 @@
 .ant-tooltip-inner {
   text-align: center;
 }
-  .ant-table-tbody tr.ant-table-row-hover:not(.ant-table-row-selected) >td{
+.ant-table-tbody tr.ant-table-row-hover:not(.ant-table-row-selected) >td{
   background-color: unset!important;
 }
 
-  .ant-table-tbody  tr.ant-table-row-selected >td{
+.ant-table-tbody  tr.ant-table-row-selected >td{
   background-color: #e6f7ff;
 }
 
 .ant-layout{
   background-color: #f6f8fb;
+}
+
+.ant-card-head {
+  height: 48px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #323232;
+
+  .ant-card-head-wrapper {
+    height: 48px;
+  }
+}
+
+.ant-input-number {
+  width: 100%;
+}
+
+.ant-card {
+  box-shadow: 0 0 4px rgba(37, 90, 168, 0.1), 0 4px 8px rgba(37, 90, 168, 0.05);
+}
+
+.ant-table-thead {
+  line-height: 24px;
+
+  .anticon-filter {
+    right: auto !important;
+  }
+}
+
+.ant-table-tbody {
+  tr {
+    height: 64px;
+
+    td {
+      vertical-align: middle;
+    }
+  }
+}
+
+.ant-table-fixed-right {
+  .ant-table-tbody {
+    background: #fff;
+  }
+
+  thead.ant-table-thead {
+    background: #fafafa;
+  }
+}
+.ant-table-tbody tr.ant-table-row-selected > td{
+  background-color: transparent;
+}
+
+.ant-tabs-tab {
+  padding: 12px 0 !important
 }

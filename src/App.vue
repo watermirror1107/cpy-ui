@@ -2,6 +2,14 @@
   <div id="app">
 <!--    <c-banner title="title"></c-banner>-->
 <!--    <c-banner>123</c-banner>-->
+<!--    <c-banner>-->
+<!--      <p-->
+<!--          v-if="true"-->
+<!--          style="font-size: 16px;margin-left: 10px;">-->
+<!--        123-->
+<!--        <span style="color: #969696;">({{ 456}})</span>-->
+<!--      </p>-->
+<!--    </c-banner>-->
     <!--        <c-button disabled type="success" @click="clickHandler(1)" icon="icon-jingxiang">CTMD</c-button>-->
     <!--        <c-button type="danger"  size="large" tip="giao">CTMD</c-button>-->
     <!--    <c-icon name="icon-shijian"></c-icon>-->
