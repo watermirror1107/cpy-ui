@@ -1,4 +1,4 @@
-//先导入字体库
+//先导入UI字体库
 import './font/font_2142578_45182ujwnjc.js'
 import './font/font_2631791_umj4vo54h.js'
 //导入第三方UI库
@@ -25,5 +25,5 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 export default {
     install,
-    version: '0.1.7'
+    version: '0.1.9'
 }

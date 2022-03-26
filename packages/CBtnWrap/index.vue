@@ -5,6 +5,11 @@ import {debounce} from "../../utils";
 export default {
   name: "CBtnWrap",
   components: {CTableBtn},
+  data(){
+    return{
+      children:[]
+    }
+  },
   props: {
     trigger: {//更多菜单的激活方式
       type: String, default: 'hover'
@@ -25,6 +30,9 @@ export default {
     if (!this.$T) {
       this.$T = this.translateText
     }
+   this.children = this.$slots.default.filter(btn => {
+      return btn.componentOptions && btn.componentOptions.tag === 'c-table-btn'//只能放 c-table-btn组件
+    })
     const _this=this
     window.onresize=debounce(function (){
         _this.$forceUpdate()
@@ -36,22 +44,17 @@ export default {
       width = parseInt(window.getComputedStyle(this.$parent.$el, null).width)
     }
     let showNum = Math.floor(width / 90)//c-table-btn的最大宽度为90,计算最多能展示几个
-    let children = this.$slots.default.filter(item => {
-      if(item.componentOptions && item.componentOptions.tag === 'c-table-btn') {//只能放 c-table-btn组件
-        item.componentOptions.propsData.show_type='vertical'//切换成竖直排列因为宽度被调整之后变成水平按钮模式要改回原来的
-        return true
-      }
-      return false
-    })
-    console.log(showNum)
     //超过的截取放到更多按钮里面
-    if (showNum < children.length||showNum===0) {//最多显示一个的时候显示更多
+    if (showNum < this.children.length||showNum===0) {//最多显示一个的时候显示更多
       //前面不需要隐藏的
       let midIndex=showNum===0?0:(showNum-1)
-      let showChildren = children.slice(0,  midIndex)
-      let hiddenChildren = children.slice(midIndex)
-      hiddenChildren.forEach(item=>{
-        item.componentOptions.propsData.show_type='horizontal'//切换成水平排列
+      this.children.forEach(btn=>{
+        btn.component.propsData.show_type='vertical'//切换成竖直排列因为宽度被调整之后变成水平按钮模式要改回原来的
+      })
+      let showChildren = this.children.slice(0,  midIndex)
+      let hiddenChildren = this.children.slice(midIndex)
+      hiddenChildren.forEach(btn=>{
+        btn.componentOptions.propsData.show_type='horizontal'//切换成水平排列
       })
       let moreNode = h('a-popover', {
             props: {
@@ -69,14 +72,13 @@ export default {
             })
           ]
       )
-
       return h('div', {
         staticClass: 'c_btn_wrap'
       }, [showChildren, moreNode])
     } else {
       return h('div', {
         staticClass: 'c_btn_wrap'
-      }, children)
+      }, this.children)
     }
   }
 }
