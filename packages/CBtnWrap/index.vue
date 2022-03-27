@@ -48,8 +48,8 @@ export default {
     if (showNum < this.children.length||showNum===0) {//最多显示一个的时候显示更多
       //前面不需要隐藏的
       let midIndex=showNum===0?0:(showNum-1)
-      this.children.forEach(btn=>{
-        btn.component.propsData.show_type='vertical'//切换成竖直排列因为宽度被调整之后变成水平按钮模式要改回原来的
+      this.children.forEach(btn=>{ 
+        btn.componentOptions.propsData.show_type='vertical'//切换成竖直排列因为宽度被调整之后变成水平按钮模式要改回原来的
       })
       let showChildren = this.children.slice(0,  midIndex)
       let hiddenChildren = this.children.slice(midIndex)
