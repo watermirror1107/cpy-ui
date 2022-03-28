@@ -6,7 +6,7 @@
         :layout="layout"
         :colon="isColon"
         :labelAlign="labelAlign"
-        :label-col="{ span: labelCol ,offset: 40}"
+        :label-col="{ span: labelCol ,offset: offset}"
         :wrapper-col="{ span: 24-labelCol }"
         :model="formData"
         :validateOnRuleChange="isValidateOnRuleChange"
@@ -102,6 +102,7 @@ export default {
     rules: {type: Object},
     isValidateOnRuleChange: {type: Boolean, default: true},
     labelCol: {type: Number, default: 6},
+    offset: {type: Number, default: 40},
     isColon: {type: Boolean, default: false},
     layout: {type: String, default: 'horizontal'},
     labelAlign: {type: String, default: 'left'}

@@ -17,7 +17,8 @@ export default {
     if (this.tip) {
       vnode = h('a-tooltip', {
         props: {
-          placement: this.placement
+          placement: this.placement,
+          trigger: this.trigger
         }
       }, [
         h('p', {slot: 'title'}, this.tip),
@@ -33,6 +34,7 @@ export default {
     show_type: {type: String, default: 'vertical'},
     tip: {type: String, default: ''},
     placement: {type: String, default: 'top'},
+    trigger: {type: String, default: 'hover'},
     icon: {type: String, default: 'icon-shilixiangqing_bianji'},
     text: {type: String, default: 'button'}
   }

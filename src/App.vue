@@ -63,50 +63,50 @@
     <!--      </template>-->
     <!--    </c-form>-->
     <!--    <button @click="changeType(2)">test debounce</button>-->
-    <!--                <c-search-select  :queryPromise="queryOptions"-->
-    <!--                                  placeholder="测试一下"-->
-    <!--                                  v-model="tabIndex"-->
-    <!--                                  style="width:320px;margin: 0 auto;"-->
-    <!--                >-->
-    <!--                    <p slot='extraContent' style="text-align:center;">extraContent</p>-->
-    <!--                </c-search-select>-->
-    <c-table ref="table"
-             :filterOptions="filterOptions"
-             :columns="columns"
-             :data="queryList"
-             @filterChange="handleFilterChange"
-             rowKey="id">
-      <template #id="{ text }">
-        <span>{{ text }}</span>
-      </template>
-      <template #operate>
-        <c-btn-wrap>
-          <c-table-btn
-              type="danger"
-              tip="giao11"
-              text="123asdfasdfasdfasdfsda"
-              @click="clickHandler(1,3)"
-          >
-          </c-table-btn>
-          <c-table-btn
-              tip="giao2"
-              @click="clickHandler(2)"
-          >
-          </c-table-btn>
-          <c-table-btn
-              tip="giao3"
-              @click="clickHandler(3)"
-          >
-          </c-table-btn>
-          <c-table-btn
-              tip="giao4"
-              text="giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4"
-              @click="clickHandler(4)"
-          >
-          </c-table-btn>
-        </c-btn-wrap>
-      </template>
-    </c-table>
+<!--    <c-search-select :queryPromise="queryOptions"-->
+<!--                     placeholder="测试一下"-->
+<!--                     v-model="tabIndex"-->
+<!--                     style="width:320px;margin: 0 auto;"-->
+<!--    >-->
+<!--                              <p slot='extraContent' style="text-align:center;" @click="clickHandler(1)">extraContent</p>-->
+<!--    </c-search-select>-->
+<!--    <c-table ref="table"-->
+<!--             :filterOptions="filterOptions"-->
+<!--             :columns="columns"-->
+<!--             :data="queryList"-->
+<!--             @filterChange="handleFilterChange"-->
+<!--             rowKey="id">-->
+<!--      <template #id="{ text }">-->
+<!--        <span>{{ text }}</span>-->
+<!--      </template>-->
+<!--      <template #operate>-->
+<!--        <c-btn-wrap>-->
+<!--          <c-table-btn-->
+<!--              type="danger"-->
+<!--              tip="giao11"-->
+<!--              text="123asdfasdfasdfasdfsda"-->
+<!--              @click="clickHandler(1,3)"-->
+<!--          >-->
+<!--          </c-table-btn>-->
+<!--          <c-table-btn-->
+<!--              tip="giao2"-->
+<!--              @click="clickHandler(2)"-->
+<!--          >-->
+<!--          </c-table-btn>-->
+<!--          <c-table-btn-->
+<!--              tip="giao3"-->
+<!--              @click="clickHandler(3)"-->
+<!--          >-->
+<!--          </c-table-btn>-->
+<!--          <c-table-btn-->
+<!--              tip="giao4"-->
+<!--              text="giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4"-->
+<!--              @click="clickHandler(4)"-->
+<!--          >-->
+<!--          </c-table-btn>-->
+<!--        </c-btn-wrap>-->
+<!--      </template>-->
+<!--    </c-table>-->
   </div>
 </template>
 
@@ -116,8 +116,11 @@ import axios from 'axios'
 import CTable from "../packages/CTable";
 import CBtnWrap from "../packages/CBtnWrap";
 import CTableBtn from "../packages/CTableBtn";
-
+import CSearchSelect from "../packages/CSearchSelect";
 export default {
+  components: {
+    CTable, CBtnWrap, CTableBtn,CSearchSelect
+  },
   data() {
     return {
       formOptions1: [
@@ -167,7 +170,7 @@ export default {
           num: 0,
         },
       ],
-      tabIndex: 1,
+      tabIndex: undefined,
       imageTypes: [{name: 'one'}, {name: 'two'}],
       month: 1,
       time: [],
@@ -238,9 +241,6 @@ export default {
       ]
     }
   },
-  components: {
-    CTable, CBtnWrap,CTableBtn
-  },
   watch: {
     tabIndex(nv) {
       console.log(nv)
@@ -248,7 +248,7 @@ export default {
   },
   mounted() {
     // this.queryOptions()
-    this.$refs.table.refresh()
+    // this.$refs.table.refresh()
   },
   methods: {
     handleFilterChange(val, confirm) {

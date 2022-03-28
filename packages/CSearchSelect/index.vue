@@ -20,7 +20,6 @@
         slot-scope="menu">
       <v-nodes :vnodes="menu" />
       <slot name="extraContent">
-        拓展内容
       </slot>
     </div>
     <!--    <a-spin-->
@@ -70,7 +69,7 @@ export default {
   },
   data() {
     return {
-      selectId: '',
+      selectId: undefined,
       isFetching: false,
       isSelectLoading: false,
       options: [],
