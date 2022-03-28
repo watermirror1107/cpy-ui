@@ -63,12 +63,12 @@ export default {
 
   p {
     width: 100%;
-    white-space: break-spaces;
-    word-break: break-all;
     text-align: left;
     line-height: 16px;
     height: 32px;
     overflow : hidden;
+    white-space: break-spaces;
+    word-break: break-all;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;

@@ -33,13 +33,14 @@ export default {
    this.children = this.$slots.default.filter(btn => {
       return btn.componentOptions && btn.componentOptions.tag === 'c-table-btn'//只能放 c-table-btn组件
     })
+    //todo 调整大小的时候自适应更改里面的内容，bug 按钮上面绑定的事件会错乱
     const _this=this
     window.onresize=debounce(function (){
         _this.$forceUpdate()
     },200)
   },
   render(h, context) {
-    let width = 0;//获取父容器宽度
+    let width = 0;//获取父容器宽度，如果父容器没有宽度会出现排版问题
     if (this.$parent.$el) {
       width = parseInt(window.getComputedStyle(this.$parent.$el, null).width)
     }
@@ -48,7 +49,7 @@ export default {
     if (showNum < this.children.length||showNum===0) {//最多显示一个的时候显示更多
       //前面不需要隐藏的
       let midIndex=showNum===0?0:(showNum-1)
-      this.children.forEach(btn=>{ 
+      this.children.forEach(btn=>{
         btn.componentOptions.propsData.show_type='vertical'//切换成竖直排列因为宽度被调整之后变成水平按钮模式要改回原来的
       })
       let showChildren = this.children.slice(0,  midIndex)

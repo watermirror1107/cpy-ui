@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-<!--    <c-banner title="title"></c-banner>-->
-<!--    <c-banner>123</c-banner>-->
-<!--    <c-banner>-->
-<!--      <p-->
-<!--          v-if="true"-->
-<!--          style="font-size: 16px;margin-left: 10px;">-->
-<!--        123-->
-<!--        <span style="color: #969696;">({{ 456}})</span>-->
-<!--      </p>-->
-<!--    </c-banner>-->
+    <!--    <c-banner title="title"></c-banner>-->
+    <!--    <c-banner>123</c-banner>-->
+    <!--    <c-banner>-->
+    <!--      <p-->
+    <!--          v-if="true"-->
+    <!--          style="font-size: 16px;margin-left: 10px;">-->
+    <!--        123-->
+    <!--        <span style="color: #969696;">({{ 456}})</span>-->
+    <!--      </p>-->
+    <!--    </c-banner>-->
     <!--        <c-button disabled type="success" @click="clickHandler(1)" icon="icon-jingxiang">CTMD</c-button>-->
-<!--            <c-button type="warning" ghost size="large" tip="giao">CTMD</c-button>-->
+    <!--            <c-button type="warning" ghost size="large" tip="giao">CTMD</c-button>-->
     <!--    <c-icon name="icon-shijian"></c-icon>-->
     <!--    <c-card  title="giao" @more="clickMore">-->
     <!--      <template #more>-->
@@ -70,50 +70,52 @@
     <!--                >-->
     <!--                    <p slot='extraContent' style="text-align:center;">extraContent</p>-->
     <!--                </c-search-select>-->
-    <!--    <c-table ref="table"-->
-    <!--             :filterOptions="filterOptions"-->
-    <!--             :columns="columns"-->
-    <!--             :data="queryList"-->
-    <!--             @filterChange="handleFilterChange"-->
-    <!--             rowKey="id">-->
-    <!--      <template #id="{ text }">-->
-    <!--        <span>{{ text }}</span>-->
-    <!--      </template>-->
-    <c-card style="width: 50vw;border:1px solid red" >
-      <c-btn-wrap >
-        <c-table-btn
-            type="danger"
-            tip="giao11"
-            text="123asdfasdfasdfasdfsda"
-            @click="clickHandler(1,3)"
-        >
-        </c-table-btn>
-        <c-table-btn
-            tip="giao2"
-            @click="clickHandler(2)"
-        >
-        </c-table-btn>
-        <c-table-btn
-            tip="giao3"
-            @click="clickHandler(3)"
-        >
-        </c-table-btn>
-        <c-table-btn
-            tip="giao4"
-            text="giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4"
-            @click="clickHandler(4)"
-        >
-        </c-table-btn>
-      </c-btn-wrap>
-    </c-card>
-
-    <!--    </c-table>-->
+    <c-table ref="table"
+             :filterOptions="filterOptions"
+             :columns="columns"
+             :data="queryList"
+             @filterChange="handleFilterChange"
+             rowKey="id">
+      <template #id="{ text }">
+        <span>{{ text }}</span>
+      </template>
+      <template #operate>
+        <c-btn-wrap>
+          <c-table-btn
+              type="danger"
+              tip="giao11"
+              text="123asdfasdfasdfasdfsda"
+              @click="clickHandler(1,3)"
+          >
+          </c-table-btn>
+          <c-table-btn
+              tip="giao2"
+              @click="clickHandler(2)"
+          >
+          </c-table-btn>
+          <c-table-btn
+              tip="giao3"
+              @click="clickHandler(3)"
+          >
+          </c-table-btn>
+          <c-table-btn
+              tip="giao4"
+              text="giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4"
+              @click="clickHandler(4)"
+          >
+          </c-table-btn>
+        </c-btn-wrap>
+      </template>
+    </c-table>
   </div>
 </template>
 
 <script>
 import {debounce} from "@/utils";
 import axios from 'axios'
+import CTable from "../packages/CTable";
+import CBtnWrap from "../packages/CBtnWrap";
+import CTableBtn from "../packages/CTableBtn";
 
 export default {
   data() {
@@ -216,7 +218,7 @@ export default {
           title: 'createTime',
           dataIndex: 'createTime',
           key: 'createTime',
-          width: '140px',
+          width: 140,
           scopedSlots: {filterDropdown: 'filterDropdown'},
           filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
           onFilterDropdownVisibleChange: (visible) => {
@@ -234,6 +236,9 @@ export default {
       ]
     }
   },
+  components: {
+    CTable, CBtnWrap,CTableBtn
+  },
   watch: {
     tabIndex(nv) {
       console.log(nv)
@@ -241,7 +246,7 @@ export default {
   },
   mounted() {
     // this.queryOptions()
-    // this.$refs.table.refresh()
+    this.$refs.table.refresh()
   },
   methods: {
     handleFilterChange(val, confirm) {
