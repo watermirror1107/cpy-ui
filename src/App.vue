@@ -202,17 +202,20 @@ export default {
           title: 'id',
           dataIndex: 'id',
           key: 'id',
-          scopedSlots: {customRender: 'id'}
+          scopedSlots: {customRender: 'id'},
+          width: 100
         },
         {
           title: 'name',
           dataIndex: 'name',
           key: 'name',
+          width: 100
         },
         {
           title: 'content',
           dataIndex: 'content',
           key: 'content',
+          width: 500
         },
         {
           title: 'createTime',
@@ -230,7 +233,6 @@ export default {
         {
           title: 'operate',
           key: 'operate',
-          width: 300,
           scopedSlots: {customRender: 'operate'}
         }
       ]
