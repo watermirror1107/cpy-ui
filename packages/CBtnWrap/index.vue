@@ -34,10 +34,10 @@ export default {
       return btn.componentOptions && btn.componentOptions.tag === 'c-table-btn'//只能放 c-table-btn组件
     })
     //todo 调整大小的时候自适应更改里面的内容，bug 按钮上面绑定的事件会错乱
-    const _this=this
-    window.onresize=debounce(function (){
-        _this.$forceUpdate()
-    },200)
+    // const _this=this
+    // window.onresize=debounce(function (){
+    //     _this.$forceUpdate()
+    // },200)
   },
   render(h, context) {
     let width = 0;//获取父容器宽度，如果父容器没有宽度会出现排版问题
