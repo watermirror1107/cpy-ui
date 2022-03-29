@@ -25,5 +25,5 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 export default {
     install,
-    version: '0.1.16'
+    version: '0.1.17'
 }

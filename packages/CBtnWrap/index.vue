@@ -88,7 +88,7 @@ export default {
 <style lang="less">
 .c_btn_wrap {
   display: flex;
-  justify-content: space-around;
+  justify-content:flex-start;
   flex-wrap: wrap;
   align-items: center;
   width: 100%;

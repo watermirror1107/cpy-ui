@@ -59,13 +59,13 @@ export default {
 }
 
 .c_table_btn_vertical {
-  max-width: 90px;
+  width: 90px;
   overflow: hidden;
   height: 60px;
 
   p {
     width: 100%;
-    text-align: left;
+    text-align: center;
     line-height: 16px;
     height: 32px;
     overflow : hidden;

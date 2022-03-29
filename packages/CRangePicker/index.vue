@@ -114,19 +114,19 @@ export default {
      */
     translateText(code) {
       //console端没有字典翻译兼容
-      let textObj={
-        'public.Starttime':'起始时间',
-        'public.Endtime':'结束时间',
-        'public.Onehour':'一小时',
-        'public.Nearly24hours':'近24小时',
-        'public.Nearlythreedays':'近3天',
-        'public.Nearlysevendays':'近7天',
-        'public.Nearlyoneday':'近1天',
-        'public.OneMonth':'1个月',
-        'public.Threemonths':'3个月',
-        'public.Halfayear':'半年',
+      let textObj = {
+        'public.Starttime': '起始时间',
+        'public.Endtime': '结束时间',
+        'public.Onehour': '一小时',
+        'public.Nearly24hours': '近24小时',
+        'public.Nearlythreedays': '近3天',
+        'public.Nearlysevendays': '近7天',
+        'public.Nearlyoneday': '近1天',
+        'public.OneMonth': '1个月',
+        'public.Threemonths': '3个月',
+        'public.Halfayear': '半年',
       }
-      return textObj[code]||code
+      return textObj[code] || code
     },
     /**
      * @description:改变时间
@@ -138,7 +138,7 @@ export default {
     /**
      * @description:触发emit
      */
-    emitChange:debounce(function(val) {
+    emitChange: debounce(function (val) {
       this.$emit('change', val);
     }),
     /**
@@ -221,13 +221,15 @@ export default {
 }
 
 .c_ranger_pick {
-  display: flex;
   background-color: #fff;
-  width: auto;
-  line-height: 42px;
-  color: #323232;
   border: 1px solid #eee;
+  color: #323232;
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
   overflow: hidden;
+  width: auto;
+
   .lh40();
 
   .ant-calendar-picker {
@@ -280,15 +282,12 @@ export default {
     border-color: transparent;
     outline: none;
   }
+
   &_quick_btn {
-    .fl();
     background-color: #f6f8fb;
-    display: flex;
-    flex: 1;
-    .lh40();
+    float: left;
 
     li {
-      flex:1;
       .fl();
       border: 1px solid #E6E6E6;
       border-top: 0;

@@ -1,7 +1,6 @@
 <template>
   <card
-      :title="title"
-  >
+      :title="title">
     <div class="c_tap">
       <div
           class="c_tap_card"

@@ -19,8 +19,8 @@
         class="c_radio_wrap_button_selected"
         v-show="$parent.value ==value&&$parent.selectedType==2">
       <icon
-          name="xuanxiangka_gou"
-          className="c_radio_wrap_button_selected_icon"></icon>
+          name="icon-xuanxiangka_gou"
+          class="c_radio_wrap_button_selected_icon"></icon>
     </div>
   </label>
 </template>

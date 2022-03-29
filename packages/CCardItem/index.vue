@@ -1,11 +1,11 @@
 <template>
   <a-row class="c_card_item">
     <a-col
-        :span="3"
+        :span="span"
         class="c_card_item_title">{{ data.title }}
     </a-col>
     <a-col
-        :span="21"
+        :span="24-span"
         class="c_card_item_content">
       <slot><span>{{ data.value }}</span></slot>
     </a-col>
@@ -18,6 +18,14 @@ export default {
   props: {
     data: {
       type: Object
+    },
+    offset:{
+      type:Number,
+      default:0
+    },
+    span:{
+      type:Number,
+      default:3
     }
   }
 };

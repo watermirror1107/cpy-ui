@@ -35,21 +35,21 @@
     <!--      <template #left>left</template>-->
     <!--      <template #right>righ</template>-->
     <!--    </c-nav-header>-->
-    <!--    <c-range-picker v-model="time" :currentType="2"></c-range-picker>-->
+<!--        <c-range-picker v-model="time" :currentType="2"></c-range-picker>-->
     <!--    <c-table-form-->
     <!--        v-model="formData"-->
     <!--        :formOptions="formOptions"-->
     <!--        @submit="handleSubmit"-->
     <!--    ></c-table-form>-->
     <!--    <c-duration v-model="month"></c-duration>-->
-    <!--    <c-tabs-->
-    <!--        :tabs="imageTypes"-->
-    <!--        :selectIndex.sync="tabIndex"></c-tabs>-->
-    <!--    <c-tap-->
-    <!--        :list="typeList"-->
-    <!--        v-model="tabIndex"-->
-    <!--        @select-item="changeType"-->
-    <!--    ></c-tap>-->
+<!--        <c-tabs-->
+<!--            :tabs="imageTypes"-->
+<!--            v-model="tabIndex"></c-tabs>-->
+<!--        <c-tap-->
+<!--            :list="typeList"-->
+<!--            v-model="tabIndex"-->
+<!--            @select-item="changeType"-->
+<!--        ></c-tap>-->
     <!--    <c-form-->
     <!--        ref="form"-->
     <!--        :formOptions="formOptions1"-->
@@ -117,9 +117,12 @@ import CTable from "../packages/CTable";
 import CBtnWrap from "../packages/CBtnWrap";
 import CTableBtn from "../packages/CTableBtn";
 import CSearchSelect from "../packages/CSearchSelect";
+import CTap from "../packages/CTap";
+import CRangePicker from "../packages/CRangePicker";
+import CTabs from "../packages/CTabs";
 export default {
   components: {
-    CTable, CBtnWrap, CTableBtn,CSearchSelect
+    CTable, CBtnWrap, CTableBtn,CSearchSelect,CTap,CRangePicker,CTabs
   },
   data() {
     return {
