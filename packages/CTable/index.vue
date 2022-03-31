@@ -1,6 +1,7 @@
 <template>
   <div class="c_table">
     <a-table
+        :scroll="scroll"
         v-on="$listeners"
         :loading="isLocalLoading"
         v-bind="property"
@@ -101,7 +102,8 @@ export default {
   props: {
     loopTime: {type: Number},//轮询间隔,建议至少5秒以上
     data: {type: Function, required: true},
-    filterOptions: {type: Array, default: () => []}
+    filterOptions: {type: Array, default: () => []},
+    scroll: {default: () => ({ x: 930 }),type:Object}
   },
   beforeMount() {
     if (!this.$T) {
