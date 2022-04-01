@@ -175,21 +175,21 @@ export default {
      */
     calcSelectAllPosition() {
       this.$nextTick(() => {
+        const head = this.$el.querySelector('.ant-table-selection-column .ant-table-header-column');
         const list = this.$el.querySelectorAll('.ant-table-selection-column');
         const actionBar = this.$el.querySelector('.c_table_action_bar');
         if (!actionBar) return;
-        if (list.length > 1) {
+        if (this.localDataSource.length>0) {
           const lineDom = window.getComputedStyle(list[1], null);
           const twidth = parseFloat(lineDom.width);
           const padLeft = parseFloat(lineDom['padding-left']);
           const padRight = parseFloat(lineDom['padding-right']);
           const mleft = ((twidth - padLeft - padRight - 16) / 2) + padLeft;
-          list[0].style.left = `${mleft}px`;
-          list[0].style.visibility = 'visible';
+          head.style.left = `${mleft}px`;
+          head.style.visibility = 'visible';
           actionBar.style.paddingLeft = `${twidth}px`;
-        } else if (list.length > 0) {
-          list[0].style.visibility = 'hidden';
-          actionBar.style.paddingLeft = '20px';
+        } else  {
+          head.style.visibility = 'hidden';
         }
       });
     },
