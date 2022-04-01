@@ -276,7 +276,7 @@ export default {
   padding-bottom: 24px;
 
   .ant-table-thead {
-     th:first-child .ant-table-header-column{
+     .ant-table-selection-column .ant-table-header-column{
       position: absolute;
       bottom: -41px;
       left: 29px;
