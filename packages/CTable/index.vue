@@ -176,9 +176,9 @@ export default {
     calcSelectAllPosition() {
       this.$nextTick(() => {
         const head = this.$el.querySelector('.ant-table-selection-column .ant-table-header-column');
+        if (!head) return;
         const list = this.$el.querySelectorAll('.ant-table-selection-column');
         const actionBar = this.$el.querySelector('.c_table_action_bar');
-        if (!actionBar) return;
         if (this.localDataSource.length>0) {
           const lineDom = window.getComputedStyle(list[1], null);
           const twidth = parseFloat(lineDom.width);
