@@ -64,7 +64,7 @@
         </slot>
       </div>
       <a-pagination
-          v-if="!dataSource"
+          v-if="!dataSource&&pagination"
           v-bind="{
          ...this.localPagination,
         showSizeChanger: true,
@@ -100,6 +100,7 @@ export default {
     }
   },
   props: {
+    pagination:{type:Boolean,default:true},
     loopTime: {type: Number},//轮询间隔,建议至少5秒以上
     data: {type: Function},
     filterOptions: {type: Array, default: () => []},
@@ -123,13 +124,11 @@ export default {
     if (this.data) {
       delete this.property?.dataSource
     }
-
     delete this.property?.rowSelection;
     delete this.property?.columns;
     this.slotArr = [...Object.keys(this.$scopedSlots), ...Object.keys(this.$slots)];
     // 这里去重下，不然自定义表头会出现2个
     this.slotArr = Array.from(new Set(this.slotArr)).filter(item => item !== 'filterDropdown' && item !== 'actionBar');
-
     // 取出列数据里面的slots
     const columnsSlots = this.$attrs.columns.filter(el => el.slots);
     const columnsSlotsValues = columnsSlots.map(el => Object.values(el.slots));
@@ -139,6 +138,11 @@ export default {
     });
     this.slotArr = this.slotArr.filter(el => !nativeTableSlotArr.includes(el));
     this.nativeTableSlotArr = nativeTableSlotArr;
+    if(this.dataSource){
+      this.localDataSource = this.dataSource
+      this.calcSelectAllPosition();
+      this.isLocalLoading = false;
+    }
   },
   beforeDestroy() {
     if (window.tableTime) {
@@ -207,11 +211,7 @@ export default {
         current: 1,
         pageNo: 1
       }));
-      if (this.dataSource && this.dataSource.length > 0) {
-        this.localDataSource = this.dataSource
-        this.calcSelectAllPosition();
-        this.isLocalLoading = false;
-      } else if (this.data && this.data instanceof Function) {
+      if (this.data && this.data instanceof Function) {
         this.isLocalLoading = true;
         this.localDataSource = [];
         this.loadData();

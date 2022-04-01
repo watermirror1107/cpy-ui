@@ -78,7 +78,7 @@
       }"
              :filterOptions="filterOptions"
              :columns="columns"
-             :data="queryList"
+             :dataSource="dataSource"
              @filterChange="handleFilterChange"
              rowKey="id">
       <template #id="{ text }">
@@ -264,7 +264,7 @@ export default {
   },
   mounted() {
     // this.queryOptions()
-    this.$refs.table.refresh()
+    // this.$refs.table.refresh()
   },
   methods: {
     onSelectChange(selectedRowKeys, selectedRows) {
