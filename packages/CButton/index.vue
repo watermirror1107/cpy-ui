@@ -39,7 +39,8 @@ export default {
     if (this.tip) {
       vnode = h('a-tooltip', {
         props: {
-          placement: this.placement
+          placement: this.placement,
+          overlayClassName:'c_button_tip_content'
         }
       }, [
         h('p', {slot: 'title'}, this.tip),
@@ -74,5 +75,9 @@ export default {
   color: @--main-yellow!important;
   background-color: transparent!important ;
 }
-
+.c_button_tip_content{
+  .ant-tooltip-inner{
+    text-align: left;
+  }
+}
 </style>

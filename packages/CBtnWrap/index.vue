@@ -42,7 +42,7 @@ export default {
   render(h, context) {
     let width = 0;//获取父容器宽度，如果父容器没有宽度会出现排版问题
     if (this.$parent.$el) {
-      width = parseInt(window.getComputedStyle(this.$parent.$el, null).width)
+      width = parseInt(window.getComputedStyle(this.$parent.$el, null).width)-16//减16是因为td的padding8
     }
     let showNum = Math.floor(width / 90)//c-table-btn的最大宽度为90,计算最多能展示几个
     //超过的截取放到更多按钮里面

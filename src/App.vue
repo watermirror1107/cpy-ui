@@ -11,7 +11,7 @@
     <!--      </p>-->
     <!--    </c-banner>-->
     <!--        <c-button disabled type="success" @click="clickHandler(1)" icon="icon-jingxiang">CTMD</c-button>-->
-    <!--            <c-button type="warning" ghost size="large" tip="giao">CTMD</c-button>-->
+    <!--                <c-button type="warning" ghost size="large" tip="giaogiaogiaogiao丰">CTMD</c-button>-->
     <!--    <c-icon name="icon-shijian"></c-icon>-->
     <!--    <c-card  title="giao" @more="clickMore">-->
     <!--      <template #more>-->
@@ -35,21 +35,21 @@
     <!--      <template #left>left</template>-->
     <!--      <template #right>righ</template>-->
     <!--    </c-nav-header>-->
-<!--        <c-range-picker v-model="time" :currentType="2"></c-range-picker>-->
+    <!--        <c-range-picker v-model="time" :currentType="2"></c-range-picker>-->
     <!--    <c-table-form-->
     <!--        v-model="formData"-->
     <!--        :formOptions="formOptions"-->
     <!--        @submit="handleSubmit"-->
     <!--    ></c-table-form>-->
     <!--    <c-duration v-model="month"></c-duration>-->
-<!--        <c-tabs-->
-<!--            :tabs="imageTypes"-->
-<!--            v-model="tabIndex"></c-tabs>-->
-<!--        <c-tap-->
-<!--            :list="typeList"-->
-<!--            v-model="tabIndex"-->
-<!--            @select-item="changeType"-->
-<!--        ></c-tap>-->
+    <!--        <c-tabs-->
+    <!--            :tabs="imageTypes"-->
+    <!--            v-model="tabIndex"></c-tabs>-->
+    <!--        <c-tap-->
+    <!--            :list="typeList"-->
+    <!--            v-model="tabIndex"-->
+    <!--            @select-item="changeType"-->
+    <!--        ></c-tap>-->
     <!--    <c-form-->
     <!--        ref="form"-->
     <!--        :formOptions="formOptions1"-->
@@ -63,56 +63,65 @@
     <!--      </template>-->
     <!--    </c-form>-->
     <!--    <button @click="changeType(2)">test debounce</button>-->
-<!--    <c-search-select :queryPromise="queryOptions"-->
-<!--                     placeholder="测试一下"-->
-<!--                     v-model="tabIndex"-->
-<!--                     style="width:320px;margin: 0 auto;"-->
-<!--    >-->
-<!--                              <p slot='extraContent' style="text-align:center;" @click="clickHandler(1)">extraContent</p>-->
-<!--    </c-search-select>-->
-<!--    <c-table ref="table"-->
-<!--             :filterOptions="filterOptions"-->
-<!--             :columns="columns"-->
-<!--             :data="queryList"-->
-<!--             @filterChange="handleFilterChange"-->
-<!--             rowKey="id">-->
-<!--      <template #id="{ text }">-->
-<!--        <span>{{ text }}</span>-->
-<!--      </template>-->
-<!--      <template #operate>-->
-<!--        <c-btn-wrap>-->
-<!--          <c-table-btn-->
-<!--              type="danger"-->
-<!--              tip="giao11"-->
-<!--              text="123asdfasdfasdfasdfsda"-->
-<!--              @click="clickHandler(1,3)"-->
-<!--          >-->
-<!--          </c-table-btn>-->
-<!--          <c-table-btn-->
-<!--              tip="giao2"-->
-<!--              @click="clickHandler(2)"-->
-<!--          >-->
-<!--          </c-table-btn>-->
-<!--          <c-table-btn-->
-<!--              tip="giao3"-->
-<!--              @click="clickHandler(3)"-->
-<!--          >-->
-<!--          </c-table-btn>-->
-<!--          <c-table-btn-->
-<!--              tip="giao4"-->
-<!--              text="giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4"-->
-<!--              @click="clickHandler(4)"-->
-<!--          >-->
-<!--          </c-table-btn>-->
-<!--        </c-btn-wrap>-->
-<!--      </template>-->
-<!--    </c-table>-->
+    <!--    <c-search-select :queryPromise="queryOptions"-->
+    <!--                     placeholder="测试一下"-->
+    <!--                     v-model="tabIndex"-->
+    <!--                     style="width:320px;margin: 0 auto;"-->
+    <!--    >-->
+    <!--                              <p slot='extraContent' style="text-align:center;" @click="clickHandler(1)">extraContent</p>-->
+    <!--    </c-search-select>-->
+    <c-table
+        ref="table"
+             :rowSelection="{
+        selectedRowKeys: selectedRowKeys,
+        onChange: onSelectChange,
+      }"
+             :filterOptions="filterOptions"
+             :columns="columns"
+             :data="queryList"
+             @filterChange="handleFilterChange"
+             rowKey="id">
+      <template #id="{ text }">
+        <span>{{ text }}</span>
+      </template>
+      <template #operate="{record}">
+        <c-btn-wrap>
+          <c-table-btn
+              type="danger"
+              tip="giao11"
+              text="123"
+              @click="clickHandler1"
+          >
+          </c-table-btn>
+          <c-table-btn
+              tip="giao2"
+              @click="clickHandler2"
+          >
+          </c-table-btn>
+          <c-table-btn
+              tip="giao3"
+              @click="clickHandler3"
+          >
+          </c-table-btn>
+          <c-table-btn
+              tip="giao4"
+              text="giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4"
+              @click="clickHandler4"
+          >
+          </c-table-btn>
+        </c-btn-wrap>
+      </template>
+      <template #actionBar>
+        <a-button>删除</a-button>
+      </template>
+    </c-table>
   </div>
 </template>
 
 <script>
 import {debounce} from "@/utils";
 import axios from 'axios'
+import CButton from "../packages/CButton";
 import CTable from "../packages/CTable";
 import CBtnWrap from "../packages/CBtnWrap";
 import CTableBtn from "../packages/CTableBtn";
@@ -120,12 +129,16 @@ import CSearchSelect from "../packages/CSearchSelect";
 import CTap from "../packages/CTap";
 import CRangePicker from "../packages/CRangePicker";
 import CTabs from "../packages/CTabs";
+
 export default {
   components: {
-    CTable, CBtnWrap, CTableBtn,CSearchSelect,CTap,CRangePicker,CTabs
+    CButton, CTable, CBtnWrap, CTableBtn, CSearchSelect, CTap, CRangePicker, CTabs
   },
   data() {
     return {
+      dataSource:[{id:1,name:'name',content:'content',createTime:'2012-12-12'}],
+      selectedRowKeys: [], // 勾选的key
+      selectedRows: [], // 选中的行数据
       formOptions1: [
         {key: 'account'},
         {key: 'age'},
@@ -251,9 +264,13 @@ export default {
   },
   mounted() {
     // this.queryOptions()
-    // this.$refs.table.refresh()
+    this.$refs.table.refresh()
   },
   methods: {
+    onSelectChange(selectedRowKeys, selectedRows) {
+      this.selectedRowKeys = selectedRowKeys
+      this.selectedRows = selectedRows
+    },
     handleFilterChange(val, confirm) {
       confirm();
       this.$refs.table.refresh()
@@ -281,7 +298,20 @@ export default {
     },
     clickHandler(text, record) {
       console.log(text)
-    }
+      console.log(record)
+    },
+    clickHandler1(){
+      console.log(1)
+    },
+    clickHandler2(){
+      console.log(2)
+    },
+    clickHandler3(){
+      console.log(3)
+    },
+    clickHandler4(){
+      console.log(4)
+    },
   }
 }
 </script>

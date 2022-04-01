@@ -63,8 +63,8 @@
             name="actionBar">
         </slot>
       </div>
-
       <a-pagination
+          v-if="!dataSource"
           v-bind="{
          ...this.localPagination,
         showSizeChanger: true,
@@ -101,9 +101,10 @@ export default {
   },
   props: {
     loopTime: {type: Number},//轮询间隔,建议至少5秒以上
-    data: {type: Function, required: true},
+    data: {type: Function},
     filterOptions: {type: Array, default: () => []},
-    scroll: {default: () => ({ x: 930 }),type:Object}
+    dataSource: {type: Array},
+    scroll: {default: () => ({x: 930}), type: Object}
   },
   beforeMount() {
     if (!this.$T) {
@@ -119,6 +120,10 @@ export default {
       ...this.$attrs,
       pagination: false,
     };
+    if (this.data) {
+      delete this.property?.dataSource
+    }
+
     delete this.property?.rowSelection;
     delete this.property?.columns;
     this.slotArr = [...Object.keys(this.$scopedSlots), ...Object.keys(this.$slots)];
@@ -146,16 +151,16 @@ export default {
      */
     translateText(code) {
       //console端没有字典翻译兼容
-      let textObj={
-        'public.search':'搜索'
+      let textObj = {
+        'public.search': '搜索'
       }
-      return textObj[code]||code
+      return textObj[code] || code
     },
     /**
      * @description:展示数据总数
      */
     showTotal(total, range) {
-      if (this.$store&&this.$store.state && this.$store.state.language === 'en_US') {
+      if (this.$store && this.$store.state && this.$store.state.language === 'en_US') {
         return `Total ${total}`
       } else {
         return `共 ${total} 条`
@@ -167,7 +172,7 @@ export default {
     calcSelectAllPosition() {
       this.$nextTick(() => {
         const list = this.$el.querySelectorAll('.ant-table-selection-column');
-        const actionBar = this.$el.querySelector('.actionBar');
+        const actionBar = this.$el.querySelector('.c_table_action_bar');
         if (!actionBar) return;
         if (list.length > 1) {
           const lineDom = window.getComputedStyle(list[1], null);
@@ -177,10 +182,10 @@ export default {
           const mleft = ((twidth - padLeft - padRight - 16) / 2) + padLeft;
           list[0].style.left = `${mleft}px`;
           list[0].style.visibility = 'visible';
-          actionBar.style.marginLeft = `${twidth}px`;
+          actionBar.style.paddingLeft = `${twidth}px`;
         } else if (list.length > 0) {
           list[0].style.visibility = 'hidden';
-          actionBar.style.marginLeft = '20px';
+          actionBar.style.paddingLeft = '20px';
         }
       });
     },
@@ -202,9 +207,15 @@ export default {
         current: 1,
         pageNo: 1
       }));
-      this.isLocalLoading = true;
-      this.localDataSource = [];
-      this.loadData();
+      if (this.dataSource && this.dataSource.length > 0) {
+        this.localDataSource = this.dataSource
+        this.calcSelectAllPosition();
+        this.isLocalLoading = false;
+      } else if (this.data && this.data instanceof Function) {
+        this.isLocalLoading = true;
+        this.localDataSource = [];
+        this.loadData();
+      }
     },
     paginationChange(pageNo, pageSize) {
       const params = {
@@ -264,19 +275,13 @@ export default {
 .c_table {
   padding-bottom: 24px;
 
-  /deep/ .ant-table-thead {
-    > tr > th {
-      border-bottom: unset;
+  .ant-table-thead {
+     th:first-child .ant-table-header-column{
+      position: absolute;
+      bottom: -41px;
+      left: 29px;
     }
 
-    .ant-table-selection-column {
-      position: absolute;
-      bottom: -47px;
-      left: 14px;
-      width: 16px;
-      padding-left: 0 !important;
-      visibility: hidden;
-    }
   }
 
   &_action_box {
@@ -289,7 +294,7 @@ export default {
   &_action_bar {
     //margin-left: 70px;
 
-     .ant-btn {
+    .ant-btn {
       margin-right: 16px;
 
       svg {
