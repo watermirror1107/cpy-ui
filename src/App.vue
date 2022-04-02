@@ -72,42 +72,63 @@
     <!--    </c-search-select>-->
     <c-table
         ref="table"
-             :rowSelection="{
+        :loopTime="10000"
+        :rowSelection="{
         selectedRowKeys: selectedRowKeys,
         onChange: onSelectChange,
       }"
-             :filterOptions="filterOptions"
-             :columns="columns"
-             :dataSource="dataSource"
-             @filterChange="handleFilterChange"
-             rowKey="id">
+        :filterOptions="filterOptions"
+        :columns="columns"
+        :data="queryList"
+        @filterChange="handleFilterChange"
+        rowKey="id">
       <template #id="{ text }">
         <span>{{ text }}</span>
       </template>
       <template #operate="{record}">
         <c-btn-wrap>
           <c-table-btn
-              type="danger"
-              tip="giao11"
-              text="123"
+              text="giao1"
               @click="clickHandler1"
           >
           </c-table-btn>
           <c-table-btn
-              tip="giao2"
+              text="giao2"
               @click="clickHandler2"
           >
           </c-table-btn>
           <c-table-btn
-              tip="giao3"
+              text="giao3"
               @click="clickHandler3"
           >
           </c-table-btn>
           <c-table-btn
-              tip="giao4"
-              text="giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4giao4"
-              @click="clickHandler4"
-          >
+              text="giao4"
+              @click="clickHandler4">
+          </c-table-btn>
+          <c-table-btn
+              text="giao5"
+              @click="clickHandler5">
+          </c-table-btn>
+          <c-table-btn
+              text="giao6"
+              @click="clickHandler6">
+          </c-table-btn>
+          <c-table-btn
+              text="giao7"
+              @click="clickHandler7">
+          </c-table-btn>
+          <c-table-btn
+              text="giao8"
+              @click="clickHandler8">
+          </c-table-btn>
+          <c-table-btn
+              text="giao9"
+              @click="clickHandler9">
+          </c-table-btn>
+          <c-table-btn
+              text="giao10"
+              @click="clickHandler10">
           </c-table-btn>
         </c-btn-wrap>
       </template>
@@ -136,7 +157,7 @@ export default {
   },
   data() {
     return {
-      dataSource:[{id:1,name:'name',content:'content',createTime:'2012-12-12'}],
+      dataSource: [{id: 1, name: 'name', content: 'content', createTime: '2012-12-12'}],
       selectedRowKeys: [], // 勾选的key
       selectedRows: [], // 选中的行数据
       formOptions1: [
@@ -264,7 +285,7 @@ export default {
   },
   mounted() {
     // this.queryOptions()
-    // this.$refs.table.refresh()
+    this.$refs.table.refresh()
   },
   methods: {
     onSelectChange(selectedRowKeys, selectedRows) {
@@ -300,18 +321,36 @@ export default {
       console.log(text)
       console.log(record)
     },
-    clickHandler1(){
+    clickHandler1() {
       console.log(1)
     },
-    clickHandler2(){
+    clickHandler2() {
       console.log(2)
     },
-    clickHandler3(){
+    clickHandler3() {
       console.log(3)
     },
-    clickHandler4(){
+    clickHandler4() {
       console.log(4)
     },
+    clickHandler5() {
+      console.log(5)
+    },
+    clickHandler6() {
+      console.log(6)
+    },
+    clickHandler7() {
+      console.log(7)
+    },
+    clickHandler8() {
+      console.log(8)
+    },
+    clickHandler9() {
+      console.log(9)
+    },
+    clickHandler10() {
+      console.log(10)
+    }
   }
 }
 </script>

@@ -33,7 +33,7 @@ export default {
     this.children = this.$slots.default.filter(btn => {
       return btn.componentOptions && btn.componentOptions.tag === 'c-table-btn'//只能放 c-table-btn组件
     })
-    //todo 调整大小的时候自适应更改里面的内容，bug 按钮上面绑定的事件会错乱，而且表格只有最后一行会伸缩改变
+    //todo 调整大小的时候自适应更改里面的内容，bug 按钮上面绑定的事件会错乱，而且表格只有最后一行会伸缩改变,当从更多中释放出来的时候不会再次触发render
     // const _this=this
     // window.onresize=debounce(function (){
     //     _this.$forceUpdate()

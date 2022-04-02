@@ -14,19 +14,19 @@
       } : null"
     >
       <template
-          v-for="name  in slotArr"
-          v-slot:[name]="text,record"
+          v-for="slot  in slotArr"
+          v-slot:[slot]="text,record"
       >
         <slot
-            :name="name"
+            :name="slot"
             :text="text"
             :record="record"
         ></slot>
       </template>
       <template
-          v-for="item in nativeTableSlotArr"
-          v-slot:[item]>
-        <slot :name="item"></slot>
+          v-for="nativeTable in nativeTableSlotArr"
+          v-slot:[nativeTable]>
+        <slot :name="nativeTable"></slot>
       </template>
       <!--      表头过滤-->
       <template v-slot:filterDropdown="{ confirm }">
@@ -46,9 +46,9 @@
             @change="$emit('filterChange',$event,confirm)"
         >
           <a-select-option
-              v-for="item in filterOptions"
-              :value="item.id"
-              :key="item.id">{{ item.name }}
+              v-for="option in filterOptions"
+              :value="option.id"
+              :key="option.id">{{ option.name }}
           </a-select-option>
         </a-select>
       </template>
