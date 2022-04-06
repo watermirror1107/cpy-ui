@@ -258,7 +258,7 @@ export default {
           if (window.tableTime) {
             clearTimeout(window.tableTime);
           }
-          window.tableTime = window.setTimeout(this.loadData, this.loopTime);
+          window.tableTime = window.setTimeout(this.refresh, this.loopTime);
         }
         this.calcSelectAllPosition();
       }).catch((e) => {

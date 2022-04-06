@@ -11,9 +11,9 @@
     <!--      </p>-->
     <!--    </c-banner>-->
     <!--        <c-button disabled type="success" @click="clickHandler(1)" icon="icon-jingxiang">CTMD</c-button>-->
-    <!--                <c-button type="warning" ghost size="large" tip="giaogiaogiaogiao丰">CTMD</c-button>-->
+    <!--                <c-button type="warning" ghost size="large" tip="clickclickclickclick丰">CTMD</c-button>-->
     <!--    <c-icon name="icon-shijian"></c-icon>-->
-    <!--    <c-card  title="giao" @more="clickMore">-->
+    <!--    <c-card  title="click" @more="clickMore">-->
     <!--      <template #more>-->
     <!--        <p style="font-size: 20px;">more</p>-->
     <!--      </template>-->
@@ -88,46 +88,46 @@
       <template #operate="{record}">
         <c-btn-wrap>
           <c-table-btn
-              text="giao1"
+              text="click1"
               @click="clickHandler1"
           >
           </c-table-btn>
           <c-table-btn
-              text="giao2"
+              text="click2"
               @click="clickHandler2"
           >
           </c-table-btn>
           <c-table-btn
-              text="giao3"
+              text="click3"
               @click="clickHandler3"
           >
           </c-table-btn>
           <c-table-btn
-              text="giao4"
+              text="click4"
               @click="clickHandler4">
           </c-table-btn>
           <c-table-btn
-              text="giao5"
+              text="click5"
               @click="clickHandler5">
           </c-table-btn>
           <c-table-btn
-              text="giao6"
+              text="click6"
               @click="clickHandler6">
           </c-table-btn>
           <c-table-btn
-              text="giao7"
+              text="click7"
               @click="clickHandler7">
           </c-table-btn>
           <c-table-btn
-              text="giao8"
+              text="click8"
               @click="clickHandler8">
           </c-table-btn>
           <c-table-btn
-              text="giao9"
+              text="click9"
               @click="clickHandler9">
           </c-table-btn>
           <c-table-btn
-              text="giao10"
+              text="click10"
               @click="clickHandler10">
           </c-table-btn>
         </c-btn-wrap>
