@@ -85,7 +85,7 @@
       <template #id="{ text }">
         <span>{{ text }}</span>
       </template>
-      <template #operate="{record}">
+      <template #operate="{record,index}">
         <c-btn-wrap>
           <c-table-btn
               :disabled="isClick"
@@ -130,7 +130,7 @@
           </c-table-btn>
           <c-table-btn
               text="click10"
-              @click="clickHandler10">
+              @click="clickHandler10(index)">
           </c-table-btn>
         </c-btn-wrap>
       </template>
@@ -359,8 +359,9 @@ export default {
       },3000)
       console.log(9)
     },
-    clickHandler10() {
+    clickHandler10(index) {
       console.log(10)
+      console.log(index)
     }
   }
 }

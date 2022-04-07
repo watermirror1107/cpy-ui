@@ -15,12 +15,13 @@
     >
       <template
           v-for="slot  in slotArr"
-          v-slot:[slot]="text,record"
+          v-slot:[slot]="text,record,index"
       >
         <slot
             :name="slot"
             :text="text"
             :record="record"
+            :index="index"
         ></slot>
       </template>
       <template

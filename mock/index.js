@@ -29,7 +29,7 @@ Mock.mock(RegExp("/getoptions.*"), 'get', (options) => {
             }
         })
         start=pageSize*(pageNo-1)
-        end=start+(pageSize-1);
+        end=start+(pageSize-1)+1;
     }
     let res=[]
     for (let i = start; i < end; i++) {
