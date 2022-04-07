@@ -1,17 +1,12 @@
 <template>
   <div class="c_table">
     <a-table
-        :scroll="scroll"
         v-on="$listeners"
         :loading="isLocalLoading"
         v-bind="property"
         :columns="$attrs.columns"
         :dataSource="localDataSource"
-        :rowSelection="$attrs.rowSelection ? {
-        selectedRowKeys: $attrs.rowSelection.selectedRowKeys?$attrs.rowSelection.selectedRowKeys:[],
-        onChange:  $attrs.rowSelection.onChange?$attrs.rowSelection.onChange:()=>{},
-        getCheckboxProps:  $attrs.rowSelection.getCheckboxProps?$attrs.rowSelection.getCheckboxProps:()=>({props: {disabled: false}}),
-      } : null"
+        :rowSelection="$attrs.rowSelection || null"
     >
       <template
           v-for="slot  in slotArr"
@@ -129,7 +124,7 @@ export default {
     delete this.property?.columns;
     this.slotArr = [...Object.keys(this.$scopedSlots), ...Object.keys(this.$slots)];
     // 这里去重下，不然自定义表头会出现2个
-    this.slotArr = Array.from(new Set(this.slotArr)).filter(item => item !== 'filterDropdown' && item !== 'actionBar');
+    this.slotArr = Array.from(new Set(this.slotArr)).filter(item => item !== 'filterDropdown' && item !== 'actionBar');//过滤掉1个自定义actionBar和一个filterDropdown
     // 取出列数据里面的slots
     const columnsSlots = this.$attrs.columns.filter(el => el.slots);
     const columnsSlotsValues = columnsSlots.map(el => Object.values(el.slots));

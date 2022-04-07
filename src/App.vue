@@ -135,7 +135,7 @@
         </c-btn-wrap>
       </template>
       <template #actionBar>
-        <a-button>删除</a-button>
+        <a-button @click="consoleRow">删除</a-button>
       </template>
     </c-table>
   </div>
@@ -291,6 +291,9 @@ export default {
     this.$refs.table.refresh()
   },
   methods: {
+    consoleRow(){
+      console.log(this.selectedRows)
+    },
     onSelectChange(selectedRowKeys, selectedRows) {
       this.selectedRowKeys = selectedRowKeys
       this.selectedRows = selectedRows
