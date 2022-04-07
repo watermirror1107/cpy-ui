@@ -88,6 +88,7 @@
       <template #operate="{record}">
         <c-btn-wrap>
           <c-table-btn
+              :disabled="isClick"
               text="click1"
               @click="clickHandler1"
           >
@@ -123,6 +124,7 @@
               @click="clickHandler8">
           </c-table-btn>
           <c-table-btn
+              :disabled="isClick"
               text="click9"
               @click="clickHandler9">
           </c-table-btn>
@@ -157,6 +159,7 @@ export default {
   },
   data() {
     return {
+      isClick:false,
       dataSource: [{id: 1, name: 'name', content: 'content', createTime: '2012-12-12'}],
       selectedRowKeys: [], // 勾选的key
       selectedRows: [], // 选中的行数据
@@ -322,6 +325,10 @@ export default {
       console.log(record)
     },
     clickHandler1() {
+      this.isClick=true
+      setTimeout(()=>{
+        this.isClick=false
+      },3000)
       console.log(1)
     },
     clickHandler2() {
@@ -346,6 +353,10 @@ export default {
       console.log(8)
     },
     clickHandler9() {
+      this.isClick=true
+      setTimeout(()=>{
+        this.isClick=false
+      },3000)
       console.log(9)
     },
     clickHandler10() {
