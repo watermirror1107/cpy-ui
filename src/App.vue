@@ -36,11 +36,11 @@
     <!--      <template #right>righ</template>-->
     <!--    </c-nav-header>-->
     <!--        <c-range-picker v-model="time" :currentType="2"></c-range-picker>-->
-    <!--    <c-table-form-->
-    <!--        v-model="formData"-->
-    <!--        :formOptions="formOptions"-->
-    <!--        @submit="handleSubmit"-->
-    <!--    ></c-table-form>-->
+    <c-table-form
+        v-model="formData"
+        :formOptions="formOptions"
+        @submit="handleSubmit"
+    ></c-table-form>
     <!--    <c-duration v-model="month"></c-duration>-->
     <!--        <c-tabs-->
     <!--            :tabs="imageTypes"-->
@@ -70,74 +70,74 @@
     <!--    >-->
     <!--                              <p slot='extraContent' style="text-align:center;" @click="clickHandler(1)">extraContent</p>-->
     <!--    </c-search-select>-->
-    <c-table
-        ref="table"
-        :loopTime="10000"
-        :rowSelection="{
-        selectedRowKeys: selectedRowKeys,
-        onChange: onSelectChange,
-      }"
-        :filterOptions="filterOptions"
-        :columns="columns"
-        :data="queryList"
-        @filterChange="handleFilterChange"
-        rowKey="id">
-      <template #id="{ text }">
-        <span>{{ text }}</span>
-      </template>
-      <template #operate="{record,index}">
-        <c-btn-wrap>
-          <c-table-btn
-              :disabled="isClick"
-              text="click1"
-              @click="clickHandler1"
-          >
-          </c-table-btn>
-          <c-table-btn
-              text="click2"
-              @click="clickHandler2"
-          >
-          </c-table-btn>
-          <c-table-btn
-              text="click3"
-              @click="clickHandler3"
-          >
-          </c-table-btn>
-          <c-table-btn
-              text="click4"
-              @click="clickHandler4">
-          </c-table-btn>
-          <c-table-btn
-              text="click5"
-              @click="clickHandler5">
-          </c-table-btn>
-          <c-table-btn
-              text="click6"
-              @click="clickHandler6">
-          </c-table-btn>
-          <c-table-btn
-              text="click7"
-              @click="clickHandler7">
-          </c-table-btn>
-          <c-table-btn
-              text="click8"
-              @click="clickHandler8">
-          </c-table-btn>
-          <c-table-btn
-              :disabled="isClick"
-              text="click9"
-              @click="clickHandler9">
-          </c-table-btn>
-          <c-table-btn
-              text="click10"
-              @click="clickHandler10(index)">
-          </c-table-btn>
-        </c-btn-wrap>
-      </template>
-      <template #actionBar>
-        <a-button @click="consoleRow">删除</a-button>
-      </template>
-    </c-table>
+<!--    <c-table-->
+<!--        ref="table"-->
+<!--        :loopTime="10000"-->
+<!--        :rowSelection="{-->
+<!--        selectedRowKeys: selectedRowKeys,-->
+<!--        onChange: onSelectChange,-->
+<!--      }"-->
+<!--        :filterOptions="filterOptions"-->
+<!--        :columns="columns"-->
+<!--        :data="queryList"-->
+<!--        @filterChange="handleFilterChange"-->
+<!--        rowKey="id">-->
+<!--      <template #id="{ text }">-->
+<!--        <span>{{ text }}</span>-->
+<!--      </template>-->
+<!--      <template #operate="{record,index}">-->
+<!--        <c-btn-wrap>-->
+<!--          <c-table-btn-->
+<!--              :disabled="isClick"-->
+<!--              text="click1"-->
+<!--              @click="clickHandler1"-->
+<!--          >-->
+<!--          </c-table-btn>-->
+<!--          <c-table-btn-->
+<!--              text="click2"-->
+<!--              @click="clickHandler2"-->
+<!--          >-->
+<!--          </c-table-btn>-->
+<!--          <c-table-btn-->
+<!--              text="click3"-->
+<!--              @click="clickHandler3"-->
+<!--          >-->
+<!--          </c-table-btn>-->
+<!--          <c-table-btn-->
+<!--              text="click4"-->
+<!--              @click="clickHandler4">-->
+<!--          </c-table-btn>-->
+<!--          <c-table-btn-->
+<!--              text="click5"-->
+<!--              @click="clickHandler5">-->
+<!--          </c-table-btn>-->
+<!--          <c-table-btn-->
+<!--              text="click6"-->
+<!--              @click="clickHandler6">-->
+<!--          </c-table-btn>-->
+<!--          <c-table-btn-->
+<!--              text="click7"-->
+<!--              @click="clickHandler7">-->
+<!--          </c-table-btn>-->
+<!--          <c-table-btn-->
+<!--              text="click8"-->
+<!--              @click="clickHandler8">-->
+<!--          </c-table-btn>-->
+<!--          <c-table-btn-->
+<!--              :disabled="isClick"-->
+<!--              text="click9"-->
+<!--              @click="clickHandler9">-->
+<!--          </c-table-btn>-->
+<!--          <c-table-btn-->
+<!--              text="click10"-->
+<!--              @click="clickHandler10(index)">-->
+<!--          </c-table-btn>-->
+<!--        </c-btn-wrap>-->
+<!--      </template>-->
+<!--      <template #actionBar>-->
+<!--        <a-button @click="consoleRow">删除</a-button>-->
+<!--      </template>-->
+<!--    </c-table>-->
   </div>
 </template>
 
@@ -152,14 +152,15 @@ import CSearchSelect from "../packages/CSearchSelect";
 import CTap from "../packages/CTap";
 import CRangePicker from "../packages/CRangePicker";
 import CTabs from "../packages/CTabs";
+import CTableForm from "../packages/CTableForm";
 
 export default {
   components: {
-    CButton, CTable, CBtnWrap, CTableBtn, CSearchSelect, CTap, CRangePicker, CTabs
+    CButton, CTable, CBtnWrap, CTableBtn, CSearchSelect, CTap, CRangePicker, CTabs,CTableForm
   },
   data() {
     return {
-      isClick:false,
+      isClick: false,
       dataSource: [{id: 1, name: 'name', content: 'content', createTime: '2012-12-12'}],
       selectedRowKeys: [], // 勾选的key
       selectedRows: [], // 选中的行数据
@@ -216,7 +217,8 @@ export default {
       time: [],
       formData: {
         queryName: '',
-        type: undefined
+        type: undefined,
+        date: []
       },
       filterOptions: [],
       formOptions: [
@@ -231,6 +233,13 @@ export default {
           placeholder: 'placeholder',
           options: [{value: 1, label: 'one'}, {value: 2, label: 'two'}]
         },
+        {
+          key: 'date',
+          type: 'range-picker',
+          placeholder: ['开始日期1', '结束日期2'],
+          mode: ['date', 'date'],
+          format: 'YYYY-MM-DD'
+        }
       ],
       num: 'one',
       type: 1,
@@ -288,10 +297,10 @@ export default {
   },
   mounted() {
     // this.queryOptions()
-    this.$refs.table.refresh()
+    // this.$refs.table.refresh()
   },
   methods: {
-    consoleRow(){
+    consoleRow() {
       console.log(this.selectedRows)
     },
     onSelectChange(selectedRowKeys, selectedRows) {
@@ -328,10 +337,10 @@ export default {
       console.log(record)
     },
     clickHandler1() {
-      this.isClick=true
-      setTimeout(()=>{
-        this.isClick=false
-      },3000)
+      this.isClick = true
+      setTimeout(() => {
+        this.isClick = false
+      }, 3000)
       console.log(1)
     },
     clickHandler2() {
@@ -356,10 +365,10 @@ export default {
       console.log(8)
     },
     clickHandler9() {
-      this.isClick=true
-      setTimeout(()=>{
-        this.isClick=false
-      },3000)
+      this.isClick = true
+      setTimeout(() => {
+        this.isClick = false
+      }, 3000)
       console.log(9)
     },
     clickHandler10(index) {

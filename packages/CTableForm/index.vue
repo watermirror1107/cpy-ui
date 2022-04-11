@@ -39,8 +39,8 @@
           <a-range-picker
               class="max-width"
               v-else-if="item.type === 'range-picker'"
-              :mode="item.mode||['day', 'day']"
-              :placeholder="item.placeholder"
+              :mode="item.mode||['date', 'date']"
+              :placeholder="item.placeholder||['开始日期','结束日期']"
               @change="handleRangePickerChange(item.key, $event)"/>
         </slot>
       </a-form-model-item>
@@ -56,7 +56,7 @@ export default {
   name: 'CTableForm',
   components: {icon},
   data() {
-    this.handleSubmit=debounce(this.handleSubmit,this.delay)
+    this.handleSubmit = debounce(this.handleSubmit, this.delay)
     return {
       formData: {}
     }
@@ -131,6 +131,9 @@ export default {
   .max-width {
     .ant-input {
       width: 296px !important;
+    }
+    .ant-calendar-picker-input{
+      line-height: 28px;
     }
   }
 }
