@@ -39,6 +39,7 @@
           <a-range-picker
               class="max-width"
               v-else-if="item.type === 'range-picker'"
+              :mode="item.mode||['day', 'day']"
               :placeholder="item.placeholder"
               @change="handleRangePickerChange(item.key, $event)"/>
         </slot>
