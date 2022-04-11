@@ -73,11 +73,7 @@ export default {
 .c_card {
   width: 100%;
   background-color: #ffffff;
-  // box-shadow: 0 0 4px rgba(37, 90, 168, 0.1), 0 4px 8px rgba(37, 90, 168, 0.05);
-
-  &:hover {
-    box-shadow: 0 0 4px rgba(37, 90, 168, 0.1), 0 4px 8px rgba(37, 90, 168, 0.05);
-  }
+  box-shadow: 0 0 4px rgba(37, 90, 168, 0.1), 0 4px 8px rgba(37, 90, 168, 0.05);
 
   .borderBottom {
     border-bottom: 1px solid #E6E6E6;
@@ -89,6 +85,7 @@ export default {
     font-size: 16px;
     padding: 16px 24px;
     font-weight: bold;
+    margin-bottom: 16px;
   }
 
   &_more {

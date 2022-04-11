@@ -7,7 +7,7 @@
         :colon="isColon"
         :labelAlign="labelAlign"
         :label-col="{ span: labelCol ,offset: offset}"
-        :wrapper-col="{ span: 24-labelCol }"
+        :wrapper-col="{ span: wrapperCol}"
         :model="formData"
         :validateOnRuleChange="isValidateOnRuleChange"
         @submit.native.prevent>
@@ -102,6 +102,7 @@ export default {
     rules: {type: Object},
     isValidateOnRuleChange: {type: Boolean, default: true},
     labelCol: {type: Number, default: 6},
+    wrapperCol: {type: Number, default: 18},
     offset: {type: Number, default: 40},
     isColon: {type: Boolean, default: false},
     layout: {type: String, default: 'horizontal'},
@@ -119,17 +120,17 @@ export default {
     }
   },
   created() {
-    if(!this.$T){
-      this.$T=this.translateText
+    if (!this.$T) {
+      this.$T = this.translateText
     }
     this.formData = Object.assign({}, this.value);
   },
   methods: {
-    translateText(code){
-      let textObj={
-        'public.save':'保存'
+    translateText(code) {
+      let textObj = {
+        'public.save': '保存'
       }
-      return textObj[code]||code
+      return textObj[code] || code
     },
     validate() {
       return this.$refs.form.validate();
