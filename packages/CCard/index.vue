@@ -72,7 +72,6 @@ export default {
 <style lang="less">
 .c_card {
   width: 100%;
-  height: 100%;
   background-color: #ffffff;
   // box-shadow: 0 0 4px rgba(37, 90, 168, 0.1), 0 4px 8px rgba(37, 90, 168, 0.05);
 

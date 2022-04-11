@@ -13,13 +13,13 @@
     <!--        <c-button disabled type="success" @click="clickHandler(1)" icon="icon-jingxiang">CTMD</c-button>-->
     <!--                <c-button type="warning" ghost size="large" tip="clickclickclickclick丰">CTMD</c-button>-->
     <!--    <c-icon name="icon-shijian"></c-icon>-->
-    <!--    <c-card  title="click" @more="clickMore">-->
-    <!--      <template #more>-->
-    <!--        <p style="font-size: 20px;">more</p>-->
-    <!--      </template>-->
-    <!--      content-->
-    <!--    </c-card>-->
-    <!--    <c-card-item :data="{title:'h1',value:'vlaue'}"></c-card-item>-->
+        <c-card  title="click" @more="clickMore">
+          <template #more>
+            <p style="font-size: 20px;">more</p>
+          </template>
+          content
+        </c-card>
+<!--        <c-card-item :data="{title:'h1',value:'vlaue'}"></c-card-item>-->
     <!--    <div style="width: 100px;margin-top: 100px;margin-left: 200px;">-->
     <!--      <c-ellipsis text="test test test test test test test test test test test test test test"></c-ellipsis>-->
     <!--      <c-editable-cell emptyPlaceholder="emptyPlaceholder"></c-editable-cell>-->
@@ -36,11 +36,11 @@
     <!--      <template #right>righ</template>-->
     <!--    </c-nav-header>-->
     <!--        <c-range-picker v-model="time" :currentType="2"></c-range-picker>-->
-    <c-table-form
-        v-model="formData"
-        :formOptions="formOptions"
-        @submit="handleSubmit"
-    ></c-table-form>
+<!--    <c-table-form-->
+<!--        v-model="formData"-->
+<!--        :formOptions="formOptions"-->
+<!--        @submit="handleSubmit"-->
+<!--    ></c-table-form>-->
     <!--    <c-duration v-model="month"></c-duration>-->
     <!--        <c-tabs-->
     <!--            :tabs="imageTypes"-->
@@ -153,10 +153,11 @@ import CTap from "../packages/CTap";
 import CRangePicker from "../packages/CRangePicker";
 import CTabs from "../packages/CTabs";
 import CTableForm from "../packages/CTableForm";
+import CCard from "../packages/CCard";
 
 export default {
   components: {
-    CButton, CTable, CBtnWrap, CTableBtn, CSearchSelect, CTap, CRangePicker, CTabs,CTableForm
+    CButton, CTable, CBtnWrap, CTableBtn, CSearchSelect, CTap, CRangePicker, CTabs,CTableForm,CCard
   },
   data() {
     return {
