@@ -157,7 +157,7 @@ import CCard from "../packages/CCard";
 
 export default {
   components: {
-    CButton, CTable, CBtnWrap, CTableBtn, CSearchSelect, CTap, CRangePicker, CTabs,CTableForm,CCard
+    // CButton, CTable, CBtnWrap, CTableBtn, CSearchSelect, CTap, CRangePicker, CTabs,CTableForm,CCard
   },
   data() {
     return {

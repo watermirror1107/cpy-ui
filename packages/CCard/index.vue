@@ -75,6 +75,7 @@ export default {
   background-color: #ffffff;
   box-shadow: 0 0 4px rgba(37, 90, 168, 0.1), 0 4px 8px rgba(37, 90, 168, 0.05);
   padding-bottom: 16px;
+  margin-bottom: 24px;
   .borderBottom {
     border-bottom: 1px solid #E6E6E6;
   }
