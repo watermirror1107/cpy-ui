@@ -103,6 +103,15 @@ export default {
     dataSource: {type: Array},
     scroll: {default: () => ({x: 930}), type: Object}
   },
+  watch:{
+    dataSource(nv){
+      if(!this.data){
+        this.localDataSource = nv
+        this.calcSelectAllPosition();
+        this.isLocalLoading = false;
+      }
+    }
+  },
   beforeMount() {
     if (!this.$T) {
       this.$T = this.translateText
@@ -134,11 +143,6 @@ export default {
     });
     this.slotArr = this.slotArr.filter(el => !nativeTableSlotArr.includes(el));
     this.nativeTableSlotArr = nativeTableSlotArr;
-    if(this.dataSource){
-      this.localDataSource = this.dataSource
-      this.calcSelectAllPosition();
-      this.isLocalLoading = false;
-    }
   },
   beforeDestroy() {
     if (window.tableTime) {

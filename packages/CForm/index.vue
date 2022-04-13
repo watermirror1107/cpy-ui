@@ -43,6 +43,8 @@
             </template>
             <template v-if="item.type === 'inputNumber'">
               <a-input-number
+                  :placeholder="item.placeholder"
+                  :min="item.min"
                   :disabled="item.isDisabled"
                   v-model="formData[item.key]"></a-input-number>
             </template>
@@ -61,7 +63,7 @@
             </template>
             <!-- 用于详情 -->
             <template v-else-if="item.type==='span'">
-              <span>{{ formData[item.key] }}</span>
+              <span>{{ formData[item.key]||'--' }}</span>
             </template>
             <template v-else>
               <a-radio-group
