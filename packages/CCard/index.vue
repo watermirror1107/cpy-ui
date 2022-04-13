@@ -35,14 +35,16 @@ export default {
   name: 'CCard',
   props: {
     title: {
-      type: String
+      type: String,
+      default:''
     },
     isBorder: {
       type: Boolean,
       default: false
     },
     more: {
-      type: [Boolean, Boolean],
+      type: String,
+      default:''
     }
   },
   methods: {
@@ -61,10 +63,10 @@ export default {
       return Boolean(this.$slots.title);
     },
     isMoreProp() {
-      return Boolean(this.more);
+      return this.more!=='';
     },
     isTitleProp() {
-      return Boolean(this.title);
+      return this.title!=='';
     }
   }
 };
@@ -86,7 +88,6 @@ export default {
     font-size: 16px;
     padding: 16px 24px;
     font-weight: bold;
-    margin-bottom: 16px;
   }
 
   &_more {
