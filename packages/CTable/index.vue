@@ -50,8 +50,7 @@
       </template>
     </a-table>
     <div
-        class="c_table_action_box"
-    >
+        class="c_table_action_box">
       <div
           class="c_table_action_bar"
           :style="{visibility:localDataSource.length>0?'visible':'hidden'}">
@@ -96,19 +95,17 @@ export default {
     }
   },
   props: {
-    pagination:{type:Boolean,default:true},
+    pagination: {type: Boolean, default: true},
     loopTime: {type: Number},//轮询间隔,建议至少5秒以上
     data: {type: Function},
     filterOptions: {type: Array, default: () => []},
-    dataSource: {type: Array},
+    dataSource: {type: Array, default: () => []},
     scroll: {default: () => ({x: 930}), type: Object}
   },
-  watch:{
-    dataSource(nv){
-      if(!this.data){
+  watch: {
+    dataSource(nv) {
+      if (!this.data) {
         this.localDataSource = nv
-        this.calcSelectAllPosition();
-        this.isLocalLoading = false;
       }
     }
   },
@@ -126,11 +123,15 @@ export default {
       ...this.$attrs,
       pagination: false,
     };
-    if (this.data) {
-      delete this.property?.dataSource
-    }
     delete this.property?.rowSelection;
     delete this.property?.columns;
+    if (this.data) {
+      delete this.property?.dataSource;
+    }else{
+     this.localDataSource=this.dataSource;
+      this.calcSelectAllPosition();
+      this.isLocalLoading = false;
+    }
     this.slotArr = [...Object.keys(this.$scopedSlots), ...Object.keys(this.$slots)];
     // 这里去重下，不然自定义表头会出现2个
     this.slotArr = Array.from(new Set(this.slotArr)).filter(item => item !== 'filterDropdown' && item !== 'actionBar');//过滤掉1个自定义actionBar和一个filterDropdown
@@ -179,7 +180,7 @@ export default {
         if (!head) return;
         const list = this.$el.querySelectorAll('.ant-table-selection-column');
         const actionBar = this.$el.querySelector('.c_table_action_bar');
-        if (this.localDataSource.length>0) {
+        if (this.localDataSource.length > 0) {
           const lineDom = window.getComputedStyle(list[1], null);
           const twidth = parseFloat(lineDom.width);
           const padLeft = parseFloat(lineDom['padding-left']);
@@ -188,7 +189,7 @@ export default {
           head.style.left = `${mleft}px`;
           head.style.visibility = 'visible';
           actionBar.style.paddingLeft = `${twidth}px`;
-        } else  {
+        } else {
           head.style.visibility = 'hidden';
         }
       });
@@ -215,6 +216,8 @@ export default {
         this.isLocalLoading = true;
         this.localDataSource = [];
         this.loadData();
+      }else{
+        this.localDataSource=this.dataSource
       }
     },
     paginationChange(pageNo, pageSize) {
@@ -276,7 +279,7 @@ export default {
   padding-bottom: 24px;
 
   .ant-table-thead {
-     .ant-table-selection-column .ant-table-header-column{
+    .ant-table-selection-column .ant-table-header-column {
       position: absolute;
       bottom: -41px;
       left: 29px;
