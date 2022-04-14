@@ -78,7 +78,8 @@
       }"
         :filterOptions="filterOptions"
         :columns="columns"
-        :dataSource="dataSource"
+        :loopTime="10000"
+        :data="queryList"
         @filterChange="handleFilterChange"
         rowKey="id">
       <template #id="{ text,record }">
@@ -316,7 +317,7 @@ export default {
   },
   mounted() {
     // this.queryOptions()
-    // this.$refs.table.refresh()
+    this.$refs.table.refresh()
   },
   methods: {
     consoleRow() {
@@ -392,7 +393,6 @@ export default {
     },
     clickHandler10(index) {
       console.log(10)
-      console.log(index)
     }
   }
 }
