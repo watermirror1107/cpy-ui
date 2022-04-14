@@ -3,9 +3,9 @@
       class="c_radio_wrap"
       :disabled="$attrs.disabled"
       :class="{
-        c_radio_wrap_b2:$parent.selectedType==2,
+        c_radio_wrap_b2:Number($parent.selectedType)==2,
         c_radio_wrap_selected: $parent.value == value&&!$attrs.disabled,
-        c_radio_wrap_blue:$parent.value == value &&$parent.selectedType==1&&!$attrs.disabled
+        c_radio_wrap_blue:$parent.value == value &&Number($parent.selectedType)==1&&!$attrs.disabled
       }"
       :value='value'>
     <input
@@ -17,7 +17,7 @@
     <slot/>
     <div
         class="c_radio_wrap_button_selected"
-        v-show="$parent.value ==value&&$parent.selectedType==2">
+        v-show="$parent.value ==value&&Number($parent.selectedType)==2">
       <icon
           name="icon-xuanxiangka_gou"
           class="c_radio_wrap_button_selected_icon"></icon>
