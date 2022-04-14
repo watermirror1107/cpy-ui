@@ -303,6 +303,7 @@ export default {
         {
           title: 'operate',
           key: 'operate',
+          width: 300,
           scopedSlots: {customRender: 'operate'}
         }
       ]
