@@ -59,7 +59,7 @@
         </slot>
       </div>
       <a-pagination
-          v-if="!dataSource&&pagination"
+          v-if="pagination"
           v-bind="{
          ...this.localPagination,
         showSizeChanger: true,
