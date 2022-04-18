@@ -127,8 +127,8 @@ export default {
     delete this.property?.columns;
     if (this.data) {
       delete this.property?.dataSource;
-    }else{
-     this.localDataSource=this.dataSource;
+    } else {
+      this.localDataSource = this.dataSource;
       this.calcSelectAllPosition();
       this.isLocalLoading = false;
     }
@@ -216,8 +216,8 @@ export default {
         this.isLocalLoading = true;
         this.localDataSource = [];
         this.loadData();
-      }else{
-        this.localDataSource=this.dataSource
+      } else {
+        this.localDataSource = this.dataSource
       }
     },
     paginationChange(pageNo, pageSize) {
@@ -306,6 +306,9 @@ export default {
       }
     }
 
+    .c_button {
+      float: left;
+    }
   }
 }
 

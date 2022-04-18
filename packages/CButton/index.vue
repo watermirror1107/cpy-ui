@@ -33,7 +33,7 @@ export default {
     }
     let vnode = h('a-button', {
       class:classNameList,
-      props:this.$attrs,
+      props:{...this.$attrs,type:this.$attrs.type||'primary'},
       on:this.$listeners
     }, children)
     if (this.tip) {
