@@ -142,12 +142,12 @@
       </template>
       <template #actionBar>
         <c-button @click="consoleRow" icon="icon-shanchu"  ghost >删除</c-button>
+        <c-button @click="consoleRow" icon="icon-shanchu" type="dashed"  >删除</c-button>
         <c-button @click="consoleRow" icon="icon-shanchu" type="danger" ghost>删除</c-button>
         <c-button @click="consoleRow" icon="icon-shanchu" type="warning" ghost>删除</c-button>
         <c-button @click="consoleRow" icon="icon-shanchu" type="warning" >删除</c-button>
         <c-button @click="consoleRow" icon="icon-shanchu" type="dashed" >giao</c-button>
         <c-button @click="consoleRow" icon="icon-shanchu" size="small"   ghost>giao</c-button>
-        <c-button @click="consoleRow" icon="icon-shanchu" type="text"   ghost>giao</c-button>
       </template>
     </c-table>
   </div>

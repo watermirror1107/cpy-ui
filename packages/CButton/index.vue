@@ -33,7 +33,7 @@ export default {
     }
     let vnode = h('a-button', {
       class:classNameList,
-      props:{...this.$attrs,type:this.$attrs.type||'primary'},
+      props:this.$attrs,
       on:this.$listeners
     }, children)
     if (this.tip) {
@@ -78,6 +78,14 @@ export default {
 .c_button_tip_content{
   .ant-tooltip-inner{
     text-align: left;
+  }
+}
+.c_button.ant-btn-background-ghost:not(.ant-btn-dashed,.ant-btn-danger,.ant-btn-warning){
+  border-color: #d9d9d9;
+  color:rgba(0,0,0,.65);
+  &:hover{
+    border-color: #40a9ff;
+    color:#40a9ff;
   }
 }
 </style>
