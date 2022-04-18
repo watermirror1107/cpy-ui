@@ -1,6 +1,7 @@
 <template>
   <div class="c_table">
     <a-table
+        :class="('bordered' in property&&!property.bordered)?'c_table_noBorder':''"
         v-on="$listeners"
         :loading="isLocalLoading"
         v-bind="property"
@@ -18,6 +19,9 @@
             :record="record"
             :index="index"
         ></slot>
+      </template>
+      <template v-if="isExpandedRowRender" v-slot:expandedRowRender="record, index, indent, expanded">
+        <slot name="expandedRowRender" :record="record" :index="index" :indent="indent" :expanded="expanded"></slot>
       </template>
       <template
           v-for="nativeTable in nativeTableSlotArr"
@@ -80,6 +84,7 @@ export default {
   inheritAttrs: false,
   data() {
     return {
+      isExpandedRowRender: false,
       isLocalLoading: true,
       localDataSource: [],
       localPagination: {
@@ -142,7 +147,8 @@ export default {
     columnsSlotsValues.forEach(el => {
       nativeTableSlotArr = nativeTableSlotArr.concat(el);
     });
-    this.slotArr = this.slotArr.filter(el => !nativeTableSlotArr.includes(el));
+    this.isExpandedRowRender = this.slotArr.some(el => el === 'expandedRowRender')
+    this.slotArr = this.slotArr.filter(el => !nativeTableSlotArr.includes(el) && el !== 'expandedRowRender');//expandedRowRender插槽比较特殊，单独处理
     this.nativeTableSlotArr = nativeTableSlotArr;
   },
   beforeDestroy() {
@@ -277,6 +283,18 @@ export default {
 <style lang="less">
 .c_table {
   padding-bottom: 24px;
+
+  .ant-table-expanded-row {
+    td {
+      border: unset
+    }
+  }
+
+  &_noBorder {
+    .ant-table {
+      border: unset !important;
+    }
+  }
 
   .ant-table-thead {
     .ant-table-selection-column .ant-table-header-column {

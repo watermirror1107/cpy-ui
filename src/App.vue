@@ -10,10 +10,10 @@
     <!--        <span style="color: #969696;">({{ 456}})</span>-->
     <!--      </p>-->
     <!--    </c-banner>-->
-    <c-button type="text">CTMD</c-button>
-    <c-button type="text" disabled>CTMD</c-button>
-    <c-button type="text" ghost>CTMD</c-button>
-    <c-button type="text" ghost disabled>CTMD</c-button>
+    <!--    <c-button type="text">CTMD</c-button>-->
+    <!--    <c-button type="text" disabled>CTMD</c-button>-->
+    <!--    <c-button type="text" ghost>CTMD</c-button>-->
+    <!--    <c-button type="text" ghost disabled>CTMD</c-button>-->
     <!--    <c-icon name="icon-shijian"></c-icon>-->
     <!--        <c-card  title="click" @more="clickMore">-->
     <!--          <template #more>-->
@@ -72,80 +72,81 @@
     <!--    >-->
     <!--                              <p slot='extraContent' style="text-align:center;" @click="clickHandler(1)">extraContent</p>-->
     <!--    </c-search-select>-->
-    <!--    <c-table-->
-    <!--        ref="table"-->
-    <!--        :rowSelection="{-->
-    <!--        selectedRowKeys: selectedRowKeys,-->
-    <!--        onChange: onSelectChange,-->
-    <!--      }"-->
-    <!--        :filterOptions="filterOptions"-->
-    <!--        :columns="columns"-->
-    <!--        :loopTime="10000"-->
-    <!--        :data="queryList"-->
-    <!--        @filterChange="handleFilterChange"-->
-    <!--        rowKey="id">-->
-    <!--      <template #id="{ text,record }">-->
-    <!--        <a-popover>-->
-    <!--          <template #content>-->
-    <!--            <c-table :columns="columns"-->
-    <!--                     :dataSource="record.children"></c-table>-->
-    <!--          </template>-->
-    <!--          <span style="color:red">{{ text }}</span>-->
-    <!--        </a-popover>-->
-    <!--      </template>-->
-    <!--      <template #operate="{record,index}">-->
-    <!--        <c-btn-wrap>-->
-    <!--          <c-table-btn-->
-    <!--              :disabled="isClick"-->
-    <!--              text="click1"-->
-    <!--              @click="clickHandler1"-->
-    <!--          >-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click2"-->
-    <!--              @click="clickHandler2"-->
-    <!--          >-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click3"-->
-    <!--              @click="clickHandler3"-->
-    <!--          >-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click4"-->
-    <!--              @click="clickHandler4">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click5"-->
-    <!--              @click="clickHandler5">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click6"-->
-    <!--              @click="clickHandler6">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click7"-->
-    <!--              @click="clickHandler7">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click8"-->
-    <!--              @click="clickHandler8">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              :disabled="isClick"-->
-    <!--              text="click9"-->
-    <!--              @click="clickHandler9">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click10"-->
-    <!--              @click="clickHandler10(index)">-->
-    <!--          </c-table-btn>-->
-    <!--        </c-btn-wrap>-->
-    <!--      </template>-->
-    <!--      <template #actionBar>-->
-    <!--        <c-button @click="consoleRow"   icon="icon-shanchu" type="text" disabled  >删除</c-button>-->
-    <!--      </template>-->
-    <!--    </c-table>-->
+    <c-table
+        :bordered="false"
+        ref="table"
+        :rowSelection="{
+            selectedRowKeys: selectedRowKeys,
+            onChange: onSelectChange,
+          }"
+        :filterOptions="filterOptions"
+        :columns="columns"
+        :loopTime="10000"
+        :data="queryList"
+        @filterChange="handleFilterChange"
+        rowKey="id">
+      <template #id="{ text,record }">
+        <a-popover>
+          <template #content>
+            <c-table :columns="columns"
+                     :dataSource="record.children"></c-table>
+          </template>
+          <span style="color:red">{{ text }}</span>
+        </a-popover>
+      </template>
+      <template #operate="{record,index}">
+        <c-btn-wrap>
+          <c-table-btn
+              :disabled="isClick"
+              text="click1"
+              @click="clickHandler1"
+          >
+          </c-table-btn>
+          <c-table-btn
+              text="click2"
+              @click="clickHandler2"
+          >
+          </c-table-btn>
+          <c-table-btn
+              text="click3"
+              @click="clickHandler3"
+          >
+          </c-table-btn>
+          <c-table-btn
+              text="click4"
+              @click="clickHandler4">
+          </c-table-btn>
+          <c-table-btn
+              text="click5"
+              @click="clickHandler5">
+          </c-table-btn>
+          <c-table-btn
+              text="click6"
+              @click="clickHandler6">
+          </c-table-btn>
+          <c-table-btn
+              text="click7"
+              @click="clickHandler7">
+          </c-table-btn>
+          <c-table-btn
+              text="click8"
+              @click="clickHandler8">
+          </c-table-btn>
+          <c-table-btn
+              :disabled="isClick"
+              text="click9"
+              @click="clickHandler9">
+          </c-table-btn>
+          <c-table-btn
+              text="click10"
+              @click="clickHandler10(index)">
+          </c-table-btn>
+        </c-btn-wrap>
+      </template>
+      <template #actionBar>
+        <c-button @click="consoleRow" icon="icon-shanchu" type="text" disabled>删除</c-button>
+      </template>
+    </c-table>
   </div>
 </template>
 
@@ -319,7 +320,7 @@ export default {
   },
   mounted() {
     // this.queryOptions()
-    // this.$refs.table.refresh()
+    this.$refs.table.refresh()
   },
   methods: {
     consoleRow() {
