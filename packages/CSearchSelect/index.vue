@@ -69,6 +69,7 @@ export default {
   },
   data() {
     return {
+      queryName: '',
       selectId: undefined,
       isFetching: false,
       isSelectLoading: false,
@@ -80,6 +81,7 @@ export default {
     }
   },
   props: {
+    extraParams:{default:()=>{},type:Object},
     mode: {default: 'default', type: String},//单选还是多选
     queryPromise: {type: Function, required: true},
     placeholder: {type: String},
@@ -101,7 +103,7 @@ export default {
   },
   beforeMount() {
     if (!this.$T) {
-      this.$T = this.translateText
+      this.$T = this.translateText;
     }
   },
   mounted() {
@@ -166,7 +168,9 @@ export default {
     queryData() {
       const result = {
         pageNo: this.selectCurPage,
-        pageSize: 10
+        pageSize: 10,
+        queryName:this.queryName,
+        ...this.extraParams
       };
       this.isFetching = true;
       this.queryPromise(result)
@@ -199,14 +203,12 @@ export default {
      * @param {Object} params 输入框参数
      */
     searchOptions: debounce(function (params) {
-      if (!params) {
-        this.options = this.loadedList;
-        return;
-      }
+      this.queryName=params;
       const result = {
         pageNo: 1,
-        pageSize: 10000,
-        queryName: params
+        pageSize: 10,
+        queryName: this.queryName,
+        ...this.extraParams
       };
       this.isFetching = true;
       this.queryPromise(result)
