@@ -87,7 +87,14 @@ export default {
     placeholder: {type: String},
     disabled: {default: false, type: Boolean},
     size: {default: 'large', type: String},
-    value: {default: ''}
+    value: {default: ''},
+     // 额外结果集  为了满足能添加自定义的选项的功能需求
+    extraResult: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
   },
   model: {
     prop: "value",
@@ -139,8 +146,14 @@ export default {
     valueChange() {
       this.$emit('change', this.selectId);
       // 返回选择实例的选项信息
-      const item = this.options.find((i) => i.id === this.selectId);
-      this.$emit('itemInfo', item || {});
+        let res = null
+      // 返回选择的选项信息
+      if (this.mode !== 'multiple') {
+        res = this.options.find((i) => i.id === this.selectId) || {}
+      } else {
+        res = this.options.filter((i) => this.selectId.includes(i.id))
+      }
+      this.$emit('itemInfo', res || {});
     },
 
     /**
@@ -178,6 +191,9 @@ export default {
             this.isFetching = false;
             this.isSelectLoading = false;
             const payload = res.data.payload || [];
+           if (this.extraResult.length > 0) {
+            payload = this.extraResult.concat(payload)
+          }
             this.addList(payload);
             this.options = this.loadedList;
             this.totalSize = res.data && res.data.totalSize;
