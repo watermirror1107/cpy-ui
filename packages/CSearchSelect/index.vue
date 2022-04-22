@@ -18,7 +18,7 @@
     <div
         slot="dropdownRender"
         slot-scope="menu">
-      <v-nodes :vnodes="menu" />
+      <v-nodes :vnodes="menu"/>
       <slot name="extraContent">
       </slot>
     </div>
@@ -81,14 +81,17 @@ export default {
     }
   },
   props: {
-    extraParams:{default:()=>{},type:Object},
+    extraParams: {
+      default: () => {
+      }, type: Object
+    },
     mode: {default: 'default', type: String},//单选还是多选
     queryPromise: {type: Function, required: true},
     placeholder: {type: String},
     disabled: {default: false, type: Boolean},
     size: {default: 'large', type: String},
     value: {default: ''},
-     // 额外结果集  为了满足能添加自定义的选项的功能需求
+    // 额外结果集  为了满足能添加自定义的选项的功能需求
     extraResult: {
       type: Array,
       default: () => {
@@ -144,9 +147,8 @@ export default {
      * @description:值变化回调
      */
     valueChange() {
-      this.$emit('change', this.selectId);
       // 返回选择实例的选项信息
-        let res = null
+      let res = null
       // 返回选择的选项信息
       if (this.mode !== 'multiple') {
         res = this.options.find((i) => i.id === this.selectId) || {}
@@ -154,6 +156,7 @@ export default {
         res = this.options.filter((i) => this.selectId.includes(i.id))
       }
       this.$emit('itemInfo', res || {});
+      this.$emit('change', this.selectId);
     },
 
     /**
@@ -182,7 +185,7 @@ export default {
       const result = {
         pageNo: this.selectCurPage,
         pageSize: 10,
-        queryName:this.queryName,
+        queryName: this.queryName,
         ...this.extraParams
       };
       this.isFetching = true;
@@ -190,10 +193,10 @@ export default {
           .then((res) => {
             this.isFetching = false;
             this.isSelectLoading = false;
-            const payload = res.data.payload || [];
-           if (this.extraResult.length > 0) {
-            payload = this.extraResult.concat(payload)
-          }
+            let payload = res.data.payload || [];
+            if (this.extraResult.length > 0) {
+              payload = this.extraResult.concat(payload)
+            }
             this.addList(payload);
             this.options = this.loadedList;
             this.totalSize = res.data && res.data.totalSize;
@@ -219,7 +222,7 @@ export default {
      * @param {Object} params 输入框参数
      */
     searchOptions: debounce(function (params) {
-      this.queryName=params;
+      this.queryName = params;
       const result = {
         pageNo: 1,
         pageSize: 10,
