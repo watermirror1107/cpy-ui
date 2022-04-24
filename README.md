@@ -1,4 +1,4 @@
-# cpy-ui
+# cpy-ui2
 
 ## Project setup
 ```
