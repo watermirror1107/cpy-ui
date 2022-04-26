@@ -1,4 +1,5 @@
 <template>
+  <!--  todo 修改样式-->
   <div class="c_duration">
     <ul
         class="c_duration_list"
@@ -95,8 +96,8 @@ export default {
     }
     if (this.moreList.length !== 0) {
       this.more_middle_list = this.moreList
-    }else{
-      this.more_middle_list=[
+    } else {
+      this.more_middle_list = [
         {
           id: 4,
           name: '4' + this.$T('public.Months'),
@@ -130,8 +131,8 @@ export default {
     }
     if (this.durationList.length !== 0) {
       this.duration_middle_list = this.durationList
-    }else{
-      this.duration_middle_list =[
+    } else {
+      this.duration_middle_list = [
         {
           id: 1,
           name: '1' + this.$T('public.Months'),
@@ -207,9 +208,10 @@ export default {
 };
 </script>
 <style lang="less">
-ul{
+ul {
   list-style: none;
 }
+
 .discount {
   display: block;
   position: absolute;
@@ -231,9 +233,10 @@ ul{
   height: 40px;
   display: inline-block;
 
-  .ant-select{
+  .ant-select {
     width: 100%;
   }
+
   .ant-select-selection.selected {
     border-color: #1279F8;
     color: #1279F8;
