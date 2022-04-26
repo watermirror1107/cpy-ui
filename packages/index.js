@@ -22,7 +22,7 @@ function install(Vue) {
 if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue)
 }
-
+//todo c-btn-list组件,c-empty组件,c-Collapse组件
 export default {
     install,
     version: '0.2.18'

@@ -1,4 +1,5 @@
 <template>
+<!--  todo 添加刷新按钮，添加设置表头按钮，改动actoinbar，修改权限复选框位置，修改分页的UI，添加row-click,添加单选和多选搜索的下拉表格过滤类型,修改表头的样式-->
   <div class="c_table">
     <a-table
         :class="('bordered' in property&&!property.bordered)?'c_table_noBorder':''"
