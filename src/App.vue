@@ -65,20 +65,27 @@
     <!--          </template>-->
     <!--        </c-form>-->
     <!--    <button @click="changeType(2)">test debounce</button>-->
-<!--    <c-search-select :queryPromise="queryOptions"-->
-<!--                     placeholder="测试一下"-->
-<!--                     v-model="tabIndex"-->
-<!--                     style="width:320px;margin: 0 auto;"-->
-<!--    >-->
-<!--      <p slot='extraContent' style="text-align:center;" @click="clickHandler(1)">extraContent</p>-->
-<!--    </c-search-select>-->
-    <c-search-select :queryPromise="queryOptions"
-                     mode="multiple"
-                     :extraParams="{date:'2012'}"
-                     placeholder="测试一下"
-                     v-model="tabIndex2"
-                     style="width:320px;margin: 0 auto;">
+    <!--    <c-search-select :queryPromise="queryOptions"-->
+    <!--                     placeholder="测试一下"-->
+    <!--                     v-model="tabIndex"-->
+    <!--                     style="width:320px;margin: 0 auto;"-->
+    <!--    >-->
+    <!--      <p slot='extraContent' style="text-align:center;" @click="clickHandler(1)">extraContent</p>-->
+    <!--    </c-search-select>-->
+    <c-search-select
+      :queryPromise="queryOptions"
+      mode="multiple"
+      :extraParams="{ date: '2012' }"
+      placeholder="测试一下"
+      v-model="tabIndex2"
+      style="width: 320px; margin: 0 auto"
+    >
     </c-search-select>
+    <CEmpty>
+      <!-- <template #image>111</template>
+      <template #description>222</template>
+      <template #extra>333</template> -->
+    </CEmpty>
     <!--    <c-table-->
     <!--        :bordered="false"-->
     <!--        ref="table"-->
@@ -158,8 +165,8 @@
 </template>
 
 <script>
-import {debounce} from "@/utils";
-import axios from 'axios'
+import { debounce } from "@/utils";
+import axios from "axios";
 import CButton from "../packages/CButton";
 import CTable from "../packages/CTable";
 import CBtnWrap from "../packages/CBtnWrap";
@@ -170,71 +177,88 @@ import CRangePicker from "../packages/CRangePicker";
 import CTabs from "../packages/CTabs";
 import CTableForm from "../packages/CTableForm";
 import CCard from "../packages/CCard";
+import CEmpty from "../packages/CEmpty";
 
 export default {
   components: {
-    CButton, CTable, CBtnWrap, CTableBtn, CSearchSelect, CTap, CRangePicker, CTabs, CTableForm, CCard
+    CButton,
+    CTable,
+    CBtnWrap,
+    CTableBtn,
+    CSearchSelect,
+    CTap,
+    CRangePicker,
+    CTabs,
+    CTableForm,
+    CCard,
+    CEmpty,
   },
   data() {
     return {
       isClick: false,
-      dataSource: [{
-        id: 1,
-        name: 'name',
-        content: 'content',
-        createTime: '2012-12-12',
-        children: [{id: 2, name: 'name', content: 'content', createTime: '2012-12-12'}]
-      }, {
-        id: 3,
-        name: 'name',
-        content: 'content',
-        createTime: '2012-12-12',
-        children: []
-      }],
+      dataSource: [
+        {
+          id: 1,
+          name: "name",
+          content: "content",
+          createTime: "2012-12-12",
+          children: [
+            {
+              id: 2,
+              name: "name",
+              content: "content",
+              createTime: "2012-12-12",
+            },
+          ],
+        },
+        {
+          id: 3,
+          name: "name",
+          content: "content",
+          createTime: "2012-12-12",
+          children: [],
+        },
+      ],
       selectedRowKeys: [], // 勾选的key
       selectedRows: [], // 选中的行数据
-      formOptions1: [
-        {key: 'account'},
-        {key: 'age'},
-        {key: 'name'}
-      ],
+      formOptions1: [{ key: "account" }, { key: "age" }, { key: "name" }],
       form: {
-        account: 'kong',
+        account: "kong",
         age: 1,
-        name: 'jason'
+        name: "jason",
       },
       typeList: [
         {
           id: "",
-          title: 'Allorders',
+          title: "Allorders",
           type: "totalCount",
           color: "#323232",
           num: 0,
         },
         {
           id: "BillWaitingCharge",
-          title: 'Pendingorder',
+          title: "Pendingorder",
           type: "waitPayCount",
           color: "#FDBE2E",
           num: 0,
         },
         {
           id: "BillPayOrOver",
-          title: 'Completedorder',
+          title: "Completedorder",
           type: "payedCount",
           color: "#4ED067",
           num: 0,
         },
         {
           id: "BillInvalid",
-          title: 'Cancelledorder',
+          title: "Cancelledorder",
           type: "expiredCount",
           color: "#1279F8",
           num: 0,
         },
         {
           id: "BillRefund",
-          title: 'Refundrecord',
+          title: "Refundrecord",
           type: "refundCount",
           color: "#F7665E",
           num: 0,
@@ -242,89 +266,92 @@ export default {
       ],
       tabIndex: undefined,
       tabIndex2: [],
-      imageTypes: [{name: 'one'}, {name: 'two'}],
+      imageTypes: [{ name: "one" }, { name: "two" }],
       month: 1,
       time: [],
       formData: {
-        queryName: '',
+        queryName: "",
         type: undefined,
-        date: []
+        date: [],
       },
       filterOptions: [],
       formOptions: [
         {
-          key: 'queryName',
-          type: 'input',
-          placeholder: 'placeholder'
+          key: "queryName",
+          type: "input",
+          placeholder: "placeholder",
         },
         {
-          key: 'type',
-          type: 'select',
-          placeholder: 'placeholder',
-          options: [{value: 1, label: 'one'}, {value: 2, label: 'two'}]
+          key: "type",
+          type: "select",
+          placeholder: "placeholder",
+          options: [
+            { value: 1, label: "one" },
+            { value: 2, label: "two" },
+          ],
         },
         {
-          key: 'date',
-          type: 'range-picker',
-          placeholder: ['开始日期1', '结束日期2'],
-          mode: ['date', 'date'],
-          format: 'YYYY-MM-DD'
-        }
+          key: "date",
+          type: "range-picker",
+          placeholder: ["开始日期1", "结束日期2"],
+          mode: ["date", "date"],
+          format: "YYYY-MM-DD",
+        },
       ],
-      num: 'one',
+      num: "one",
       type: 1,
-      text: 'text',
+      text: "text",
       dateOptions: [
-        {id: 1, name: '10-20'},
-        {id: 2, name: '30-40'}
+        { id: 1, name: "10-20" },
+        { id: 2, name: "30-40" },
       ],
-      dataFilterValue: '',
+      dataFilterValue: "",
       columns: [
         {
-          title: 'id',
-          dataIndex: 'id',
-          key: 'id',
-          scopedSlots: {customRender: 'id'},
-          width: 100
+          title: "id",
+          dataIndex: "id",
+          key: "id",
+          scopedSlots: { customRender: "id" },
+          width: 100,
         },
         {
-          title: 'name',
-          dataIndex: 'name',
-          key: 'name',
-          width: 100
+          title: "name",
+          dataIndex: "name",
+          key: "name",
+          width: 100,
         },
         {
-          title: 'content',
-          dataIndex: 'content',
-          key: 'content',
-          width: 100
+          title: "content",
+          dataIndex: "content",
+          key: "content",
+          width: 100,
         },
         {
-          title: 'createTime',
-          dataIndex: 'createTime',
-          key: 'createTime',
+          title: "createTime",
+          dataIndex: "createTime",
+          key: "createTime",
           width: 140,
-          scopedSlots: {filterDropdown: 'filterDropdown'},
+          scopedSlots: { filterDropdown: "filterDropdown" },
           filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
           onFilterDropdownVisibleChange: (visible) => {
             if (visible) {
               this.filterOptions = this.dateOptions;
             }
-          }
+          },
         },
         {
-          title: 'operate',
-          key: 'operate',
+          title: "operate",
+          key: "operate",
           width: 300,
-          scopedSlots: {customRender: 'operate'}
-        }
-      ]
-    }
+          scopedSlots: { customRender: "operate" },
+        },
+      ],
+    };
   },
   watch: {
     tabIndex(nv) {
-      console.log(nv)
-    }
+      console.log(nv);
+    },
   },
   mounted() {
     // this.queryOptions()
@@ -332,81 +359,81 @@ export default {
   },
   methods: {
     consoleRow() {
-      console.log(this.selectedRows)
+      console.log(this.selectedRows);
     },
     onSelectChange(selectedRowKeys, selectedRows) {
-      this.selectedRowKeys = selectedRowKeys
-      this.selectedRows = selectedRows
+      this.selectedRowKeys = selectedRowKeys;
+      this.selectedRows = selectedRows;
     },
     handleFilterChange(val, confirm) {
       confirm();
-      this.$refs.table.refresh()
+      this.$refs.table.refresh();
     },
     queryOptions() {
-      return axios.get('/getoptions?ID=12345')
+      return axios.get("/getoptions?ID=12345");
     },
     queryList(params) {
       // const data = Object.assign({}, params, this.formData, result);
       return axios({
-        url: '/getoptions',
-        method: 'get',
-        params
-      })
+        url: "/getoptions",
+        method: "get",
+        params,
+      });
     },
     changeType: debounce(function (i) {
-      console.log(this.text)
-      console.log(i)
+      console.log(this.text);
+      console.log(i);
     }),
     handleSubmit() {
-      console.log(this.formData)
+      console.log(this.formData);
     },
     clickMore() {
-      console.log('more')
+      console.log("more");
     },
     clickHandler(text, record) {
-      console.log(text)
-      console.log(record)
+      console.log(text);
+      console.log(record);
     },
     clickHandler1() {
-      this.isClick = true
+      this.isClick = true;
       setTimeout(() => {
-        this.isClick = false
-      }, 3000)
-      console.log(1)
+        this.isClick = false;
+      }, 3000);
+      console.log(1);
     },
     clickHandler2() {
-      console.log(2)
+      console.log(2);
     },
     clickHandler3() {
-      console.log(3)
+      console.log(3);
     },
     clickHandler4() {
-      console.log(4)
+      console.log(4);
     },
     clickHandler5() {
-      console.log(5)
+      console.log(5);
     },
     clickHandler6() {
-      console.log(6)
+      console.log(6);
     },
     clickHandler7() {
-      console.log(7)
+      console.log(7);
     },
     clickHandler8() {
-      console.log(8)
+      console.log(8);
     },
     clickHandler9() {
-      this.isClick = true
+      this.isClick = true;
       setTimeout(() => {
-        this.isClick = false
-      }, 3000)
-      console.log(9)
+        this.isClick = false;
+      }, 3000);
+      console.log(9);
     },
     clickHandler10(index) {
-      console.log(10)
-    }
-  }
-}
+      console.log(10);
+    },
+  },
+};
 </script>
 
 <style lang="less">
