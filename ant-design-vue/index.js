@@ -13,7 +13,10 @@ import {
     Popover,
     Tooltip,
     DatePicker,
-    Pagination
+    Pagination,
+    Divider,
+    Checkbox,
+    Collapse,
 } from 'ant-design-vue';
 // 设置 table 的 size 默认值为 small
 Table.props.size.default = 'small';
@@ -31,3 +34,6 @@ Vue.use(Tabs);
 Vue.use(Popover);
 Vue.use(Tooltip);
 Vue.use(DatePicker);
+Vue.use(Checkbox);
+Vue.use(Divider);
+Vue.use(Collapse);

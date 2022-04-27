@@ -1,6 +1,34 @@
 <template>
-<!--  todo 添加刷新按钮，添加设置表头按钮，改动actoinbar，修改权限复选框位置，修改分页的UI，添加row-click,添加单选和多选搜索的下拉表格过滤类型,修改表头的样式-->
+  <!--  todo 添加刷新按钮，添加设置表头按钮，改动actionBar，修改权限复选框位置，修改分页的UI，添加row-click,添加单选和多选搜索的下拉表格过滤类型,修改表头的样式-->
   <div class="c_table">
+    <div class="c_table_header">
+      <div class="c_table_header_left">
+        <div class="c_table_action_bar">
+          <slot name="actionBar"></slot>
+        </div>
+        <a-input size="large" v-model="formData.queryName"
+                 :placeholder="formOptions.find(i=>i.key==='queryName').placeholder"
+                 @change="refresh(true)">
+          <icon
+              slot="suffix"
+              name="icon-sousuo"/>
+        </a-input>
+        <c-button class="c_table_header_left_refresh" size="large" :disabled="isLocalLoading" type="text"
+                  @click="refresh(true)">
+          <icon name="icon-chongzhi_shuaxin"></icon>
+        </c-button>
+        <c-button type="text" class="c_table_header_left_refresh" v-if="isSetColumn" size="large"
+                  @click="$emit('setColumn')">
+          <icon name="icon-daohang_shiliguige"></icon>
+          <!--      todo 设置图标未提供-->
+        </c-button>
+      </div>
+      <div class="c_table_header_right">
+        <slot name="headerRight"></slot>
+      </div>
+    </div>
+    <tag-list class="c_table_tags" v-model="formData" :formOptions="formOptions"
+              :filterArr="['queryName','date']"></tag-list>
     <a-table
         :class="('bordered' in property&&!property.bordered)?'c_table_noBorder':''"
         v-on="$listeners"
@@ -10,6 +38,10 @@
         :dataSource="localDataSource"
         :rowSelection="$attrs.rowSelection || null"
     >
+      <template #filterIcon>
+        <!--todo 图标未替换-->
+        <icon style="width: 16px;outline: unset;margin-left: 4px;" name="icon-qidong"></icon>
+      </template>
       <template
           v-for="slot  in slotArr"
           v-slot:[slot]="text,record,index"
@@ -30,9 +62,42 @@
         <slot :name="nativeTable"></slot>
       </template>
       <!--      表头过滤-->
-      <template v-slot:filterDropdown="{ confirm }">
+      <template v-slot:filterDropdown="{ confirm ,column}">
         <a-select
-            ref="searchInput"
+            v-if="column.type==='selectMultiple'"
+            show-search
+            v-model="formData[column.key]"
+            style="width: 180px;"
+            :defaultOpen="true"
+            :open="true"
+            :showArrow="false"
+            mode="multiple"
+            :getPopupContainer="(triggerNode)=>triggerNode.parentNode"
+            :filter-option="(input, option) =>(option.componentOptions.children[1].text.toLowerCase().indexOf(input.toLowerCase()) >= 0)"
+            :placeholder="$T('public.search')"
+        >
+          <a-select-option
+              class="multipleOptions"
+              v-for="option in filterOptions"
+              :value="option.id"
+              :key="option.id">
+            {{ option.name }}
+          </a-select-option>
+          <div slot="dropdownRender" slot-scope="menu">
+            <v-nodes :vnodes="menu"/>
+            <a-divider style="margin: 4px 0;"/>
+            <div
+                style="padding: 7px 8px;"
+                @mousedown="e => e.preventDefault()"
+            >
+              <a-button style="margin-right: 8px;" type="primary" @click="debounceFresh($event,confirm)">确定</a-button>
+              <a-button type="primary" ghost @change="debounceFresh($event,confirm)">重置</a-button>
+            </div>
+          </div>
+        </a-select>
+        <a-select
+            v-else
+            v-model="formData[column.key]"
             style="width: 180px;"
             show-search
             :showArrow="false"
@@ -44,7 +109,7 @@
             option-filter-prop="children"
             :filter-option="(input, option) =>(option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0)"
             :placeholder="$T('public.search')"
-            @change="$emit('filterChange',$event,confirm)"
+            @change="debounceFresh($event,confirm)"
         >
           <a-select-option
               v-for="option in filterOptions"
@@ -56,13 +121,6 @@
     </a-table>
     <div
         class="c_table_action_box">
-      <div
-          class="c_table_action_bar"
-          :style="{visibility:localDataSource.length>0?'visible':'hidden'}">
-        <slot
-            name="actionBar">
-        </slot>
-      </div>
       <a-pagination
           v-if="pagination"
           v-bind="{
@@ -79,10 +137,22 @@
 </template>
 <script>
 import {debounce} from "@/utils";
+import Icon from "../CIcon";
+import TagList from "../CTagList";
+import CButton from "../CButton";
 
 export default {
   name: 'CTable',
   inheritAttrs: false,
+  components: {
+    Icon,
+    CButton,
+    TagList,
+    VNodes: {
+      functional: true,
+      render: (h, ctx) => ctx.props.vnodes,
+    }
+  },
   data() {
     return {
       isExpandedRowRender: false,
@@ -101,9 +171,15 @@ export default {
     }
   },
   props: {
+    isSetColumn: {type: Boolean, default: true},//是否可以设置表头
     pagination: {type: Boolean, default: true},
     loopTime: {type: Number},//轮询间隔,建议至少5秒以上
     data: {type: Function},
+    formData: {
+      type: Object, default: () => {
+      }
+    },
+    formOptions: {type: Array, default: () => []},
     filterOptions: {type: Array, default: () => []},
     dataSource: {type: Array, default: () => []},
     scroll: {default: () => ({x: 930}), type: Object}
@@ -121,6 +197,7 @@ export default {
     }
   },
   mounted() {
+    //todo 判断是否有存储的columns
     if (window.tableTime) {
       clearTimeout(window.tableTime);
     }
@@ -135,12 +212,11 @@ export default {
       delete this.property?.dataSource;
     } else {
       this.localDataSource = this.dataSource;
-      this.calcSelectAllPosition();
       this.isLocalLoading = false;
     }
     this.slotArr = [...Object.keys(this.$scopedSlots), ...Object.keys(this.$slots)];
     // 这里去重下，不然自定义表头会出现2个
-    this.slotArr = Array.from(new Set(this.slotArr)).filter(item => item !== 'filterDropdown' && item !== 'actionBar');//过滤掉1个自定义actionBar和一个filterDropdown
+    this.slotArr = Array.from(new Set(this.slotArr)).filter(item => item !== 'filterDropdown' && item !== 'actionBar' && item !== 'headerRight');//过滤掉1个自定义actionBar和一个filterDropdown
     // 取出列数据里面的slots
     const columnsSlots = this.$attrs.columns.filter(el => el.slots);
     const columnsSlotsValues = columnsSlots.map(el => Object.values(el.slots));
@@ -158,6 +234,12 @@ export default {
     }
   },
   methods: {
+    /**
+     * @description:延迟刷新
+     */
+    debounceFresh: debounce(function (ev, confirm) {
+      this.$emit('filterChange', ev, confirm)
+    }),
     /**
      * @description:兼容处理
      */
@@ -270,7 +352,6 @@ export default {
           }
           window.tableTime = window.setTimeout(this.loadData, this.loopTime);
         }
-        this.calcSelectAllPosition();
       }).catch((e) => {
         console.log(e);
       }).finally(() => {
@@ -285,6 +366,37 @@ export default {
 .c_table {
   padding-bottom: 24px;
 
+  .ant-table-thead {
+    background-color: #F7F9FC !important;
+  }
+
+  &_header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    &_left {
+      .ant-input-affix-wrapper {
+        width: 240px;
+        margin-right: 16px;
+        float: left;
+      }
+
+      &_refresh {
+        margin-right: 16px;
+        float: left;
+        //border-color:#E6E6E6!important;
+        //color: #646464!important;
+      }
+    }
+  }
+
+  &_tags {
+    margin-bottom: 16px;
+  }
+
   .ant-table-expanded-row {
     td {
       border: unset
@@ -297,23 +409,14 @@ export default {
     }
   }
 
-  .ant-table-thead {
-    .ant-table-selection-column .ant-table-header-column {
-      position: absolute;
-      bottom: -41px;
-      left: 29px;
-    }
-
-  }
 
   &_action_box {
-    display: flex;
     margin-top: 10px;
-    justify-content: space-between
-
+    width: 100%;
   }
 
   &_action_bar {
+    float: left;
     //margin-left: 70px;
 
     .ant-btn {

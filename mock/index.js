@@ -39,7 +39,7 @@ Mock.mock(RegExp("/getoptions.*"), 'get', (options) => {
         status: 200,
         message: '获取数据成功',
         payload: res,
-        totalSize:60,
+        totalSize:600,
         current: 1,
         pageNo: 1,
         pageSize: 10

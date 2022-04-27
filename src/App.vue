@@ -38,11 +38,11 @@
     <!--      <template #right>righ</template>-->
     <!--    </c-nav-header>-->
     <!--        <c-range-picker v-model="time" :currentType="2"></c-range-picker>-->
-    <!--    <c-table-form-->
-    <!--        v-model="formData"-->
-    <!--        :formOptions="formOptions"-->
-    <!--        @submit="handleSubmit"-->
-    <!--    ></c-table-form>-->
+    <!--        <c-table-form-->
+    <!--            v-model="formData"-->
+    <!--            :formOptions="formOptions"-->
+    <!--            @submit="handleSubmit"-->
+    <!--        ></c-table-form>-->
     <!--    <c-duration v-model="month"></c-duration>-->
     <!--        <c-tabs-->
     <!--            :tabs="imageTypes"-->
@@ -65,95 +65,113 @@
     <!--          </template>-->
     <!--        </c-form>-->
     <!--    <button @click="changeType(2)">test debounce</button>-->
-<!--    <c-search-select :queryPromise="queryOptions"-->
-<!--                     placeholder="测试一下"-->
-<!--                     v-model="tabIndex"-->
-<!--                     style="width:320px;margin: 0 auto;"-->
-<!--    >-->
-<!--      <p slot='extraContent' style="text-align:center;" @click="clickHandler(1)">extraContent</p>-->
-<!--    </c-search-select>-->
-    <c-search-select :queryPromise="queryOptions"
-                     mode="multiple"
-                     :extraParams="{date:'2012'}"
-                     placeholder="测试一下"
-                     v-model="tabIndex2"
-                     style="width:320px;margin: 0 auto;">
-    </c-search-select>
-    <!--    <c-table-->
-    <!--        :bordered="false"-->
-    <!--        ref="table"-->
-    <!--        :rowSelection="{-->
-    <!--            selectedRowKeys: selectedRowKeys,-->
-    <!--            onChange: onSelectChange,-->
-    <!--          }"-->
-    <!--        :filterOptions="filterOptions"-->
-    <!--        :columns="columns"-->
-    <!--        :loopTime="10000"-->
-    <!--        :data="queryList"-->
-    <!--        @filterChange="handleFilterChange"-->
-    <!--        rowKey="id">-->
-    <!--      <template #id="{ text,record }">-->
-    <!--        <a-popover>-->
-    <!--          <template #content>-->
-    <!--            <c-table :columns="columns"-->
-    <!--                     :dataSource="record.children"></c-table>-->
-    <!--          </template>-->
-    <!--          <span style="color:red">{{ text }}</span>-->
-    <!--        </a-popover>-->
-    <!--      </template>-->
-    <!--      <template #operate="{record,index}">-->
-    <!--        <c-btn-wrap>-->
-    <!--          <c-table-btn-->
-    <!--              :disabled="isClick"-->
-    <!--              text="click1"-->
-    <!--              @click="clickHandler1"-->
-    <!--          >-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click2"-->
-    <!--              @click="clickHandler2"-->
-    <!--          >-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click3"-->
-    <!--              @click="clickHandler3"-->
-    <!--          >-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click4"-->
-    <!--              @click="clickHandler4">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click5"-->
-    <!--              @click="clickHandler5">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click6"-->
-    <!--              @click="clickHandler6">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click7"-->
-    <!--              @click="clickHandler7">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click8"-->
-    <!--              @click="clickHandler8">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              :disabled="isClick"-->
-    <!--              text="click9"-->
-    <!--              @click="clickHandler9">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click10"-->
-    <!--              @click="clickHandler10(index)">-->
-    <!--          </c-table-btn>-->
-    <!--        </c-btn-wrap>-->
-    <!--      </template>-->
-    <!--      <template #actionBar>-->
-    <!--        <c-button @click="consoleRow" icon="icon-shanchu" type="text" disabled>删除</c-button>-->
-    <!--      </template>-->
-    <!--    </c-table>-->
+    <!--    <c-search-select :queryPromise="queryOptions"-->
+    <!--                     placeholder="测试一下"-->
+    <!--                     v-model="tabIndex"-->
+    <!--                     style="width:320px;margin: 0 auto;"-->
+    <!--    >-->
+    <!--      <p slot='extraContent' style="text-align:center;" @click="clickHandler(1)">extraContent</p>-->
+    <!--    </c-search-select>-->
+    <!--    <c-search-select :queryPromise="queryOptions"-->
+    <!--                     mode="multiple"-->
+    <!--                     :extraParams="{date:'2012'}"-->
+    <!--                     placeholder="测试一下"-->
+    <!--                     v-model="tabIndex2"-->
+    <!--                     style="width:320px;margin: 0 auto;">-->
+    <!--    </c-search-select>-->
+    <c-table
+        :formData="formData"
+        :formOptions="formOptions"
+        ref="table"
+        :rowSelection="{
+                selectedRowKeys: selectedRowKeys,
+                onChange: onSelectChange,
+              }"
+        :filterOptions="filterOptions"
+        :columns="columns"
+        :loopTime="10000"
+        :data="queryList"
+        @filterChange="handleFilterChange"
+        rowKey="id">
+      <template #headerRight>
+        <c-button size="large">添加</c-button>
+      </template>
+      <template #id="{ text,record }">
+        <a-popover>
+          <template #content>
+            <c-table :columns="columns"
+                     :dataSource="record.children"></c-table>
+          </template>
+          <span style="color:red">{{ text }}</span>
+        </a-popover>
+      </template>
+      <template #operate="{record,index}">
+        <c-btn-wrap>
+          <c-table-btn
+              :disabled="isClick"
+              text="click1"
+              @click="clickHandler1"
+          >
+          </c-table-btn>
+          <c-table-btn
+              text="click2"
+              @click="clickHandler2"
+          >
+          </c-table-btn>
+          <c-table-btn
+              text="click3"
+              @click="clickHandler3"
+          >
+          </c-table-btn>
+          <c-table-btn
+              text="click4"
+              @click="clickHandler4">
+          </c-table-btn>
+          <c-table-btn
+              text="click5"
+              @click="clickHandler5">
+          </c-table-btn>
+          <c-table-btn
+              text="click6"
+              @click="clickHandler6">
+          </c-table-btn>
+          <c-table-btn
+              text="click7"
+              @click="clickHandler7">
+          </c-table-btn>
+          <c-table-btn
+              text="click8"
+              @click="clickHandler8">
+          </c-table-btn>
+          <c-table-btn
+              :disabled="isClick"
+              text="click9"
+              @click="clickHandler9">
+          </c-table-btn>
+          <c-table-btn
+              text="click10"
+              @click="clickHandler10(index)">
+          </c-table-btn>
+        </c-btn-wrap>
+      </template>
+      <template #actionBar>
+        <c-button size="large" @click="consoleRow" icon="icon-shanchu" type="text" disabled>删除</c-button>
+      </template>
+    </c-table>
+    <!--    <c-collapse :activeKey="['1']">-->
+    <!--      <c-collapse-panel key="1" >-->
+    <!--        <p name="header">title1</p>-->
+    <!--      </c-collapse-panel>-->
+    <!--      <c-collapse-panel key="2" header="title2">2</c-collapse-panel>-->
+    <!--      <c-collapse-panel key="3" :disabled="true" header="title3">3</c-collapse-panel>-->
+    <!--      <c-collapse-panel key="4">-->
+    <!--        <template #header>giao</template>-->
+    <!--        <template #extra>extra</template>-->
+    <!--        <p>giao1</p>-->
+    <!--        <p>giao2</p>-->
+    <!--        123123-->
+    <!--      </c-collapse-panel>-->
+    <!--    </c-collapse>-->
   </div>
 </template>
 
@@ -170,10 +188,27 @@ import CRangePicker from "../packages/CRangePicker";
 import CTabs from "../packages/CTabs";
 import CTableForm from "../packages/CTableForm";
 import CCard from "../packages/CCard";
+import CCollapse from "../packages/CCollapse";
+import CCollapsePanel from "../packages/CCollapsePanel";
+import CTagList from "../packages/CTagList";
+import CIcon from "../packages/CIcon";
 
 export default {
   components: {
-    CButton, CTable, CBtnWrap, CTableBtn, CSearchSelect, CTap, CRangePicker, CTabs, CTableForm, CCard
+    CButton,
+    CIcon,
+    CTable,
+    CBtnWrap,
+    CTableBtn,
+    CSearchSelect,
+    CTap,
+    CRangePicker,
+    CTabs,
+    CTableForm,
+    CCard,
+    CCollapse,
+    CCollapsePanel,
+    CTagList
   },
   data() {
     return {
@@ -247,7 +282,7 @@ export default {
       time: [],
       formData: {
         queryName: '',
-        type: undefined,
+        createTime: undefined,
         date: []
       },
       filterOptions: [],
@@ -258,10 +293,14 @@ export default {
           placeholder: 'placeholder'
         },
         {
-          key: 'type',
-          type: 'select',
+          key: 'name',
           placeholder: 'placeholder',
-          options: [{value: 1, label: 'one'}, {value: 2, label: 'two'}]
+          options: [{id: 1, name: 'one'}, {id: 2, name: 'two'}]
+        }, {
+          key: 'createTime',
+          // type: 'select',
+          placeholder: 'placeholder',
+          options: [{id: 1, name: 'one'}, {id: 2, name: 'two'}]
         },
         {
           key: 'date',
@@ -284,6 +323,7 @@ export default {
           title: 'id',
           dataIndex: 'id',
           key: 'id',
+          fixed:'left',
           scopedSlots: {customRender: 'id'},
           width: 100
         },
@@ -291,7 +331,15 @@ export default {
           title: 'name',
           dataIndex: 'name',
           key: 'name',
-          width: 100
+          width: 100,
+          type: 'selectMultiple',
+          scopedSlots: {filterDropdown: 'filterDropdown',filterIcon:'filterIcon'},
+          filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
+          onFilterDropdownVisibleChange: (visible) => {
+            if (visible) {
+              this.filterOptions = this.formOptions.find(i => i.key === 'name').options;
+            }
+          }
         },
         {
           title: 'content',
@@ -304,11 +352,11 @@ export default {
           dataIndex: 'createTime',
           key: 'createTime',
           width: 140,
-          scopedSlots: {filterDropdown: 'filterDropdown'},
+          scopedSlots: {filterDropdown: 'filterDropdown',filterIcon:'filterIcon'},
           filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
           onFilterDropdownVisibleChange: (visible) => {
             if (visible) {
-              this.filterOptions = this.dateOptions;
+              this.filterOptions = this.formOptions.find(i => i.key === 'createTime').options;
             }
           }
         },
@@ -328,7 +376,7 @@ export default {
   },
   mounted() {
     // this.queryOptions()
-    // this.$refs.table.refresh()
+    this.$refs.table.refresh()
   },
   methods: {
     consoleRow() {
@@ -404,6 +452,9 @@ export default {
     },
     clickHandler10(index) {
       console.log(10)
+    },
+    consoleValue(value) {
+      console.log(value)
     }
   }
 }

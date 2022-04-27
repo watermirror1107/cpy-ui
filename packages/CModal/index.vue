@@ -1,6 +1,7 @@
 <!--全局弹窗样式-->
 <template>
   <a-modal
+      class="c_modal"
       :width="width"
       :footer="null"
       :visible="isVisible"
@@ -17,8 +18,7 @@
     <slot v-if="isSlotFooter"
           name="footer">
       <div
-          class="footer"
-      >
+          class="footer">
         <a-button
             class="footer_cancel"
             type="ghost"
@@ -38,9 +38,9 @@
   </a-modal>
 </template>
 
-<script lang="ts">
+<script>
 import Icon from "../CIcon/index.vue";
-
+import Vue from "vue";
 export default {
   name: 'CModal',
   components: {Icon},
@@ -53,13 +53,8 @@ export default {
     isDestroy: {type: Boolean, default: true},
     isConfirmLoading: {type: Boolean, default: false},
     width: {type: Number, default: 600},
-    cancelText: {type: String, default: this.$T('instance.Cancel')},
-    okText: {type: String, default: this.$T('instance.Confirm')},
-  },
-  create() {
-    if (!this.$T) {
-      this.$T = this.translateText
-    }
+    cancelText: {type: String, default: Vue.prototype.$T?Vue.prototype.$T('instance.Cancel'):'取消'},
+    okText: {type: String, default: Vue.prototype.$T?Vue.prototype.$T('instance.Confirm'):'确定'}
   },
   computed: {
     isSlotTitle() {
@@ -68,37 +63,31 @@ export default {
     isSlotFooter() {
       return Boolean(this.$slots.footer || this.$scopedSlots.footer);
     }
-  },
-  methods: {
-    translateText(code) {
-      let obj = {
-        'instance.Cancel': '取消',
-        'instance.Confirm': '确定',
-      }
-      return obj[code] || code
-    }
   }
 };
 </script>
 
-<style scoped lang="less">
-.footer {
-  margin-top: 26px;
-  display: flex;
-  justify-content: center;
+<style lang="less">
+.c_modal{
+  .footer {
+    margin-top: 26px;
+    display: flex;
+    justify-content: center;
 
-  &_ok {
-    margin-right: 24px;
-  }
+    &_ok {
+      margin-right: 24px;
+    }
 
-  &_cancel {
-    color: #959595;
-    border-color: #959595;
-  }
+    &_cancel {
+      color: #959595;
+      border-color: #959595;
+    }
 
-  &_cancel:hover {
-    color: #C8C8C8;
-    border-color: #C8C8C8;
+    &_cancel:hover {
+      color: #C8C8C8;
+      border-color: #C8C8C8;
+    }
   }
 }
+
 </style>
