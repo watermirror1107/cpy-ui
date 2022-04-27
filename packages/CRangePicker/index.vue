@@ -1,18 +1,21 @@
 <template>
 <!--  todo 修改样式-->
-  <div class="c_ranger_pick">
-    <icon name="icon-shijianxuanz_shijian"></icon>
-    <a-range-picker
-        :allowClear="false"
-        :value="dateValue"
-        :disabledDate="disabledDate"
-        :separator="separator"
-        :show-time="{ format: 'HH:mm:ss' }"
-        format="YYYY-MM-DD HH:mm:ss"
-        :placeholder="[$T('public.Starttime'), $T('public.Endtime')]"
-        @change="onChange"
-    />
-    <ul class="c_ranger_pick_quick_btn" v-if="isShowQuick">
+  <div class="range-pick-wrap">
+    <div class="left-input">
+      <icon class="icon-box" name="icon-shijianxuanz_shijian"></icon>
+      <a-range-picker
+          size="large"
+          :allowClear="false"
+          :value="dateValue"
+          :disabledDate="disabledDate"
+          :separator="separator"
+          :show-time="{ format: 'HH:mm:ss' }"
+          format="YYYY-MM-DD HH:mm:ss"
+          :placeholder="[$T('public.Starttime'), $T('public.Endtime')]"
+          @change="onChange"
+      />
+    </div>
+    <ul class="right-btn" v-if="isShowQuick">
       <!--      <li-->
       <!--        :class="{activated:type===0}"-->
       <!--        @click="type=0">实时-->
@@ -90,7 +93,7 @@ export default {
     value: {type: Array, default: () => ([moment().subtract(1, 'days'), moment()])},
     gap: {type: Number, default: 3},// 实时刷新的时间间隙,单位为秒
     currentType: {type: Number, default: 1},
-    separator: {type: String, default: '~'},//分隔符
+    separator: {type: String, default: '-'},//分隔符
     isShowQuick: {type: Boolean, default: true},//是否显示快捷键
     disabledDate: {//不可用时间
       type: Function, default: (current) => {
@@ -118,11 +121,11 @@ export default {
       let textObj = {
         'public.Starttime': '起始时间',
         'public.Endtime': '结束时间',
-        'public.Onehour': '一小时',
-        'public.Nearly24hours': '近24小时',
-        'public.Nearlythreedays': '近3天',
-        'public.Nearlysevendays': '近7天',
-        'public.Nearlyoneday': '近1天',
+        'public.Onehour': '1小时',
+        'public.Nearly24hours': '24小时',
+        'public.Nearlythreedays': '3天',
+        'public.Nearlysevendays': '7天',
+        'public.Nearlyoneday': '1天',
         'public.OneMonth': '1个月',
         'public.Threemonths': '3个月',
         'public.Halfayear': '半年',
@@ -214,103 +217,65 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+.range-pick-wrap {
+  display: flex;
+  align-items: center;
+  font-size: 0;
+  .left-input {
+    display: flex;
+    align-items: center;
+    width: 352px;
+    height: 40px;
+    border: 1px solid #E6E6E6;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-right: 16px;
+    background: #fff;
+    .icon-box {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      margin: 0 8px;
+    }
+    /deep/ .ant-calendar-range-picker-separator {
+      min-width: 25px;
+    }
 
-
-.fl {
-  float: left
-}
-
-.c_ranger_pick {
-  background-color: #fff;
-  border: 1px solid #eee;
-  color: #323232;
-  display: inline-block;
-  height: 40px;
-  line-height: 40px;
-  overflow: hidden;
-  width: auto;
-
-  .lh40();
-
-  .ant-calendar-picker {
-    .fl();
-
-    input {
-      .lh40();
+    /deep/ .ant-input {
+      border: none;
+    }
+    /deep/ .ant-calendar-picker-input {
+      padding-left: 2px;
+    }
+    /deep/ .ant-calendar-picker:focus .ant-calendar-picker-input:not(.ant-input-disabled) {
+      box-shadow: none;
     }
   }
 
-  .c_icon {
-    margin-left: 16px;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    .fl()
-  }
-
-  .ant-calendar-picker-input {
-
-    .lh40();
-    padding: 0;
-    border: none;
-    border-radius: 0;
-  }
-
-  //去除focus的蓝框
-
-  .ant-calendar-picker:focus {
-    box-shadow: unset;
-    border: none;
-    border-color: transparent;
-    outline: none;
-  }
-
-  //去除focus的蓝框
-
-  .ant-calendar-picker:focus .ant-calendar-picker-input:not(.ant-input-disabled) {
-    box-shadow: unset;
-    border: none;
-    border-color: transparent;
-    outline: none;
-  }
-
-  //去除focus的蓝框
-
-  .ant-calendar-picker-input:focus {
-    box-shadow: unset;
-    border: none;
-    border-color: transparent;
-    outline: none;
-  }
-
-  &_quick_btn {
-    background-color: #f6f8fb;
-    float: left;
-
+  .right-btn {
+    display: flex;
+    align-items: center;
+    border: 1px solid #E6E6E6;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
     li {
-      .fl();
-      border: 1px solid #E6E6E6;
-      border-top: 0;
-      border-right: 0;
-      padding: 0 15px;
-      box-sizing: border-box;
+      height: 38px;
+      width: 64px;
+      font-size: 14px;
+      line-height: 38px;
+      text-align: center;
+      border-right: 1px solid #E6E6E6;
       cursor: pointer;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .activated {
-      color: #fff;
-      border-color: #205299;
-      background-color: #205299;
-    }
-
-    &::after {
-      clear: both;
-      content: '';
-      display: block;
+      color: #323232;
+      &:last-child {
+        border-right: none;
+      }
+      &.activated {
+        background: #0048FF;
+        color: #fff;
+      }
     }
   }
 }
