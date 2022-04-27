@@ -22,7 +22,7 @@ export default {
     cIcon,
   },
   props: {
-    title: { type: String, default: "当前主机尚未挂载数据盘" },
+    title: { type: String, default: "暂无数据" },
   },
   data() {
     return {};
