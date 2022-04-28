@@ -1,24 +1,23 @@
 <template>
-  <!--  todo 添加刷新按钮，添加设置表头按钮，改动actionBar，修改权限复选框位置，修改分页的UI，添加row-click,添加单选和多选搜索的下拉表格过滤类型,修改表头的样式-->
+  <!--  todo  修改分页的UI-->
   <div class="c_table">
     <div class="c_table_header">
       <div class="c_table_header_left">
         <div class="c_table_action_bar">
           <slot name="actionBar"></slot>
         </div>
-        <a-input size="large" v-model="formData.queryName"
-                 :placeholder="formOptions.find(i=>i.key==='queryName').placeholder"
-                 @change="refresh(true)">
+        <a-input size="large" v-model="formData.queryName" @change="debounceFresh($event,()=>{},'queryName')"
+                 :placeholder="formOptions.find(i=>i.key==='queryName').placeholder">
           <icon
               slot="suffix"
               name="icon-sousuo"/>
         </a-input>
         <c-button class="c_table_header_left_refresh" size="large" :disabled="isLocalLoading" type="text"
-                  @click="refresh(true)">
+                  @click="refresh">
           <icon name="icon-chongzhi_shuaxin"></icon>
         </c-button>
         <c-button type="text" class="c_table_header_left_refresh" v-if="isSetColumn" size="large"
-                  @click="$emit('setColumn')">
+                  @click="setColumns">
           <icon name="icon-daohang_shiliguige"></icon>
           <!--      todo 设置图标未提供-->
         </c-button>
@@ -27,14 +26,14 @@
         <slot name="headerRight"></slot>
       </div>
     </div>
-    <tag-list class="c_table_tags" v-model="formData" :formOptions="formOptions"
-              :filterArr="['queryName','date']"></tag-list>
+    <tag-list @close="refresh(true)" class="c_table_tags" v-model="formData" :formOptions="formOptions"
+              :tagFilterArr="tagFilterArr"></tag-list>
     <a-table
         :class="('bordered' in property&&!property.bordered)?'c_table_noBorder':''"
         v-on="$listeners"
         :loading="isLocalLoading"
         v-bind="property"
-        :columns="$attrs.columns"
+        :columns="$attrs.columns.filter(column=> showColumns.includes(column.key))"
         :dataSource="localDataSource"
         :rowSelection="$attrs.rowSelection || null"
     >
@@ -62,18 +61,18 @@
         <slot :name="nativeTable"></slot>
       </template>
       <!--      表头过滤-->
-      <template v-slot:filterDropdown="{ confirm ,column}">
+      <template v-slot:filterDropdown="{confirm,column}">
         <a-select
             v-if="column.type==='selectMultiple'"
             show-search
-            v-model="formData[column.key]"
             style="width: 180px;"
             :defaultOpen="true"
             :open="true"
             :showArrow="false"
             mode="multiple"
+            v-model="formData[column.key]"
             :getPopupContainer="(triggerNode)=>triggerNode.parentNode"
-            :filter-option="(input, option) =>(option.componentOptions.children[1].text.toLowerCase().indexOf(input.toLowerCase()) >= 0)"
+            :filter-option="(input, option) =>(option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0)"
             :placeholder="$T('public.search')"
         >
           <a-select-option
@@ -88,28 +87,29 @@
             <a-divider style="margin: 4px 0;"/>
             <div
                 style="padding: 7px 8px;"
-                @mousedown="e => e.preventDefault()"
-            >
-              <a-button style="margin-right: 8px;" type="primary" @click="debounceFresh($event,confirm)">确定</a-button>
-              <a-button type="primary" ghost @change="debounceFresh($event,confirm)">重置</a-button>
+                @mousedown="e => e.preventDefault()">
+              <a-button style="margin-right: 8px;" type="primary"
+                        @click="debounceFresh(formData[column.key],confirm,column.key)">确定
+              </a-button>
+              <a-button type="primary" ghost @click="resetFilter(column.key)">重置</a-button>
             </div>
           </div>
         </a-select>
         <a-select
             v-else
-            v-model="formData[column.key]"
             style="width: 180px;"
             show-search
             :showArrow="false"
             allowClear
             autoFocus
+            v-model="formData[column.key]"
             :defaultOpen="true"
             :open="true"
             :getPopupContainer="(triggerNode)=>triggerNode.parentNode"
             option-filter-prop="children"
             :filter-option="(input, option) =>(option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0)"
             :placeholder="$T('public.search')"
-            @change="debounceFresh($event,confirm)"
+            @change="debounceFresh($event,confirm,column.key)"
         >
           <a-select-option
               v-for="option in filterOptions"
@@ -141,22 +141,33 @@
           @showSizeChange=onShowSizeChange
       /> -->
     </div>
+    <modal :width="480" okText="确定" cancelText="取消" :isVisible="isVisible" title="列表字段设置"
+           :cancel="()=>(isVisible=false)" :ok="confirmColumns">
+      <a-checkbox-group style="width: 100%;" v-model="midColumns">
+        <checkbox v-for="(item,index) in $attrs.columns.map(i=>i.key)" :key="index" class="column-checkbox"
+                  :value="item">
+          {{ item }}
+        </checkbox>
+      </a-checkbox-group>
+    </modal>
   </div>
 </template>
 <script>
 import {debounce} from "@/utils";
 import Icon from "../CIcon";
 import TagList from "../CTagList";
+import Modal from "../CModal";
 import CButton from "../CButton";
+import {Checkbox} from "ant-design-vue";
 import CPage from '../CPage'
-
 export default {
   name: 'CTable',
   inheritAttrs: false,
   components: {
     Icon,
+    Checkbox,
+    Modal,
     CButton,
-    CPage,
     TagList,
     VNodes: {
       functional: true,
@@ -165,6 +176,9 @@ export default {
   },
   data() {
     return {
+      showColumns: [],
+      midColumns: [],
+      isVisible: false,
       isExpandedRowRender: false,
       isLocalLoading: true,
       localDataSource: [],
@@ -190,6 +204,7 @@ export default {
       }
     },
     formOptions: {type: Array, default: () => []},
+    tagFilterArr: {type: Array, default: () => ['queryName']},
     filterOptions: {type: Array, default: () => []},
     dataSource: {type: Array, default: () => []},
     scroll: {default: () => ({x: 930}), type: Object}
@@ -201,13 +216,20 @@ export default {
       }
     }
   },
+  created() {
+    if (this?.$route?.path && localStorage.custormColumnObject) {//从缓存里面取
+      let arr = JSON.parse(localStorage.custormColumnObject)[this?.$route?.path].split(',')
+      this.showColumns = arr
+    } else {
+      this.showColumns = this.$attrs.columns.map(i => i.key)
+    }
+  },
   beforeMount() {
     if (!this.$T) {
       this.$T = this.translateText
     }
   },
   mounted() {
-    //todo 判断是否有存储的columns
     if (window.tableTime) {
       clearTimeout(window.tableTime);
     }
@@ -245,10 +267,48 @@ export default {
   },
   methods: {
     /**
+     * @description:多选的下拉框中的重置按钮
+     */
+    resetFilter(key) {
+      this.formData[key] = []
+      this.refresh(true)
+    },
+    /**
+     * @description:打开设置表头弹窗
+     */
+    setColumns() {
+      this.midColumns = Object.assign([], this.showColumns)
+      this.isVisible = true;
+    },
+    /**
+     * @description:确认设置表头，更新表头并保持到localStorage
+     */
+    confirmColumns() {
+      this.showColumns = Object.assign([], this.midColumns)
+      if (this.$route) {
+        let userId = this.$store.state.userInfo.id//获取用户ID this.$store.state.userInfo.id
+        if (localStorage.custormColumnObject) {
+          let obj = JSON.parse(localStorage.custormColumnObject)
+          obj[userId][this.$route.path] = this.showColumns.join(',')
+          localStorage.custormColumnObject = JSON.stringify(obj)
+        } else {
+          localStorage.custormColumnObject = JSON.stringify({
+            [userId]: {
+              [this.$route.path]: this.showColumns.join(',')
+            }
+          })
+        }
+      }
+      this.isVisible = false;
+    },
+    /**
      * @description:延迟刷新
      */
-    debounceFresh: debounce(function (ev, confirm) {
-      this.$emit('filterChange', ev, confirm)
+    debounceFresh: debounce(function (val, confirm, key) {
+      confirm()
+      this.refresh(true)
+      this.$emit('filterChange', val, key)
+      console.log(this.formData)
     }),
     /**
      * @description:兼容处理
@@ -373,6 +433,27 @@ export default {
 
 </script>
 <style lang="less">
+.column-checkbox {
+  width: 33%;
+  margin-left: 0 !important;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 29px !important;
+}
+
+.multipleOptions i {
+  border: 1px solid #E6E6E6;
+  color: #fff !important;
+  left: 22px;
+  right: 0;
+  width: 16px;
+}
+
+.multipleOptions.ant-select-dropdown-menu-item-selected i {
+  background-color: #0048FF;
+}
+
 .c_table {
   padding-bottom: 24px;
 
