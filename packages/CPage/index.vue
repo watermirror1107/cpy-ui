@@ -5,7 +5,7 @@
         <a class="sizelink" @click="(e) => e.preventDefault()">
           {{currentPageSize}} <a-icon type="caret-down" /> <span class="unit">条/页</span>
         </a>
-        <a-menu slot="overlay" @click="onSize">
+        <a-menu slot="overlay" @click="onSize" :selectedKeys="[currentPageSize]">
           <a-menu-item v-for="opt in pageSizeOpts" :key="opt">
             {{ opt }} 条/页
           </a-menu-item>
@@ -153,6 +153,12 @@ export default {
 .dropdownc .ant-dropdown-menu-item:hover {
    background-color: #0048ff !important;
    color: #fff;
+}
+.dropdownc .ant-dropdown-menu-item-selected {
+  background: #fafafa;
+  color: rgba(0, 0, 0, 0.65);
+  font-weight: 600;
+  
 }
 </style>
 <style lang="less">
