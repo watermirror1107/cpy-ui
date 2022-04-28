@@ -1,5 +1,12 @@
 <template>
   <div id="app">
+    <c-btn-group>
+      <c-button class="3dawddw">开机</c-button>
+      <c-button>关机</c-button>
+      <c-button>重启</c-button>
+      <c-button>测试</c-button>
+      <c-button>测试</c-button>
+    </c-btn-group>
     <!--    <c-banner title="title"></c-banner>-->
     <!--    <c-banner>123</c-banner>-->
     <!--    <c-banner>-->
@@ -80,84 +87,64 @@
     <!--                     style="width:320px;margin: 0 auto;">-->
     <!--    </c-search-select>-->
     <c-table
-        :formData="formData"
-        :formOptions="formOptions"
-        ref="table"
-        :rowSelection="{
-                selectedRowKeys: selectedRowKeys,
-                onChange: onSelectChange,
-              }"
-        :filterOptions="filterOptions"
-        :columns="columns"
-        :loopTime="10000"
-        :data="queryList"
-        @filterChange="handleFilterChange"
-        rowKey="id">
+      :formData="formData"
+      :formOptions="formOptions"
+      ref="table"
+      :rowSelection="{
+        selectedRowKeys: selectedRowKeys,
+        onChange: onSelectChange,
+      }"
+      :filterOptions="filterOptions"
+      :columns="columns"
+      :loopTime="10000"
+      :data="queryList"
+      @filterChange="handleFilterChange"
+      rowKey="id"
+    >
       <template #headerRight>
         <c-button size="large">添加</c-button>
       </template>
-      <template #id="{ text,record }">
+      <template #id="{ text, record }">
         <a-popover>
           <template #content>
-            <c-table :columns="columns"
-                     :dataSource="record.children"></c-table>
+            <c-table :columns="columns" :dataSource="record.children"></c-table>
           </template>
-          <span style="color:red">{{ text }}</span>
+          <span style="color: red">{{ text }}</span>
         </a-popover>
       </template>
-      <template #operate="{record,index}">
+      <template #operate="{ record, index }">
         <c-btn-wrap>
-          <c-table-btn
-              :disabled="isClick"
-              text="click1"
-              @click="clickHandler1"
-          >
+          <c-table-btn :disabled="isClick" text="click1" @click="clickHandler1">
           </c-table-btn>
-          <c-table-btn
-              text="click2"
-              @click="clickHandler2"
-          >
+          <c-table-btn text="click2" @click="clickHandler2"> </c-table-btn>
+          <c-table-btn text="click3" @click="clickHandler3"> </c-table-btn>
+          <c-table-btn text="click4" @click="clickHandler4"> </c-table-btn>
+          <c-table-btn text="click5" @click="clickHandler5"> </c-table-btn>
+          <c-table-btn text="click6" @click="clickHandler6"> </c-table-btn>
+          <c-table-btn text="click7" @click="clickHandler7"> </c-table-btn>
+          <c-table-btn text="click8" @click="clickHandler8"> </c-table-btn>
+          <c-table-btn :disabled="isClick" text="click9" @click="clickHandler9">
           </c-table-btn>
-          <c-table-btn
-              text="click3"
-              @click="clickHandler3"
-          >
-          </c-table-btn>
-          <c-table-btn
-              text="click4"
-              @click="clickHandler4">
-          </c-table-btn>
-          <c-table-btn
-              text="click5"
-              @click="clickHandler5">
-          </c-table-btn>
-          <c-table-btn
-              text="click6"
-              @click="clickHandler6">
-          </c-table-btn>
-          <c-table-btn
-              text="click7"
-              @click="clickHandler7">
-          </c-table-btn>
-          <c-table-btn
-              text="click8"
-              @click="clickHandler8">
-          </c-table-btn>
-          <c-table-btn
-              :disabled="isClick"
-              text="click9"
-              @click="clickHandler9">
-          </c-table-btn>
-          <c-table-btn
-              text="click10"
-              @click="clickHandler10(index)">
+          <c-table-btn text="click10" @click="clickHandler10(index)">
           </c-table-btn>
         </c-btn-wrap>
       </template>
       <template #actionBar>
-        <c-button size="large" @click="consoleRow" icon="icon-shanchu" type="text" disabled>删除</c-button>
+        <c-button
+          size="large"
+          @click="consoleRow"
+          icon="icon-shanchu"
+          type="text"
+          disabled
+          >删除</c-button
+        >
       </template>
     </c-table>
+
+    {{ number }}
+    <CInputNumber v-model="number"></CInputNumber>
+
+    <!-- <CInputNumber v-model="number"></CInputNumber> -->
     <!--    <c-collapse :activeKey="['1']">-->
     <!--      <c-collapse-panel key="1" >-->
     <!--        <p name="header">title1</p>-->
@@ -176,11 +163,12 @@
 </template>
 
 <script>
-import {debounce} from "@/utils";
-import axios from 'axios'
+import { debounce } from "@/utils";
+import axios from "axios";
 import CButton from "../packages/CButton";
 import CTable from "../packages/CTable";
 import CBtnWrap from "../packages/CBtnWrap";
+import CBtnGroup from "../packages/CBtnGroup";
 import CTableBtn from "../packages/CTableBtn";
 import CSearchSelect from "../packages/CSearchSelect";
 import CTap from "../packages/CTap";
@@ -192,6 +180,7 @@ import CCollapse from "../packages/CCollapse";
 import CCollapsePanel from "../packages/CCollapsePanel";
 import CTagList from "../packages/CTagList";
 import CIcon from "../packages/CIcon";
+import CInputNumber from "../packages/CInputNumber";
 
 export default {
   components: {
@@ -208,68 +197,77 @@ export default {
     CCard,
     CCollapse,
     CCollapsePanel,
-    CTagList
+    CTagList,
+    CInputNumber,
+    CBtnGroup,
   },
   data() {
     return {
+      number: "",
       isClick: false,
-      dataSource: [{
-        id: 1,
-        name: 'name',
-        content: 'content',
-        createTime: '2012-12-12',
-        children: [{id: 2, name: 'name', content: 'content', createTime: '2012-12-12'}]
-      }, {
-        id: 3,
-        name: 'name',
-        content: 'content',
-        createTime: '2012-12-12',
-        children: []
-      }],
+      dataSource: [
+        {
+          id: 1,
+          name: "name",
+          content: "content",
+          createTime: "2012-12-12",
+          children: [
+            {
+              id: 2,
+              name: "name",
+              content: "content",
+              createTime: "2012-12-12",
+            },
+          ],
+        },
+        {
+          id: 3,
+          name: "name",
+          content: "content",
+          createTime: "2012-12-12",
+          children: [],
+        },
+      ],
       selectedRowKeys: [], // 勾选的key
       selectedRows: [], // 选中的行数据
-      formOptions1: [
-        {key: 'account'},
-        {key: 'age'},
-        {key: 'name'}
-      ],
+      formOptions1: [{ key: "account" }, { key: "age" }, { key: "name" }],
       form: {
-        account: 'kong',
+        account: "kong",
         age: 1,
-        name: 'jason'
+        name: "jason",
       },
       typeList: [
         {
           id: "",
-          title: 'Allorders',
+          title: "Allorders",
           type: "totalCount",
           color: "#323232",
           num: 0,
         },
         {
           id: "BillWaitingCharge",
-          title: 'Pendingorder',
+          title: "Pendingorder",
           type: "waitPayCount",
           color: "#FDBE2E",
           num: 0,
         },
         {
           id: "BillPayOrOver",
-          title: 'Completedorder',
+          title: "Completedorder",
           type: "payedCount",
           color: "#4ED067",
           num: 0,
         },
         {
           id: "BillInvalid",
-          title: 'Cancelledorder',
+          title: "Cancelledorder",
           type: "expiredCount",
           color: "#1279F8",
           num: 0,
         },
         {
           id: "BillRefund",
-          title: 'Refundrecord',
+          title: "Refundrecord",
           type: "refundCount",
           color: "#F7665E",
           num: 0,
@@ -277,187 +275,204 @@ export default {
       ],
       tabIndex: undefined,
       tabIndex2: [],
-      imageTypes: [{name: 'one'}, {name: 'two'}],
+      imageTypes: [{ name: "one" }, { name: "two" }],
       month: 1,
       time: [],
       formData: {
-        queryName: '',
+        queryName: "",
         createTime: undefined,
-        date: []
+        date: [],
       },
       filterOptions: [],
       formOptions: [
         {
-          key: 'queryName',
-          type: 'input',
-          placeholder: 'placeholder'
+          key: "queryName",
+          type: "input",
+          placeholder: "placeholder",
         },
         {
-          key: 'name',
-          placeholder: 'placeholder',
-          options: [{id: 1, name: 'one'}, {id: 2, name: 'two'}]
-        }, {
-          key: 'createTime',
+          key: "name",
+          placeholder: "placeholder",
+          options: [
+            { id: 1, name: "one" },
+            { id: 2, name: "two" },
+          ],
+        },
+        {
+          key: "createTime",
           // type: 'select',
-          placeholder: 'placeholder',
-          options: [{id: 1, name: 'one'}, {id: 2, name: 'two'}]
+          placeholder: "placeholder",
+          options: [
+            { id: 1, name: "one" },
+            { id: 2, name: "two" },
+          ],
         },
         {
-          key: 'date',
-          type: 'range-picker',
-          placeholder: ['开始日期1', '结束日期2'],
-          mode: ['date', 'date'],
-          format: 'YYYY-MM-DD'
-        }
+          key: "date",
+          type: "range-picker",
+          placeholder: ["开始日期1", "结束日期2"],
+          mode: ["date", "date"],
+          format: "YYYY-MM-DD",
+        },
       ],
-      num: 'one',
+      num: "one",
       type: 1,
-      text: 'text',
+      text: "text",
       dateOptions: [
-        {id: 1, name: '10-20'},
-        {id: 2, name: '30-40'}
+        { id: 1, name: "10-20" },
+        { id: 2, name: "30-40" },
       ],
-      dataFilterValue: '',
+      dataFilterValue: "",
       columns: [
         {
-          title: 'id',
-          dataIndex: 'id',
-          key: 'id',
-          fixed:'left',
-          scopedSlots: {customRender: 'id'},
-          width: 100
-        },
-        {
-          title: 'name',
-          dataIndex: 'name',
-          key: 'name',
+          title: "id",
+          dataIndex: "id",
+          key: "id",
+          fixed: "left",
+          scopedSlots: { customRender: "id" },
           width: 100,
-          type: 'selectMultiple',
-          scopedSlots: {filterDropdown: 'filterDropdown',filterIcon:'filterIcon'},
+        },
+        {
+          title: "name",
+          dataIndex: "name",
+          key: "name",
+          width: 100,
+          type: "selectMultiple",
+          scopedSlots: {
+            filterDropdown: "filterDropdown",
+            filterIcon: "filterIcon",
+          },
           filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
           onFilterDropdownVisibleChange: (visible) => {
             if (visible) {
-              this.filterOptions = this.formOptions.find(i => i.key === 'name').options;
+              this.filterOptions = this.formOptions.find(
+                (i) => i.key === "name"
+              ).options;
             }
-          }
+          },
         },
         {
-          title: 'content',
-          dataIndex: 'content',
-          key: 'content',
-          width: 100
+          title: "content",
+          dataIndex: "content",
+          key: "content",
+          width: 100,
         },
         {
-          title: 'createTime',
-          dataIndex: 'createTime',
-          key: 'createTime',
+          title: "createTime",
+          dataIndex: "createTime",
+          key: "createTime",
           width: 140,
-          scopedSlots: {filterDropdown: 'filterDropdown',filterIcon:'filterIcon'},
+          scopedSlots: {
+            filterDropdown: "filterDropdown",
+            filterIcon: "filterIcon",
+          },
           filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
           onFilterDropdownVisibleChange: (visible) => {
             if (visible) {
-              this.filterOptions = this.formOptions.find(i => i.key === 'createTime').options;
+              this.filterOptions = this.formOptions.find(
+                (i) => i.key === "createTime"
+              ).options;
             }
-          }
+          },
         },
         {
-          title: 'operate',
-          key: 'operate',
+          title: "operate",
+          key: "operate",
           width: 300,
-          scopedSlots: {customRender: 'operate'}
-        }
-      ]
-    }
+          scopedSlots: { customRender: "operate" },
+        },
+      ],
+    };
   },
   watch: {
     tabIndex(nv) {
-      console.log(nv)
-    }
+      console.log(nv);
+    },
   },
   mounted() {
     // this.queryOptions()
-    this.$refs.table.refresh()
+    this.$refs.table.refresh();
   },
   methods: {
     consoleRow() {
-      console.log(this.selectedRows)
+      console.log(this.selectedRows);
     },
     onSelectChange(selectedRowKeys, selectedRows) {
-      this.selectedRowKeys = selectedRowKeys
-      this.selectedRows = selectedRows
+      this.selectedRowKeys = selectedRowKeys;
+      this.selectedRows = selectedRows;
     },
     handleFilterChange(val, confirm) {
       confirm();
-      this.$refs.table.refresh()
+      this.$refs.table.refresh();
     },
     queryOptions() {
-      return axios.get('/getoptions?ID=12345')
+      return axios.get("/getoptions?ID=12345");
     },
     queryList(params) {
       // const data = Object.assign({}, params, this.formData, result);
       return axios({
-        url: '/getoptions',
-        method: 'get',
-        params
-      })
+        url: "/getoptions",
+        method: "get",
+        params,
+      });
     },
     changeType: debounce(function (i) {
-      console.log(this.text)
-      console.log(i)
+      console.log(this.text);
+      console.log(i);
     }),
     handleSubmit() {
-      console.log(this.formData)
+      console.log(this.formData);
     },
     clickMore() {
-      console.log('more')
+      console.log("more");
     },
     clickHandler(text, record) {
-      console.log(text)
-      console.log(record)
+      console.log(text);
+      console.log(record);
     },
     clickHandler1() {
-      this.isClick = true
+      this.isClick = true;
       setTimeout(() => {
-        this.isClick = false
-      }, 3000)
-      console.log(1)
+        this.isClick = false;
+      }, 3000);
+      console.log(1);
     },
     clickHandler2() {
-      console.log(2)
+      console.log(2);
     },
     clickHandler3() {
-      console.log(3)
+      console.log(3);
     },
     clickHandler4() {
-      console.log(4)
+      console.log(4);
     },
     clickHandler5() {
-      console.log(5)
+      console.log(5);
     },
     clickHandler6() {
-      console.log(6)
+      console.log(6);
     },
     clickHandler7() {
-      console.log(7)
+      console.log(7);
     },
     clickHandler8() {
-      console.log(8)
+      console.log(8);
     },
     clickHandler9() {
-      this.isClick = true
+      this.isClick = true;
       setTimeout(() => {
-        this.isClick = false
-      }, 3000)
-      console.log(9)
+        this.isClick = false;
+      }, 3000);
+      console.log(9);
     },
     clickHandler10(index) {
-      console.log(10)
+      console.log(10);
     },
     consoleValue(value) {
-      console.log(value)
-    }
-  }
-}
+      console.log(value);
+    },
+  },
+};
 </script>
 
 <style lang="less">
