@@ -188,7 +188,7 @@ export default {
       line-height: calc(100% - 2px);
       padding-left:10px;
       background-color: transparent;
-      text-align: center;
+      text-align: left;
       border: unset!important;
     }
 
