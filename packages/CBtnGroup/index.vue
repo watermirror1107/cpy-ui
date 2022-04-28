@@ -144,4 +144,20 @@ export default {
     }
   }
 }
+.c_btn_group_more_item {
+  width: 108px;
+
+  .c_button {
+    width: 100%;
+    justify-content: center;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid #eee;
+
+    &:hover {
+      border-color: #eee;
+      background-color: #f5f5f5;
+    }
+  }
+}
 </style>
