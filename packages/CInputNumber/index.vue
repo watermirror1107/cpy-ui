@@ -4,40 +4,40 @@
   <div class="c_inputNumber" :class="'c_inputNumber_' + size">
     <div class="c_inputNumber_box">
       <div
-        class="c_inputNumber_container"
-        :class="{ c_inputNumber_container_disabled: disabled }"
+          class="c_inputNumber_container"
+          :class="{ c_inputNumber_container_disabled: disabled }"
       >
         <button
-          class="
+            class="
             c_inputNumber_container_button c_inputNumber_container_button_add
           "
-          :disabled="disabled || value <= min"
-          type="button"
-          style="
+            :disabled="disabled || value <= min"
+            type="button"
+            style="
             border-left: 1px solid #e6e6e6;
             border-bottom: 1px solid #e6e6e6;
           "
-          @click="reduce"
+            @click="reduce"
         >
           <icon name="icon-shousuodaohang"></icon>
         </button>
         <input
-          class="c_inputNumber_container_input"
-          ref="input"
-          :disabled="disabled"
-          :value="value"
-          type="number"
-          @input="inputChangeValue"
-          @blur="blurChangeValue"
+            class="c_inputNumber_container_input"
+            ref="input"
+            :disabled="disabled"
+            :value="value"
+            type="number"
+            @input="inputChangeValue"
+            @blur="blurChangeValue"
         />
         <button
-          class="
+            class="
             c_inputNumber_container_button c_inputNumber_container_button_cut
           "
-          :disabled="disabled || value >= max"
-          style="border-left: 1px solid #e6e6e6"
-          type="button"
-          @click="plus"
+            :disabled="disabled || value >= max"
+            style="border-left: 1px solid #e6e6e6"
+            type="button"
+            @click="plus"
         >
           <icon name="icon-xuanzekuanxia"></icon>
         </button>
@@ -56,14 +56,14 @@ export default {
     Icon,
   },
   props: {
-    isInteger: { default: true, type: Boolean },
-    disabled: { default: false, type: Boolean },
-    step: { default: 1, type: Number },
-    max: { default: 4096, type: Number },
-    min: { default: 1, type: Number },
-    unit: { default: "", type: String },
-    size: { default: "large", type: String },
-    value: { default: "large", type: [String, Number] },
+    isInteger: {default: true, type: Boolean},
+    disabled: {default: false, type: Boolean},
+    step: {default: 1, type: Number},
+    max: {default: 4096, type: Number},
+    min: {default: 1, type: Number},
+    unit: {default: "", type: String},
+    size: {default: "large", type: String},
+    value: {default: "large", type: [String, Number]},
   },
   model: {
     event: "valChange",
@@ -80,7 +80,7 @@ export default {
      */
     inputChangeValue(ev) {
       if (this.isInteger) {
-        const { value } = ev.target;
+        const {value} = ev.target;
         this.$nextTick(() => {
           this.$refs.input.value = this.isInteger ? parseInt(value) : value;
         });
@@ -91,7 +91,7 @@ export default {
      * @description:失去焦点
      */
     blurChangeValue(ev) {
-      let { value } = ev.target;
+      let {value} = ev.target;
       if (value > this.max) {
         value = this.max;
         ev.target.value = this.max;
@@ -104,13 +104,13 @@ export default {
     },
 
     reduce() {
-      const { value, min, step } = this;
+      const {value, min, step} = this;
       const res = Number(value) - step;
       this.$emit("valChange", res < min ? min : res);
     },
 
     plus() {
-      const { value, max, step } = this;
+      const {value, max, step} = this;
       const res = Number(value) + step;
       this.$emit("valChange", res > max ? max : res);
     },
@@ -128,9 +128,12 @@ export default {
   height: 32px;
   line-height: 32px;
 }
+
 .c_inputNumber {
   display: block;
   font-size: 14px;
+  min-width: 150px;
+  position: relative;
 
   &:after {
     clear: both;
@@ -144,16 +147,17 @@ export default {
     float: left;
     line-height: inherit;
     height: inherit;
-    width: calc(100% - 40px);
+    width: 100%;
   }
 
   &_unit {
-    display: block;
     float: left;
     height: inherit;
     line-height: inherit;
     width: 40px;
     text-align: center;
+    position: absolute;
+    right: 35px;
   }
 
   &_container {
@@ -177,7 +181,9 @@ export default {
       height: calc(100% - 2px);
       line-height: calc(100% - 2px);
       outline: none;
-      width: calc(100% - 80px);
+      width: 100%;
+      padding-right: 70px;
+      padding-left: 10px;
       flex-grow: 1;
       background-color: transparent;
       text-align: center;
@@ -215,6 +221,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+
       &:hover {
         background: #e6e6e6;
         color: #c8c8c8;
