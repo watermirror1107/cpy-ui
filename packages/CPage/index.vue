@@ -13,10 +13,10 @@
       </a-dropdown>
     </div>
     <div class="cpage-btn">
-      <div class="btn-item" @click="firstPage">
+      <div class="btn-item" :class="{ 'cpage-btn-disabled' : isFirstPage }" @click="firstPage">
         <a-icon type="step-backward" />
       </div>
-      <div class="btn-item" @click="prev">
+      <div class="btn-item" :class="{ 'cpage-btn-disabled' : isFirstPage }" @click="prev">
         <a-icon type="caret-left" />
       </div>
       <input
@@ -30,10 +30,10 @@
         @change="keyUp"
       />
       <div class="btn-item btn-total-num">/ {{ allPages }}</div>
-      <div class="btn-item" @click="next">
+      <div class="btn-item" :class="{ 'cpage-btn-disabled' : isLastPage }" @click="next">
         <a-icon type="caret-right" />
       </div>
-      <div class="btn-item" style="border-right: none" @click="lastPage">
+      <div class="btn-item" :class="{ 'cpage-btn-disabled' : isLastPage }" style="border-right: none" @click="lastPage">
         <a-icon type="step-forward" />
       </div>
     </div>
@@ -74,6 +74,12 @@ export default {
       const allPage = Math.ceil(this.total / this.currentPageSize)
       return allPage === 0 ? 1 : allPage
     },
+    isFirstPage() {
+      return this.currentPage === 1
+    },
+    isLastPage() {
+      return this.currentPage === this.allPages
+    }
   },
   methods: {
     changePage(page) {
@@ -84,6 +90,7 @@ export default {
       }
     },
     prev() {
+      if(this.isFirstPage) return;
       const current = this.currentPage
       if (current <= 1) {
         return false
@@ -91,6 +98,7 @@ export default {
       this.changePage(current - 1)
     },
     next() {
+      if(this.isLastPage) return;
       const current = this.currentPage
       if (current >= this.allPages) {
         return false
@@ -98,9 +106,11 @@ export default {
       this.changePage(current + 1)
     },
     firstPage() {
+      if(this.isFirstPage) return;
       this.changePage(1)
     },
     lastPage() {
+      if(this.isLastPage) return;
       this.changePage(this.allPages)
     },
     onSize({key}) {
@@ -197,6 +207,13 @@ export default {
     cursor: pointer;
     &:hover {
       color: #0048ff;
+    }
+    &.cpage-btn-disabled {
+      background-color: #E6E6E6;
+      color: #C8C8C8;
+      &:hover {
+        color: #C8C8C8;
+      }
     }
   }
   .input-wrap {
