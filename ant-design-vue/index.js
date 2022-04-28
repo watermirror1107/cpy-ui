@@ -17,6 +17,9 @@ import {
     Divider,
     Checkbox,
     Collapse,
+    Menu,
+    Dropdown,
+    Icon
 } from 'ant-design-vue';
 // 设置 table 的 size 默认值为 small
 Table.props.size.default = 'small';
@@ -37,3 +40,6 @@ Vue.use(DatePicker);
 Vue.use(Checkbox);
 Vue.use(Divider);
 Vue.use(Collapse);
+Vue.use(Menu);
+Vue.use(Dropdown)
+Vue.use(Icon)

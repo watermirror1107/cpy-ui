@@ -121,7 +121,15 @@
     </a-table>
     <div
         class="c_table_action_box">
-      <a-pagination
+        <c-page v-if="pagination"
+          v-bind="{
+         ...this.localPagination,
+        showSizeChanger: true,
+        total: this.total
+        }"
+          @change=paginationChange
+          @showSizeChange=onShowSizeChange></c-page>
+      <!-- <a-pagination
           v-if="pagination"
           v-bind="{
          ...this.localPagination,
@@ -131,7 +139,7 @@
           :showTotal="showTotal"
           @change=paginationChange
           @showSizeChange=onShowSizeChange
-      />
+      /> -->
     </div>
   </div>
 </template>
@@ -140,6 +148,7 @@ import {debounce} from "@/utils";
 import Icon from "../CIcon";
 import TagList from "../CTagList";
 import CButton from "../CButton";
+import CPage from '../CPage'
 
 export default {
   name: 'CTable',
@@ -147,6 +156,7 @@ export default {
   components: {
     Icon,
     CButton,
+    CPage,
     TagList,
     VNodes: {
       functional: true,
