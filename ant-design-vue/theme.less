@@ -2,7 +2,7 @@
 @primary-color: #1279F8; // 全局主色
 @table-row-hover-bg: #ffffff; // 悬浮行背景色
 @table-selected-row-bg: #EAF1FB; // 选中行背景色
-@layout-body-background: rgba(246, 248, 251,1);
+@layout-body-background: rgba(246, 248, 251, 1);
 
 // 表单样式覆写
 .ant-form-inline {
@@ -10,10 +10,12 @@
     &-control-wrapper {
       .ant-form-item-control {
         .ant-form-item-children {
+
           .ant-select,
           .ant-input {
             width: 200px;
           }
+
           .ant-btn[type="button"] {
             width: 114px;
           }
@@ -23,7 +25,8 @@
   }
 }
 
-.ant-input-lg,.ant-select-lg {
+.ant-input-lg,
+.ant-select-lg {
   font-size: 14px
 }
 
@@ -32,6 +35,7 @@
   flex-wrap: wrap;
   justify-content: flex-start;
 }
+
 .form-item-container-right {
   display: flex;
   flex-wrap: wrap;
@@ -41,20 +45,25 @@
     margin: 0 0 0 16px;
   }
 }
+
 .ant-card {
   margin: 20px 16px 0 24px;
 }
+
 .ant-card-body {
   padding: 0; // 卡片内容边距
 }
+
 .ant-table-wrapper {
   .ant-table {
     border-radius: 0;
     border-left: 0;
     border-right: 0;
+
     .ant-table-content {
-      .ant-table-body{
+      .ant-table-body {
         margin: 0;
+
         .ant-table-thead {
           background: #FAFAFA; // 表头背景色
         }
@@ -63,18 +72,20 @@
     }
   }
 }
+
 .ant-tooltip-inner {
   text-align: center;
 }
-.ant-table-tbody tr.ant-table-row-hover:not(.ant-table-row-selected) >td{
-  background-color: #F1F2F6!important;
+
+.ant-table-tbody tr.ant-table-row-hover:not(.ant-table-row-selected)>td {
+  background-color: #F1F2F6 !important;
 }
 
-.ant-table-tbody  tr.ant-table-row-selected >td{
-  background-color: #DEE4EB!important;
+.ant-table-tbody tr.ant-table-row-selected>td {
+  background-color: #DEE4EB !important;
 }
 
-.ant-layout{
+.ant-layout {
   background-color: #f6f8fb;
 }
 
