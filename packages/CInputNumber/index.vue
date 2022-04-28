@@ -52,7 +52,7 @@ export default {
     Icon,
   },
   props: {
-    type: {default: 'two', type: String},
+    type: {default: 'one', type: String},
     isInteger: {default: true, type: Boolean},
     disabled: {default: false, type: Boolean},
     step: {default: 1, type: Number},
