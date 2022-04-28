@@ -1,71 +1,78 @@
 <!--数字输入框-->
 <template>
-<!-- todo 修改样式 -->
-  <div
-      class="c_inputNumber"
-      :class="'c_inputNumber_'+size">
+  <!-- todo 修改样式 -->
+  <div class="c_inputNumber" :class="'c_inputNumber_' + size">
     <div class="c_inputNumber_box">
       <div
-          class="c_inputNumber_container"
-          :class="{c_inputNumber_container_disabled:disabled}">
+        class="c_inputNumber_container"
+        :class="{ c_inputNumber_container_disabled: disabled }"
+      >
         <button
-            class="c_inputNumber_container_button"
-            :disabled="disabled||value<=min"
-            type="button"
-            style="border-right: 1px solid #E6E6E6;"
-            @click="reduce">
-          <icon name="icon-jian"></icon>
+          class="
+            c_inputNumber_container_button c_inputNumber_container_button_add
+          "
+          :disabled="disabled || value <= min"
+          type="button"
+          style="
+            border-left: 1px solid #e6e6e6;
+            border-bottom: 1px solid #e6e6e6;
+          "
+          @click="reduce"
+        >
+          <icon name="icon-shousuodaohang"></icon>
         </button>
         <input
-            class="c_inputNumber_container_input"
-            ref="input"
-            :disabled="disabled"
-            :value="value"
-            type="number"
-            @input="inputChangeValue"
-            @blur="blurChangeValue">
+          class="c_inputNumber_container_input"
+          ref="input"
+          :disabled="disabled"
+          :value="value"
+          type="number"
+          @input="inputChangeValue"
+          @blur="blurChangeValue"
+        />
         <button
-            class="c_inputNumber_container_button"
-            :disabled="disabled||value>=max"
-            style="border-left: 1px solid #E6E6E6;"
-            type="button"
-            @click="plus">
-          <icon name="icon-jia"></icon>
+          class="
+            c_inputNumber_container_button c_inputNumber_container_button_cut
+          "
+          :disabled="disabled || value >= max"
+          style="border-left: 1px solid #e6e6e6"
+          type="button"
+          @click="plus"
+        >
+          <icon name="icon-xuanzekuanxia"></icon>
         </button>
       </div>
     </div>
-    <span
-        class="c_inputNumber_unit"
-        v-if="unit">{{ unit ? unit : '' }}</span>
+    <span class="c_inputNumber_unit" v-if="unit">{{ unit ? unit : "" }}</span>
   </div>
 </template>
 
 <script>
-import Icon from '../CIcon/index.vue';
+import Icon from "../CIcon/index.vue";
 
 export default {
-  name: 'CInputNumber',
+  name: "CInputNumber",
   components: {
-    Icon
+    Icon,
   },
   props: {
-    isInteger: {default: true, type: Boolean},
-    disabled: {default: false, type: Boolean},
-    step: {default: 1, type: Number},
-    max: {default: 4096, type: Number},
-    min: {default: 1, type: Number},
-    unit: {default: '', type: String},
-    size: {default: 'large', type: String},
-    value: {default: 'large', type: [String, Number]},
+    isInteger: { default: true, type: Boolean },
+    disabled: { default: false, type: Boolean },
+    step: { default: 1, type: Number },
+    max: { default: 4096, type: Number },
+    min: { default: 1, type: Number },
+    unit: { default: "", type: String },
+    size: { default: "large", type: String },
+    value: { default: "large", type: [String, Number] },
   },
   model: {
-    event: 'valChange',
-    prop: 'value'
+    event: "valChange",
+    prop: "value",
   },
   watch: {
     value() {
-      this.$emit('change');
-    }
+      this.$emit("change");
+    },
   },
   methods: {
     /**
@@ -73,7 +80,7 @@ export default {
      */
     inputChangeValue(ev) {
       if (this.isInteger) {
-        const {value} = ev.target;
+        const { value } = ev.target;
         this.$nextTick(() => {
           this.$refs.input.value = this.isInteger ? parseInt(value) : value;
         });
@@ -84,7 +91,7 @@ export default {
      * @description:失去焦点
      */
     blurChangeValue(ev) {
-      let {value} = ev.target;
+      let { value } = ev.target;
       if (value > this.max) {
         value = this.max;
         ev.target.value = this.max;
@@ -93,29 +100,21 @@ export default {
         value = this.min;
         ev.target.value = this.min;
       }
-      this.$emit('valChange', this.isInteger ? parseInt(value) : value);
+      this.$emit("valChange", this.isInteger ? parseInt(value) : value);
     },
 
     reduce() {
-      const {
-        value,
-        min,
-        step
-      } = this;
+      const { value, min, step } = this;
       const res = Number(value) - step;
-      this.$emit('valChange', res < min ? min : res);
+      this.$emit("valChange", res < min ? min : res);
     },
 
     plus() {
-      const {
-        value,
-        max,
-        step
-      } = this;
+      const { value, max, step } = this;
       const res = Number(value) + step;
-      this.$emit('valChange', res > max ? max : res);
-    }
-  }
+      this.$emit("valChange", res > max ? max : res);
+    },
+  },
 };
 </script>
 
@@ -136,7 +135,7 @@ export default {
   &:after {
     clear: both;
     display: block;
-    content: '';
+    content: "";
   }
 
   &_box {
@@ -170,8 +169,9 @@ export default {
     color: #323232;
     font-size: 14px;
     box-sizing: border-box;
-    border: 1px solid #E6E6E6;
+    border: 1px solid #e6e6e6;
     // margin-right: 10px;
+    position: relative;
 
     &_input {
       height: calc(100% - 2px);
@@ -188,33 +188,56 @@ export default {
       cursor: not-allowed;
     }
 
-    &_input[type=number]::-webkit-inner-spin-button,
-    &_input[type=number]::-webkit-outer-spin-button {
+    &_input[type="number"]::-webkit-inner-spin-button,
+    &_input[type="number"]::-webkit-outer-spin-button {
       -webkit-appearance: none;
       margin: 0;
     }
 
     /*** 消除input元素 type="number" 时默认的 加减按钮---moz版*/
 
-    &_input[type=number] {
+    &_input[type="number"] {
       -moz-appearance: textfield;
     }
 
     &_button {
-      color: #C8C8C8;
+      color: #646464;
       display: block;
       width: 32px;
-      height: 100%;
+      font-size: 10px;
+      // height: 100%;
       text-align: center;
       cursor: pointer;
       outline: none;
       background-color: transparent;
       border-color: transparent;
       box-sizing: content-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:hover {
+        background: #e6e6e6;
+        color: #c8c8c8;
+      }
+    }
+
+    &_button_add {
+      position: absolute;
+      right: 0px;
+      height: 50%;
+      top: -3px;
+    }
+
+    &_button_cut {
+      position: absolute;
+      right: 0px;
+      height: 50%;
+      bottom: -3px;
     }
 
     &_button[disabled] {
-      background-color: #E6E6E6;
+      background-color: #e6e6e6;
+      color: #c8c8c8;
       cursor: not-allowed;
     }
   }
@@ -233,6 +256,4 @@ export default {
   height: 32px;
   line-height: 32px;
 }
-
-
 </style>
