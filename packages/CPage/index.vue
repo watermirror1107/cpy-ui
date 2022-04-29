@@ -1,40 +1,45 @@
 <template>
   <div class="cpage-wrap">
-    <div class="cpage-pagesize">
-      <a-dropdown :trigger="['click']" overlayClassName="dropdownc">
-        <a class="sizelink" @click="(e) => e.preventDefault()">
-          {{currentPageSize}} <a-icon type="caret-down" /> <span class="unit">条/页</span>
-        </a>
-        <a-menu slot="overlay" @click="onSize" :selectedKeys="[currentPageSize]">
-          <a-menu-item v-for="opt in pageSizeOpts" :key="opt">
-            {{ opt }} 条/页
-          </a-menu-item>
-        </a-menu>
-      </a-dropdown>
+    <div class="cpage-total">
+      总共{{total}}条
     </div>
-    <div class="cpage-btn">
-      <div class="btn-item" :class="{ 'cpage-btn-disabled' : isFirstPage }" @click="firstPage">
-        <a-icon type="step-backward" />
+    <div>
+      <div class="cpage-pagesize">
+        <a-dropdown :trigger="['click']" overlayClassName="dropdownc">
+          <a class="sizelink" @click="(e) => e.preventDefault()">
+            {{currentPageSize}} <a-icon type="caret-down" /> <span class="unit">条/页</span>
+          </a>
+          <a-menu slot="overlay" @click="onSize" :selectedKeys="[currentPageSize]">
+            <a-menu-item v-for="opt in pageSizeOpts" :key="opt">
+              {{ opt }} 条/页
+            </a-menu-item>
+          </a-menu>
+        </a-dropdown>
       </div>
-      <div class="btn-item" :class="{ 'cpage-btn-disabled' : isFirstPage }" @click="prev">
-        <a-icon type="caret-left" />
-      </div>
-      <input
-        class="input-wrap"
-        type="text"
-        :value="currentPage"
-        autocomplete="off"
-        spellcheck="false"
-        @keydown="keyDown"
-        @keyup="keyUp"
-        @change="keyUp"
-      />
-      <div class="btn-item btn-total-num">/ {{ allPages }}</div>
-      <div class="btn-item" :class="{ 'cpage-btn-disabled' : isLastPage }" @click="next">
-        <a-icon type="caret-right" />
-      </div>
-      <div class="btn-item" :class="{ 'cpage-btn-disabled' : isLastPage }" style="border-right: none" @click="lastPage">
-        <a-icon type="step-forward" />
+      <div class="cpage-btn">
+        <div class="btn-item" :class="{ 'cpage-btn-disabled' : isFirstPage }" @click="firstPage">
+          <a-icon type="step-backward" />
+        </div>
+        <div class="btn-item" :class="{ 'cpage-btn-disabled' : isFirstPage }" @click="prev">
+          <a-icon type="caret-left" />
+        </div>
+        <input
+            class="input-wrap"
+            type="text"
+            :value="currentPage"
+            autocomplete="off"
+            spellcheck="false"
+            @keydown="keyDown"
+            @keyup="keyUp"
+            @change="keyUp"
+        />
+        <div class="btn-item btn-total-num">/ {{ allPages }}</div>
+        <div class="btn-item" :class="{ 'cpage-btn-disabled' : isLastPage }" @click="next">
+          <a-icon type="caret-right" />
+        </div>
+        <div class="btn-item" :class="{ 'cpage-btn-disabled' : isLastPage }" style="border-right: none" @click="lastPage">
+          <a-icon type="step-forward" />
+        </div>
       </div>
     </div>
   </div>
@@ -168,17 +173,20 @@ export default {
   background: #fafafa;
   color: rgba(0, 0, 0, 0.65);
   font-weight: 600;
-  
+
 }
 </style>
 <style lang="less">
 .cpage-wrap {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .cpage-pagesize {
+  float: left;
   display: flex;
   margin-right: 24px;
+  line-height: 34px;
   .sizelink {
     color: #646464;
   }
@@ -191,8 +199,9 @@ export default {
 }
 
 .cpage-btn {
+  float: left;
   display: flex;
-  align-items: i;
+  align-items: center;
   border: 1px solid #d1dae3;
   color: #646464;
   border-radius: 4px;

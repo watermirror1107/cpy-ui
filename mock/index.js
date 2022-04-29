@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
 
 const data = Mock.mock({
-    "list|60": [
+    "list|600": [
         {
             "id": '@increment(1)',
             "name": "@ctitle",

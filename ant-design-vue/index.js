@@ -19,7 +19,8 @@ import {
     Collapse,
     Menu,
     Dropdown,
-    Icon
+    Icon,
+    Modal
 } from 'ant-design-vue';
 // 设置 table 的 size 默认值为 small
 Table.props.size.default = 'small';
@@ -43,3 +44,4 @@ Vue.use(Collapse);
 Vue.use(Menu);
 Vue.use(Dropdown)
 Vue.use(Icon)
+Vue.use(Modal)
