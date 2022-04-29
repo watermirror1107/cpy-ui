@@ -182,6 +182,9 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
+.cpage-total{
+  color: #969696;
+}
 .cpage-pagesize {
   float: left;
   display: flex;

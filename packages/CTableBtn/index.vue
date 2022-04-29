@@ -7,11 +7,18 @@ export default {
   inheritAttrs: false,
   render(h, context) {
     let children = this.$slots.default ? this.$slots.default : [
-      h(icon, {props: {name: this.icon}}), h('p', {class: ['c_table_btn_text']}, this.text)
+      h('p', {class: ['c_table_btn_text']}, this.text)
     ]
+    if (this.icon !== '') {
+      children.unshift(h(icon, {props: {name: this.icon}}))
+    }
+    let classList = ['c_table_btn', `c_table_btn_${this.show_type}`]
+    if(this.isShowDivision){
+      classList.push('c_table_btn_division')
+    }
     let vnode = h('a-button', {
-      class: ['c_table_btn', `c_table_btn_${this.show_type}`],
-      props: {...this.$attrs,ghost:this.$attrs.type==='danger'},//danger的时候要设置ghost不然样式不好看
+      class: classList,
+      props: {...this.$attrs, ghost: this.$attrs.type === 'danger'},//danger的时候要设置ghost不然样式不好看
       on: this.$listeners,
     }, children)
     if (this.tip) {
@@ -31,11 +38,12 @@ export default {
     icon
   },
   props: {
+    isShowDivision: {type: Boolean, default: false},
     show_type: {type: String, default: 'vertical'},
     tip: {type: String, default: ''},
     placement: {type: String, default: 'top'},
     trigger: {type: String, default: 'hover'},
-    icon: {type: String, default: 'icon-shilixiangqing_bianji'},
+    icon: {type: String, default: ''},
     text: {type: String, default: 'button'}
   }
 }
@@ -43,7 +51,7 @@ export default {
 
 <style lang="less">
 .c_table_btn:hover {
-  background-color: #f5f5f5 !important
+  //background-color: #f5f5f5 !important
 }
 
 .c_table_btn.ant-btn {
@@ -53,8 +61,27 @@ export default {
 }
 
 .c_table_btn {
+  color: var(--main-blue);
+  position: relative;
+
   &_text {
     margin-bottom: 0;
+  }
+}
+.c_table_btn_division{
+  &:after {
+    position: absolute;
+    content: '';
+    opacity:1!important;
+    display: block;
+    right: 0!important;
+    left:unset!important;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 1px;
+    height: 16px;
+    background-color: #969696;
   }
 }
 
@@ -67,8 +94,9 @@ export default {
     width: 100%;
     text-align: center;
     line-height: 16px;
+    font-size: 14px;
     height: 32px;
-    overflow : hidden;
+    overflow: hidden;
     white-space: break-spaces;
     word-break: break-all;
     text-overflow: ellipsis;
@@ -84,8 +112,9 @@ export default {
   height: 48px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #eee!important;
+  border-bottom: 1px solid #eee !important;
   border-radius: 0;
+
   .c_icon {
     margin-right: 8px;
     flex-shrink: 0;
@@ -93,13 +122,14 @@ export default {
 
   p {
     white-space: nowrap;
-    flex:1;
+    flex: 1;
     text-align: left;
-    overflow : hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
   }
-  &:last-child{
-    border-bottom: unset!important;
+
+  &:last-child {
+    border-bottom: unset !important;
   }
 }
 

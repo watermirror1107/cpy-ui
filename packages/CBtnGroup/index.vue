@@ -1,5 +1,4 @@
 <script>
-//todo 修改样式
 import CButton from "../CButton";
 
 export default {
@@ -46,20 +45,12 @@ export default {
     if (children.length > 0) {
       let showNum = this.showNum;
       //超过的截取放到更多按钮里面
-      children.forEach((btn) => {
-        btn.componentOptions.propsData.show_type = "vertical"; //切换成竖直排列因为宽度被调整之后变成水平按钮模式要改回原来的
-      });
       if (showNum < children.length || showNum === 0) {
         //最多显示一个的时候显示更多
         //前面不需要隐藏的
         let midIndex = showNum === 0 ? 0 : showNum;
         let showChildren = children.slice(0, midIndex);
         let hiddenChildren = children.slice(midIndex);
-        hiddenChildren.forEach((btn) => {
-          //   console.log(btn);
-          btn.componentOptions.propsData.show_type = "horizontal"; //切换成水平排列
-          //   btn.elm.classList.add("c_btton_group_popver");
-        });
         let moreNode = h(
           "a-popover",
           {

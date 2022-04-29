@@ -48,7 +48,10 @@ export default {
       if (showNum < children.length || (showNum === 0 && width >= 90)) {//最多显示一个的时候显示更多
         //前面不需要隐藏的
         let midIndex = showNum === 0 ? 0 : (showNum - 1)
-        let showChildren = children.slice(0, midIndex)
+        let showChildren = children.slice(0, midIndex).map(btn => {//给展示在外面的按钮添加一个有边框
+          btn.componentOptions.propsData.isShowDivision = true
+          return btn
+        })
         let hiddenChildren = children.slice(midIndex)
         hiddenChildren.forEach(btn => {
           btn.componentOptions.propsData.show_type = 'horizontal'//切换成水平排列
@@ -63,7 +66,7 @@ export default {
               h('template', {slot: 'content'}, hiddenChildren),
               h(CTableBtn, {
                 props: {
-                  icon: 'icon-gengduo',
+                  // icon: 'icon-gengduo',
                   text: this.$T('instance.More')
                 }
               })
@@ -75,7 +78,10 @@ export default {
       } else {
         return h('div', {
           staticClass: 'c_btn_wrap'
-        }, children)
+        }, children.map((btn, index) => {
+          btn.componentOptions.propsData.isShowDivision = index !== (children.length - 1)
+          return btn
+        }))
       }
     } else {
       return h('')
