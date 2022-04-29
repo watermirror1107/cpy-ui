@@ -129,17 +129,6 @@
         }"
           @change=paginationChange
           @showSizeChange=onShowSizeChange></c-page>
-      <!-- <a-pagination
-          v-if="pagination"
-          v-bind="{
-         ...this.localPagination,
-        showSizeChanger: true,
-        total: this.total
-        }"
-          :showTotal="showTotal"
-          @change=paginationChange
-          @showSizeChange=onShowSizeChange
-      /> -->
     </div>
     <modal :width="480" okText="确定" cancelText="取消" :isVisible="isVisible" title="列表字段设置"
            :cancel="()=>(isVisible=false)" :ok="confirmColumns">
@@ -168,6 +157,7 @@ export default {
     Checkbox,
     Modal,
     CButton,
+    CPage,
     TagList,
     VNodes: {
       functional: true,
