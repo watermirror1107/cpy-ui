@@ -1,18 +1,3 @@
-<!--  <a-collapse class="c_collapse" :bordered="false">-->
-<!--    <template #expandIcon="props">-->
-<!--      <icon name="icon-xuanzekuanxia" :style="{transform:props.isActive?'rotate(-180deg)':'rotate(0deg)'}"/>-->
-<!--    </template>-->
-<!--    <a-collapse-panel key="1" header="This is panel header 1">-->
-<!--      <p>123</p>-->
-<!--    </a-collapse-panel>-->
-<!--    <a-collapse-panel key="2" header="This is panel header 2">-->
-<!--      <p>123</p>-->
-<!--    </a-collapse-panel>-->
-<!--    <a-collapse-panel key="3" header="This is panel header 3">-->
-<!--      <p>123</p>-->
-<!--    </a-collapse-panel>-->
-<!--  </a-collapse>-->
-
 <script>
 /**
  * @description:使用注意c-collapse-panel中的插槽最好是使用template包裹作为作用域插槽，目前没兼容name类型的插槽

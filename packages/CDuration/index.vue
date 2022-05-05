@@ -1,5 +1,4 @@
 <template>
-  <!--  todo 修改样式-->
   <div class="c_duration">
     <ul
         class="c_duration_list"

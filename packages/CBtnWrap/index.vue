@@ -1,5 +1,4 @@
 <script>
-//todo 修改样式
 import CTableBtn from "../CTableBtn";
 
 export default {
