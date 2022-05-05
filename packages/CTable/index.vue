@@ -1,12 +1,12 @@
 <template>
   <div class="c_table">
-    <div class="c_table_header">
+    <div v-if="isShowHeader" class="c_table_header">
       <div class="c_table_header_left">
         <div class="c_table_action_bar">
           <slot name="actionBar"></slot>
         </div>
         <a-input size="large" v-model="formData.queryName" @change="debounceFresh($event,()=>{},'queryName')"
-                 :placeholder="formOptions.find(i=>i.key==='queryName').placeholder">
+                 :placeholder="queryNamePlaceholder">
           <icon
               slot="suffix"
               name="icon-sousuo"/>
@@ -25,7 +25,7 @@
         <slot name="headerRight"></slot>
       </div>
     </div>
-    <tag-list @close="refresh(true)" class="c_table_tags" v-model="formData" :formOptions="formOptions"
+    <tag-list @close="refresh(true)" class="c_table_tags" v-model="formData" :formOptions="getFormOptions()"
               :tagFilterArr="tagFilterArr"></tag-list>
     <a-table
         :class="('bordered' in property&&!property.bordered)?'c_table_noBorder':''"
@@ -72,11 +72,11 @@
             v-model="formData[column.selectKey||column.key]"
             :getPopupContainer="(triggerNode)=>triggerNode.parentNode"
             :filter-option="(input, option) =>(option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0)"
-            :placeholder="$T('public.search')"
+            :placeholder="column.placeholder||$T('public.search')"
         >
           <a-select-option
               class="multipleOptions"
-              v-for="option in filterOptions"
+              v-for="option in column.options"
               :value="option.id"
               :key="option.id">
             {{ option.name }}
@@ -107,11 +107,11 @@
             :getPopupContainer="(triggerNode)=>triggerNode.parentNode"
             option-filter-prop="children"
             :filter-option="(input, option) =>(option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0)"
-            :placeholder="$T('public.search')"
+            :placeholder="column.placeholder||$T('public.search')"
             @change="debounceFresh($event,confirm,column.selectKey||column.key)"
         >
           <a-select-option
-              v-for="option in filterOptions"
+              v-for="option in column.options"
               :value="option.id"
               :key="option.id">{{ option.name }}
           </a-select-option>
@@ -119,8 +119,9 @@
       </template>
     </a-table>
     <div
-        class="c_table_action_box">
-      <c-page v-if="pagination"
+        v-if="isShowPagination"
+        class="c_table_pagination_box">
+      <c-page
               v-bind="{
          ...this.localPagination,
         showSizeChanger: true,
@@ -185,17 +186,17 @@ export default {
     }
   },
   props: {
+    queryNamePlaceholder: {type: String, default: 'placeholder'},//是否可以设置表头
+    isShowHeader: {type: Boolean, default: true},//是否显示表格搜索头部等按钮
+    isShowPagination: {type: Boolean, default: true},//是否显示分页器
     isSetColumn: {type: Boolean, default: true},//是否可以设置表头
-    pagination: {type: Boolean, default: true},
     loopTime: {type: Number},//轮询间隔,建议至少5秒以上
     data: {type: Function},
     formData: {
       type: Object, default: () => {
       }
     },
-    formOptions: {type: Array, default: () => []},
     tagFilterArr: {type: Array, default: () => ['queryName']},
-    filterOptions: {type: Array, default: () => []},
     dataSource: {type: Array, default: () => []},
     scroll: {default: () => ({x: 930}), type: Object}
   },
@@ -258,6 +259,12 @@ export default {
   },
   methods: {
     /**
+    * @description:获取taglist需要的formoptions
+    */
+    getFormOptions(){
+      return this.$attrs.columns.filter(i=>i.options)
+    },
+    /**
      * @description:多选的下拉框中的重置按钮
      */
     resetFilter(key) {
@@ -299,7 +306,6 @@ export default {
       confirm()
       this.refresh(true)
       this.$emit('filterChange', val, key)
-      console.log(this.formData)
     }),
     /**
      * @description:兼容处理
@@ -496,7 +502,7 @@ export default {
   }
 
 
-  &_action_box {
+  &_pagination_box {
     padding: 16px 24px 16px 15px;
     background-color: #fff;
     border:1px solid #e8e8e8;
