@@ -7,7 +7,11 @@
       <c-button>测试</c-button>
       <c-button>测试</c-button>
     </c-btn-group>
-    <c-select v-model="selectVal" :selectOptions="selectOptions" style="width:300px"></c-select>
+    <c-select
+      v-model="selectVal"
+      :selectOptions="selectOptions"
+      style="width: 300px"
+    ></c-select>
     <!--    <c-banner title="title"></c-banner>-->
     <!--    <c-banner>123</c-banner>-->
     <!--    <c-banner>-->
@@ -87,139 +91,157 @@
     <!--                     v-model="tabIndex2"-->
     <!--                     style="width:320px;margin: 0 auto;">-->
     <!--    </c-search-select>-->
-<!--    <c-table-->
-<!--        :formData="formData"-->
-<!--        :formOptions="formOptions"-->
-<!--        ref="table"-->
-<!--        :rowSelection="{-->
-<!--          selectedRowKeys: selectedRowKeys,-->
-<!--          onChange: onSelectChange-->
-<!--        }"-->
-<!--        :filterOptions="filterOptions"-->
-<!--        :tagFilterArr="['queryName','date']"-->
-<!--        :columns="columns"-->
-<!--        :loopTime="10000"-->
-<!--        :data="queryList"-->
-<!--        rowKey="id">-->
-<!--      <template #headerRight>-->
-<!--        <c-button size="large">添加</c-button>-->
-<!--      </template>-->
-<!--      <template #id="{ text,record }">-->
-<!--        <a-popover>-->
-<!--          <template #content>-->
-<!--            <c-table :columns="columns"-->
-<!--                     :dataSource="record.children"></c-table>-->
-<!--          </template>-->
-<!--          <span style="color:red">{{ text }}</span>-->
-<!--        </a-popover>-->
-<!--      </template>-->
-<!--      <template #operate="{record,index}">-->
-<!--        <c-btn-wrap>-->
-<!--          <c-table-btn-->
-<!--              :disabled="isClick"-->
-<!--              text="click1"-->
-<!--              @click="clickHandler1"-->
-<!--          >-->
-<!--          </c-table-btn>-->
-<!--          <c-table-btn-->
-<!--              text="click2"-->
-<!--              @click="clickHandler2"-->
-<!--          >-->
-<!--          </c-table-btn>-->
-<!--          <c-table-btn-->
-<!--              text="click3"-->
-<!--              @click="clickHandler3"-->
-<!--          >-->
-<!--          </c-table-btn>-->
-<!--          <c-table-btn-->
-<!--              text="click4"-->
-<!--              @click="clickHandler4">-->
-<!--          </c-table-btn>-->
-<!--          <c-table-btn-->
-<!--              text="click5"-->
-<!--              @click="clickHandler5">-->
-<!--          </c-table-btn>-->
-<!--          <c-table-btn-->
-<!--              text="click6"-->
-<!--              @click="clickHandler6">-->
-<!--          </c-table-btn>-->
-<!--          <c-table-btn-->
-<!--              text="click7"-->
-<!--              @click="clickHandler7">-->
-<!--          </c-table-btn>-->
-<!--          <c-table-btn-->
-<!--              text="click8"-->
-<!--              @click="clickHandler8">-->
-<!--          </c-table-btn>-->
-<!--          <c-table-btn-->
-<!--              :disabled="isClick"-->
-<!--              text="click9"-->
-<!--              @click="clickHandler9">-->
-<!--          </c-table-btn>-->
-<!--          <c-table-btn-->
-<!--              text="click10"-->
-<!--              @click="clickHandler10(index)">-->
-<!--          </c-table-btn>-->
-<!--        </c-btn-wrap>-->
-<!--      </template>-->
-<!--      <template #actionBar>-->
-<!--        <c-btn-group>-->
-<!--          <c-button-->
-<!--              icon="icon-kaiji"-->
-<!--              size="large">-->
-<!--           123-->
-<!--          </c-button>-->
-<!--          <c-button-->
-<!--              icon="icon-kaiji"-->
-<!--              size="large">-->
-<!--           123-->
-<!--          </c-button>-->
-<!--          <c-button-->
-<!--              icon="icon-kaiji"-->
-<!--              size="large">-->
-<!--           123-->
-<!--          </c-button>-->
-<!--          <c-button-->
-<!--              icon="icon-kaiji"-->
-<!--              size="large">-->
-<!--           123-->
-<!--          </c-button>-->
-<!--          <c-button-->
-<!--              icon="icon-kaiji"-->
-<!--              size="large">-->
-<!--           123-->
-<!--          </c-button>-->
-<!--          <c-button-->
-<!--              icon="icon-kaiji"-->
-<!--              size="large">-->
-<!--           123-->
-<!--          </c-button>-->
-<!--          <c-button-->
-<!--              icon="icon-kaiji"-->
-<!--              size="large">-->
-<!--           123-->
-<!--          </c-button>-->
-<!--        </c-btn-group>-->
-<!--      </template>-->
-<!--    </c-table>-->
-        <c-collapse :activeKey="['c']">
-          <c-collapse-panel key="a" >
-            <p name="header">title1</p>
-          </c-collapse-panel>
-          <c-collapse-panel key="b" header="title2">2</c-collapse-panel>
-          <c-collapse-panel key="c" :disabled="true" header="title3">3</c-collapse-panel>
-          <c-collapse-panel key="d">
-            <template #header>giao</template>
-            <template #extra>extra</template>
-            <p>giao1</p>
-            <p>giao2</p>
-            123123
-          </c-collapse-panel>
-        </c-collapse>
+    <!--    <c-table-->
+    <!--        :formData="formData"-->
+    <!--        :formOptions="formOptions"-->
+    <!--        ref="table"-->
+    <!--        :rowSelection="{-->
+    <!--          selectedRowKeys: selectedRowKeys,-->
+    <!--          onChange: onSelectChange-->
+    <!--        }"-->
+    <!--        :filterOptions="filterOptions"-->
+    <!--        :tagFilterArr="['queryName','date']"-->
+    <!--        :columns="columns"-->
+    <!--        :loopTime="10000"-->
+    <!--        :data="queryList"-->
+    <!--        rowKey="id">-->
+    <!--      <template #headerRight>-->
+    <!--        <c-button size="large">添加</c-button>-->
+    <!--      </template>-->
+    <!--      <template #id="{ text,record }">-->
+    <!--        <a-popover>-->
+    <!--          <template #content>-->
+    <!--            <c-table :columns="columns"-->
+    <!--                     :dataSource="record.children"></c-table>-->
+    <!--          </template>-->
+    <!--          <span style="color:red">{{ text }}</span>-->
+    <!--        </a-popover>-->
+    <!--      </template>-->
+    <!--      <template #operate="{record,index}">-->
+    <!--        <c-btn-wrap>-->
+    <!--          <c-table-btn-->
+    <!--              :disabled="isClick"-->
+    <!--              text="click1"-->
+    <!--              @click="clickHandler1"-->
+    <!--          >-->
+    <!--          </c-table-btn>-->
+    <!--          <c-table-btn-->
+    <!--              text="click2"-->
+    <!--              @click="clickHandler2"-->
+    <!--          >-->
+    <!--          </c-table-btn>-->
+    <!--          <c-table-btn-->
+    <!--              text="click3"-->
+    <!--              @click="clickHandler3"-->
+    <!--          >-->
+    <!--          </c-table-btn>-->
+    <!--          <c-table-btn-->
+    <!--              text="click4"-->
+    <!--              @click="clickHandler4">-->
+    <!--          </c-table-btn>-->
+    <!--          <c-table-btn-->
+    <!--              text="click5"-->
+    <!--              @click="clickHandler5">-->
+    <!--          </c-table-btn>-->
+    <!--          <c-table-btn-->
+    <!--              text="click6"-->
+    <!--              @click="clickHandler6">-->
+    <!--          </c-table-btn>-->
+    <!--          <c-table-btn-->
+    <!--              text="click7"-->
+    <!--              @click="clickHandler7">-->
+    <!--          </c-table-btn>-->
+    <!--          <c-table-btn-->
+    <!--              text="click8"-->
+    <!--              @click="clickHandler8">-->
+    <!--          </c-table-btn>-->
+    <!--          <c-table-btn-->
+    <!--              :disabled="isClick"-->
+    <!--              text="click9"-->
+    <!--              @click="clickHandler9">-->
+    <!--          </c-table-btn>-->
+    <!--          <c-table-btn-->
+    <!--              text="click10"-->
+    <!--              @click="clickHandler10(index)">-->
+    <!--          </c-table-btn>-->
+    <!--        </c-btn-wrap>-->
+    <!--      </template>-->
+    <!--      <template #actionBar>-->
+    <!--        <c-btn-group>-->
+    <!--          <c-button-->
+    <!--              icon="icon-kaiji"-->
+    <!--              size="large">-->
+    <!--           123-->
+    <!--          </c-button>-->
+    <!--          <c-button-->
+    <!--              icon="icon-kaiji"-->
+    <!--              size="large">-->
+    <!--           123-->
+    <!--          </c-button>-->
+    <!--          <c-button-->
+    <!--              icon="icon-kaiji"-->
+    <!--              size="large">-->
+    <!--           123-->
+    <!--          </c-button>-->
+    <!--          <c-button-->
+    <!--              icon="icon-kaiji"-->
+    <!--              size="large">-->
+    <!--           123-->
+    <!--          </c-button>-->
+    <!--          <c-button-->
+    <!--              icon="icon-kaiji"-->
+    <!--              size="large">-->
+    <!--           123-->
+    <!--          </c-button>-->
+    <!--          <c-button-->
+    <!--              icon="icon-kaiji"-->
+    <!--              size="large">-->
+    <!--           123-->
+    <!--          </c-button>-->
+    <!--          <c-button-->
+    <!--              icon="icon-kaiji"-->
+    <!--              size="large">-->
+    <!--           123-->
+    <!--          </c-button>-->
+    <!--        </c-btn-group>-->
+    <!--      </template>-->
+    <!--    </c-table>-->
+    <c-collapse :activeKey="['c']">
+      <c-collapse-panel :key="'a'">
+        <p name="header">title1</p>
+      </c-collapse-panel>
+      <c-collapse-panel :key="'b'" header="title2">2</c-collapse-panel>
+      <c-collapse-panel :key="'c'" :disabled="true" header="title3"
+        >3</c-collapse-panel
+      >
+      <c-collapse-panel :key="'d'">
+        <template #header>giao</template>
+        <template #extra>extra</template>
+        <p>giao1</p>
+        <p>giao2</p>
+      </c-collapse-panel>
+    </c-collapse>
+
+    <!-- <a-collapse :activeKey="['b']">
+      <a-collapse-panel key="a" header="This is panel header 1">
+        <p>{{ text }}</p>
+      </a-collapse-panel>
+      <a-collapse-panel
+        key="b"
+        header="This is panel header 2"
+        :disabled="false"
+      >
+        <p>{{ text }}</p>
+      </a-collapse-panel>
+      <a-collapse-panel key="c" header="This is panel header 3" disabled>
+        <p>{{ text }}</p>
+      </a-collapse-panel>
+    </a-collapse> -->
   </div>
 </template>
 
 <script>
+import { Collapse } from "ant-design-vue";
 import { debounce } from "@/utils";
 import axios from "axios";
 import CButton from "../packages/CButton";
@@ -238,7 +260,7 @@ import CCollapsePanel from "../packages/CCollapsePanel";
 import CTagList from "../packages/CTagList";
 import CIcon from "../packages/CIcon";
 import CInputNumber from "../packages/CInputNumber";
-import CSelect from "../packages/CSelect"
+import CSelect from "../packages/CSelect";
 
 export default {
   components: {
@@ -258,20 +280,23 @@ export default {
     CTagList,
     CInputNumber,
     CBtnGroup,
-    CSelect
+    CSelect,
+    [Collapse.name]: Collapse,
+    [Collapse.Panel.name]: Collapse.Panel,
   },
   data() {
     return {
+      activeKey: ["1"],
       number: "",
       isClick: false,
       selectVal: 1,
       selectOptions: [
         {
-          val: 1, // 
-          text: '1个月',
-          preIcon: 'icon-win_blue',
-          hotText: '9折'
-        }
+          val: 1, //
+          text: "1个月",
+          preIcon: "icon-win_blue",
+          hotText: "9折",
+        },
       ],
       dataSource: [
         {
@@ -391,135 +416,156 @@ export default {
         { id: 2, name: "30-40" },
       ],
       dataFilterValue: "",
-      columns: [
-        {
-          title: "id",
-          dataIndex: "id",
-          key: "id",
-          fixed: "left",
-          scopedSlots: { customRender: "id" },
-          width: 100,
-        },
-        {
-          title: "name",
-          dataIndex: "name",
-          key: "name",
-          width: 100,
-          type: "selectMultiple",
-          scopedSlots: {
-            filterDropdown: "filterDropdown",
-            filterIcon: "filterIcon",
-          },
-          filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
-          onFilterDropdownVisibleChange: (visible) => {
-            if (visible) {
-              this.filterOptions = this.formOptions.find(
-                (i) => i.key === "name"
-              ).options;
-            }
-          },
-        },
-        {
-          title: "content",
-          dataIndex: "content",
-          key: "content",
-          width: 100,
-        },
-        {
-          title: "createTime",
-          dataIndex: "createTime",
-          key: "createTime",
-          width: 140,
-          scopedSlots: {
-            filterDropdown: "filterDropdown",
-            filterIcon: "filterIcon",
-          },
-          filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
-          onFilterDropdownVisibleChange: (visible) => {
-            if (visible) {
-              this.filterOptions = this.formOptions.find(
-                (i) => i.key === "createTime"
-              ).options;
-            }
-          },
-        },
-        {
-          title: "operate",
-          key: "operate",
-          width: 300,
-          scopedSlots: { customRender: "operate" },
-        },
-      ],
+      // columns: [
+      //   {
+      //     title: "id",
+      //     dataIndex: "id",
+      //     key: "id",
+      //     fixed: "left",
+      //     scopedSlots: { customRender: "id" },
+      //     width: 100,
+      //   },
+      //   {
+      //     title: "name",
+      //     dataIndex: "name",
+      //     key: "name",
+      //     width: 100,
+      //     type: "selectMultiple",
+      //     scopedSlots: {
+      //       filterDropdown: "filterDropdown",
+      //       filterIcon: "filterIcon",
+      //     },
+      //     filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
+      //     onFilterDropdownVisibleChange: (visible) => {
+      //       if (visible) {
+      //         this.filterOptions = this.formOptions.find(
+      //           (i) => i.key === "name"
+      //         ).options;
+      //       }
+      //     },
+      //   },
+      //   {
+      //     title: "content",
+      //     dataIndex: "content",
+      //     key: "content",
+      //     width: 100,
+      //   },
+      //   {
+      //     title: "createTime",
+      //     dataIndex: "createTime",
+      //     key: "createTime",
+      //     width: 140,
+      //     scopedSlots: {
+      //       filterDropdown: "filterDropdown",
+      //       filterIcon: "filterIcon",
+      //     },
+      //     filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
+      //     onFilterDropdownVisibleChange: (visible) => {
+      //       if (visible) {
+      //         this.filterOptions = this.formOptions.find(
+      //           (i) => i.key === "createTime"
+      //         ).options;
+      //       }
+      //     },
+      //   },
+      //   {
+      //     title: "operate",
+      //     key: "operate",
+      //     width: 300,
+      //     scopedSlots: { customRender: "operate" },
+      //   },
+      // ],
     };
   },
-  computed:{
-    columns(){
-      if(true){
+  computed: {
+    columns() {
+      if (true) {
         return [
           {
-            title: 'id',
-            dataIndex: 'id',
-            key: 'id',
-            fixed: 'left',
+            title: "id",
+            dataIndex: "id",
+            key: "id",
+            fixed: "left",
             width: 100,
-            type: 'selectMultiple',
-            scopedSlots: {filterDropdown: 'filterDropdown', filterIcon: 'filterIcon',customRender:"id"},
-            filteredValue: this.dataFilterValue? [this.dataFilterValue] : null,
+            type: "selectMultiple",
+            scopedSlots: {
+              filterDropdown: "filterDropdown",
+              filterIcon: "filterIcon",
+              customRender: "id",
+            },
+            filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
-                this.filterOptions = this.formOptions.find(i => i.key === 'id').options;
+                this.filterOptions = this.formOptions.find(
+                  (i) => i.key === "id"
+                ).options;
               }
-            }
+            },
           },
           {
-            title: 'name',
-            dataIndex: 'name',
-            key: 'name',
+            title: "name",
+            dataIndex: "name",
+            key: "name",
             width: 100,
-            type: 'selectMultiple',
-            scopedSlots: {filterDropdown: 'filterDropdown', filterIcon: 'filterIcon'},
-            filteredValue: this.dataFilterValue? [this.dataFilterValue] : null,
+            type: "selectMultiple",
+            scopedSlots: {
+              filterDropdown: "filterDropdown",
+              filterIcon: "filterIcon",
+            },
+            filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
-                this.filterOptions = this.formOptions.find(i => i.key === 'name').options;
+                this.filterOptions = this.formOptions.find(
+                  (i) => i.key === "name"
+                ).options;
               }
-            }
+            },
           },
           {
-            title: 'content',
-            dataIndex: 'content',
-            key: 'content',
+            title: "content",
+            dataIndex: "content",
+            key: "content",
             width: 200,
-            scopedSlots: {filterDropdown: 'filterDropdown', filterIcon: 'filterIcon'},
-            filteredValue: this.dataFilterValue? [this.dataFilterValue] : null,
+            scopedSlots: {
+              filterDropdown: "filterDropdown",
+              filterIcon: "filterIcon",
+            },
+            filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
-                this.filterOptions = this.formOptions.find(i => i.key === 'content').options;
+                this.filterOptions = this.formOptions.find(
+                  (i) => i.key === "content"
+                ).options;
               }
-            }
+            },
           },
           {
-            title: 'createTime',
-            dataIndex: 'createTime',
-            key: 'createTime',
+            title: "createTime",
+            dataIndex: "createTime",
+            key: "createTime",
             width: 140,
-            scopedSlots: {filterDropdown: 'filterDropdown',filterIcon:'filterIcon'},
-            filteredValue: this.dataFilterValue? [this.dataFilterValue] : null,
+            scopedSlots: {
+              filterDropdown: "filterDropdown",
+              filterIcon: "filterIcon",
+            },
+            filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
-                this.filterOptions = this.formOptions.find(i => i.key === 'createTime').options;
+                this.filterOptions = this.formOptions.find(
+                  (i) => i.key === "createTime"
+                ).options;
               }
-            }
+            },
           },
           {
-            title: 'operate',
-            key: 'operate',
+            title: "operate",
+            key: "operate",
             width: 300,
-            scopedSlots: {customRender: 'operate'}
-          }
-        ]
+            scopedSlots: { customRender: "operate" },
+          },
+        ];
       }
-    }
+    },
   },
   watch: {
     tabIndex(nv) {
@@ -528,7 +574,7 @@ export default {
   },
   mounted() {
     // this.queryOptions()
-    this.$refs.table.refresh();
+    // this.$refs.table.refresh();
   },
   methods: {
     consoleRow() {
