@@ -85,12 +85,13 @@
             <v-nodes :vnodes="menu"/>
             <a-divider style="margin: 4px 0;"/>
             <div
-                style="padding: 7px 8px;"
+                style="padding: 7px 8px;display:flex;justify-content:space-between;"
                 @mousedown="e => e.preventDefault()">
-              <a-button style="margin-right: 8px;" type="primary"
-                        @click="debounceFresh(formData[column.selectKey||column.key],confirm,column.selectKey||column.key)">确定
+              <a-button type="primary"
+                        @click="debounceFresh(formData[column.selectKey||column.key],confirm,column.selectKey||column.key)">
+                确定
               </a-button>
-              <a-button type="primary" ghost @click="resetFilter(column.selectKey||column.key)">重置</a-button>
+              <a-button type="primary" ghost @click="resetFilter(column.selectKey||column.key,confirm)">重置</a-button>
             </div>
           </div>
         </a-select>
@@ -122,13 +123,13 @@
         v-if="isShowPagination"
         class="c_table_pagination_box">
       <c-page
-              v-bind="{
+          v-bind="{
          ...this.localPagination,
         showSizeChanger: true,
         total: this.total
         }"
-              @change=paginationChange
-              @showSizeChange=onShowSizeChange></c-page>
+          @change=paginationChange
+          @showSizeChange=onShowSizeChange></c-page>
     </div>
     <modal :width="480" okText="确定" cancelText="取消" :isVisible="isVisible" title="列表字段设置"
            :cancel="()=>(isVisible=false)" :ok="confirmColumns">
@@ -259,16 +260,17 @@ export default {
   },
   methods: {
     /**
-    * @description:获取taglist需要的formoptions
-    */
-    getFormOptions(){
-      return this.$attrs.columns.filter(i=>i.options)
+     * @description:获取taglist需要的formoptions
+     */
+    getFormOptions() {
+      return this.$attrs.columns.filter(i => i.options)
     },
     /**
      * @description:多选的下拉框中的重置按钮
      */
-    resetFilter(key) {
+    resetFilter(key, confirm) {
       this.formData[key] = []
+      confirm()
       this.refresh(true)
     },
     /**
@@ -439,12 +441,17 @@ export default {
   margin-bottom: 29px !important;
 }
 
-.multipleOptions i {
-  border: 1px solid #E6E6E6;
-  color: #fff !important;
-  left: 22px;
-  right: 0;
-  width: 16px;
+.multipleOptions {
+  padding-right: 0 !important;
+  padding-left: 50px;
+  text-align: left;
+  i {
+    border: 1px solid #E6E6E6;
+    color: #fff !important;
+    left: 22px;
+    right: 0;
+    width: 16px;
+  }
 }
 
 .multipleOptions.ant-select-dropdown-menu-item-selected i {
@@ -456,13 +463,16 @@ export default {
   .ant-table-thead {
     background-color: #F7F9FC !important;
   }
+
   .ant-table-tbody {
     background-color: #fff !important;
   }
-  .ant-table-wrapper .ant-table{
+
+  .ant-table-wrapper .ant-table {
     border-left: 1px solid #e8e8e8;
     border-right: 1px solid #e8e8e8;
   }
+
   &_header {
     display: flex;
     justify-content: space-between;
@@ -505,7 +515,7 @@ export default {
   &_pagination_box {
     padding: 16px 24px 16px 15px;
     background-color: #fff;
-    border:1px solid #e8e8e8;
+    border: 1px solid #e8e8e8;
     border-top: 0;
   }
 
