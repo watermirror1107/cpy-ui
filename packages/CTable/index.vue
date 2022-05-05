@@ -1,5 +1,4 @@
 <template>
-  <!--  todo  修改分页的UI-->
   <div class="c_table">
     <div class="c_table_header">
       <div class="c_table_header_left">
@@ -70,7 +69,7 @@
             :open="true"
             :showArrow="false"
             mode="multiple"
-            v-model="formData[column.key]"
+            v-model="formData[column.selectKey||column.key]"
             :getPopupContainer="(triggerNode)=>triggerNode.parentNode"
             :filter-option="(input, option) =>(option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0)"
             :placeholder="$T('public.search')"
@@ -89,9 +88,9 @@
                 style="padding: 7px 8px;"
                 @mousedown="e => e.preventDefault()">
               <a-button style="margin-right: 8px;" type="primary"
-                        @click="debounceFresh(formData[column.key],confirm,column.key)">确定
+                        @click="debounceFresh(formData[column.selectKey||column.key],confirm,column.selectKey||column.key)">确定
               </a-button>
-              <a-button type="primary" ghost @click="resetFilter(column.key)">重置</a-button>
+              <a-button type="primary" ghost @click="resetFilter(column.selectKey||column.key)">重置</a-button>
             </div>
           </div>
         </a-select>
@@ -102,14 +101,14 @@
             :showArrow="false"
             allowClear
             autoFocus
-            v-model="formData[column.key]"
+            v-model="formData[column.selectKey||column.key]"
             :defaultOpen="true"
             :open="true"
             :getPopupContainer="(triggerNode)=>triggerNode.parentNode"
             option-filter-prop="children"
             :filter-option="(input, option) =>(option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0)"
             :placeholder="$T('public.search')"
-            @change="debounceFresh($event,confirm,column.key)"
+            @change="debounceFresh($event,confirm,column.selectKey||column.key)"
         >
           <a-select-option
               v-for="option in filterOptions"
@@ -121,14 +120,14 @@
     </a-table>
     <div
         class="c_table_action_box">
-        <c-page v-if="pagination"
-          v-bind="{
+      <c-page v-if="pagination"
+              v-bind="{
          ...this.localPagination,
         showSizeChanger: true,
         total: this.total
         }"
-          @change=paginationChange
-          @showSizeChange=onShowSizeChange></c-page>
+              @change=paginationChange
+              @showSizeChange=onShowSizeChange></c-page>
     </div>
     <modal :width="480" okText="确定" cancelText="取消" :isVisible="isVisible" title="列表字段设置"
            :cancel="()=>(isVisible=false)" :ok="confirmColumns">
@@ -149,6 +148,7 @@ import Modal from "../CModal";
 import CButton from "../CButton";
 import {Checkbox} from "ant-design-vue";
 import CPage from '../CPage'
+
 export default {
   name: 'CTable',
   inheritAttrs: false,
@@ -208,7 +208,8 @@ export default {
   },
   created() {
     if (this?.$route?.path && localStorage.custormColumnObject) {//从缓存里面取
-      let arr = JSON.parse(localStorage.custormColumnObject)[this?.$route?.path].split(',')
+      let userId = this.$store.state.userInfo.id//获取用户ID this.$store.state.userInfo.id
+      let arr = JSON.parse(localStorage.custormColumnObject)[userId][this?.$route?.path].split(',')
       this.showColumns = arr
     } else {
       this.showColumns = this.$attrs.columns.map(i => i.key)
@@ -445,18 +446,22 @@ export default {
 }
 
 .c_table {
-  padding-bottom: 24px;
 
   .ant-table-thead {
     background-color: #F7F9FC !important;
   }
-
+  .ant-table-tbody {
+    background-color: #fff !important;
+  }
+  .ant-table-wrapper .ant-table{
+    border-left: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+  }
   &_header {
     display: flex;
-    width: 100%;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin: 16px 0;
 
     &_left {
       .ant-input-affix-wrapper {
@@ -492,8 +497,10 @@ export default {
 
 
   &_action_box {
-    margin-top: 10px;
-    width: 100%;
+    padding: 16px 24px 16px 15px;
+    background-color: #fff;
+    border:1px solid #e8e8e8;
+    border-top: 0;
   }
 
   &_action_bar {

@@ -1,9 +1,9 @@
 <script>
-import CButton from "../CButton";
+import Button from "../CButton";
 
 export default {
   name: "CBtnGroup",
-  components: { CButton },
+  components: {Button},
   props: {
     trigger: {
       //更多菜单的激活方式
@@ -38,7 +38,7 @@ export default {
     if (this.$slots.default) {
       children = this.$slots.default.filter((item) => {
         return (
-          item.componentOptions && item.componentOptions.tag === "c-button"
+            item.componentOptions && item.componentOptions.tag === "c-button"
         );
       });
     }
@@ -52,54 +52,57 @@ export default {
         let showChildren = children.slice(0, midIndex);
         let hiddenChildren = children.slice(midIndex);
         let moreNode = h(
-          "a-popover",
-          {
-            props: {
-              trigger: this.trigger,
-              placement: this.placement,
-            },
-          },
-          [
-            h(
-              "template",
-              { slot: "content" },
-              hiddenChildren.map((item) => {
-                return h(
-                  "div",
-                  {
-                    class: "c_btn_group_more_item",
-                  },
-                  [item]
-                );
-              })
-            ),
-            h(
-              CButton,
-              {
-                props: {
-                  icon: "icon-xuanzekuanxia",
-                  // text: ,
-                },
-                class: "c_btn_group_more_btn",
+            "a-popover",
+            {
+              props: {
+                trigger: this.trigger,
+                placement: this.placement,
               },
-              this.$T("instance.More") || "更多操作"
-            ),
-          ]
+            },
+            [
+              h(
+                  "template",
+                  {slot: "content"},
+                  hiddenChildren.map((item) => {
+                    return h(
+                        "div",
+                        {
+                          class: "c_btn_group_more_item",
+                        },
+                        [item]
+                    );
+                  })
+              ),
+              h(
+                  Button,
+                  {
+                    style:{
+                      height:'40px',
+                      lineHeight:'40px'
+                    },
+                    props: {
+                      icon: "icon-xuanzekuanxia",
+                    },
+                    class: "c_btn_group_more_btn"
+                  },
+                  this.$T("instance.More")
+              ),
+            ]
         );
         return h(
-          "div",
-          {
-            staticClass: "c_btn_group",
-          },
-          [showChildren, moreNode]
+            "div",
+            {
+              staticClass: "c_btn_group",
+            },
+            [showChildren, moreNode]
         );
       } else {
         return h(
-          "div",
-          {
-            staticClass: "c_btn_group",
-          },
-          children
+            "div",
+            {
+              staticClass: "c_btn_group",
+            },
+            children
         );
       }
     } else {
@@ -119,22 +122,27 @@ export default {
   height: 100%;
   min-width: 92px; //最小宽度可以显示一个按钮
   overflow: hidden;
+
   .c_button {
     margin-right: 15px;
   }
+
   &::after {
     clear: both;
     display: block;
     content: "";
   }
+
   .c_btn_group_more_btn {
     flex-direction: row-reverse;
+
     .c_button_iconSvg {
       font-size: 10px;
       margin: 0px 0px 0px 10px;
     }
   }
 }
+
 .c_btn_group_more_item {
   width: 108px;
 

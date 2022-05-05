@@ -396,6 +396,75 @@ export default {
       ],
     };
   },
+  computed:{
+    columns(){
+      if(true){
+        return [
+          {
+            title: 'id',
+            dataIndex: 'id',
+            key: 'id',
+            fixed: 'left',
+            width: 100,
+            type: 'selectMultiple',
+            scopedSlots: {filterDropdown: 'filterDropdown', filterIcon: 'filterIcon',customRender:"id"},
+            filteredValue: this.dataFilterValue? [this.dataFilterValue] : null,
+            onFilterDropdownVisibleChange: (visible) => {
+              if (visible) {
+                this.filterOptions = this.formOptions.find(i => i.key === 'id').options;
+              }
+            }
+          },
+          {
+            title: 'name',
+            dataIndex: 'name',
+            key: 'name',
+            width: 100,
+            type: 'selectMultiple',
+            scopedSlots: {filterDropdown: 'filterDropdown', filterIcon: 'filterIcon'},
+            filteredValue: this.dataFilterValue? [this.dataFilterValue] : null,
+            onFilterDropdownVisibleChange: (visible) => {
+              if (visible) {
+                this.filterOptions = this.formOptions.find(i => i.key === 'name').options;
+              }
+            }
+          },
+          {
+            title: 'content',
+            dataIndex: 'content',
+            key: 'content',
+            width: 200,
+            scopedSlots: {filterDropdown: 'filterDropdown', filterIcon: 'filterIcon'},
+            filteredValue: this.dataFilterValue? [this.dataFilterValue] : null,
+            onFilterDropdownVisibleChange: (visible) => {
+              if (visible) {
+                this.filterOptions = this.formOptions.find(i => i.key === 'content').options;
+              }
+            }
+          },
+          {
+            title: 'createTime',
+            dataIndex: 'createTime',
+            key: 'createTime',
+            width: 140,
+            scopedSlots: {filterDropdown: 'filterDropdown',filterIcon:'filterIcon'},
+            filteredValue: this.dataFilterValue? [this.dataFilterValue] : null,
+            onFilterDropdownVisibleChange: (visible) => {
+              if (visible) {
+                this.filterOptions = this.formOptions.find(i => i.key === 'createTime').options;
+              }
+            }
+          },
+          {
+            title: 'operate',
+            key: 'operate',
+            width: 300,
+            scopedSlots: {customRender: 'operate'}
+          }
+        ]
+      }
+    }
+  },
   watch: {
     tabIndex(nv) {
       console.log(nv);

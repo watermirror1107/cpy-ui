@@ -25,45 +25,46 @@ export default {
   },
   render(h, context) {
     let keys = Object.keys(this.formData).filter(i => !this.tagFilterArr.includes(i))
-    let children = keys.map(key => {
+    let children =[];
+    keys.forEach(key => {
       let tagChildren = []
-      //name
       let selectItem = this.formOptions.find(i => i.key === key)
       if (selectItem) {
+        //name
         tagChildren.push(h('span', {style: {marginRight: '16px'}}, selectItem?.title + ':'))
-      }
-      //内容
-      let content = '';
-      let isVisible=false;
-      if (this.formData[key] instanceof Array) {
-       let options= selectItem.options.filter(i=>this.formData[key].includes(i.id)).map(i=>i.name)
-        content = options.join(' | ')
-        isVisible=this.formData[key].length>0
-      } else {
-        content = selectItem.options.find(i => i.id == this.formData[key])?.name
-        isVisible=(!!this.formData[key]) && this.formData[key] !== ''||this.formData[key]
-      }
-      tagChildren.push(h('span', content))
-      //删除按钮
-      tagChildren.push(h(Icon, {
-        props: {name: 'icon-cipanxiangqing_bukeyong'},
-        nativeOn: {
-          click: () => {
-            if (this.formData[key] instanceof Array) {
-              this.formData[key] = []
-            } else {
-              this.formData[key] = undefined
+        //内容
+        let content = '';
+        let isVisible=false;
+        if (this.formData[key] instanceof Array) {
+          let options= selectItem.options.filter(i=>this.formData[key].includes(i.id)).map(i=>i.name)
+          content = options.join(' | ')
+          isVisible=this.formData[key].length>0
+        } else {
+          content = selectItem.options.find(i => i.id == this.formData[key])?.name
+          isVisible=(!!this.formData[key]) && this.formData[key] !== ''
+        }
+        tagChildren.push(h('span', content))
+        //删除按钮
+        tagChildren.push(h(Icon, {
+          props: {name: 'icon-cipanxiangqing_bukeyong'},
+          nativeOn: {
+            click: () => {
+              if (this.formData[key] instanceof Array) {
+                this.formData[key] = []
+              } else {
+                this.formData[key] = undefined
+              }
+              this.$emit('close')
             }
-            this.$emit('close')
           }
-        }
-      }))
-      return h(Tag, {
-        props: {
-          closable: true,
-          visible: isVisible
-        }
-      }, tagChildren)
+        }))
+        children.push(h(Tag, {
+          props: {
+            closable: true,
+            visible: isVisible
+          }
+        }, tagChildren))
+      }
     })
     return h('ul', {
       class: 'c_tag_list',
