@@ -4,6 +4,7 @@
       class="c_modal"
       :width="width"
       :footer="null"
+      :closable="false"
       :visible="isVisible"
       :destroyOnClose="isDestroy"
       :title="null"
@@ -11,23 +12,25 @@
   >
     <slot
         name="title">
-      <icon v-if="icon" :name="icon"></icon>
-      <p class="title">{title}</p>
+      <p v-if="!isSlotTitle" class="c_modal_title">
+        <icon v-if="icon" :name="icon" style="margin-right: 8px"></icon>
+        {{ title }}
+      </p>
     </slot>
     <slot></slot>
-    <slot v-if="isSlotFooter"
-          name="footer">
-      <div
-          class="footer">
+    <slot
+        name="footer">
+      <div v-if="!isSlotFooter"
+           class="c_modal_footer">
         <a-button
-            class="footer_cancel"
-            type="ghost"
+            class="c_modal_footer_cancel c_modal_footer_btn"
+            type="text"
             @click="cancel"
         >{{ cancelText }}
         </a-button>
         <a-button
             :loading="isConfirmLoading"
-            class="footer_ok"
+            class="c_modal_footer_ok c_modal_footer_btn"
             :disabled="isConfirmLoading"
             type="primary"
             @click="ok"
@@ -41,6 +44,7 @@
 <script>
 import Icon from "../CIcon/index.vue";
 import Vue from "vue";
+
 export default {
   name: 'CModal',
   components: {Icon},
@@ -52,9 +56,9 @@ export default {
     isVisible: {type: Boolean, default: false},
     isDestroy: {type: Boolean, default: true},
     isConfirmLoading: {type: Boolean, default: false},
-    width: {type: Number, default: 600},
-    cancelText: {type: String, default: Vue.prototype.$T?Vue.prototype.$T('instance.Cancel'):'取消'},
-    okText: {type: String, default: Vue.prototype.$T?Vue.prototype.$T('instance.Confirm'):'确定'}
+    width: {type: Number, default: 376},
+    cancelText: {type: String, default: Vue.prototype.$T ? Vue.prototype.$T('instance.Cancel') : '取消'},
+    okText: {type: String, default: Vue.prototype.$T ? Vue.prototype.$T('instance.Confirm') : '确定'}
   },
   computed: {
     isSlotTitle() {
@@ -68,18 +72,22 @@ export default {
 </script>
 
 <style lang="less">
-.c_modal{
-  .footer {
+.c_modal {
+  &_title {
+    text-align: center;
+    color: #323232;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  &_footer {
     margin-top: 26px;
     display: flex;
     justify-content: center;
 
-    &_ok {
-      margin-right: 24px;
-    }
-
     &_cancel {
       color: #959595;
+      margin-right: 12px;
       border-color: #959595;
     }
 

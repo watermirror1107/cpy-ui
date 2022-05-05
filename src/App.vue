@@ -7,6 +7,7 @@
       <c-button>测试</c-button>
       <c-button>测试</c-button>
     </c-btn-group>
+    <c-select v-model="selectVal" :selectOptions="selectOptions" style="width:300px"></c-select>
     <!--    <c-banner title="title"></c-banner>-->
     <!--    <c-banner>123</c-banner>-->
     <!--    <c-banner>-->
@@ -181,6 +182,7 @@ import CCollapsePanel from "../packages/CCollapsePanel";
 import CTagList from "../packages/CTagList";
 import CIcon from "../packages/CIcon";
 import CInputNumber from "../packages/CInputNumber";
+import CSelect from "../packages/CSelect"
 
 export default {
   components: {
@@ -200,11 +202,21 @@ export default {
     CTagList,
     CInputNumber,
     CBtnGroup,
+    CSelect
   },
   data() {
     return {
       number: "",
       isClick: false,
+      selectVal: 1,
+      selectOptions: [
+        {
+          val: 1, // 
+          text: '1个月',
+          preIcon: 'icon-win_blue',
+          hotText: '9折'
+        }
+      ],
       dataSource: [
         {
           id: 1,
@@ -383,6 +395,75 @@ export default {
         },
       ],
     };
+  },
+  computed:{
+    columns(){
+      if(true){
+        return [
+          {
+            title: 'id',
+            dataIndex: 'id',
+            key: 'id',
+            fixed: 'left',
+            width: 100,
+            type: 'selectMultiple',
+            scopedSlots: {filterDropdown: 'filterDropdown', filterIcon: 'filterIcon',customRender:"id"},
+            filteredValue: this.dataFilterValue? [this.dataFilterValue] : null,
+            onFilterDropdownVisibleChange: (visible) => {
+              if (visible) {
+                this.filterOptions = this.formOptions.find(i => i.key === 'id').options;
+              }
+            }
+          },
+          {
+            title: 'name',
+            dataIndex: 'name',
+            key: 'name',
+            width: 100,
+            type: 'selectMultiple',
+            scopedSlots: {filterDropdown: 'filterDropdown', filterIcon: 'filterIcon'},
+            filteredValue: this.dataFilterValue? [this.dataFilterValue] : null,
+            onFilterDropdownVisibleChange: (visible) => {
+              if (visible) {
+                this.filterOptions = this.formOptions.find(i => i.key === 'name').options;
+              }
+            }
+          },
+          {
+            title: 'content',
+            dataIndex: 'content',
+            key: 'content',
+            width: 200,
+            scopedSlots: {filterDropdown: 'filterDropdown', filterIcon: 'filterIcon'},
+            filteredValue: this.dataFilterValue? [this.dataFilterValue] : null,
+            onFilterDropdownVisibleChange: (visible) => {
+              if (visible) {
+                this.filterOptions = this.formOptions.find(i => i.key === 'content').options;
+              }
+            }
+          },
+          {
+            title: 'createTime',
+            dataIndex: 'createTime',
+            key: 'createTime',
+            width: 140,
+            scopedSlots: {filterDropdown: 'filterDropdown',filterIcon:'filterIcon'},
+            filteredValue: this.dataFilterValue? [this.dataFilterValue] : null,
+            onFilterDropdownVisibleChange: (visible) => {
+              if (visible) {
+                this.filterOptions = this.formOptions.find(i => i.key === 'createTime').options;
+              }
+            }
+          },
+          {
+            title: 'operate',
+            key: 'operate',
+            width: 300,
+            scopedSlots: {customRender: 'operate'}
+          }
+        ]
+      }
+    }
   },
   watch: {
     tabIndex(nv) {

@@ -14,7 +14,7 @@ export default {
       default: () => [],
       type: Array
     },
-    filterArr: {//不显示
+    tagFilterArr: {//不显示
       default: () => [],
       type: Array
     }
@@ -24,40 +24,47 @@ export default {
     prop: 'formData'
   },
   render(h, context) {
-    let keys = Object.keys(this.formData).filter(i => !this.filterArr.includes(i))
-    let children = keys.map(key => {
+    let keys = Object.keys(this.formData).filter(i => !this.tagFilterArr.includes(i))
+    let children =[];
+    keys.forEach(key => {
       let tagChildren = []
-      //label
       let selectItem = this.formOptions.find(i => i.key === key)
       if (selectItem) {
+        //name
         tagChildren.push(h('span', {style: {marginRight: '16px'}}, selectItem?.title + ':'))
-      }
-      //内容
-      let content=''
-      if(this.formData[key] instanceof Array){
-
-      }else{
-        content=selectItem.options.find(i=>i.value===this.formData[key]).label
-      }
-      tagChildren.push(h('span',content))
-      //删除按钮
-      tagChildren.push(h(Icon, {
-        props: {name: 'icon-cipanxiangqing_bukeyong'}, nativeOn: {
-          click: () => {
-            if (this.formData[key] instanceof Array) {
-              this.formData[key] = []
-            } else {
-              this.formData[key] = undefined
+        //内容
+        let content = '';
+        let isVisible=false;
+        if (this.formData[key] instanceof Array) {
+          let options= selectItem.options.filter(i=>this.formData[key].includes(i.id)).map(i=>i.name)
+          content = options.join(' | ')
+          isVisible=this.formData[key].length>0
+        } else {
+          content = selectItem.options.find(i => i.id == this.formData[key])?.name
+          isVisible=(!!this.formData[key]) && this.formData[key] !== ''
+        }
+        tagChildren.push(h('span', content))
+        //删除按钮
+        tagChildren.push(h(Icon, {
+          props: {name: 'icon-cipanxiangqing_bukeyong'},
+          nativeOn: {
+            click: () => {
+              if (this.formData[key] instanceof Array) {
+                this.formData[key] = []
+              } else {
+                this.formData[key] = undefined
+              }
+              this.$emit('close')
             }
           }
-        }
-      }))
-      return h(Tag, {
-        props: {
-          closable: true,
-          visible: (!!this.formData[key]) && this.formData[key] !== ''
-        }
-      }, tagChildren)
+        }))
+        children.push(h(Tag, {
+          props: {
+            closable: true,
+            visible: isVisible
+          }
+        }, tagChildren))
+      }
     })
     return h('ul', {
       class: 'c_tag_list',
@@ -68,6 +75,12 @@ export default {
 
 <style lang="less">
 .c_tag_list {
+  &:after {
+    clear: both;
+    content: '';
+    display: block;
+  }
+
   .ant-tag {
     background-color: #E6E6E6;
     height: 32px;
@@ -76,6 +89,7 @@ export default {
     line-height: 32px;
     color: #646464;
     border: unset;
+    float: left;
 
     .c_icon {
       vertical-align: -3px;
