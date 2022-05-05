@@ -134,9 +134,9 @@
     <modal :width="480" okText="确定" cancelText="取消" :isVisible="isVisible" title="列表字段设置"
            :cancel="()=>(isVisible=false)" :ok="confirmColumns">
       <a-checkbox-group style="width: 100%;" v-model="midColumns">
-        <checkbox v-for="(item,index) in $attrs.columns.map(i=>i.key)" :key="index" class="column-checkbox"
-                  :value="item">
-          {{ item }}
+        <checkbox v-for="(item,index) in $attrs.columns" :key="index" class="column-checkbox"
+                  :value="item.key">
+          {{ item.title }}
         </checkbox>
       </a-checkbox-group>
     </modal>

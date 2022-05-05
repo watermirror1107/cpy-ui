@@ -78,6 +78,7 @@ export default {
     color: #323232;
     font-size: 14px;
     font-weight: bold;
+    margin-bottom: 25px;
   }
 
   &_footer {
