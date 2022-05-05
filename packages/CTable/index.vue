@@ -210,7 +210,7 @@ export default {
   },
   created() {
     if (this?.$route?.path && localStorage.custormColumnObject) {//从缓存里面取
-      let userId = this.$store.state.userInfo.id//获取用户ID this.$store.state.userInfo.id
+      let userId = JSON.parse(localStorage.CPY_PORTAL_USERINFO).userId//获取用户ID this.$store.state.userInfo.id
       let arr = JSON.parse(localStorage.custormColumnObject)[userId][this?.$route?.path].split(',')
       this.showColumns = arr
     } else {
