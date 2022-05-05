@@ -28,7 +28,7 @@ export default {
     let children =[];
     keys.forEach(key => {
       let tagChildren = []
-      let selectItem = this.formOptions.find(i => i.key === key)
+      let selectItem = this.formOptions.find(i => (i.selectKey === key||i.key === key))
       if (selectItem) {
         //name
         tagChildren.push(h('span', {style: {marginRight: '16px'}}, selectItem?.title + ':'))
