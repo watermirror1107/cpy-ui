@@ -92,9 +92,7 @@ export default {
   p {
     width: 100%;
     text-align: center;
-    line-height: 16px;
     font-size: 14px;
-    height: 32px;
     overflow: hidden;
     white-space: break-spaces;
     word-break: break-all;
