@@ -39,8 +39,6 @@ export default {
       } else if (this.$parent.$options.propsData.column.width) {//dataSource的是容器初始宽度会为0；如果column中没给width也会为0
         width = this.$parent.$options.propsData.column.width
       }
-      console.log('parent',this.$parent)
-      console.log(width)
       let showNum = Math.floor(width / 58)//c-table-btn的最大宽度为58,计算最多能展示几个
       //超过的截取放到更多按钮里面
       children.forEach(btn => {
