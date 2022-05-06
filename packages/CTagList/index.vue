@@ -46,7 +46,7 @@ export default {
         tagChildren.push(h('span', content))
         //删除按钮
         tagChildren.push(h(Icon, {
-          props: {name: 'icon-cipanxiangqing_bukeyong'},
+          props: {name: 'icon-chuangjianshili_guanbi'},
           nativeOn: {
             click: () => {
               if (this.formData[key] instanceof Array) {
