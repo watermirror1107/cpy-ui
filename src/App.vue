@@ -376,7 +376,6 @@ export default {
         createTime: undefined,
         date: [],
       },
-      filterOptions: [],
       formOptions: [
         {
           key: "queryName",

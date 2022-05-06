@@ -90,6 +90,7 @@ export default {
   height: 60px;
   padding: 0;
   p {
+    padding: 0 5px;
     width: 100%;
     text-align: center;
     font-size: 14px;
