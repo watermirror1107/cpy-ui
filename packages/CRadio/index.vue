@@ -3,7 +3,6 @@
       class="c_radio_wrap"
       :disabled="$attrs.disabled"
       :class="{
-        c_radio_wrap_b2:Number($parent.selectedType)==2,
         c_radio_wrap_selected: $parent.value == value&&!$attrs.disabled,
         c_radio_wrap_blue:$parent.value == value &&Number($parent.selectedType)==1&&!$attrs.disabled
       }"
@@ -53,11 +52,11 @@ export default {
   min-height: 40px;
   padding: 0 24px;
   text-align: center;
-  color: #323232;
+  color: #0048FF;
   font-size: 14px;
   font-family: Source Han Sans CN;
   font-weight: bold;
-  border: 1px solid #C8C8C8;
+  border: 1px solid #e6e6e6;
   border-radius: 4px;
   line-height: 40px;
   cursor: pointer;
@@ -117,8 +116,8 @@ export default {
 
 
 .c_radio_wrap_blue{
-  color: #1279F8;
-  background-color: #D0E4FE;
+  color: #fff;
+  background-color: #0048FF;
 }
 
 .c_radio_wrap_b2{
