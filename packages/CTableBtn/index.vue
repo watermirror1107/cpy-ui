@@ -63,7 +63,6 @@ export default {
 .c_table_btn {
   color: var(--main-blue);
   position: relative;
-  padding: 0;
   &_text {
     margin-bottom: 0;
   }
@@ -89,7 +88,7 @@ export default {
   width: 58px;
   overflow: hidden;
   height: 60px;
-
+  padding: 0;
   p {
     width: 100%;
     text-align: center;

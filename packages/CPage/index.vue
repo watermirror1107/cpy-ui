@@ -7,12 +7,12 @@
       <div class="cpage-pagesize">
         <a-dropdown :trigger="['click']" overlayClassName="dropdownc">
           <a class="sizelink" @click="(e) => e.preventDefault()">
-            {{ currentPageSize }}
+            {{ currentPageSize }} {{ translateText('page') }}
             <a-icon type="caret-down"/>
           </a>
           <a-menu slot="overlay" @click="onSize" :selectedKeys="[currentPageSize]">
             <a-menu-item v-for="opt in pageSizeOpts" :key="opt">
-              {{ opt }} {{ translateText('page') }}
+              {{ opt }}
             </a-menu-item>
           </a-menu>
         </a-dropdown>

@@ -129,7 +129,7 @@
           @change=paginationChange
           @showSizeChange=onShowSizeChange></c-page>
     </div>
-    <modal :width="480" :okText="$T('instance.Confirm')" :cancelText="$T('instance.Cancel')" :isVisible="isVisible" :title="$('public.setColumn')"
+    <modal :width="480" :okText="$T('instance.Confirm')" :cancelText="$T('instance.Cancel')" :isVisible="isVisible" :title="$T('public.setColumn')"
            :cancel="()=>(isVisible=false)" :ok="confirmColumns">
       <a-checkbox-group style="width: 100%;" v-model="midColumns">
         <checkbox v-for="(item,index) in $attrs.columns" :key="index" class="column-checkbox"
