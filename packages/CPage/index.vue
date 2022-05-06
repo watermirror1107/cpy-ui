@@ -1,27 +1,28 @@
 <template>
   <div class="cpage-wrap">
     <div class="cpage-total">
-      总共{{total}}条
+      {{ translateText('total',total) }}
     </div>
     <div>
       <div class="cpage-pagesize">
         <a-dropdown :trigger="['click']" overlayClassName="dropdownc">
           <a class="sizelink" @click="(e) => e.preventDefault()">
-            {{currentPageSize}} <a-icon type="caret-down" /> <span class="unit">条/页</span>
+            {{ currentPageSize }}
+            <a-icon type="caret-down"/>
           </a>
           <a-menu slot="overlay" @click="onSize" :selectedKeys="[currentPageSize]">
             <a-menu-item v-for="opt in pageSizeOpts" :key="opt">
-              {{ opt }} 条/页
+              {{ opt }} {{ translateText('page') }}
             </a-menu-item>
           </a-menu>
         </a-dropdown>
       </div>
       <div class="cpage-btn">
         <div class="btn-item" :class="{ 'cpage-btn-disabled' : isFirstPage }" @click="firstPage">
-          <a-icon type="step-backward" />
+          <a-icon type="step-backward"/>
         </div>
         <div class="btn-item" :class="{ 'cpage-btn-disabled' : isFirstPage }" @click="prev">
-          <a-icon type="caret-left" />
+          <a-icon type="caret-left"/>
         </div>
         <input
             class="input-wrap"
@@ -35,10 +36,11 @@
         />
         <div class="btn-item btn-total-num">/ {{ allPages }}</div>
         <div class="btn-item" :class="{ 'cpage-btn-disabled' : isLastPage }" @click="next">
-          <a-icon type="caret-right" />
+          <a-icon type="caret-right"/>
         </div>
-        <div class="btn-item" :class="{ 'cpage-btn-disabled' : isLastPage }" style="border-right: none" @click="lastPage">
-          <a-icon type="step-forward" />
+        <div class="btn-item" :class="{ 'cpage-btn-disabled' : isLastPage }" style="border-right: none"
+             @click="lastPage">
+          <a-icon type="step-forward"/>
         </div>
       </div>
     </div>
@@ -87,6 +89,22 @@ export default {
     }
   },
   methods: {
+    /**
+     * @description:翻译兼容
+     */
+    translateText(key,total) {
+      let textObj = {
+        'en_US': {
+          page: '/page',
+          total:`Total ${total} items`
+        },
+        'zh_CN': {
+          page: '条/页',
+          total: `总共${total}条`
+        },
+      }
+      return textObj[localStorage.CPY_PORTAL_LANGUAGE||'zh_CN'][key]
+    },
     changePage(page) {
       if (this.currentPage != page) {
         const pageSize = this.currentPageSize
@@ -95,7 +113,7 @@ export default {
       }
     },
     prev() {
-      if(this.isFirstPage) return;
+      if (this.isFirstPage) return;
       const current = this.currentPage
       if (current <= 1) {
         return false
@@ -103,7 +121,7 @@ export default {
       this.changePage(current - 1)
     },
     next() {
-      if(this.isLastPage) return;
+      if (this.isLastPage) return;
       const current = this.currentPage
       if (current >= this.allPages) {
         return false
@@ -111,11 +129,11 @@ export default {
       this.changePage(current + 1)
     },
     firstPage() {
-      if(this.isFirstPage) return;
+      if (this.isFirstPage) return;
       this.changePage(1)
     },
     lastPage() {
-      if(this.isLastPage) return;
+      if (this.isLastPage) return;
       this.changePage(this.allPages)
     },
     onSize({key}) {
@@ -128,11 +146,11 @@ export default {
     keyDown(e) {
       const key = e.keyCode
       const condition =
-        (key >= 48 && key <= 57) ||
-        (key >= 96 && key <= 105) ||
-        key === 8 ||
-        key === 37 ||
-        key === 39
+          (key >= 48 && key <= 57) ||
+          (key >= 96 && key <= 105) ||
+          key === 8 ||
+          key === 37 ||
+          key === 39
 
       if (!condition) {
         e.preventDefault()
@@ -166,9 +184,10 @@ export default {
 </script>
 <style>
 .dropdownc .ant-dropdown-menu-item:hover {
-   background-color: #0048ff !important;
-   color: #fff;
+  background-color: #0048ff !important;
+  color: #fff;
 }
+
 .dropdownc .ant-dropdown-menu-item-selected {
   background: #fafafa;
   color: rgba(0, 0, 0, 0.65);
@@ -182,17 +201,21 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
-.cpage-total{
+
+.cpage-total {
   color: #969696;
 }
+
 .cpage-pagesize {
   float: left;
   display: flex;
   margin-right: 24px;
   line-height: 34px;
+
   .sizelink {
     color: #646464;
   }
+
   .unit {
     display: inline-block;
     padding-left: 6px;
@@ -209,6 +232,7 @@ export default {
   color: #646464;
   border-radius: 4px;
   overflow: hidden;
+
   .btn-item {
     height: 32px;
     width: 32px;
@@ -217,17 +241,21 @@ export default {
     border-right: 1px solid #d1dae3;
     background: #f7f9fc;
     cursor: pointer;
+
     &:hover {
       color: #0048ff;
     }
+
     &.cpage-btn-disabled {
       background-color: #E6E6E6;
       color: #C8C8C8;
+
       &:hover {
         color: #C8C8C8;
       }
     }
   }
+
   .input-wrap {
     border: none;
     outline: none;
@@ -237,8 +265,10 @@ export default {
     text-align: center;
     line-height: 32px;
   }
+
   .btn-total-num {
     width: 48px;
+
     &:hover {
       color: #646464;
     }

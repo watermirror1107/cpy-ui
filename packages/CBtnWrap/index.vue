@@ -39,12 +39,14 @@ export default {
       } else if (this.$parent.$options.propsData.column.width) {//dataSource的是容器初始宽度会为0；如果column中没给width也会为0
         width = this.$parent.$options.propsData.column.width
       }
-      let showNum = Math.floor(width / 90)//c-table-btn的最大宽度为90,计算最多能展示几个
+      console.log('parent',this.$parent)
+      console.log(width)
+      let showNum = Math.floor(width / 58)//c-table-btn的最大宽度为58,计算最多能展示几个
       //超过的截取放到更多按钮里面
       children.forEach(btn => {
         btn.componentOptions.propsData.show_type = 'vertical'//切换成竖直排列因为宽度被调整之后变成水平按钮模式要改回原来的
       })
-      if (showNum < children.length || (showNum === 0 && width >= 90)) {//最多显示一个的时候显示更多
+      if (showNum < children.length || (showNum === 0 && width >= 58)) {//最多显示一个的时候显示更多
         //前面不需要隐藏的
         let midIndex = showNum === 0 ? 0 : (showNum - 1)
         let showChildren = children.slice(0, midIndex).map(btn => {//给展示在外面的按钮添加一个有边框

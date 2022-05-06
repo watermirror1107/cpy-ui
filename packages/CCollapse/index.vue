@@ -12,7 +12,7 @@ export default {
     Icon,
   },
   props: {
-    activeKey: { default: () => [], type: Array }, //todo activeKey不准确
+    activeKey: { default: () => [], type: Array },
   },
   render(h, context) {
     let children = this.$slots.default.filter((item) => {

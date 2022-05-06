@@ -9,7 +9,7 @@
                  :placeholder="queryNamePlaceholder">
           <icon
               slot="suffix"
-              name="icon-sousuo"/>
+              name="icon-shili_shousuo"/>
         </a-input>
         <c-button class="c_table_header_left_refresh" size="large" :disabled="isLocalLoading" type="text"
                   @click="refresh">
@@ -17,8 +17,7 @@
         </c-button>
         <c-button type="text" class="c_table_header_left_refresh" v-if="isSetColumn" size="large"
                   @click="setColumns">
-          <icon name="icon-daohang_shiliguige"></icon>
-          <!--      todo 设置图标未提供-->
+          <icon name="icon-shili_shezhi"></icon>
         </c-button>
       </div>
       <div class="c_table_header_right">
@@ -37,8 +36,7 @@
         :rowSelection="$attrs.rowSelection || null"
     >
       <template #filterIcon>
-        <!--todo 图标未替换-->
-        <icon style="width: 16px;outline: unset;margin-left: 4px;" name="icon-qidong"></icon>
+        <icon style="width: 16px;outline: unset;margin-left: 4px;" name="icon-shili_saixuan"></icon>
       </template>
       <template
           v-for="slot  in slotArr"
@@ -89,9 +87,9 @@
                 @mousedown="e => e.preventDefault()">
               <a-button type="primary"
                         @click="debounceFresh(formData[column.selectKey||column.key],confirm,column.selectKey||column.key)">
-                确定
+                {{$T('instance.Confirm')}}
               </a-button>
-              <a-button type="primary" ghost @click="resetFilter(column.selectKey||column.key,confirm)">重置</a-button>
+              <a-button type="primary" ghost @click="resetFilter(column.selectKey||column.key,confirm)">{{$T('instance.Reset')}}</a-button>
             </div>
           </div>
         </a-select>
@@ -131,7 +129,7 @@
           @change=paginationChange
           @showSizeChange=onShowSizeChange></c-page>
     </div>
-    <modal :width="480" okText="确定" cancelText="取消" :isVisible="isVisible" title="列表字段设置"
+    <modal :width="480" :okText="$T('instance.Confirm')" :cancelText="$T('instance.Cancel')" :isVisible="isVisible" :title="$('public.setColumn')"
            :cancel="()=>(isVisible=false)" :ok="confirmColumns">
       <a-checkbox-group style="width: 100%;" v-model="midColumns">
         <checkbox v-for="(item,index) in $attrs.columns" :key="index" class="column-checkbox"
@@ -315,7 +313,11 @@ export default {
     translateText(code) {
       //console端没有字典翻译兼容
       let textObj = {
-        'public.search': '搜索'
+        'public.search': '搜索',
+        'public.setColumn': '列表字段设置',
+        'instance.Confirm': '确定',
+        'instance.Reset': '重置',
+        'instance.Cancel': '取消',
       }
       return textObj[code] || code
     },
