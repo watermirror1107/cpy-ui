@@ -52,7 +52,7 @@ export default {
   min-height: 40px;
   padding: 0 24px;
   text-align: center;
-  color: #323232;
+  color: #0048FF;
   font-size: 14px;
   font-family: Source Han Sans CN;
   font-weight: bold;
@@ -116,8 +116,8 @@ export default {
 
 
 .c_radio_wrap_blue{
-  color: #1279F8;
-  background-color: #D0E4FE;
+  color: #fff;
+  background-color: #0048FF;
 }
 
 .c_radio_wrap_b2{
