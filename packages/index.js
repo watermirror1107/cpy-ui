@@ -4,7 +4,7 @@ import './font/font_2631791_umj4vo54h.js'//等UI补全图标后删除
 import './font/font_3379171_qn91vchjwn.js'//new
 //导入第三方UI库
 import '../ant-design-vue/index'
-
+import CModal from "./CModal/index.js";
 const components = []
 //导入组件
 const req = require.context('./', true, /\.vue$/);
@@ -17,6 +17,7 @@ function install(Vue) {
     if (!install.installed) {
         install.installed = true
         components.forEach(component => Vue.component(component.name, component))
+        Vue.prototype.$CModal=CModal
     }
 }
 

@@ -8,7 +8,7 @@
       :visible="isVisible"
       :destroyOnClose="isDestroy"
       :title="null"
-      @cancel="cancel"
+      @cancel="closeModal"
   >
     <slot
         name="title">
@@ -17,7 +17,7 @@
         {{ title }}
       </p>
     </slot>
-    <slot></slot>
+    <slot>{{content}}</slot>
     <slot
         name="footer">
       <div v-if="!isSlotFooter"
@@ -25,7 +25,7 @@
         <a-button
             class="c_modal_footer_cancel c_modal_footer_btn"
             type="text"
-            @click="cancel"
+            @click="closeModal"
         >{{ cancelText }}
         </a-button>
         <a-button
@@ -48,11 +48,16 @@ import Vue from "vue";
 export default {
   name: 'CModal',
   components: {Icon},
+  model:{
+    prop:'isVisible',
+    event:'change'
+  },
   props: {
     icon: {type: String, default: ''},
+    content: {type: String, default: ''},
     title: {type: String},
-    ok: {type: Function},
-    cancel: {type: Function},
+    ok: {type: Function,default:()=>{}},
+    cancel: {type: Function,default:()=>{}},
     isVisible: {type: Boolean, default: false},
     isDestroy: {type: Boolean, default: true},
     isConfirmLoading: {type: Boolean, default: false},
@@ -66,6 +71,15 @@ export default {
     },
     isSlotFooter() {
       return Boolean(this.$slots.footer || this.$scopedSlots.footer);
+    }
+  },
+  methods:{
+    /**
+    * @description:关闭弹窗
+    */
+    closeModal(){
+      this.$emit('change',false)
+      this.cancel()
     }
   }
 };

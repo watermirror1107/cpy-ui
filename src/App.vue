@@ -576,6 +576,20 @@ export default {
     // this.$refs.table.refresh();
   },
   methods: {
+    addTest(){
+      let x=this.$CModal({
+        icon:'icon-a-shili_hong',
+        title: 'test',
+        content: 'content',
+        // cancel: () => {
+        //   console.log('closese')
+        // },
+        ok: () => {
+          console.log('ok')
+        },
+        okText: 'Ok'
+      })
+    },
     consoleRow() {
       console.log(this.selectedRows);
     },

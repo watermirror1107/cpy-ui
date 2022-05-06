@@ -87,9 +87,11 @@
                 @mousedown="e => e.preventDefault()">
               <a-button type="primary"
                         @click="debounceFresh(formData[column.selectKey||column.key],confirm,column.selectKey||column.key)">
-                {{$T('instance.Confirm')}}
+                {{ $T('instance.Confirm') }}
               </a-button>
-              <a-button type="primary" ghost @click="resetFilter(column.selectKey||column.key,confirm)">{{$T('instance.Reset')}}</a-button>
+              <a-button type="primary" ghost @click="resetFilter(column.selectKey||column.key,confirm)">
+                {{ $T('instance.Reset') }}
+              </a-button>
             </div>
           </div>
         </a-select>
@@ -129,8 +131,10 @@
           @change=paginationChange
           @showSizeChange=onShowSizeChange></c-page>
     </div>
-    <modal :width="480" :okText="$T('instance.Confirm')" :cancelText="$T('instance.Cancel')" :isVisible="isVisible" :title="$T('public.setColumn')"
-           :cancel="()=>(isVisible=false)" :ok="confirmColumns">
+    <modal :width="480" :okText="$T('instance.Confirm')" :cancelText="$T('instance.Cancel')" v-model="isVisible"
+           :title="$T('public.setColumn')"
+           :ok="confirmColumns"
+    >
       <a-checkbox-group style="width: 100%;" v-model="midColumns">
         <checkbox v-for="(item,index) in $attrs.columns" :key="index" class="column-checkbox"
                   :value="item.key">
@@ -144,7 +148,7 @@
 import {debounce} from "@/utils";
 import Icon from "../CIcon";
 import TagList from "../CTagList";
-import Modal from "../CModal";
+import Modal from "../CModal/index.vue";
 import CButton from "../CButton";
 import {Checkbox} from "ant-design-vue";
 import CPage from '../CPage'
@@ -447,6 +451,7 @@ export default {
   padding-right: 0 !important;
   padding-left: 50px;
   text-align: left;
+
   i {
     border: 1px solid #E6E6E6;
     color: #fff !important;
