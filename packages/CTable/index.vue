@@ -24,7 +24,7 @@
         <slot name="headerRight"></slot>
       </div>
     </div>
-    <tag-list @close="refresh(true)" class="c_table_tags" v-model="formData" :formOptions="getFormOptions()"
+    <tag-list v-if="isShowHeader" @close="refresh(true)" class="c_table_tags" v-model="formData" :formOptions="getFormOptions()"
               :tagFilterArr="tagFilterArr"></tag-list>
     <a-table
         :class="('bordered' in property&&!property.bordered)?'c_table_noBorder':''"
