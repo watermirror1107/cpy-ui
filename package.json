@@ -1,6 +1,6 @@
 {
   "name": "cpy-ui",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "private": false,
   "main": "./lib/cpy-ui.min.js",
   "license": "MIT",
