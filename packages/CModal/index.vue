@@ -13,11 +13,11 @@
     <slot
         name="title">
       <p v-if="!isSlotTitle" class="c_modal_title">
-        <icon v-if="icon" :name="icon" style="margin-right: 8px"></icon>
+        <icon v-if="icon" :name="icon" style="margin-right: 8px;vertical-align: -4px;"></icon>
         {{ title }}
       </p>
     </slot>
-    <slot>{{content}}</slot>
+    <slot><p class="c_modal_content">{{content}}</p></slot>
     <slot
         name="footer">
       <div v-if="!isSlotFooter"
@@ -94,22 +94,25 @@ export default {
     font-weight: bold;
     margin-bottom: 25px;
   }
-
+  &_content{
+    text-align: center;
+  }
   &_footer {
     margin-top: 26px;
     display: flex;
     justify-content: center;
 
     &_cancel {
-      color: #959595;
+      color: #646464;
       margin-right: 12px;
-      border-color: #959595;
+      border:unset;
+      background-color: #F1F2F6;
+      &:hover{
+        background-color: #eee;
+        color: #333333;
+      }
     }
 
-    &_cancel:hover {
-      color: #C8C8C8;
-      border-color: #C8C8C8;
-    }
   }
 }
 
