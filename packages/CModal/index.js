@@ -14,8 +14,19 @@ export default function CModal(config) {
             originFn()
             modalInstance.$destroy()
         }
-    }else{
+    } else {
         currentConfig.cancel = function () {
+            modalInstance.$destroy()
+        }
+    }
+    if (config.ok) {//兼容指令式的关闭弹窗
+        let originFn = config.ok
+        currentConfig.ok = function () {
+            originFn()
+            modalInstance.$destroy()
+        }
+    } else {
+        currentConfig.ok = function () {
             modalInstance.$destroy()
         }
     }
