@@ -1,63 +1,76 @@
 <!--按钮-->
 <script>
-import Icon from '../CIcon/index'
+import Icon from "../CIcon/index";
 
 export default {
   inheritAttrs: false,
   components: {
-    Icon
+    Icon,
   },
-  name: 'CButton',
+  name: "CButton",
   props: {
     icon: {
-      default: '',
-      type: String
+      default: "",
+      type: String,
     },
     tip: {
-      default: '',
-      type: String
+      default: "",
+      type: String,
     },
     placement: {
-      default: 'top',
-      type: String
-    }
+      default: "top",
+      type: String,
+    },
   },
   render(h) {
-    let children = [h('div', this.$slots.default)]
+    let children = [h("div", this.$slots.default)];
     if (this.icon) {
-      let icon = h(Icon, {class: {'c_button_iconSvg': this.$slots.default}, props: {name: this.icon}})
-      children.unshift(icon)
+      let icon = h(Icon, {
+        class: { c_button_iconSvg: this.$slots.default },
+        props: { name: this.icon },
+      });
+      children.unshift(icon);
     }
-    let classNameList = ['c_button']
-    if (this.$attrs.type === 'warning') {
-      classNameList.push(`c_button_warning${this.$attrs.ghost !== undefined ? '_g' : ''}`)
-    } else if (this.$attrs.type === 'success') {
-      classNameList.push(`c_button_success${this.$attrs.ghost !== undefined ? '_g' : ''}`)
-    }else if(this.$attrs.type === 'danger'){
-      classNameList.push(`c_button_danger${this.$attrs.ghost !== undefined ? '_g' : ''}`)
+    let classNameList = ["c_button"];
+    if (this.$attrs.type === "warning") {
+      classNameList.push(
+        `c_button_warning${this.$attrs.ghost !== undefined ? "_g" : ""}`
+      );
+    } else if (this.$attrs.type === "success") {
+      classNameList.push(
+        `c_button_success${this.$attrs.ghost !== undefined ? "_g" : ""}`
+      );
+    } else if (this.$attrs.type === "danger") {
+      classNameList.push(
+        `c_button_danger${this.$attrs.ghost !== undefined ? "_g" : ""}`
+      );
     }
-    let vnode = h('a-button', {
-      class: classNameList,
-      props: this.$attrs,
-      on: this.$listeners
-    }, children)
+    let vnode = h(
+      "a-button",
+      {
+        class: classNameList,
+        props: this.$attrs,
+        on: this.$listeners,
+      },
+      children
+    );
     if (this.tip) {
-      vnode = h('a-tooltip', {
-        props: {
-          placement: this.placement,
-          overlayClassName: 'c_button_tip_content'
-        }
-      }, [
-        h('p', {slot: 'title'}, this.tip),
-        vnode
-      ])
+      vnode = h(
+        "a-tooltip",
+        {
+          props: {
+            placement: this.placement,
+            overlayClassName: "c_button_tip_content",
+          },
+        },
+        [h("p", { slot: "title" }, this.tip), vnode]
+      );
     }
-    return vnode
-  }
+    return vnode;
+  },
 };
 </script>
 <style lang="less">
-
 .c_button {
   display: flex;
   align-items: center;
@@ -68,6 +81,20 @@ export default {
 
   &_iconSvg {
     margin-right: 8px;
+  }
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  color: #0048ff;
+  font-size: 14px;
+
+  &[disabled] {
+    background: #fff;
+    color: #aac0fe;
+    opacity: 0.8;
+
+    &:hover {
+      color: #ccdaff;
+    }
   }
 }
 

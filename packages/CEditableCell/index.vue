@@ -1,85 +1,84 @@
 <!--文本编辑组件-->
 <template>
-  <div
-      class="c_cell"
-      @click.stop="">
-    <div
-        v-show="isEditable"
-    >
+  <div class="c_cell" @click.stop="">
+    <div v-show="isEditable">
       <a-form-model
-          layout="inline"
-          :model="litForm"
-          :rules="formRules"
-          ref="litForm">
+        layout="inline"
+        :model="litForm"
+        :rules="formRules"
+        ref="litForm"
+      >
         <a-form-model-item prop="text">
           <a-input
-              style="width: 100%"
-              :id="id"
-              v-model="litForm.text"
-              @focus="$emit('focus')"
-              @change="handleChange"
-              @pressEnter="enterSubmit($event)"
-              @blur="check"/>
+            style="width: 100%"
+            :id="id"
+            v-model="litForm.text"
+            @focus="$emit('focus')"
+            @change="handleChange"
+            @pressEnter="enterSubmit($event)"
+            @blur="check"
+          />
         </a-form-model-item>
       </a-form-model>
     </div>
-    <div
-        v-show="!isEditable"
-        class="c_cell_text">
+    <div v-show="!isEditable" class="c_cell_text">
       <!-- 这里不用v-if而用v-show是因为Label不能找到未渲染的Input-->
       <Ellipsis
-          class="c_cell_text_content"
-          :class="{c_cell_text_content_isHasHover:isHasHover&&!isDisabled,c_cell_text_content_isDisabled:isDisabled}"
-          :text="litForm.text||emptyPlaceholder"
-          @click.native="handleClick"></Ellipsis>
+        class="c_cell_text_content"
+        :class="{
+          c_cell_text_content_isHasHover: isHasHover && !isDisabled,
+          c_cell_text_content_isDisabled: isDisabled,
+        }"
+        :text="litForm.text || emptyPlaceholder"
+        @click.native="handleClick"
+      ></Ellipsis>
       <label
-          :for="id"
-          style="margin-left: 20px;cursor:pointer;"
-          @click="isEditable=true"
-          v-if="!isDisabled">
-        <icon
-            name="icon-bianji"
-        ></icon>
+        :for="id"
+        style="margin-left: 20px; cursor: pointer"
+        @click="isEditable = true"
+        v-if="!isDisabled"
+      >
+        <icon name="icon-bianji"></icon>
       </label>
     </div>
   </div>
 </template>
 <script>
-import Ellipsis from '../CEllipsis/index.vue';
-import Icon from '../CIcon/index.vue';
+import Ellipsis from "../CEllipsis/index.vue";
+import Icon from "../CIcon/index.vue";
 
 export default {
-  name: 'CEditableCell',
-  components: {Ellipsis, Icon},
+  name: "CEditableCell",
+  components: { Ellipsis, Icon },
   data() {
     return {
       formRules: {
-        text: []
+        text: [],
       },
       id: Math.random(), // 一个列表里面有多个输入框的时候不能用同一个ID,不然label会找不到对应的input
       isEditable: false,
       litForm: {
-        text: ''
-      }
-    }
+        text: "",
+      },
+    };
   },
   props: {
     emptyPlaceholder: {
-      type: String
+      type: String,
     },
     text: {
-      type: String
+      type: String,
     },
     rules: {
-      type: Array
+      type: Array,
     },
     isHasHover: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isDisabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
   },
   watch: {
@@ -87,8 +86,8 @@ export default {
       handler: function (nv) {
         this.litForm.text = nv;
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   beforeMount() {
     if (this.rules) {
@@ -104,14 +103,14 @@ export default {
      */
     handleClick() {
       if (this.isDisabled) return;
-      this.$emit('textClick');
+      this.$emit("textClick");
     },
     /**
      * @description:回车触发
      */
     enterSubmit(ev) {
-      this.$emit('enter');
-      ev?.target?.blur();//
+      this.$emit("enter");
+      ev?.target?.blur(); //
     },
     /**
      * @description:键盘输入发生改变
@@ -132,16 +131,16 @@ export default {
             // this.$message.warn('名称一致不用修改')
             return;
           }
-          this.$emit('change', {
+          this.$emit("change", {
             val: this.litForm.text,
             errCallback: () => {
               this.litForm.text = this.text;
-            }
+            },
           });
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less">
@@ -161,6 +160,4 @@ export default {
     color: #969696 !important;
   }
 }
-
-
 </style>
