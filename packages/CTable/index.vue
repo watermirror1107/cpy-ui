@@ -211,11 +211,11 @@ export default {
     }
   },
   created() {
-    if (this?.$route?.path && localStorage.custormColumnObject) {//从缓存里面取
-      let userId = JSON.parse(localStorage.CPY_PORTAL_USERINFO).userId//获取用户ID this.$store.state.userInfo.id
-      let arr = JSON.parse(localStorage.custormColumnObject)[userId][this?.$route?.path].split(',')
-      this.showColumns = arr
-    } else {
+    // 读取当前用户设置的列，如果没有则取默认
+    try {
+      let userId = JSON.parse(localStorage.CPY_PORTAL_USERINFO).userId
+      this.showColumns = JSON.parse(localStorage.custormColumnObject)[userId][this?.$route?.path].split(',')
+    } catch (error) {
       this.showColumns = this.$attrs.columns.map(i => i.key)
     }
   },
