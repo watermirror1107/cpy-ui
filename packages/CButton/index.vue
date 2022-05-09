@@ -44,6 +44,10 @@ export default {
       classNameList.push(
         `c_button_danger${this.$attrs.ghost !== undefined ? "_g" : ""}`
       );
+    } else if (!this.$attrs.type) {
+      classNameList.push(
+        `c_button_default${this.$attrs.ghost !== undefined ? "_g" : ""}`
+      );
     }
     let vnode = h(
       "a-button",
@@ -82,6 +86,14 @@ export default {
   &_iconSvg {
     margin-right: 8px;
   }
+}
+
+.c_button_tip_content {
+  .ant-tooltip-inner {
+    text-align: left;
+  }
+}
+.c_button_default {
   background: #ffffff;
   border: 1px solid #e6e6e6;
   color: #0048ff;
@@ -94,16 +106,10 @@ export default {
 
     &:hover {
       color: #ccdaff;
+      background: #fff;
     }
   }
 }
-
-.c_button_tip_content {
-  .ant-tooltip-inner {
-    text-align: left;
-  }
-}
-
 .c_button_warning {
   border-color: @--main-yellow !important;
   color: white !important;

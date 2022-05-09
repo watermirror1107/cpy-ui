@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <c-btn-group>
-      <c-button class="3dawddw">开机</c-button>
+      <c-button class="3dawddw" disabled>开机</c-button>
       <c-button>关机</c-button>
       <c-button>重启</c-button>
       <c-button>测试</c-button>
@@ -22,10 +22,14 @@
     <!--        <span style="color: #969696;">({{ 456}})</span>-->
     <!--      </p>-->
     <!--    </c-banner>-->
-    <!--    <c-button type="text">CTMD</c-button>-->
-    <!--    <c-button type="text" disabled>CTMD</c-button>-->
-    <!--    <c-button type="text" ghost>CTMD</c-button>-->
-    <!--    <c-button type="text" ghost disabled>CTMD</c-button>-->
+    <c-button type="text" disabled>CTMD</c-button>
+    <c-button type="text">CTMD</c-button>
+    <c-button type="text" ghost>CTMD</c-button>
+    <c-button type="text" ghost disabled>CTMD</c-button>
+    <c-button type="danger" ghost disabled>CTMD</c-button>
+    <c-button type="warning" ghost disabled>CTMD</c-button>
+    <c-button type="success" ghost disabled>CTMD</c-button>
+    <c-button type="primary" disabled>CTMD</c-button>
     <!--    <c-icon name="icon-shijian"></c-icon>-->
     <!--        <c-card  title="click" @more="clickMore">-->
     <!--          <template #more>-->
@@ -40,7 +44,7 @@
     <!--    </div>-->
     <!--  <c-input label="asdf"  v-model="text"></c-input>-->
     <!--    <c-empty></c-empty>-->
-    <!--        <c-input-number v-model="num" size="small"></c-input-number>-->
+    <c-input-number v-model="num" unit="MBBB" size="small"></c-input-number>
     <!--    <c-radio-group v-model="num">-->
     <!--      <c-radio value="one">one</c-radio>-->
     <!--      <c-radio value="two">two</c-radio>-->
@@ -206,7 +210,7 @@
     <!--        </c-btn-group>-->
     <!--      </template>-->
     <!--    </c-table>-->
-    <c-collapse :activeKey="['c']">
+    <!-- <c-collapse :activeKey="['c']">
       <c-collapse-panel :key="'a'">
         <p name="header">title1</p>
       </c-collapse-panel>
@@ -220,7 +224,7 @@
         <p>giao1</p>
         <p>giao2</p>
       </c-collapse-panel>
-    </c-collapse>
+    </c-collapse> -->
 
     <!-- <a-collapse :activeKey="['b']">
       <a-collapse-panel key="a" header="This is panel header 1">
@@ -576,19 +580,19 @@ export default {
     // this.$refs.table.refresh();
   },
   methods: {
-    addTest(){
-      let x=this.$CModal({
-        icon:'icon-a-shili_hong',
-        title: 'test',
-        content: 'content',
+    addTest() {
+      let x = this.$CModal({
+        icon: "icon-a-shili_hong",
+        title: "test",
+        content: "content",
         // cancel: () => {
         //   console.log('closese')
         // },
         ok: () => {
-          console.log('ok')
+          console.log("ok");
         },
-        okText: 'Ok'
-      })
+        okText: "Ok",
+      });
     },
     consoleRow() {
       console.log(this.selectedRows);
