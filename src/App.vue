@@ -22,14 +22,10 @@
     <!--        <span style="color: #969696;">({{ 456}})</span>-->
     <!--      </p>-->
     <!--    </c-banner>-->
-    <c-button type="text" disabled>CTMD</c-button>
-    <c-button type="text">CTMD</c-button>
-    <c-button type="text" ghost>CTMD</c-button>
-    <c-button type="text" ghost disabled>CTMD</c-button>
-    <c-button type="danger" ghost disabled>CTMD</c-button>
-    <c-button type="warning" ghost disabled>CTMD</c-button>
-    <c-button type="success" ghost disabled>CTMD</c-button>
-    <c-button type="primary" disabled>CTMD</c-button>
+    <!--    <c-button type="text">CTMD</c-button>-->
+    <!--    <c-button type="text" disabled>CTMD</c-button>-->
+    <!--    <c-button type="text" ghost>CTMD</c-button>-->
+    <!--    <c-button type="text" ghost disabled>CTMD</c-button>-->
     <!--    <c-icon name="icon-shijian"></c-icon>-->
     <!--        <c-card  title="click" @more="clickMore">-->
     <!--          <template #more>-->
@@ -589,10 +585,10 @@ export default {
         //   console.log('closese')
         // },
         ok: () => {
-          console.log("ok");
+          console.log('ok')
         },
-        okText: "Ok",
-      });
+        okText: 'Ok'
+      })
     },
     consoleRow() {
       console.log(this.selectedRows);
