@@ -5,7 +5,7 @@
         <div class="c_table_action_bar">
           <slot name="actionBar"></slot>
         </div>
-        <a-input size="large" v-model="formData.queryName" @change="debounceFresh($event,()=>{},'queryName')"
+        <a-input v-if="isShowSearch" size="large" v-model="formData.queryName" @change="debounceFresh($event,()=>{},'queryName')"
                  :placeholder="queryNamePlaceholder">
           <icon
               slot="suffix"
@@ -192,6 +192,7 @@ export default {
     queryNamePlaceholder: {type: String, default: 'placeholder'},//是否可以设置表头
     isShowHeader: {type: Boolean, default: true},//是否显示表格搜索头部等按钮
     isShowPagination: {type: Boolean, default: true},//是否显示分页器
+    isShowSearch: {type: Boolean, default: true}, //是否可以搜索
     isSetColumn: {type: Boolean, default: true},//是否可以设置表头
     loopTime: {type: Number},//轮询间隔,建议至少5秒以上
     data: {type: Function},
