@@ -11,11 +11,11 @@
       >
         <button
           class="
-            c_inputNumber_container_button c_inputNumber_container_button_cut
+            c_inputNumber_container_button c_inputNumber_container_button_add
           "
-          :disabled="disabled || value <= min"
+          :disabled="disabled || value >= max"
           type="button"
-          @click="reduce"
+          @click="plus"
         >
           <icon v-if="type !== 'one'" name="icon-jian"></icon>
           <icon v-else name="icon-shousuodaohang"></icon>
@@ -31,11 +31,11 @@
         />
         <button
           class="
-            c_inputNumber_container_button c_inputNumber_container_button_add
+            c_inputNumber_container_button c_inputNumber_container_button_cut
           "
-          :disabled="disabled || value >= max"
+          :disabled="disabled || value <= min"
           type="button"
-          @click="plus"
+          @click="reduce"
         >
           <icon v-if="type !== 'one'" name="icon-jia"></icon>
           <icon v-else name="icon-xuanzekuanxia"></icon>
@@ -234,12 +234,12 @@ export default {
     }
 
     .c_inputNumber_container_button_add {
-      top: 47%;
+      border-bottom: 1px solid #e6e6e6;
+      top: -5px;
     }
 
     .c_inputNumber_container_button_cut {
-      border-bottom: 1px solid #e6e6e6;
-      top: -5px;
+      top: 47%;
     }
   }
 
