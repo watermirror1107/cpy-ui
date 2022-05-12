@@ -85,7 +85,7 @@ export default {
 }
 
 .c_table_btn_vertical {
-  width: 58px;
+  width: 80px;
   overflow: hidden;
   height: 60px;
   padding: 0;

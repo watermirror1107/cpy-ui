@@ -9,7 +9,7 @@ const webpackConfig = {
     mode: 'development',
     target: 'node',
     entry: {
-        index: path.resolve(__dirname, '../packages/index.js')
+        index: path.resolve(__dirname, '../src/main.js')
     },
     output: {
         filename: 'js/[name]-[hash].js',
@@ -74,18 +74,9 @@ const webpackConfig = {
     },
     devtool: 'eval-cheap-source-map',
     plugins: [
-        new CopyPlugin({
-            patterns: [{
-                from: path.resolve(__dirname, 'template'),
-                to: path.resolve(__dirname, 'dist'),
-                filter: async (resourcePath) => {
-                    return resourcePath.indexOf('index.html') <= -1
-                }
-            }]
-        }),
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, 'template/index.html'),
+            template: path.resolve(__dirname, '../public/index.html'),
             title: 'ecp-portal'
         }),
         new webpack.IgnorePlugin({resourceRegExp: /canvas/}),

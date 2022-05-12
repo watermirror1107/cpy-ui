@@ -1,6 +1,6 @@
 {
   "name": "cpy-ui",
-  "version": "0.3.12",
+  "version": "0.3.16",
   "private": false,
   "main": "./lib/cpy-ui.min.js",
   "license": "MIT",
@@ -10,7 +10,8 @@
   "scripts": {
     "serve": "webpack-dev-server --config webpack/dev.config.js --mode development",
     "lib": "webpack --config webpack/build.config.js",
-    "test:unit:all": "mochapack --webpack-config webpack/test.config.js --require test/setup.js test/**/*.spec.js"
+    "test:unit:all": "mochapack --webpack-config webpack/test.config.js --require test/setup.js test/**/*.spec.js",
+    "test:unit": "node webpack/testCommand.js"
   },
   "peerDependencies": {
     "ant-design-vue": "^1.6.5",
@@ -60,6 +61,7 @@
     "eslint-plugin-vue": "^7.9.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
+    "inquirer": "^8.2.4",
     "jsdom": "^18.0.1",
     "jsdom-global": "^3.0.2",
     "less": "^4.1.2",
@@ -76,6 +78,7 @@
     "postcss-nested": "^5.0.6",
     "process": "^0.11.10",
     "serve": "^11.3.2",
+    "shelljs": "^0.8.5",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.2.4",
     "url-loader": "^4.1.1",

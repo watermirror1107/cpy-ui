@@ -9,7 +9,7 @@
       :value="curText"
       @change="handleChange"
     >
-      <a-icon slot="suffixIcon" type="caret-down" />
+      <a-icon slot="suffixIcon" style="color: #646464" type="caret-down" />
       <a-select-option
         v-for="item in selectOptions"
         :key="item.val"

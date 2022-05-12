@@ -11,15 +11,16 @@
       >
         <button
           class="
-            c_inputNumber_container_button c_inputNumber_container_button_add
+            c_inputNumber_container_button c_inputNumber_container_button_cut
           "
-          :disabled="disabled || value >= max"
+          :disabled="disabled || value <= min"
           type="button"
-          @click="plus"
+          @click="reduce"
         >
           <icon v-if="type !== 'one'" name="icon-jian"></icon>
-          <icon v-else name="icon-shousuodaohang"></icon>
+          <icon v-else name="icon-xuanzekuanxia"></icon>
         </button>
+        
         <input
           class="c_inputNumber_container_input"
           ref="input"
@@ -29,16 +30,17 @@
           @input="inputChangeValue"
           @blur="blurChangeValue"
         />
+        
         <button
           class="
-            c_inputNumber_container_button c_inputNumber_container_button_cut
+            c_inputNumber_container_button c_inputNumber_container_button_add
           "
-          :disabled="disabled || value <= min"
+          :disabled="disabled || value >= max"
           type="button"
-          @click="reduce"
+          @click="plus"
         >
           <icon v-if="type !== 'one'" name="icon-jia"></icon>
-          <icon v-else name="icon-xuanzekuanxia"></icon>
+          <icon v-else name="icon-shousuodaohang"></icon>
         </button>
       </div>
     </div>

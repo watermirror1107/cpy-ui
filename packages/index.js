@@ -1,7 +1,7 @@
 //先导入UI字体库
 import './font/font_2142578_45182ujwnjc.js'//等UI补全图标后删除
 import './font/font_2631791_umj4vo54h.js'//等UI补全图标后删除
-import './font/font_3379171_qn91vchjwn.js'//new
+import './font/font_3379171_y950vki2zz.js'//new
 //导入第三方UI库
 import '../ant-design-vue/index'
 import CModal from "./CModal/index.js";
@@ -26,5 +26,5 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 export default {
     install,
-    version: '0.3.12'
+    version: '0.3.16'
 }

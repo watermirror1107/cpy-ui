@@ -26,48 +26,48 @@ export default {
     let children = [h("div", this.$slots.default)];
     if (this.icon) {
       let icon = h(Icon, {
-        class: { c_button_iconSvg: this.$slots.default },
-        props: { name: this.icon },
+        class: {c_button_iconSvg: this.$slots.default},
+        props: {name: this.icon},
       });
       children.unshift(icon);
     }
     let classNameList = ["c_button"];
     if (this.$attrs.type === "warning") {
       classNameList.push(
-        `c_button_warning${this.$attrs.ghost !== undefined ? "_g" : ""}`
+          `c_button_warning${this.$attrs.ghost !== undefined ? "_g" : ""}`
       );
     } else if (this.$attrs.type === "success") {
       classNameList.push(
-        `c_button_success${this.$attrs.ghost !== undefined ? "_g" : ""}`
+          `c_button_success${this.$attrs.ghost !== undefined ? "_g" : ""}`
       );
     } else if (this.$attrs.type === "danger") {
       classNameList.push(
-        `c_button_danger${this.$attrs.ghost !== undefined ? "_g" : ""}`
+          `c_button_danger${this.$attrs.ghost !== undefined ? "_g" : ""}`
       );
     } else if (!this.$attrs.type) {
       classNameList.push(
-        `c_button_default${this.$attrs.ghost !== undefined ? "_g" : ""}`
+          `c_button_default${this.$attrs.ghost !== undefined ? "_g" : ""}`
       );
     }
     let vnode = h(
-      "a-button",
-      {
-        class: classNameList,
-        props: this.$attrs,
-        on: this.$listeners,
-      },
-      children
+        "a-button",
+        {
+          class: classNameList,
+          props: this.$attrs,
+          on: this.$listeners,
+        },
+        children
     );
     if (this.tip) {
       vnode = h(
-        "a-tooltip",
-        {
-          props: {
-            placement: this.placement,
-            overlayClassName: "c_button_tip_content",
+          "a-tooltip",
+          {
+            props: {
+              placement: this.placement,
+              overlayClassName: "c_button_tip_content",
+            },
           },
-        },
-        [h("p", { slot: "title" }, this.tip), vnode]
+          [h("p", {slot: "title"}, this.tip), vnode]
       );
     }
     return vnode;
@@ -93,6 +93,7 @@ export default {
     text-align: left;
   }
 }
+
 .c_button_default {
   background: #ffffff;
   border: 1px solid #e6e6e6;
@@ -109,7 +110,22 @@ export default {
       background: #fff;
     }
   }
+
+  &:hover {
+    border-color: @--main-blue !important;
+    color: @--main-blue !important;
+  }
+
+  &:focus {
+    border-color: #e6e6e6;
+    color: @--main-blue;
+  }
 }
+
+.c_button.ant-btn-primary:focus {
+  background-color: @--main-blue;
+}
+
 .c_button_warning {
   border-color: @--main-yellow !important;
   color: white !important;
