@@ -60,7 +60,7 @@
     >
       <template #filterIcon>
         <icon
-          style="width: 16px; outline: unset; margin-left: 4px"
+          style="width: 14px; outline: unset; margin-left: 10px"
           name="icon-shili_saixuan"
         ></icon>
       </template>

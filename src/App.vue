@@ -91,121 +91,61 @@
     <!--                     v-model="tabIndex2"-->
     <!--                     style="width:320px;margin: 0 auto;">-->
     <!--    </c-search-select>-->
-    <!--    <c-table-->
-    <!--        :formData="formData"-->
-    <!--        :formOptions="formOptions"-->
-    <!--        ref="table"-->
-    <!--        :rowSelection="{-->
-    <!--          selectedRowKeys: selectedRowKeys,-->
-    <!--          onChange: onSelectChange-->
-    <!--        }"-->
-    <!--        :filterOptions="filterOptions"-->
-    <!--        :tagFilterArr="['queryName','date']"-->
-    <!--        :columns="columns"-->
-    <!--        :loopTime="10000"-->
-    <!--        :data="queryList"-->
-    <!--        rowKey="id">-->
-    <!--      <template #headerRight>-->
-    <!--        <c-button size="large">添加</c-button>-->
-    <!--      </template>-->
-    <!--      <template #id="{ text,record }">-->
-    <!--        <a-popover>-->
-    <!--          <template #content>-->
-    <!--            <c-table :columns="columns"-->
-    <!--                     :dataSource="record.children"></c-table>-->
-    <!--          </template>-->
-    <!--          <span style="color:red">{{ text }}</span>-->
-    <!--        </a-popover>-->
-    <!--      </template>-->
-    <!--      <template #operate="{record,index}">-->
-    <!--        <c-btn-wrap>-->
-    <!--          <c-table-btn-->
-    <!--              :disabled="isClick"-->
-    <!--              text="click1"-->
-    <!--              @click="clickHandler1"-->
-    <!--          >-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click2"-->
-    <!--              @click="clickHandler2"-->
-    <!--          >-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click3"-->
-    <!--              @click="clickHandler3"-->
-    <!--          >-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click4"-->
-    <!--              @click="clickHandler4">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click5"-->
-    <!--              @click="clickHandler5">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click6"-->
-    <!--              @click="clickHandler6">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click7"-->
-    <!--              @click="clickHandler7">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click8"-->
-    <!--              @click="clickHandler8">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              :disabled="isClick"-->
-    <!--              text="click9"-->
-    <!--              @click="clickHandler9">-->
-    <!--          </c-table-btn>-->
-    <!--          <c-table-btn-->
-    <!--              text="click10"-->
-    <!--              @click="clickHandler10(index)">-->
-    <!--          </c-table-btn>-->
-    <!--        </c-btn-wrap>-->
-    <!--      </template>-->
-    <!--      <template #actionBar>-->
-    <!--        <c-btn-group>-->
-    <!--          <c-button-->
-    <!--              icon="icon-kaiji"-->
-    <!--              size="large">-->
-    <!--           123-->
-    <!--          </c-button>-->
-    <!--          <c-button-->
-    <!--              icon="icon-kaiji"-->
-    <!--              size="large">-->
-    <!--           123-->
-    <!--          </c-button>-->
-    <!--          <c-button-->
-    <!--              icon="icon-kaiji"-->
-    <!--              size="large">-->
-    <!--           123-->
-    <!--          </c-button>-->
-    <!--          <c-button-->
-    <!--              icon="icon-kaiji"-->
-    <!--              size="large">-->
-    <!--           123-->
-    <!--          </c-button>-->
-    <!--          <c-button-->
-    <!--              icon="icon-kaiji"-->
-    <!--              size="large">-->
-    <!--           123-->
-    <!--          </c-button>-->
-    <!--          <c-button-->
-    <!--              icon="icon-kaiji"-->
-    <!--              size="large">-->
-    <!--           123-->
-    <!--          </c-button>-->
-    <!--          <c-button-->
-    <!--              icon="icon-kaiji"-->
-    <!--              size="large">-->
-    <!--           123-->
-    <!--          </c-button>-->
-    <!--        </c-btn-group>-->
-    <!--      </template>-->
-    <!--    </c-table>-->
+    <c-table
+      :formData="formData"
+      :formOptions="formOptions"
+      ref="table"
+      :rowSelection="{
+        selectedRowKeys: selectedRowKeys,
+        onChange: onSelectChange,
+      }"
+      :filterOptions="filterOptions"
+      :tagFilterArr="['queryName', 'date']"
+      :columns="columns"
+      :loopTime="10000"
+      :data="queryList"
+      rowKey="id"
+    >
+      <template #headerRight>
+        <c-button size="large">添加</c-button>
+      </template>
+      <template #id="{ text, record }">
+        <a-popover>
+          <template #content>
+            <c-table :columns="columns" :dataSource="record.children"></c-table>
+          </template>
+          <span style="color: red">{{ text }}</span>
+        </a-popover>
+      </template>
+      <template #operate="{ record, index }">
+        <c-btn-wrap>
+          <c-table-btn :disabled="isClick" text="click1" @click="clickHandler1">
+          </c-table-btn>
+          <c-table-btn text="click2" @click="clickHandler2"> </c-table-btn>
+          <c-table-btn text="click3" @click="clickHandler3"> </c-table-btn>
+          <c-table-btn text="click4" @click="clickHandler4"> </c-table-btn>
+          <c-table-btn text="click5" @click="clickHandler5"> </c-table-btn>
+          <c-table-btn text="click6" @click="clickHandler6"> </c-table-btn>
+          <c-table-btn text="click7" @click="clickHandler7"> </c-table-btn>
+          <c-table-btn text="click8" @click="clickHandler8"> </c-table-btn>
+          <c-table-btn :disabled="isClick" text="click9" @click="clickHandler9">
+          </c-table-btn>
+          <c-table-btn text="click10" @click="clickHandler10(index)">
+          </c-table-btn>
+        </c-btn-wrap>
+      </template>
+      <template #actionBar>
+        <c-btn-group>
+          <c-button icon="icon-kaiji" size="large"> 123 </c-button>
+          <c-button icon="icon-kaiji" size="large"> 123 </c-button>
+          <c-button icon="icon-kaiji" size="large"> 123 </c-button>
+          <c-button icon="icon-kaiji" size="large"> 123 </c-button>
+          <c-button icon="icon-kaiji" size="large"> 123 </c-button>
+          <c-button icon="icon-kaiji" size="large"> 123 </c-button>
+          <c-button icon="icon-kaiji" size="large"> 123 </c-button>
+        </c-btn-group>
+      </template>
+    </c-table>
     <!-- <c-collapse :activeKey="['c']">
       <c-collapse-panel :key="'a'">
         <p name="header">title1</p>
@@ -573,7 +513,7 @@ export default {
   },
   mounted() {
     // this.queryOptions()
-    // this.$refs.table.refresh();
+    this.$refs.table.refresh();
   },
   methods: {
     addTest() {
@@ -585,10 +525,10 @@ export default {
         //   console.log('closese')
         // },
         ok: () => {
-          console.log('ok')
+          console.log("ok");
         },
-        okText: 'Ok'
-      })
+        okText: "Ok",
+      });
     },
     consoleRow() {
       console.log(this.selectedRows);
