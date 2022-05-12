@@ -36,8 +36,8 @@
         v-model="duration"
         style="width: 120px">
       <a-select-option
-          v-for="item in [...durationList,...moreList].sort((a,b)=>{return a.id>b.id?1:-1})"
-          :value="item.id" ￥
+          v-for="item in [...duration_middle_list,...more_middle_list].sort((a,b)=>{return a.id>b.id?1:-1})"
+          :value="item.id"
           :key="item.id">
         {{ item.name }}
       </a-select-option>
@@ -75,6 +75,7 @@ export default {
     duration: {
       handler(nv, ov) {
         if (nv != ov) {
+          console.log(typeof nv)
           this.$emit('change', nv);
         }
       },
