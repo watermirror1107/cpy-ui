@@ -48,4 +48,11 @@ Page分页组件
 Select选择组件
 ```
  
- 
+### Unit Test
+
+```
+
+运行单个组件测试npm run test:unit CBanner
+运行全部组件测试npm run test:unit:all 
+
+```
