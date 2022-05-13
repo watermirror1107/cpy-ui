@@ -3,41 +3,42 @@
   <div class="c_inputNumber" :class="'c_inputNumber_' + size">
     <div class="c_inputNumber_box">
       <div
-        class="c_inputNumber_container"
-        :class="{
+          class="c_inputNumber_container"
+          :class="{
           c_inputNumber_container_disabled: disabled,
           ['c_inputNumber_container_' + type]: true,
         }"
       >
         <button
-          class="
+            class="
             c_inputNumber_container_button c_inputNumber_container_button_cut
           "
-          :disabled="disabled || value <= min"
-          type="button"
-          @click="reduce"
+            :disabled="disabled || value <= min"
+            type="button"
+            @click="reduce"
         >
           <icon v-if="type !== 'one'" name="icon-jian"></icon>
           <icon v-else name="icon-xuanzekuanxia"></icon>
         </button>
-        
+
         <input
-          class="c_inputNumber_container_input"
-          ref="input"
-          :disabled="disabled"
-          :value="value"
-          type="number"
-          @input="inputChangeValue"
-          @blur="blurChangeValue"
+            class="c_inputNumber_container_input"
+            ref="input"
+            :style="computedStyle"
+            :disabled="disabled"
+            :value="value"
+            type="number"
+            @input="inputChangeValue"
+            @blur="blurChangeValue"
         />
-        
+
         <button
-          class="
+            class="
             c_inputNumber_container_button c_inputNumber_container_button_add
           "
-          :disabled="disabled || value >= max"
-          type="button"
-          @click="plus"
+            :disabled="disabled || value >= max"
+            type="button"
+            @click="plus"
         >
           <icon v-if="type !== 'one'" name="icon-jia"></icon>
           <icon v-else name="icon-shousuodaohang"></icon>
@@ -45,8 +46,8 @@
       </div>
     </div>
     <span class="c_inputNumber_unit" :showType="type" v-if="unit">{{
-      unit ? unit : ""
-    }}</span>
+        unit ? unit : ""
+      }}</span>
   </div>
 </template>
 
@@ -59,15 +60,15 @@ export default {
     Icon,
   },
   props: {
-    type: { default: "one", type: String },
-    isInteger: { default: true, type: Boolean },
-    disabled: { default: false, type: Boolean },
-    step: { default: 1, type: Number },
-    max: { default: 4096, type: Number },
-    min: { default: 1, type: Number },
-    unit: { default: "", type: String },
-    size: { default: "large", type: String },
-    value: { default: "large", type: [String, Number] },
+    type: {default: "one", type: String},
+    isInteger: {default: true, type: Boolean},
+    disabled: {default: false, type: Boolean},
+    step: {default: 1, type: Number},
+    max: {default: 4096, type: Number},
+    min: {default: 1, type: Number},
+    unit: {default: "", type: String},
+    size: {default: "large", type: String},
+    value: {default: "large", type: [String, Number]},
   },
   model: {
     event: "valChange",
@@ -78,13 +79,27 @@ export default {
       this.$emit("change");
     },
   },
+  computed: {
+    computedStyle() {
+      let res = {
+        paddingRight: '10px'
+      }
+
+      if (this.unit) {
+        res.paddingRight = this.type === 'two' ? '40px' : '72px'
+      } else if (this.type === 'one') {
+        res.paddingRight = '35px'
+      }
+      return res
+    }
+  },
   methods: {
     /**
      * @description:输入框内容改变
      */
     inputChangeValue(ev) {
       if (this.isInteger) {
-        const { value } = ev.target;
+        const {value} = ev.target;
         this.$nextTick(() => {
           this.$refs.input.value = this.isInteger ? parseInt(value) : value;
         });
@@ -95,7 +110,7 @@ export default {
      * @description:失去焦点
      */
     blurChangeValue(ev) {
-      let { value } = ev.target;
+      let {value} = ev.target;
       if (value > this.max) {
         value = this.max;
         ev.target.value = this.max;
@@ -108,13 +123,13 @@ export default {
     },
 
     reduce() {
-      const { value, min, step } = this;
+      const {value, min, step} = this;
       const res = Number(value) - step;
       this.$emit("valChange", res < min ? min : res);
     },
 
     plus() {
-      const { value, max, step } = this;
+      const {value, max, step} = this;
       const res = Number(value) + step;
       this.$emit("valChange", res > max ? max : res);
     },
@@ -129,6 +144,7 @@ export default {
   min-width: 150px;
   position: relative;
   width: 100%;
+
   &:after {
     clear: both;
     display: block;
@@ -152,12 +168,15 @@ export default {
     color: #c8c8c8;
     position: absolute;
   }
+
   &_unit[showType="one"] {
-    right: 50px;
+    right: 35px;
   }
+
   &_unit[showType="two"] {
-    right: 45px;
+    right: 44px;
   }
+
   &_container {
     overflow: hidden;
     border-collapse: collapse;
@@ -220,9 +239,6 @@ export default {
   &_container_one {
     justify-content: space-between;
     position: relative;
-    .c_inputNumber_container_input {
-      padding-right: 85px;
-    }
 
     .c_inputNumber_container_button {
       position: absolute;
@@ -251,10 +267,12 @@ export default {
       flex-grow: 1;
       width: 100%;
     }
+
     .c_inputNumber_container_button_cut {
       flex-shrink: 0;
       border-right: 1px solid #e6e6e6;
     }
+
     .c_inputNumber_container_button_add {
       flex-shrink: 0;
       border-left: 1px solid #e6e6e6;
@@ -265,6 +283,7 @@ export default {
     opacity: 0.5;
   }
 }
+
 .c_inputNumber_large {
   height: 40px;
   line-height: 40px;
