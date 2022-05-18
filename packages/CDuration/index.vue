@@ -6,7 +6,7 @@
       <li
           class="c_duration_list_item"
           v-for="item in duration_middle_list"
-          :class="{c_duration_list_item_selected:item.id==duration}"
+          :class="{c_duration_list_item_selected:item.id==duration,c_duration_list_item_disabled:disabled}"
           :key="item.id"
           @click="handleClick(item.id)"
       >
@@ -16,12 +16,13 @@
       </li>
       <li class="c_duration_list_item">
         <a-select
+            :disabled="disabled"
             class="c_duration_list_item_more"
             :class="{selected:mDuration}"
             v-model="mDuration"
             @change="selectMore"
             size="large">
-          <a-icon slot="suffixIcon" style="color: #646464" type="caret-down" />
+          <a-icon slot="suffixIcon" style="color: #646464" type="caret-down"/>
           <a-select-option value="">
             {{ $T('public.Moretime') }}
           </a-select-option>
@@ -40,9 +41,10 @@
     <a-select
         v-else
         size="large"
+        :disabled="disabled"
         v-model="duration"
         style="width: 120px">
-      <a-icon slot="suffixIcon" style="color: #646464" type="caret-down" />
+      <a-icon slot="suffixIcon" style="color: #646464" type="caret-down"/>
       <a-select-option
           v-for="item in [...duration_middle_list,...more_middle_list].sort((a,b)=>{return a.id>b.id?1:-1})"
           :value="item.id"
@@ -66,6 +68,7 @@ export default {
     }
   },
   props: {
+    disabled: {type: [Boolean], default: false},
     value: {type: [Number, String]},
     type: {default: 1},
     moreList: {
@@ -191,7 +194,7 @@ export default {
      */
     translate(discount) {
       if (localStorage?.CPY_PORTAL_LANGUAGE === 'en_US') {
-        return (100 - discount * 10)
+        return discount * 10
       }
       return discount
     },
@@ -220,6 +223,7 @@ export default {
      * @description:选择选项
      */
     handleClick(id) {
+      if (this.disabled) return false;
       this.duration = id;
       this.mDuration = '';
     }
@@ -303,6 +307,12 @@ ul {
         border-color: #1279F8;
         color: #1279F8;
         background-color: #D0E4FE
+      }
+
+      &_disabled {
+        color: rgba(0, 0, 0, .25) !important;
+        background-color: rgb(245, 245, 245) !important;
+        cursor: not-allowed;
       }
     }
 

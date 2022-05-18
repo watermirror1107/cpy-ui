@@ -227,6 +227,7 @@ export default {
       border-color: transparent;
       box-sizing: content-box;
       width: 40px;
+      padding: 0;
     }
 
     &_button[disabled] {
@@ -252,12 +253,14 @@ export default {
     }
 
     .c_inputNumber_container_button_add {
+      box-sizing: border-box;
       border-bottom: 1px solid #e6e6e6;
-      top: -5px;
+      top: 0;
     }
 
     .c_inputNumber_container_button_cut {
-      top: 47%;
+      box-sizing: border-box;
+      top: 50%;
     }
   }
 
