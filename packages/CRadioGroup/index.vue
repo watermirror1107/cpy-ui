@@ -16,8 +16,8 @@ export default {
   },
   provide() {
     return {
-      setGroupValue:  (e)=> {
-        this.$emit('change', e.target.value);
+      setGroupValue:  (val)=> {
+        this.$emit('change', val);
       }
     }
   }

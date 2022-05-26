@@ -11,7 +11,7 @@
         :disabled="$attrs.disabled"
         type="radio"
         :value="value"
-        @click="handleClick"
+        @click="handleClick($event,value)"
         class="c_radio">
     <slot/>
     <div
@@ -36,8 +36,8 @@ export default {
   },
   inject: ['setGroupValue'],
   methods: {
-    handleClick(e) {
-      this.setGroupValue(e);
+    handleClick(e,val) {
+      this.setGroupValue(val);
       this.$emit('change', e);
     }
   }
