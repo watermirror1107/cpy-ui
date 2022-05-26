@@ -102,14 +102,30 @@
           "
           :placeholder="column.placeholder || $T('public.search')"
         >
-          <a-select-option
-            class="multipleOptions"
-            v-for="option in column.options"
-            :value="option.id"
-            :key="option.id"
-          >
-            {{ option.name }}
-          </a-select-option>
+          <!-- 分层显示 -->
+          <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
+            <a-select-opt-group class="filterGroupItem" v-for="(item,index) in column.filterOptionMethod(column.options)" :key="index">
+              <span slot="label">{{item.name}}</span>
+              <a-select-option
+                class="multipleOptions"
+                v-for="option in item.options"
+                :value="option.id"
+                :key="option.id"
+              >
+                {{ option.name }}
+              </a-select-option>
+            </a-select-opt-group>
+          </template>
+          <template v-if="!column.filterOptionMethod">
+             <a-select-option
+                class="multipleOptions"
+                v-for="option in column.options"
+                :value="option.id"
+                :key="option.id"
+              >
+                {{ option.name }}
+              </a-select-option>
+          </template>
           <div slot="dropdownRender" slot-scope="menu">
             <v-nodes :vnodes="menu" />
             <a-divider style="margin: 4px 0" />
@@ -166,12 +182,28 @@
             debounceFresh($event, confirm, column.selectKey || column.key)
           "
         >
-          <a-select-option
-            v-for="option in column.options"
-            :value="option.id"
-            :key="option.id"
-            >{{ option.name }}
-          </a-select-option>
+         <!-- 分层显示 -->
+         <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
+            <a-select-opt-group class="filterGroupItem" v-for="(item,index) in column.filterOptionMethod(column.options)" :key="index">
+              <span slot="label">{{item.name}}</span>
+              <a-select-option
+                v-for="option in item.options"
+                :value="option.id"
+                :key="option.id"
+              >
+                {{ option.name }}
+              </a-select-option>
+            </a-select-opt-group>
+          </template>
+          <template v-if="!column.filterOptionMethod">
+             <a-select-option 
+                v-for="option in column.options"
+                :value="option.id"
+                :key="option.id"
+              >
+                {{ option.name }}
+              </a-select-option>
+          </template>
         </a-select>
       </template>
     </a-table>
@@ -535,10 +567,13 @@ export default {
   text-overflow: ellipsis;
   margin-bottom: 29px !important;
 }
+.filterGroupItem{
+  text-align: left;
+}
 
 .multipleOptions {
   padding-right: 0 !important;
-  padding-left: 50px;
+  padding-left: 50px!important;
   text-align: left;
 
   i {
