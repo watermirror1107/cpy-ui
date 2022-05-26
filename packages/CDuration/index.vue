@@ -2,44 +2,56 @@
   <div class="c_duration">
     <ul
         class="c_duration_list"
-        v-if="type===1">
+        v-if="type==1">
       <li
           class="c_duration_list_item"
           v-for="item in duration_middle_list"
-          :class="{c_duration_list_item_selected:item.id==duration}"
+          :class="{c_duration_list_item_selected:item.id==duration,c_duration_list_item_disabled:disabled}"
           :key="item.id"
           @click="handleClick(item.id)"
       >
         {{ item.name }}
+        <span v-if="item.discount>0"
+              class="c_duration_discount">{{ translate(item.discount) }}{{ $T('public.discount') }}</span>
       </li>
       <li class="c_duration_list_item">
         <a-select
+            :disabled="disabled"
             class="c_duration_list_item_more"
             :class="{selected:mDuration}"
             v-model="mDuration"
             @change="selectMore"
             size="large">
+          <a-icon slot="suffixIcon" style="color: #646464" type="caret-down"/>
           <a-select-option value="">
             {{ $T('public.Moretime') }}
           </a-select-option>
-          <a-select-option
-              v-for="mitem in more_middle_list"
-              :value="mitem.id"
-              :key="mitem.id">
-            {{ mitem.id }}{{ $T('public.Months') }}
-          </a-select-option>
+          <template v-for="mitem in more_middle_list">
+            <a-select-option
+                :value="mitem.id"
+                :key="mitem.id">
+              {{ mitem.id }}{{ $T('public.Months') }}
+              <span v-if="mitem.discount>0"
+                    class="c_duration_discount">{{ translate(mitem.discount) }}{{ $T('public.discount') }}</span>
+            </a-select-option>
+          </template>
         </a-select>
       </li>
     </ul>
     <a-select
         v-else
+        size="large"
+        :disabled="disabled"
         v-model="duration"
         style="width: 120px">
+      <a-icon slot="suffixIcon" style="color: #646464" type="caret-down"/>
       <a-select-option
-          v-for="item in [...durationList,...moreList].sort((a,b)=>{return a.id>b.id?1:-1})"
-          :value="item.id" ￥
+          v-for="item in [...duration_middle_list,...more_middle_list].sort((a,b)=>{return a.id>b.id?1:-1})"
+          :value="item.id"
           :key="item.id">
         {{ item.name }}
+        <span v-if="item.discount>0"
+              class="c_duration_discount">{{ translate(item.discount) }}{{ $T('public.discount') }}</span>
       </a-select-option>
     </a-select>
   </div>
@@ -56,6 +68,7 @@ export default {
     }
   },
   props: {
+    disabled: {type: [Boolean], default: false},
     value: {type: [Number, String]},
     type: {default: 1},
     moreList: {
@@ -177,6 +190,15 @@ export default {
   },
   methods: {
     /**
+     * @description:计算中英文折扣
+     */
+    translate(discount) {
+      if (localStorage?.CPY_PORTAL_LANGUAGE === 'en_US') {
+        return discount * 10
+      }
+      return discount
+    },
+    /**
      * @description:翻译兼容
      */
     translateText(code) {
@@ -185,6 +207,7 @@ export default {
         'public.Moretime': '更多时长',
         'public.Months': '个月',
         'public.year': '年',
+        'public.discount': '折',
       }
       return textObj[code] || code
     },
@@ -200,6 +223,7 @@ export default {
      * @description:选择选项
      */
     handleClick(id) {
+      if (this.disabled) return false;
       this.duration = id;
       this.mDuration = '';
     }
@@ -211,80 +235,89 @@ ul {
   list-style: none;
 }
 
-.discount {
-  display: block;
-  position: absolute;
-  color: #fff;
-  line-height: 16px;
-  font-size: 12px;
-  width: 32px;
-  height: 16px;
-  background-color: @--main-red;
-  top: -9px;
-  left: 2px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
-}
 
-.c_duration_list {
-  border: 1px solid #eeeeee;
-  height: 40px;
-  display: inline-block;
-
-  .ant-select {
-    width: 100%;
-  }
-
-  .ant-select-selection.selected {
-    border-color: #1279F8;
-    color: #1279F8;
-    background-color: #D0E4FE;
-  }
-
-  .ant-select-selection__rendered {
-    border: unset;
-  }
-
-  .ant-select-selection {
-    border: unset;
-  }
-
-  .ant-select-lg .ant-select-selection--single {
-    height: 36px;
-  }
-
-  &_item {
-    float: left;
-    height: 40px;
-    width: 90px;
+.c_duration {
+  &_discount {
+    display: inline-block;
+    color: #fff;
+    line-height: 16px;
+    font-size: 12px;
+    width: 32px;
+    height: 16px;
+    background-color: @--main-red;
+    border-radius: 8px;
+    margin-left: 8px;
     text-align: center;
-    line-height: 40px;
-    margin: 0;
-    border: 1px solid #E6E6E6;
-    border-collapse: collapse;
-    cursor: pointer;
+  }
 
-    &:last-child {
-      width: 120px;
+  &_list {
+    border: 1px solid #eeeeee;
+    height: 40px;
+    display: inline-block;
+
+    .ant-select {
+      width: 100%;
     }
 
-    .icon {
-      margin-left: 10px;
+    .ant-select-selection.selected {
+      border-color: #1279F8;
+      color: #1279F8;
+      background-color: #D0E4FE;
     }
 
-    &_more {
+    .ant-select-selection__rendered {
       border: unset;
     }
 
-    &_selected {
-      border-color: #1279F8;
-      color: #1279F8;
-      background-color: #D0E4FE
+    .ant-select-selection {
+      border: unset;
     }
+
+    .ant-select-lg .ant-select-selection--single {
+      height: 36px;
+    }
+
+    &_item {
+      float: left;
+      height: 40px;
+      width: 90px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 40px;
+      margin: 0;
+      border: 1px solid #E6E6E6;
+      border-collapse: collapse;
+      cursor: pointer;
+
+      &:last-child {
+        width: 120px;
+      }
+
+      .icon {
+        margin-left: 10px;
+      }
+
+      &_more {
+        border: unset;
+      }
+
+      &_selected {
+        border-color: #1279F8;
+        color: #1279F8;
+        background-color: #D0E4FE
+      }
+
+      &_disabled {
+        color: rgba(0, 0, 0, .25) !important;
+        background-color: rgb(245, 245, 245) !important;
+        cursor: not-allowed;
+      }
+    }
+
+
   }
-
-
 }
 
 

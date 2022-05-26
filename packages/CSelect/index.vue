@@ -3,7 +3,7 @@
     <div v-if="curIcon" class="prefix-wrap"><c-icon :name="curIcon"></c-icon></div>
     <div v-if="curHotText" class="suffix-wrap"><span class="sel-icon">{{curHotText}}</span></div>
     <a-select
-      size="large"
+      :size="size"
       style="width: 100%"
       dropdownClassName="dropdown-wrap"
       :value="curText"
@@ -35,6 +35,7 @@ export default {
     'c-icon': CIcon
   },
   props: {
+    size: { type: String, default: 'large' },
     value: { type: [Number, String] },
     selectOptions: {
       type: Array,
