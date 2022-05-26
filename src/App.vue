@@ -119,8 +119,11 @@
       </template>
       <template #operate="{ record, index }">
         <c-btn-wrap>
-          <c-table-btn :disabled="isClick" text="click1" @click="clickHandler1">
-          </c-table-btn>
+          <c-table-btn
+            :disabled="isClick"
+            text="click1"
+            @click="clickHandler1"
+          ></c-table-btn>
           <c-table-btn text="click2" @click="clickHandler2"> </c-table-btn>
           <c-table-btn text="click3" @click="clickHandler3"> </c-table-btn>
           <c-table-btn text="click4" @click="clickHandler4"> </c-table-btn>
