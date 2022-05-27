@@ -103,8 +103,8 @@ export default {
     isShowQuick: {type: Boolean, default: true},//是否显示快捷键
     defaultType:{type:Number,default:2},//默认type类型
     arrValue:{type:Array,default:()=>([{
-        type:-1
-      },{
+        type:1
+      },{ 
         type:3
       },{
         type:7
