@@ -63,6 +63,13 @@
           {{ $T('public.Halfayear') }}
         </li>
       </template>
+      <template v-else-if="currentType === 3">
+        <li v-for="(item,index) in arrValue" :key="index"
+            :class="{activated:type===item.type}"
+            @click="changeType(item)">
+           {{Math.abs(item.type)}}{{ $T('public.day') }}
+        </li>
+      </template>
     </ul>
   </div>
 </template>
@@ -84,7 +91,7 @@ export default {
       loop: null // 轮询
     }
   },
-  model: {
+  model: { 
     event: 'change',
     prop: 'value'
   },
@@ -94,19 +101,28 @@ export default {
     currentType: {type: Number, default: 1},
     separator: {type: String, default: '-'},//分隔符
     isShowQuick: {type: Boolean, default: true},//是否显示快捷键
+    defaultType:{type:Number,default:2},//默认type类型
+    arrValue:{type:Array,default:()=>([{
+        type:-1
+      },{
+        type:3
+      },{
+        type:7
+      }])
+    },
     disabledDate: {//不可用时间
       type: Function, default: (current) => {
         return current && current > Date.now();
       }
     }
-  },
+  }, 
   created() {
     if (!this.$T) {
       this.$T = this.translateText
     }
   },
   mounted() {
-    this.type = 2;
+    // this.type = 2;
   },
   beforeDestroy() {
     this.clearTime();
@@ -128,6 +144,7 @@ export default {
         'public.OneMonth': '1个月',
         'public.Threemonths': '3个月',
         'public.Halfayear': '半年',
+        'public.day':'天'
       }
       return textObj[code] || code
     },
@@ -149,12 +166,24 @@ export default {
      */
     clearTime() {
       clearInterval(this.loop);
+    },
+    changeType(item){
+      this.type = item.type
+      if(item.type<0){
+         this.dateValue = [moment(),moment().subtract(item.type, 'days')];
+      }else{
+         this.dateValue = [moment().subtract(item.type, 'days'), moment()];
+      }
+      this.emitChange(this.dateValue);
     }
   },
   watch: {
     type(nv, ov) {
       if (nv !== 0) {
         this.clearTime();
+      }
+      if(this.currentType==3){
+        return;
       }
       switch (nv) {
         case 0:
@@ -211,6 +240,9 @@ export default {
     },
     value(nv, ov) {
       this.dateValue = nv;
+    },
+    defaultType(nv,ov){
+      this.type = nv;
     }
   }
 };
