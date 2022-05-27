@@ -1,5 +1,5 @@
 <template>
-  <div class="c-select-wrap" :class="{ 'has-prefix' : curIcon, 'has-suffix' : curHotText }">
+  <div class="c-select-wrap" :class="{ 'has-prefix' : curIcon, 'has-suffix' : curHotText, 'no-border': noBorder }">
     <div v-if="curIcon" class="prefix-wrap"><c-icon :name="curIcon"></c-icon></div>
     <div v-if="curHotText" class="suffix-wrap"><span class="sel-icon">{{curHotText}}</span></div>
     <a-select
@@ -36,6 +36,7 @@ export default {
   },
   props: {
     size: { type: String, default: 'large' },
+    noBorder: { type: Boolean, default: false },
     value: { type: [Number, String] },
     selectOptions: {
       type: Array,
@@ -90,6 +91,7 @@ export default {
   display: inline-block;
   width: 120px;
   background: #fff;
+  
   &.has-prefix {
     /deep/ .ant-select-selection__rendered {
       margin-left: 32px;
@@ -144,6 +146,12 @@ export default {
       box-shadow: none;
     }
     box-shadow: none;
+  }
+
+  &.no-border {
+    /deep/ .ant-select-selection {
+      border: none;
+    }
   }
 }
 </style>
