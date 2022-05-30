@@ -454,28 +454,28 @@ export default {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
             },
-            // filterOptionMethod:(val,key="cityName")=>{
-            //   let temp = [];
-            //   //城市名称提取
-            //   [...new Set(val.map(item=>{
-            //     return item[key]
-            //   }))].forEach(item=>{
-            //     temp.push({
-            //       name:item,
-            //       options:[]
-            //     })
-            //   })
-            //   //城市名称下的集合
-            //   val.forEach(item=>{
-            //     temp.forEach(tempItem=>{
-            //       if(item[key]==tempItem.name){
-            //         tempItem.options.push(item);
-            //       }
-            //     })
-            //   })
-            //   return temp;
-            // },
-            options:[{id:111,name:'111',cityName:'厦门'},{id:112,name:'113',cityName:'厦门'},{id:222,name:'2222',cityName:'福州'}],
+            filterOptionMethod:(val,key="cityName")=>{
+              let temp = [];
+              //城市名称提取
+              [...new Set(val.map(item=>{
+                return item[key]
+              }))].forEach(item=>{
+                temp.push({
+                  name:item,
+                  options:[]
+                })
+              })
+              //城市名称下的集合
+              val.forEach(item=>{
+                temp.forEach(tempItem=>{
+                  if(item[key]==tempItem.name){
+                    tempItem.options.push(item);
+                  }
+                })
+              })
+              return temp;
+            },
+            options:[{id:111,name:'111',cityName:'all'},{id:111,name:'111',cityName:'厦门'},{id:112,name:'113',cityName:'厦门'},{id:222,name:'2222',cityName:'福州'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => { 
               if (visible) {
@@ -515,7 +515,7 @@ export default {
               })
               return temp;
             },
-            options:[{id:111,name:'111',cityName:'厦门'},{id:112,name:'113',cityName:'厦门'},{id:222,name:'2222',cityName:'福州'}],
+            options:[{id:111,name:'111',cityName:'all'},{id:111,name:'111',cityName:'厦门'},{id:112,name:'113',cityName:'厦门'},{id:222,name:'2222',cityName:'福州'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {

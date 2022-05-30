@@ -104,17 +104,27 @@
         >
           <!-- 分层显示 -->
           <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
-            <a-select-opt-group class="filterGroupItem" v-for="(item,index) in column.filterOptionMethod(column.options)" :key="index">
-              <span slot="label">{{item.name}}</span>
-              <a-select-option
-                class="multipleOptions"
-                v-for="option in item.options"
-                :value="option.id"
-                :key="option.id"
-              >
-                {{ option.name }}
-              </a-select-option>
-            </a-select-opt-group>
+            <template  v-for="(item,index) in column.filterOptionMethod(column.options)" >
+              <a-select-opt-group v-if="item.name!=='all'" class="filterGroupItem" :key="index">
+                <span slot="label">{{item.name}}</span>
+                <a-select-option
+                  class="multipleOptions"
+                  v-for="option in item.options"
+                  :value="option.id"
+                  :key="option.id"
+                >
+                  {{ option.name }}
+                </a-select-option>
+              </a-select-opt-group>
+              <a-select-option v-else
+                  class="multipleOptions"
+                  v-for="option in item.options"
+                  :value="option.id"
+                  :key="option.id"
+                >
+                  {{ option.name }}
+                </a-select-option>
+            </template>
           </template>
           <template v-if="!column.filterOptionMethod">
              <a-select-option
@@ -160,7 +170,7 @@
           </div>
         </a-select>
         <a-select
-          v-else
+          v-else 
           style="width: 180px"
           show-search
           :showArrow="false"
@@ -184,16 +194,25 @@
         >
          <!-- 分层显示 -->
          <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
-            <a-select-opt-group class="filterGroupItem" v-for="(item,index) in column.filterOptionMethod(column.options)" :key="index">
-              <span slot="label">{{item.name}}</span>
-              <a-select-option
-                v-for="option in item.options"
-                :value="option.id"
-                :key="option.id"
-              >
-                {{ option.name }}
-              </a-select-option>
-            </a-select-opt-group>
+            <template  v-for="(item,index) in column.filterOptionMethod(column.options)" >
+              <a-select-opt-group v-if="item.name!=='all'" class="filterGroupItem" :key="index">
+                <span slot="label">{{item.name}}</span>
+                <a-select-option
+                  v-for="option in item.options"
+                  :value="option.id"
+                  :key="option.id"
+                >
+                  {{ option.name }}
+                </a-select-option>
+              </a-select-opt-group>
+              <a-select-option v-else
+                  v-for="option in item.options"
+                  :value="option.id"
+                  :key="option.id"
+                >
+                  {{ option.name }}
+                </a-select-option>
+            </template>
           </template>
           <template v-if="!column.filterOptionMethod">
              <a-select-option 
