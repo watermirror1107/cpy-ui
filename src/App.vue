@@ -49,8 +49,8 @@
     <!--      <template #left>left</template>-->
     <!--      <template #right>righ</template>-->
     <!--    </c-nav-header>-->
-           <c-range-picker  :currentType="3" isShowQuick></c-range-picker>
-    <!--        <c-table-form--> 
+    <!--        <c-range-picker v-model="time" :currentType="2"></c-range-picker>-->
+    <!--        <c-table-form-->
     <!--            v-model="formData"-->
     <!--            :formOptions="formOptions"-->
     <!--            @submit="handleSubmit"-->
