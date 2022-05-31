@@ -170,7 +170,7 @@
           </div>
         </a-select>
         <a-select
-          v-else 
+          v-else
           style="width: 180px"
           show-search
           :showArrow="false"
@@ -215,7 +215,7 @@
             </template>
           </template>
           <template v-if="!column.filterOptionMethod">
-             <a-select-option 
+             <a-select-option
                 v-for="option in column.options"
                 :value="option.id"
                 :key="option.id"
@@ -230,7 +230,6 @@
       <c-page
         v-bind="{
           ...this.localPagination,
-          showSizeChanger: true,
           total: this.total,
         }"
         @change="paginationChange"

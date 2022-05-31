@@ -4,7 +4,7 @@
       {{ translateText('total',total) }}
     </div>
     <div>
-      <div class="cpage-pagesize">
+      <div class="cpage-pagesize" v-if="isShowSizeChanger">
         <a-dropdown :trigger="['click']" overlayClassName="dropdownc">
           <a class="sizelink" @click="(e) => e.preventDefault()">
             {{ currentPageSize }} {{ translateText('page') }}
@@ -51,6 +51,10 @@
 export default {
   name: 'CPage',
   props: {
+    isShowSizeChanger:{
+      type:Boolean,
+      default:true
+    },
     current: {
       type: Number,
       default: 1,
