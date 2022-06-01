@@ -635,6 +635,9 @@ export default {
       }
 
       &_refresh {
+        width: 40px;
+        height: 40px;
+        padding: 0 11px;
         margin-right: 16px;
         float: left;
         //border-color:#E6E6E6!important;
