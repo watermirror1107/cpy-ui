@@ -423,7 +423,13 @@ export default {
         let userId = this.$store.state.userInfo.id; //获取用户ID this.$store.state.userInfo.id
         if (localStorage.custormColumnObject) {
           let obj = JSON.parse(localStorage.custormColumnObject);
-          obj[userId][this.$route.path] = this.showColumns.join(",");
+          obj = {
+            ...obj,
+            [userId]: {
+              [this.$route.path]: this.showColumns.join(","),
+            },
+          } 
+          // obj[userId][this.$route.path] = this.showColumns.join(",");
           localStorage.custormColumnObject = JSON.stringify(obj);
         } else {
           localStorage.custormColumnObject = JSON.stringify({
