@@ -2,7 +2,7 @@
 <template>
   <svg
       class="c_icon"
-      :class="getClassName"
+      :class="{getClassName:true,rotate360:name==='icon-shili_yemianjiazai'}"
       :width="width"
       :height="height"
       aria-hidden="true"
@@ -49,5 +49,16 @@ export default {
   height: 1em;
   fill: currentColor;
   overflow: hidden;
+}
+@keyframes rotateCircle {
+  from{
+    transform: rotate(0deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+.rotate360{
+  animation: rotateCircle 1000ms linear infinite;
 }
 </style>

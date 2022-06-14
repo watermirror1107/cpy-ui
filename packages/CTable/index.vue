@@ -170,7 +170,7 @@
           </div>
         </a-select>
         <a-select
-          v-else
+          v-else 
           style="width: 180px"
           show-search
           :showArrow="false"
@@ -215,7 +215,7 @@
             </template>
           </template>
           <template v-if="!column.filterOptionMethod">
-             <a-select-option
+             <a-select-option 
                 v-for="option in column.options"
                 :value="option.id"
                 :key="option.id"
@@ -230,6 +230,7 @@
       <c-page
         v-bind="{
           ...this.localPagination,
+          showSizeChanger: true,
           total: this.total,
         }"
         @change="paginationChange"
@@ -422,7 +423,16 @@ export default {
         let userId = this.$store.state.userInfo.id; //获取用户ID this.$store.state.userInfo.id
         if (localStorage.custormColumnObject) {
           let obj = JSON.parse(localStorage.custormColumnObject);
-          obj[userId][this.$route.path] = this.showColumns.join(",");
+          if(obj[userId]){
+            obj[userId][this.$route.path] = this.showColumns.join(",");
+          }else{
+            obj = {
+              ...obj, 
+              [userId]: {
+                [this.$route.path]: this.showColumns.join(","),
+              },
+            }
+          };
           localStorage.custormColumnObject = JSON.stringify(obj);
         } else {
           localStorage.custormColumnObject = JSON.stringify({
