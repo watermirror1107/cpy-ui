@@ -26,15 +26,18 @@ export default {
     }
     //content
     let content = null
+    // 是否要居中对齐
+    let className = ['c_model_content']
     if (this.$slots.default || this.content) {
       if (this.$slots.default) {
         content = this.$slots.default
       } else if (this.content instanceof Function) {
         content = [this.content(h)]
       } else if (this.content) {
+        className.push('c_model_content-center')
         content = this.content
       }
-      children.push(h('p', {class: 'c_model_content'}, content))
+      children.push(h('p', {class: className}, content))
     }
     //footer
     if (this.isSlotFooter || this.footer) {
