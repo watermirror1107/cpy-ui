@@ -29,7 +29,7 @@ export default {
         on: this.$listeners,
       },
       [
-        h(Icon, { props: { name: "icon-xuanzekuanxia" }, slot: "expandIcon" }),
+        h(Icon, { props: { name: "icon-xuanzekuanxia" }, slot: "expandIcon",class:'arrow' }),
         children.map((child) => {
           let property = { props: child.data.attrs };
           if (child.data?.key) {
@@ -49,7 +49,7 @@ export default {
             property.props.header = child.data.attrs.header;
           }
           return h("a-collapse-panel", property, c_children);
-        }),
+        })
       ]
     );
   },
@@ -57,6 +57,15 @@ export default {
 </script>
 <style lang="less">
 .c_collapse {
+  .arrow{
+    transition: all 300ms;
+    transform:translateY(-50%) rotate(-90deg)!important;
+  }
+  .ant-collapse-item-active{
+    .arrow{
+      transform:translateY(-50%)!important;
+    }
+  }
   .ant-collapse-header {
     background-color: #e6e6e6;
     text-align: left;

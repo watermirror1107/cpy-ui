@@ -149,7 +149,7 @@
         </c-btn-group>
       </template>
     </c-table>
-    <!-- <c-collapse :activeKey="['c']">
+  <c-collapse :activeKey="['c']">
       <c-collapse-panel :key="'a'">
         <p name="header">title1</p>
       </c-collapse-panel>
@@ -163,7 +163,7 @@
         <p>giao1</p>
         <p>giao2</p>
       </c-collapse-panel>
-    </c-collapse> -->
+    </c-collapse>
 
     <!-- <a-collapse :activeKey="['b']">
       <a-collapse-panel key="a" header="This is panel header 1">
@@ -477,7 +477,7 @@ export default {
             },
             options:[{id:111,name:'111',cityName:'all'},{id:111,name:'111',cityName:'厦门'},{id:112,name:'113',cityName:'厦门'},{id:222,name:'2222',cityName:'福州'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
-            onFilterDropdownVisibleChange: (visible) => { 
+            onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
                 this.filterOptions = this.formOptions.find(
                   (i) => i.key === "name"
@@ -498,7 +498,7 @@ export default {
               let temp = [];
               //城市名称提取
               [...new Set(val.map(item=>{
-                return item[key] 
+                return item[key]
               }))].forEach(item=>{
                 temp.push({
                   name:item,
