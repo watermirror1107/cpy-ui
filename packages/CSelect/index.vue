@@ -5,6 +5,8 @@
     <a-select
       :size="size"
       style="width: 100%"
+      :disabled="disabled"
+      :style="{'background': disabled ? '#f5f5f5' : ''}"
       dropdownClassName="dropdown-wrap"
       :value="curText"
       @change="handleChange"
@@ -38,6 +40,7 @@ export default {
     size: { type: String, default: 'large' },
     noBorder: { type: Boolean, default: false },
     value: { type: [Number, String] },
+    disabled: { type: Boolean, default: false },
     selectOptions: {
       type: Array,
       default: () => [
