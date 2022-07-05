@@ -15,6 +15,7 @@
       <a-select-option
         v-for="item in selectOptions"
         :key="item.val"
+        :value="item.val"
         :disabled="item.disabled"
       >
         <c-icon v-if="item.preIcon" :name="item.preIcon"></c-icon>
