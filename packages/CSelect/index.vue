@@ -18,9 +18,21 @@
         :value="item.val"
         :disabled="item.disabled"
       >
-        <c-icon v-if="item.preIcon" :name="item.preIcon"></c-icon>
-        {{ item.text }}
-        <span v-if="item.hotText" class="opt-icon">{{ item.hotText }}</span>
+        <a-tooltip
+          placement="topLeft"
+          :title="item.text">
+          <div
+            style="
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            "
+          >
+            <c-icon v-if="item.preIcon" :name="item.preIcon"></c-icon>
+            {{ item.text }}
+            <span v-if="item.hotText" class="opt-icon">{{ item.hotText }}</span>
+          </div>
+        </a-tooltip>
       </a-select-option>
     </a-select>
   </div>
