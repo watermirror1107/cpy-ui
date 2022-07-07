@@ -101,8 +101,8 @@ export default {
   font-size: 14px;
 
   &[disabled] {
-    background: #fff;
-    color: #aac0fe;
+    // background: #fff;
+    // color: #aac0fe;
     opacity: 0.8;
 
     &:hover {
@@ -112,8 +112,8 @@ export default {
   }
 
   &:hover {
-    border-color: @--main-blue !important;
-    color: @--main-blue !important;
+    border-color: @--main-blue;
+    color: @--main-blue;
   }
 
   &:focus {
