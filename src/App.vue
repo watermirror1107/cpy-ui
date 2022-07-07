@@ -99,10 +99,8 @@
         selectedRowKeys: selectedRowKeys,
         onChange: onSelectChange,
       }"
-      :filterOptions="filterOptions"
       :tagFilterArr="['queryName', 'date']"
       :columns="columns"
-      :loopTime="10000"
       :data="queryList"
       rowKey="id"
     >
@@ -438,9 +436,7 @@ export default {
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
-                this.filterOptions = this.formOptions.find(
-                  (i) => i.key === "id"
-                ).options;
+
               }
             },
           },
@@ -479,9 +475,7 @@ export default {
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
-                this.filterOptions = this.formOptions.find(
-                  (i) => i.key === "name"
-                ).options;
+
               }
             },
           },
@@ -515,13 +509,11 @@ export default {
               })
               return temp;
             },
-            options:[{id:111,name:'111',cityName:'all'},{id:111,name:'111',cityName:'厦门'},{id:112,name:'113',cityName:'厦门'},{id:222,name:'2222',cityName:'福州'}],
+            options:[{id:undefined,name:'all',cityName:'all'},{id:111,name:'1122',cityName:'厦门'},{id:112,name:'113',cityName:'厦门'},{id:222,name:'2222',cityName:'福州'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
-                this.filterOptions = this.formOptions.find(
-                  (i) => i.key === "content"
-                ).options;
+
               }
             },
           },
@@ -534,12 +526,11 @@ export default {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
             },
+            options:[{id:111,name:'111'},{id:222,name:'222'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
-                this.filterOptions = this.formOptions.find(
-                  (i) => i.key === "createTime"
-                ).options;
+
               }
             },
           },

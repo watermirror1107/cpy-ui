@@ -6,29 +6,29 @@
           <slot name="actionBar"></slot>
         </div>
         <a-input
-          v-if="isShowSearch"
-          size="large"
-          v-model="formData.queryName"
-          @change="debounceFresh($event, () => {}, 'queryName')"
-          :placeholder="queryNamePlaceholder"
+            v-if="isShowSearch"
+            size="large"
+            v-model="formData.queryName"
+            @change="debounceFresh($event, () => {}, 'queryName')"
+            :placeholder="queryNamePlaceholder"
         >
-          <icon slot="suffix" name="icon-shili_shousuo" />
+          <icon slot="suffix" name="icon-shili_shousuo"/>
         </a-input>
         <c-button
-          class="c_table_header_left_refresh"
-          size="large"
-          :disabled="isLocalLoading"
-          type="text"
-          @click="refresh"
+            class="c_table_header_left_refresh"
+            size="large"
+            :disabled="isLocalLoading"
+            type="text"
+            @click="refresh"
         >
           <icon name="icon-chongzhi_shuaxin"></icon>
         </c-button>
         <c-button
-          type="text"
-          class="c_table_header_left_refresh"
-          v-if="isSetColumn"
-          size="large"
-          @click="setColumns"
+            type="text"
+            class="c_table_header_left_refresh"
+            v-if="isSetColumn"
+            size="large"
+            @click="setColumns"
         >
           <icon name="icon-shili_shezhi"></icon>
         </c-button>
@@ -38,45 +38,45 @@
       </div>
     </div>
     <tag-list
-      v-if="isShowTag"
-      @close="refresh(true)"
-      class="c_table_tags"
-      v-model="formData"
-      :formOptions="getFormOptions()"
-      :tagFilterArr="tagFilterArr"
+        v-if="isShowTag"
+        @close="refresh(true)"
+        class="c_table_tags"
+        v-model="formData"
+        :formOptions="getFormOptions()"
+        :tagFilterArr="tagFilterArr"
     ></tag-list>
     <a-table
-      :class="
+        :class="
         'bordered' in property && !property.bordered ? 'c_table_noBorder' : ''
       "
-      v-on="$listeners"
-      :loading="isLocalLoading"
-      v-bind="property"
-      :columns="
+        v-on="$listeners"
+        :loading="isLocalLoading"
+        v-bind="property"
+        :columns="
         $attrs.columns.filter((column) => showColumns.includes(column.key))
       "
-      :dataSource="localDataSource"
-      :rowSelection="$attrs.rowSelection || null"
+        :dataSource="localDataSource"
+        :rowSelection="$attrs.rowSelection || null"
     >
       <template #filterIcon>
         <icon
-          style="width: 14px; outline: unset; margin-left: 10px"
-          name="icon-shili_saixuan"
+            style="width: 14px; outline: unset; margin-left: 10px"
+            name="icon-shili_saixuan"
         ></icon>
       </template>
       <template v-for="slot in slotArr" v-slot:[slot]="text, record, index">
         <slot :name="slot" :text="text" :record="record" :index="index"></slot>
       </template>
       <template
-        v-if="isExpandedRowRender"
-        v-slot:expandedRowRender="record, index, indent, expanded"
+          v-if="isExpandedRowRender"
+          v-slot:expandedRowRender="record, index, indent, expanded"
       >
         <slot
-          name="expandedRowRender"
-          :record="record"
-          :index="index"
-          :indent="indent"
-          :expanded="expanded"
+            name="expandedRowRender"
+            :record="record"
+            :index="index"
+            :indent="indent"
+            :expanded="expanded"
         ></slot>
       </template>
       <template v-for="nativeTable in nativeTableSlotArr" v-slot:[nativeTable]>
@@ -85,71 +85,66 @@
       <!--      表头过滤-->
       <template v-slot:filterDropdown="{ confirm, column }">
         <a-select
-          v-if="column.type === 'selectMultiple'"
-          show-search
-          style="width: 180px"
-          :defaultOpen="true"
-          :open="true"
-          :showArrow="false"
-          mode="multiple"
-          v-model="formData[column.selectKey || column.key]"
-          :getPopupContainer="(triggerNode) => triggerNode.parentNode"
-          :filter-option="
-            (input, option) =>
-              option.componentOptions.children[0].text
-                .toLowerCase()
-                .indexOf(input.toLowerCase()) >= 0
-          "
-          :placeholder="column.placeholder || $T('public.search')"
+            v-if="column.type === 'selectMultiple'"
+            show-search
+            style="width: 180px"
+            :defaultOpen="true"
+            :open="true"
+            :showArrow="false"
+            mode="multiple"
+            v-model="formData[column.selectKey || column.key]"
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            :filter-option="filterOption"
+            :placeholder="column.placeholder || $T('public.search')"
         >
           <!-- 分层显示 -->
           <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
-            <template  v-for="(item,index) in column.filterOptionMethod(column.options)" >
+            <template v-for="(item,index) in column.filterOptionMethod(column.options)">
               <a-select-opt-group v-if="item.name!=='all'" class="filterGroupItem" :key="index">
-                <span slot="label">{{item.name}}</span>
+                <span slot="label">{{ item.name }}</span>
                 <a-select-option
-                  class="multipleOptions"
-                  v-for="option in item.options"
-                  :value="option.id"
-                  :key="option.id"
+                    class="multipleOptions"
+                    v-for="option in item.options"
+                    :value="option.id"
+                    :key="option.id"
                 >
                   {{ option.name }}
                 </a-select-option>
               </a-select-opt-group>
               <a-select-option v-else
-                  class="multipleOptions"
-                  v-for="option in item.options"
-                  :value="option.id"
-                  :key="option.id"
-                >
-                  {{ option.name }}
-                </a-select-option>
+                               class="multipleOptions"
+                               v-for="option in item.options"
+                               :value="option.id"
+                               :key="option.id"
+              >
+                {{ option.name }}
+              </a-select-option>
             </template>
           </template>
           <template v-if="!column.filterOptionMethod">
-             <a-select-option
+            <a-select-option
                 class="multipleOptions"
                 v-for="option in column.options"
                 :value="option.id"
                 :key="option.id"
-              >
-                {{ option.name }}
-              </a-select-option>
+            >
+              {{ option.name }}
+            </a-select-option>
           </template>
           <div slot="dropdownRender" slot-scope="menu">
-            <v-nodes :vnodes="menu" />
-            <a-divider style="margin: 4px 0" />
+            <v-nodes :vnodes="menu"/>
+            <a-divider style="margin: 4px 0"/>
             <div
-              style="
+                style="
                 padding: 7px 8px;
                 display: flex;
                 justify-content: space-between;
               "
-              @mousedown="(e) => e.preventDefault()"
+                @mousedown="(e) => e.preventDefault()"
             >
               <a-button
-                type="primary"
-                @click="
+                  type="primary"
+                  @click="
                   debounceFresh(
                     formData[column.selectKey || column.key],
                     confirm,
@@ -160,9 +155,9 @@
                 {{ $T("instance.Confirm") }}
               </a-button>
               <a-button
-                type="primary"
-                ghost
-                @click="resetFilter(column.selectKey || column.key, confirm)"
+                  type="primary"
+                  ghost
+                  @click="resetFilter(column.selectKey || column.key, confirm)"
               >
                 {{ $T("instance.Reset") }}
               </a-button>
@@ -170,87 +165,79 @@
           </div>
         </a-select>
         <a-select
-          v-else 
-          style="width: 180px"
-          show-search
-          :showArrow="false"
-          allowClear
-          autoFocus
-          v-model="formData[column.selectKey || column.key]"
-          :defaultOpen="true"
-          :open="true"
-          :getPopupContainer="(triggerNode) => triggerNode.parentNode"
-          option-filter-prop="children"
-          :filter-option="
-            (input, option) =>
-              option.componentOptions.children[0].text
-                .toLowerCase()
-                .indexOf(input.toLowerCase()) >= 0
-          "
-          :placeholder="column.placeholder || $T('public.search')"
-          @change="
-            debounceFresh($event, confirm, column.selectKey || column.key)
-          "
+            v-else
+            style="width: 180px"
+            show-search
+            :showArrow="false"
+            allowClear
+            autoFocus
+            v-model="formData[column.selectKey || column.key]"
+            :defaultOpen="true"
+            :open="true"
+            :getPopupContainer="(triggerNode) => triggerNode.parentNode"
+            :filter-option="filterOption"
+            :placeholder="column.placeholder || $T('public.search')"
+            @change="debounceFresh($event, confirm, column.selectKey || column.key)"
         >
-         <!-- 分层显示 -->
-         <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
-            <template  v-for="(item,index) in column.filterOptionMethod(column.options)" >
+          <!-- 分层显示 -->
+          <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
+            <template v-for="(item,index) in column.filterOptionMethod(column.options)">
               <a-select-opt-group v-if="item.name!=='all'" class="filterGroupItem" :key="index">
-                <span slot="label">{{item.name}}</span>
+                <span slot="label">{{ item.name }}</span>
                 <a-select-option
-                  v-for="option in item.options"
-                  :value="option.id"
-                  :key="option.id"
+                    v-for="option in item.options"
+                    :value="option.id"
+                    :key="option.id"
                 >
                   {{ option.name }}
                 </a-select-option>
               </a-select-opt-group>
               <a-select-option v-else
-                  v-for="option in item.options"
-                  :value="option.id"
-                  :key="option.id"
-                >
-                  {{ option.name }}
-                </a-select-option>
-            </template>
-          </template>
-          <template v-if="!column.filterOptionMethod">
-             <a-select-option 
-                v-for="option in column.options"
-                :value="option.id"
-                :key="option.id"
+                               v-for="option in item.options"
+                               :value="option.id"
+                               :key="option.id"
               >
                 {{ option.name }}
               </a-select-option>
+            </template>
+          </template>
+          <template v-if="!column.filterOptionMethod">
+            <a-select-option
+                v-for="option in column.options"
+                :value="option.id"
+                :key="option.id"
+            >
+              {{ option.name }}
+            </a-select-option>
           </template>
         </a-select>
       </template>
     </a-table>
     <div v-if="isShowPagination" class="c_table_pagination_box">
       <c-page
-        v-bind="{
+          v-bind="{
           ...this.localPagination,
           showSizeChanger: true,
           total: this.total,
         }"
-        @change="paginationChange"
-        @showSizeChange="onShowSizeChange"
+          @change="paginationChange"
+          @showSizeChange="onShowSizeChange"
       ></c-page>
     </div>
     <modal
-      :width="480"
-      :okText="$T('instance.Confirm')"
-      :cancelText="$T('instance.Cancel')"
-      v-model="isVisible"
-      :title="$T('public.setColumn')"
-      :ok="confirmColumns"
+        :width="480"
+        :okText="$T('instance.Confirm')"
+        :cancelText="$T('instance.Cancel')"
+        v-model="isVisible"
+        :title="$T('public.setColumn')"
+        :ok="confirmColumns"
     >
       <a-checkbox-group style="width: 100%" v-model="midColumns">
         <checkbox
-          v-for="(item, index) in $attrs.columns"
-          :key="index"
-          class="column-checkbox"
-          :value="item.key"
+            v-for="(item, index) in $attrs.columns"
+            :key="index"
+            class="column-checkbox"
+            :value="item.key"
         >
           {{ item.title }}
         </checkbox>
@@ -259,12 +246,12 @@
   </div>
 </template>
 <script>
-import { debounce } from "@/utils";
+import {debounce} from "@/utils";
 import Icon from "../CIcon";
 import TagList from "../CTagList";
 import Modal from "../CModal/index.vue";
 import CButton from "../CButton";
-import { Checkbox } from "ant-design-vue";
+import {Checkbox} from "ant-design-vue";
 import CPage from "../CPage";
 
 export default {
@@ -299,25 +286,26 @@ export default {
       slotArr: [],
       nativeTableSlotArr: [],
       property: {},
-      form: { filterCondition: undefined },
+      form: {filterCondition: undefined},
     };
   },
   props: {
-    queryNamePlaceholder: { type: String, default: "placeholder" }, //是否可以设置表头
-    isShowHeader: { type: Boolean, default: true }, //是否显示表格搜索头部等按钮
-    isShowTag: { type: Boolean, default: true }, //是否显示过滤条件
-    isShowPagination: { type: Boolean, default: true }, //是否显示分页器
-    isShowSearch: { type: Boolean, default: true }, //是否可以搜索
-    isSetColumn: { type: Boolean, default: true }, //是否可以设置表头
-    loopTime: { type: Number }, //轮询间隔,建议至少5秒以上
-    data: { type: Function },
+    queryNamePlaceholder: {type: String, default: "placeholder"}, //是否可以设置表头
+    isShowHeader: {type: Boolean, default: true}, //是否显示表格搜索头部等按钮
+    isShowTag: {type: Boolean, default: true}, //是否显示过滤条件
+    isShowPagination: {type: Boolean, default: true}, //是否显示分页器
+    isShowSearch: {type: Boolean, default: true}, //是否可以搜索
+    isSetColumn: {type: Boolean, default: true}, //是否可以设置表头
+    loopTime: {type: Number}, //轮询间隔,建议至少5秒以上
+    data: {type: Function},
     formData: {
       type: Object,
-      default: () => {},
+      default: () => {
+      },
     },
-    tagFilterArr: { type: Array, default: () => ["queryName"] },
-    dataSource: { type: Array, default: () => [] },
-    scroll: { default: () => ({ x: 930 }), type: Object },
+    tagFilterArr: {type: Array, default: () => ["queryName"]},
+    dataSource: {type: Array, default: () => []},
+    scroll: {default: () => ({x: 930}), type: Object},
   },
   watch: {
     dataSource(nv) {
@@ -331,8 +319,8 @@ export default {
     try {
       let userId = JSON.parse(localStorage.CPY_PORTAL_USERINFO).userId;
       this.showColumns = JSON.parse(localStorage.custormColumnObject)[userId][
-        this?.$route?.path
-      ].split(",");
+          this?.$route?.path
+          ].split(",");
     } catch (error) {
       this.showColumns = this.$attrs.columns.map((i) => i.key);
     }
@@ -365,25 +353,25 @@ export default {
     ];
     // 这里去重下，不然自定义表头会出现2个
     this.slotArr = Array.from(new Set(this.slotArr)).filter(
-      (item) =>
-        item !== "filterDropdown" &&
-        item !== "actionBar" &&
-        item !== "headerRight"
+        (item) =>
+            item !== "filterDropdown" &&
+            item !== "actionBar" &&
+            item !== "headerRight"
     ); //过滤掉1个自定义actionBar和一个filterDropdown
     // 取出列数据里面的slots
     const columnsSlots = this.$attrs.columns.filter((el) => el.slots);
     const columnsSlotsValues = columnsSlots.map((el) =>
-      Object.values(el.slots)
+        Object.values(el.slots)
     );
     let nativeTableSlotArr = [];
     columnsSlotsValues.forEach((el) => {
       nativeTableSlotArr = nativeTableSlotArr.concat(el);
     });
     this.isExpandedRowRender = this.slotArr.some(
-      (el) => el === "expandedRowRender"
+        (el) => el === "expandedRowRender"
     );
     this.slotArr = this.slotArr.filter(
-      (el) => !nativeTableSlotArr.includes(el) && el !== "expandedRowRender"
+        (el) => !nativeTableSlotArr.includes(el) && el !== "expandedRowRender"
     ); //expandedRowRender插槽比较特殊，单独处理
     this.nativeTableSlotArr = nativeTableSlotArr;
   },
@@ -423,16 +411,17 @@ export default {
         let userId = this.$store.state.userInfo.id; //获取用户ID this.$store.state.userInfo.id
         if (localStorage.custormColumnObject) {
           let obj = JSON.parse(localStorage.custormColumnObject);
-          if(obj[userId]){
+          if (obj[userId]) {
             obj[userId][this.$route.path] = this.showColumns.join(",");
-          }else{
+          } else {
             obj = {
-              ...obj, 
+              ...obj,
               [userId]: {
                 [this.$route.path]: this.showColumns.join(","),
               },
             }
-          };
+          }
+          ;
           localStorage.custormColumnObject = JSON.stringify(obj);
         } else {
           localStorage.custormColumnObject = JSON.stringify({
@@ -471,9 +460,9 @@ export default {
      */
     showTotal(total, range) {
       if (
-        this.$store &&
-        this.$store.state &&
-        this.$store.state.language === "en_US"
+          this.$store &&
+          this.$store.state &&
+          this.$store.state.language === "en_US"
       ) {
         return `Total ${total}`;
       } else {
@@ -486,7 +475,7 @@ export default {
     calcSelectAllPosition() {
       this.$nextTick(() => {
         const head = this.$el.querySelector(
-          ".ant-table-selection-column .ant-table-header-column"
+            ".ant-table-selection-column .ant-table-header-column"
         );
         if (!head) return;
         const list = this.$el.querySelectorAll(".ant-table-selection-column");
@@ -519,10 +508,10 @@ export default {
      */
     refresh(bool = false) {
       bool &&
-        (this.localPagination = Object.assign({}, this.localPagination, {
-          current: 1,
-          pageNo: 1,
-        }));
+      (this.localPagination = Object.assign({}, this.localPagination, {
+        current: 1,
+        pageNo: 1,
+      }));
       if (this.data && this.data instanceof Function) {
         this.isLocalLoading = true;
         this.localDataSource = [];
@@ -559,30 +548,49 @@ export default {
     },
     loadData: debounce(function (params = this.localPagination) {
       this.data(this.localPagination)
-        .then((res) => {
-          const { data } = res;
-          this.localDataSource = data.payload || [];
-          this.total = data.totalSize;
-          const maxPage = Math.ceil(this.total / params.pageSize);
-          if (this.total > 0 && maxPage < params.pageNo) {
-            this.localPagination.pageNo = maxPage;
-            this.localPagination.current = maxPage;
-            this.loadData();
-          }
-          if (this.loopTime >= 5000) {
-            if (window.tableTime) {
-              clearTimeout(window.tableTime);
+          .then((res) => {
+            const {data} = res;
+            this.localDataSource = data.payload || [];
+            this.total = data.totalSize;
+            const maxPage = Math.ceil(this.total / params.pageSize);
+            if (this.total > 0 && maxPage < params.pageNo) {
+              this.localPagination.pageNo = maxPage;
+              this.localPagination.current = maxPage;
+              this.loadData();
             }
-            window.tableTime = window.setTimeout(this.loadData, this.loopTime);
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        })
-        .finally(() => {
-          this.isLocalLoading = false;
-        });
+            if (this.loopTime >= 5000) {
+              if (window.tableTime) {
+                clearTimeout(window.tableTime);
+              }
+              window.tableTime = window.setTimeout(this.loadData, this.loopTime);
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+          })
+          .finally(() => {
+            this.isLocalLoading = false;
+          });
     }),
+    filterOption(input, option) {
+      if (option.tag.indexOf("ASelectOptGroup")>-1) {
+        //如果分组名称匹配到就直接完成匹配过滤
+        let groupName=option.componentOptions.children[0].children[0].text
+        if(groupName.toLowerCase().indexOf(input.toLowerCase()) >= 0){
+          return true
+        }
+        //分组名称没匹配到获取分组的子节点(根据tag过滤)
+        const children=option.componentOptions.children.filter(child=>child.tag&&child.tag.indexOf('ASelectOption')>-1)
+        return children.every(child=>{//这里需要所有的子节点都满足匹配分组才出现
+          return child.componentOptions.children[0].text
+              .toLowerCase()
+              .indexOf(input.toLowerCase()) >= 0
+        })
+      }
+      return option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+    }
   },
 };
 </script>
@@ -595,13 +603,14 @@ export default {
   text-overflow: ellipsis;
   margin-bottom: 29px !important;
 }
-.filterGroupItem{
+
+.filterGroupItem {
   text-align: left;
 }
 
 .multipleOptions {
   padding-right: 0 !important;
-  padding-left: 50px!important;
+  padding-left: 50px !important;
   text-align: left;
 
   i {
