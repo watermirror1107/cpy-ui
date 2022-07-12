@@ -35,7 +35,7 @@ export default {
     if (children.length > 0) {
       let width = 0;//获取父容器宽度，如果父容器没有宽度会出现排版问题
       if (this.$parent.$el) {
-        width = parseInt(window.getComputedStyle(this.$parent.$el, null).width) - 16//减16是因为td的padding8
+        width = parseInt(window.getComputedStyle(this.$parent.$el, null).width) - 16 - 20//减16是因为td的padding8 margin-left:-20px 为了对齐
       } else if (this.$parent.$options.propsData.column.width) {//dataSource的是容器初始宽度会为0；如果column中没给width也会为0
         width = this.$parent.$options.propsData.column.width
       }
@@ -99,7 +99,7 @@ export default {
   height: 100%;
   min-width: 92px; //最小宽度可以显示一个按钮
   overflow: hidden;
-
+  margin-left: -20px;
   &::after {
     clear: both;
     display: block;

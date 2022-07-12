@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <c-btn-group>
+    <!-- <c-btn-group>
       <c-button class="3dawddw" disabled>开机</c-button>
       <c-button>关机</c-button>
       <c-button>重启</c-button>
@@ -11,7 +11,7 @@
       v-model="selectVal"
       :selectOptions="selectOptions"
       style="width: 300px"
-    ></c-select>
+    ></c-select> -->
     <!--    <c-banner title="title"></c-banner>-->
     <!--    <c-banner>123</c-banner>-->
     <!--    <c-banner>-->
@@ -40,7 +40,7 @@
     <!--    </div>-->
     <!--  <c-input label="asdf"  v-model="text"></c-input>-->
     <!--    <c-empty></c-empty>-->
-    <c-input-number v-model="num" unit="MBBB" size="small"></c-input-number>
+    <!-- <c-input-number v-model="num" unit="MBBB" size="small"></c-input-number> -->
     <!--    <c-radio-group v-model="num">-->
     <!--      <c-radio value="one">one</c-radio>-->
     <!--      <c-radio value="two">two</c-radio>-->
@@ -105,7 +105,7 @@
       rowKey="id"
     >
       <template #headerRight>
-        <c-button size="large">添加</c-button>
+       
       </template>
       <template #id="{ text, record }">
         <a-popover>
@@ -137,6 +137,7 @@
       </template>
       <template #actionBar>
         <c-btn-group>
+           <c-button size="large" type="primary">添加</c-button>
           <c-button icon="icon-kaiji" size="large"> 123 </c-button>
           <c-button icon="icon-kaiji" size="large"> 123 </c-button>
           <c-button icon="icon-kaiji" size="large"> 123 </c-button>
@@ -147,7 +148,7 @@
         </c-btn-group>
       </template>
     </c-table>
-  <c-collapse :activeKey="['c']">
+  <!-- <c-collapse :activeKey="['c']">
       <c-collapse-panel :key="'a'">
         <p name="header">title1</p>
       </c-collapse-panel>
@@ -161,7 +162,7 @@
         <p>giao1</p>
         <p>giao2</p>
       </c-collapse-panel>
-    </c-collapse>
+    </c-collapse> -->
 
     <!-- <a-collapse :activeKey="['b']">
       <a-collapse-panel key="a" header="This is panel header 1">
@@ -185,45 +186,45 @@
 import { Collapse } from "ant-design-vue";
 import { debounce } from "@/utils";
 import axios from "axios";
-import CButton from "../packages/CButton";
-import CTable from "../packages/CTable";
-import CBtnWrap from "../packages/CBtnWrap";
-import CBtnGroup from "../packages/CBtnGroup";
-import CTableBtn from "../packages/CTableBtn";
-import CSearchSelect from "../packages/CSearchSelect";
-import CTap from "../packages/CTap";
-import CRangePicker from "../packages/CRangePicker";
-import CTabs from "../packages/CTabs";
-import CTableForm from "../packages/CTableForm";
-import CCard from "../packages/CCard";
-import CCollapse from "../packages/CCollapse";
-import CCollapsePanel from "../packages/CCollapsePanel";
-import CTagList from "../packages/CTagList";
-import CIcon from "../packages/CIcon";
-import CInputNumber from "../packages/CInputNumber";
-import CSelect from "../packages/CSelect";
+// import CButton from "../packages/CButton";
+// import CTable from "../packages/CTable";
+// import CBtnWrap from "../packages/CBtnWrap";
+// import CBtnGroup from "../packages/CBtnGroup";
+// import CTableBtn from "../packages/CTableBtn";
+// import CSearchSelect from "../packages/CSearchSelect";
+// import CTap from "../packages/CTap";
+// import CRangePicker from "../packages/CRangePicker";
+// import CTabs from "../packages/CTabs";
+// import CTableForm from "../packages/CTableForm";
+// import CCard from "../packages/CCard";
+// import CCollapse from "../packages/CCollapse";
+// import CCollapsePanel from "../packages/CCollapsePanel";
+// import CTagList from "../packages/CTagList";
+// import CIcon from "../packages/CIcon";
+// import CInputNumber from "../packages/CInputNumber";
+// import CSelect from "../packages/CSelect";
 
 export default {
   components: {
-    CButton,
-    CIcon,
-    CTable,
-    CBtnWrap,
-    CTableBtn,
-    CSearchSelect,
-    CTap,
-    CRangePicker,
-    CTabs,
-    CTableForm,
-    CCard,
-    CCollapse,
-    CCollapsePanel,
-    CTagList,
-    CInputNumber,
-    CBtnGroup,
-    CSelect,
-    [Collapse.name]: Collapse,
-    [Collapse.Panel.name]: Collapse.Panel,
+    // CButton,
+    // CIcon, 
+    // CTable,
+    // CBtnWrap,
+    // CTableBtn,
+    // CSearchSelect,
+    // CTap,
+    // CRangePicker,
+    // CTabs,
+    // CTableForm,
+    // CCard,
+    // CCollapse,
+    // CCollapsePanel,
+    // CTagList,
+    // CInputNumber,
+    // CBtnGroup,
+    // CSelect,
+    // [Collapse.name]: Collapse,
+    // [Collapse.Panel.name]: Collapse.Panel,
   },
   data() {
     return {

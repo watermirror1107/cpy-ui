@@ -5,17 +5,21 @@
         <div class="c_table_action_bar">
           <slot name="actionBar"></slot>
         </div>
+        
+      </div>
+      <div class="c_table_header_right">
+        <slot name="headerRight"></slot>
         <a-input
             v-if="isShowSearch"
-            size="large"
+            size="large" 
             v-model="formData.queryName"
             @change="debounceFresh($event, () => {}, 'queryName')"
             :placeholder="queryNamePlaceholder"
         >
           <icon slot="suffix" name="icon-shili_shousuo"/>
-        </a-input>
+        </a-input> 
         <c-button
-            class="c_table_header_left_refresh"
+            class="c_table_header_right_refresh"
             size="large"
             :disabled="isLocalLoading"
             type="text"
@@ -25,16 +29,13 @@
         </c-button>
         <c-button
             type="text"
-            class="c_table_header_left_refresh"
+            class="c_table_header_right_refresh"
             v-if="isSetColumn"
             size="large"
             @click="setColumns"
         >
           <icon name="icon-shili_shezhi"></icon>
         </c-button>
-      </div>
-      <div class="c_table_header_right">
-        <slot name="headerRight"></slot>
       </div>
     </div>
     <tag-list
@@ -627,8 +628,12 @@ export default {
 }
 
 .c_table {
+  padding: 10px 0px 0px 0px;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  background: white;
   .ant-table-thead {
-    background-color: #f7f9fc !important;
+    background-color: #e6e8f1!important;//#f7f9fc !important;
   }
 
   .ant-table-tbody {
@@ -636,8 +641,8 @@ export default {
   }
 
   .ant-table-wrapper .ant-table {
-    border-left: 1px solid #e8e8e8;
-    border-right: 1px solid #e8e8e8;
+    // border-left: 1px solid #e8e8e8;
+    // border-right: 1px solid #e8e8e8;
   }
 
   &_header {
@@ -645,16 +650,20 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin: 16px 0;
-
+    padding: 0px 20px;
     &_left {
+      
+    }
+    &_right{
+      display: flex;
       .ant-input-affix-wrapper {
         width: 240px;
-        margin-right: 16px;
-        float: left;
+        margin-left: 16px;
+        // float: left;
       }
 
       &_refresh {
-        margin-right: 16px;
+        margin-left: 16px;
         float: left;
         //border-color:#E6E6E6!important;
         //color: #646464!important;
@@ -681,7 +690,7 @@ export default {
   &_pagination_box {
     padding: 16px 24px 16px 15px;
     background-color: #fff;
-    border: 1px solid #e8e8e8;
+    // border: 1px solid #e8e8e8;
     border-top: 0;
   }
 
