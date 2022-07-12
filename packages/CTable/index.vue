@@ -673,6 +673,7 @@ export default {
 
   &_tags {
     margin-bottom: 16px;
+    padding:0px 20px;
   }
 
   .ant-table-expanded-row {
