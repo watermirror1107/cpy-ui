@@ -43,8 +43,8 @@
         :value="item.id">
       <a-tooltip
           placement="topLeft"
-          :title="item.name">
-        <div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.name }}</div>
+          :title="showId ? `${item.name}(${item.id})` : item.name">
+        <div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.name }} <span v-if="showId">({{item.id}})</span></div>
       </a-tooltip>
     </a-select-option>
     <a-select-option
@@ -87,6 +87,7 @@ export default {
     },
     mode: {default: 'default', type: String},//单选还是多选
     queryPromise: {type: Function, required: true},
+    showId: { default: false, type: Boolean },
     placeholder: {type: String},
     disabled: {default: false, type: Boolean},
     size: {default: 'large', type: String},
