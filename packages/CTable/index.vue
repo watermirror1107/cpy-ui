@@ -635,6 +635,13 @@ export default {
   .ant-table-thead {
     background-color: #e6e8f1!important;//#f7f9fc !important;
   }
+  .ant-table-thead > tr:first-child > th:first-child{
+    border-radius: 0px!important;
+  }
+
+  .ant-table-thead > tr:last-child > th:last-child{
+    border-radius: 0px!important;
+  }
 
   .ant-table-tbody {
     background-color: #fff !important;
