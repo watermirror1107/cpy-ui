@@ -173,7 +173,7 @@ export default {
       if (clientHeight + scrollTop + 30 >= scrollHeight && !this.isSelectLoading) {
         this.selectCurPage += 1;
         this.isSelectLoading = true;
-        this.queryData(true);//重复问题
+        this.queryData();
       }
     },
     /**
