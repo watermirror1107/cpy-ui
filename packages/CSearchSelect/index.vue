@@ -12,7 +12,6 @@
       @popupScroll="popupScroll"
       @dropdownVisibleChange="dropdownVisibleChange"
       @change="valueChange"
-      :not-found-content="isFetching ? undefined : null"
       :class="{empty:!value||value===''}"
   >
     <div
@@ -27,12 +26,12 @@
     <!--        slot="notFoundContent"-->
     <!--        size="small"/>-->
     <a-select-option
-        v-if="mode!=='multiple'&&options.length!==0"
+        v-if="mode!=='multiple'&&options.length!==0&&(!isSelectLoading)"
         value="">
       {{ $T('public.Dontchoose') }}
     </a-select-option>
     <a-select-option
-        v-if="options.length===0"
+        v-if="(!isSelectLoading)&&options.length===0"
         disabled
         value="">
       {{ $T('public.queryNoOption') }}
@@ -42,6 +41,7 @@
         :key="item.id"
         :value="item.id">
       <a-tooltip
+          :getPopupContainer="(triggerNode)=>triggerNode.parentNode"
           placement="topLeft"
           :title="item.name">
         <div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.name }}</div>
@@ -117,7 +117,6 @@ export default {
     }
   },
   mounted() {
-    this.queryData();
     this.selectId = this.value;
   },
   methods: {
@@ -134,16 +133,6 @@ export default {
       return textObj[code] || code
     },
     /**
-     * @description:选项容器张开关闭监听
-     */
-    dropdownVisibleChange(isOpen) {
-      if (!isOpen) {
-        return;
-      }
-      if (this.options === this.loadedList) return;
-      this.options = this.loadedList;
-    },
-    /**
      * @description:值变化回调
      */
     valueChange() {
@@ -158,11 +147,24 @@ export default {
       this.$emit('itemInfo', res || {});
       this.$emit('change', this.selectId);
     },
-
+    /**
+     * @description:选项容器张开关闭监听
+     */
+    dropdownVisibleChange(isOpen) {
+      if (!isOpen) {
+        return;
+      }
+      if (this.options.length == 0) {
+        this.isSelectLoading = true;
+        this.queryData();
+      }
+    },
     /**
      * @description:选项容器滚动监听
      */
     popupScroll(e) {
+      if (this.isLoadedAll) return
+      this.isFetching = true;
       const {
         clientHeight,
         scrollHeight,
@@ -170,44 +172,49 @@ export default {
       } = e.target;
       if (clientHeight + scrollTop + 30 >= scrollHeight && !this.isSelectLoading) {
         this.selectCurPage += 1;
-        if (Math.ceil(this.totalSize / 10) >= this.selectCurPage) {
-          this.isSelectLoading = true;
-          this.queryData();
-        } else {
-          this.isLoadedAll = true;
-        }
+        this.isSelectLoading = true;
+        this.queryData(true);//重复问题
       }
     },
     /**
      * @description: 分页获取数据
      */
-    queryData() {
+    queryData: debounce(function () {
       const result = {
         pageNo: this.selectCurPage,
         pageSize: 10,
         queryName: this.queryName,
         ...this.extraParams
       };
-      this.isFetching = true;
       this.queryPromise(result)
           .then((res) => {
-            this.isFetching = false;
             this.isSelectLoading = false;
             let payload = res.data.payload || [];
             if (this.extraResult.length > 0) {
               payload = this.extraResult.concat(payload)
             }
-            this.addList(payload);
-            this.options = this.loadedList;
+            this.addList( payload);
             this.totalSize = res.data && res.data.totalSize;
+            this.isLoadedAll = (this.options.length - this.extraResult.length) >= this.totalSize
           });
+    }),
+    /**
+     * @description: 通过搜索获取实例列表
+     * @param {Object} params 输入框参数
+     */
+    searchOptions(params) {
+      this.options = []
+      this.isSelectLoading = true;
+      this.queryName = params;
+      this.selectCurPage = 1;
+      this.queryData()
     },
     /**
      * @description:去重
      */
     addList(payload) {
       const obj = {};
-      const tmp = this.loadedList.concat(payload);
+      const tmp = this.options.concat(payload);
       const result = [];
       for (const item of tmp) {
         if (!obj[item.id]) {
@@ -215,31 +222,8 @@ export default {
           result.push(item);
         }
       }
-      this.loadedList = result;
+      this.options = result;
     },
-    /**
-     * @description: 通过搜索获取实例列表
-     * @param {Object} params 输入框参数
-     */
-    searchOptions: debounce(function (params) {
-      this.queryName = params;
-      const result = {
-        pageNo: 1,
-        pageSize: 10,
-        queryName: this.queryName,
-        ...this.extraParams
-      };
-      this.isFetching = true;
-      this.queryPromise(result)
-          .then((res) => {
-            this.isFetching = false;
-            const payload = res.data && res.data.payload;
-            this.options = payload;
-            if (!this.isLoadedAll && payload) {
-              this.addList(payload);
-            }
-          });
-    })
   }
 };
 </script>

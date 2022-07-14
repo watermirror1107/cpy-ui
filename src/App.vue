@@ -73,6 +73,7 @@
 <!--      <p slot='extraContent' style="text-align:center;" @click="clickHandler(1)">extraContent</p>-->
 <!--    </c-search-select>-->
     <c-search-select :queryPromise="queryOptions"
+                     :extraResult="[{id:'test',name:'test'}]"
                      mode="multiple"
                      :extraParams="{date:'2012'}"
                      placeholder="测试一下"
@@ -342,8 +343,8 @@ export default {
       confirm();
       this.$refs.table.refresh()
     },
-    queryOptions() {
-      return axios.get('/getoptions?ID=12345')
+    queryOptions(params) {
+      return axios.get('/getoptions', {params})
     },
     queryList(params) {
       // const data = Object.assign({}, params, this.formData, result);
