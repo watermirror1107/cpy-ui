@@ -90,7 +90,7 @@ export default {
     placeholder: {type: String},
     disabled: {default: false, type: Boolean},
     size: {default: 'large', type: String},
-    value: {default: ''},
+    value: {},
     // 额外结果集  为了满足能添加自定义的选项的功能需求
     extraResult: {
       type: Array,
