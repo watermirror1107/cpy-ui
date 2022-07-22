@@ -20,7 +20,8 @@ import {
     Menu,
     Dropdown,
     Icon,
-    Modal
+    Modal,
+    Empty
 } from 'ant-design-vue';
 // 设置 table 的 size 默认值为 small
 Table.props.size.default = 'small';
@@ -45,3 +46,4 @@ Vue.use(Menu);
 Vue.use(Dropdown)
 Vue.use(Icon)
 Vue.use(Modal)
+Vue.use(Empty)

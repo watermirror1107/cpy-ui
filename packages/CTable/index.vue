@@ -168,7 +168,6 @@
         <a-select
             v-else
             style="width: 180px"
-            show-search
             :showArrow="false"
             allowClear
             autoFocus
