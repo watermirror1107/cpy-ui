@@ -85,7 +85,48 @@
       </template>
       <!--      表头过滤-->
       <template v-slot:filterDropdown="{ confirm, column }">
-        <a-select
+        <template  v-if="column.type === 'selectMultiple'">
+          <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
+            <c-table-filter :isMultiple="true" mode="tree" v-model="formData[column.selectKey || column.key]" :options="column.filterOptionMethod(column.options)" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)">></c-table-filter>
+          </template> 
+          <template v-if="!column.filterOptionMethod">
+            <c-table-filter :isMultiple="true" v-model="formData[column.selectKey || column.key]" :options="column.options" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)"></c-table-filter>
+          </template> 
+          <!-- slot="dropdownRender" slot-scope="menu" -->
+          <div> 
+            <!-- <v-nodes :vnodes="menu"/> -->
+            <a-divider style="margin: 4px 0"/>
+            <div
+                style="
+                padding: 7px 8px;
+                display: flex;
+                justify-content: space-between;
+              "
+                @mousedown="(e) => e.preventDefault()"
+            >
+              <a-button
+                  type="primary"
+                  @click="
+                  debounceFresh(
+                    formData[column.selectKey || column.key],
+                    confirm,
+                    column.selectKey || column.key
+                  )
+                "
+              >
+                {{ $T("instance.Confirm") }}
+              </a-button>
+              <a-button
+                  type="primary"
+                  ghost
+                  @click="resetFilter(column.selectKey || column.key, confirm)"
+              >
+                {{ $T("instance.Reset") }}
+              </a-button>
+            </div>
+          </div>
+        </template>
+        <!-- <a-select
             v-if="column.type === 'selectMultiple'"
             show-search
             style="width: 180px"
@@ -98,7 +139,6 @@
             :filter-option="filterOption"
             :placeholder="column.placeholder || $T('public.search')"
         >
-          <!-- 分层显示 -->
           <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
             <template v-for="(item,index) in column.filterOptionMethod(column.options)">
               <a-select-opt-group v-if="item.name!=='all'" class="filterGroupItem" :key="index">
@@ -130,42 +170,19 @@
                 :key="option.id"
             >
               {{ option.name }}
-            </a-select-option>
+            </a-select-option> 
           </template>
-          <div slot="dropdownRender" slot-scope="menu">
-            <v-nodes :vnodes="menu"/>
-            <a-divider style="margin: 4px 0"/>
-            <div
-                style="
-                padding: 7px 8px;
-                display: flex;
-                justify-content: space-between;
-              "
-                @mousedown="(e) => e.preventDefault()"
-            >
-              <a-button
-                  type="primary"
-                  @click="
-                  debounceFresh(
-                    formData[column.selectKey || column.key],
-                    confirm,
-                    column.selectKey || column.key
-                  )
-                "
-              >
-                {{ $T("instance.Confirm") }}
-              </a-button>
-              <a-button
-                  type="primary"
-                  ghost
-                  @click="resetFilter(column.selectKey || column.key, confirm)"
-              >
-                {{ $T("instance.Reset") }}
-              </a-button>
-            </div>
-          </div>
-        </a-select>
-        <a-select
+          
+        </a-select> -->
+        <template v-else>
+            <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
+              <c-table-filter mode="tree" v-model="formData[column.selectKey || column.key]" :options="column.filterOptionMethod(column.options)" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)">></c-table-filter>
+            </template>  
+            <template v-if="!column.filterOptionMethod">
+              <c-table-filter v-model="formData[column.selectKey || column.key]" :options="column.options" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)"></c-table-filter>
+            </template> 
+        </template>
+        <!-- <a-select
             v-else
             style="width: 180px"
             :showArrow="false"
@@ -179,7 +196,6 @@
             :placeholder="column.placeholder || $T('public.search')"
             @change="debounceFresh($event, confirm, column.selectKey || column.key)"
         >
-          <!-- 分层显示 -->
           <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
             <template v-for="(item,index) in column.filterOptionMethod(column.options)">
               <a-select-opt-group v-if="item.name!=='all'" class="filterGroupItem" :key="index">
@@ -210,7 +226,7 @@
               {{ option.name }}
             </a-select-option>
           </template>
-        </a-select>
+        </a-select> -->
       </template>
     </a-table>
     <div v-if="isShowPagination" class="c_table_pagination_box">
@@ -238,7 +254,7 @@
             :key="index"
             class="column-checkbox"
             :value="item.key"
-        >
+        > 
           {{ item.title }}
         </checkbox>
       </a-checkbox-group>
@@ -253,6 +269,7 @@ import Modal from "../CModal/index.vue";
 import CButton from "../CButton";
 import {Checkbox} from "ant-design-vue";
 import CPage from "../CPage";
+import CTableFilter from '../CTableFilter/index.vue';
 
 export default {
   name: "CTable",
@@ -264,6 +281,7 @@ export default {
     CButton,
     CPage,
     TagList,
+    CTableFilter,
     VNodes: {
       functional: true,
       render: (h, ctx) => ctx.props.vnodes,
@@ -428,7 +446,7 @@ export default {
             [userId]: {
               [this.$route.path]: this.showColumns.join(","),
             },
-          });
+          }); 
         }
       }
       this.isVisible = false;
@@ -437,6 +455,7 @@ export default {
      * @description:延迟刷新
      */
     debounceFresh: debounce(function (val, confirm, key) {
+      // debugger; 
       confirm();
       this.refresh(true);
       this.$emit("filterChange", val, key);

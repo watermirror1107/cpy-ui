@@ -106,8 +106,8 @@ export default {
     opacity: 0.8;
 
     &:hover {
-      color: #ccdaff;
-      background: #fff;
+      // color: #ccdaff;
+      // background: #fff;
     }
   }
 

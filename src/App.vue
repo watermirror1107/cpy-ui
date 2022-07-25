@@ -142,7 +142,7 @@
       <template #actionBar>
         <c-btn-group>
            <c-button size="large" type="primary">添加</c-button>
-          <c-button icon="icon-kaiji" size="large"> 123 </c-button>
+          <c-button disabled icon="icon-kaiji" size="large"> 123 </c-button>
           <c-button icon="icon-kaiji" size="large"> 123 </c-button>
           <c-button icon="icon-kaiji" size="large"> 123 </c-button>
           <c-button icon="icon-kaiji" size="large"> 123 </c-button>
@@ -455,28 +455,46 @@ export default {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
             },
-            filterOptionMethod:(val,key="cityName")=>{
+            filterOptionMethod:(val,key="regionName",key2="cityName")=>{
               let temp = [];
-              //城市名称提取
+              //区域名称提取
               [...new Set(val.map(item=>{
                 return item[key]
-              }))].forEach(item=>{
+              }))].forEach((item,index)=>{
                 temp.push({
                   name:item,
-                  options:[]
+                  id:item,
+                  children:[]
                 })
               })
-              //城市名称下的集合
+              //区域名称下城市集合
               val.forEach(item=>{
                 temp.forEach(tempItem=>{
                   if(item[key]==tempItem.name){
-                    tempItem.options.push(item);
+                    tempItem.children.push({
+                      name:item[key2],
+                      id:item[key2],
+                      children:[]
+                    });
                   }
+                })
+              })
+              //城市下集群的集合
+              val.forEach(item=>{
+                temp.forEach(tempItem=>{
+                  tempItem.children.forEach(childItem=>{
+                    if(childItem.name==item[key2]){
+                      childItem.children.push({
+                        name:item.name,
+                        id:item.id
+                      })
+                    }
+                  })
                 })
               })
               return temp;
             },
-            options:[{id:111,name:'111',cityName:'all'},{id:111,name:'111',cityName:'厦门'},{id:112,name:'113',cityName:'厦门'},{id:222,name:'2222',cityName:'福州'}],
+            options:[{id:111,name:'111',cityName:'厦门1',regionName:'华东'},{id:112,name:'113',cityName:'厦门2',regionName:'华东'},{id:222,name:'2222',cityName:'福州',regionName:'华西'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
@@ -493,28 +511,48 @@ export default {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
             },
-            filterOptionMethod:(val,key="cityName")=>{
+            filterOptionMethod:(val,key="regionName",key2="cityName")=>{
               let temp = [];
-              //城市名称提取
+              //区域名称提取
               [...new Set(val.map(item=>{
                 return item[key]
-              }))].forEach(item=>{
+              }))].forEach((item,index)=>{
                 temp.push({
                   name:item,
-                  options:[]
+                  id:item,
+                  children:[]
                 })
-              })
-              //城市名称下的集合
+              }); 
+              //区域名称下城市集合
               val.forEach(item=>{
                 temp.forEach(tempItem=>{
                   if(item[key]==tempItem.name){
-                    tempItem.options.push(item);
+                    tempItem.children.push({
+                      name:item[key2],
+                      id:item[key2],
+                      children:[]
+                    });
                   }
                 })
-              })
+              }); 
+              //城市下集群的集合
+              val.forEach(item=>{
+                temp.forEach(tempItem=>{
+                  tempItem.children.forEach(childItem=>{
+                    // debugger;
+                    if(childItem.name==item[key2]){
+                      childItem.children.push({
+                        name:item.name,
+                        id:item.id
+                      })
+                    }
+                  })
+                })
+              }) 
+              // debugger
               return temp;
             },
-            options:[{id:undefined,name:'all',cityName:'all'},{id:111,name:'1122',cityName:'厦门'},{id:112,name:'113',cityName:'厦门'},{id:222,name:'2222',cityName:'福州'}],
+            options:[{id:111,name:'111',cityName:'厦门1',regionName:'华东'},{id:112,name:'113',cityName:'厦门2',regionName:'华东'},{id:222,name:'2222',cityName:'福州',regionName:'华西'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
@@ -531,6 +569,7 @@ export default {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
             },
+             type: "selectMultiple",
             options:[{id:111,name:'111'},{id:222,name:'222'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {

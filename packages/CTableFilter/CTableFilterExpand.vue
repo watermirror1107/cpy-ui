@@ -1,14 +1,14 @@
 <template>
   <div class="c_table_filter_expand" :style="{'width':width+'px','right':`-${width+10+extraRight}px`}">
-    <div @click="changeSelect(item)" :class="{'c_table_filter_expand_item_active':selectId==item.id}" class="c_table_filter_expand_item" v-for="(item,index) in options" :key="index">
+    <div @click.stop="changeSelect(item)" :class="{'c_table_filter_expand_item_active':(isMultiple?ArrayContain(selectId,item.id):(selectId==item.id))}" class="c_table_filter_expand_item" v-for="(item,index) in options" :key="index">
         <span>{{item.name}}</span>
         <c-icon v-show="isHasChild(item)" class="c_table_filter_expand_item_icon" name="icon-fanhui"/>
-        <c-icon v-show="!isHasChild(item)&&selectId==item.id" class="c_table_filter_expand_item_icon_yes" style="font-size:10px" name="icon-xuanxiangka_gou"/>
+        <c-icon v-show="!isHasChild(item)&&(isMultiple?ArrayContain(selectId,item.id):(selectId==item.id))" class="c_table_filter_expand_item_icon_yes" style="font-size:10px" name="icon-xuanxiangka_gou"/>
         <template v-if="isHasChild(item)&&item.showChilren">
             <CTableFilterExpand :isMultiple="isMultiple" v-model="selectId"  :options="item.children" :width="width"/> 
         </template>
     </div>
-  </div>
+  </div> 
 </template>
 
 <script>
@@ -26,6 +26,9 @@ export default {
         default:()=>{
             return []
         }
+      },
+      value:{
+        type:[String,Number,Array],
       },
       width:{
         type:Number,
@@ -51,7 +54,9 @@ export default {
       },
       selectId:{
         handler(nv) {
-           this.$emit('change',this.selectId)
+          if(nv!=undefined){
+            this.$emit('change',this.selectId)
+          } 
         },
       }
     },
@@ -61,18 +66,34 @@ export default {
         }
     },
     methods:{
+      ArrayContain(arr,value){
+          if(Array.isArray(arr)&&arr.indexOf(value)>-1){
+            return true;
+          }
+          return false
+      }, 
+      ArrayContainIndex(arr,value){
+          return arr.indexOf(value)
+      },
       isHasChild(childItem){
           if(childItem.children&&childItem.children.length>0){
               return true
           }
           return false
-      },
+      }, 
       changeSelect(item){
         if(this.isHasChild(item)){
           this.$set(item,'showChilren',true)
         }else{
-          this.selectId = item.id 
-          this.$emit('change',this.selectId)
+          if(this.isMultiple){
+            if(this.ArrayContain(this.selectId,item.id)){
+              this.selectId.splice(this.ArrayContainIndex(this.selectId,item.id),1)
+            }else{
+              this.selectId.push(item.id);
+            }
+          }else{ 
+            this.selectId = item.id 
+          }
         } 
       }
     }

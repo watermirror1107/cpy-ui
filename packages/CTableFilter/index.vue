@@ -1,6 +1,5 @@
 <template>
    <div class="c_table_filter" :style="{width:width+'px'}">
-    {{selectId}}
      <template v-if="mode=='tree'">
         <a-input v-model="searchName" placeholder="输入关键字搜索" @change="inputSearch">
             <a-icon slot="prefix" type="search" />
@@ -10,27 +9,27 @@
             <div v-if="!empty" class="c_table_filter_all" :class="{'c_table_filter_all_active':selectId==''}"  @click="changeSelect({name:'全部',id:''})">
                 <span>全部</span>
                 <c-icon v-show="selectId==''" class="c_table_filter_all_icon"  style="font-size:10px" name="icon-xuanxiangka_gou"/>
-            </div>
+            </div> 
             <template v-for="(item,index) in treeData" >
                 <div class="c_table_filter_tree_group" v-if="item.showSearch" :key="index">
                     <div class="c_table_filter_tree_group_title" @click="expandNextChildren(item)">
                         <span>
                             {{item.name}}({{item.children?item.children.length:0}})
-                            <c-icon  v-if="isHasChild(item)" :style="{transform:item.nextShow?'rotate(180deg)':'rotate(0deg)'}"  style="font-size:9px;margin-left:5px;transform: rotate(180deg)" name="icon-xialakuang_jiantou" />
+                            <c-icon v-if="isHasChild(item)" :style="{transform:item.nextShow?'rotate(180deg)':'rotate(0deg)'}"  style="font-size:9px;margin-left:5px;transform: rotate(180deg)" name="icon-xialakuang_jiantou" />
                         </span> 
                     </div>
                     <template v-if="item.children&&item.children.length>0&&item.nextShow"> 
                         <div @click="changeSelect(childItem)" 
-                            :class="{'c_table_filter_tree_group_item_active':selectId==childItem.id}" 
+                            :class="{'c_table_filter_tree_group_item_active':(isMultiple?ArrayContain(selectId,childItem.id):(selectId==childItem.id))}" 
                             class="c_table_filter_tree_group_item" 
                             v-for="(childItem,childIndex) in item.children" :key="childItem.id+childIndex">
                             <span>{{childItem.name}}</span> 
                             <c-icon v-show="isHasChild(childItem)" class="c_table_filter_tree_group_item_icon" name="icon-fanhui" style="transform: rotate(180deg)"/>
-                            <c-icon v-show="!isHasChild(childItem)&&selectId==childItem.id" class="c_table_filter_tree_group_item_icon"  style="font-size:10px" name="icon-xuanxiangka_gou"/>
+                            <c-icon v-show="!isHasChild(childItem)&&(isMultiple?ArrayContain(selectId,childItem.id):(selectId==childItem.id))" class="c_table_filter_tree_group_item_icon"  style="font-size:10px" name="icon-xuanxiangka_gou"/>
                             <template v-if="isHasChild(childItem)&&childItem.showChilren">
                                 <CTableFilterExpand :isMultiple="isMultiple" v-model="selectId" :options="childItem.children" :width="width" :extraRight="10"/> 
                             </template>
-                        </div>   
+                        </div>    
                     </template>
                 </div>
             </template>
@@ -45,9 +44,9 @@
                 <span>全部</span>
                 <c-icon v-show="selectId==''" class="c_table_filter_all_icon"  style="font-size:10px" name="icon-xuanxiangka_gou"/>
             </div>
-            <div @click="changeSelect(item)" :class="{'c_table_filter_item_active':selectId==item.id}" class="c_table_filter_item" v-for="(item,index) in optionsData" :key="index">
+            <div @click="changeSelect(item)" :class="{'c_table_filter_item_active':(isMultiple?ArrayContain(selectId,item.id):(selectId==item.id))}" class="c_table_filter_item" v-for="(item,index) in optionsData" :key="index">
                 <span>{{item.name}}</span>
-                <c-icon v-show="selectId==item.id" name="icon-xuanxiangka_gou" style="font-size:10px"/>
+                <c-icon v-show="(isMultiple?ArrayContain(selectId,item.id):(selectId==item.id))" name="icon-xuanxiangka_gou" style="font-size:10px"/>
             </div>
         </div>
      </template>
@@ -66,18 +65,24 @@ export default {
        prop: 'value'
     }, 
     props:{
+        value:{type:[String,Number,Array]},
         mode: {type: String, default: "normal"}, // tree 代表树形结构 normal 代表单级数据结构  
         isMultiple:{type:Boolean,default:false}, //是否支持多选 
         width:{type:Number,default:200},
         options:{type:Array,default:()=>{return[]}}
     },
     mounted(){
-        // this.initOptions();
+        this.initOptions();
+        if(this.isMultiple){
+            this.selectId = Array.isArray(this.value)?this.value:[]
+        }else{
+            this.selectId = this.value || '';
+        }
     },
     watch:{
       options: {
         handler(nv) {
-            // this.initOptions();
+            this.initOptions();
         },
         deep: true
       },
@@ -88,7 +93,12 @@ export default {
       }, 
       selectId:{
         handler(nv) {
-            this.$emit('change',nv)
+            if(nv!=undefined){
+                this.$emit('change',nv)
+                if(!this.isMultiple){
+                  this.$emit('confirm',nv); 
+                }  
+            } 
         },
       }
     },
@@ -99,31 +109,8 @@ export default {
           selectId:'',
           multipleSelectIds:'',
           empty:false,
-          optionsData:[
-            {name:'1111',id:"1"},
-            {name:'2222',id:'2'},
-            {name:'3333',id:'3'} 
-          ], 
-          treeData:[
-            {name:'区域一',
-             id:"1",
-             showSearch:true,
-             nextShow:true,
-             children:[
-                {name:'城市一',
-                 id:'11',
-                 children:[
-                    {name:'集群一',id:'33',
-                    children:[{name:'集群一11',id:'33', children:[{name:'集群一11',id:'33'}]}]},
-                    {name:'集群一',id:'33'}
-                 ]
-                },
-                {name:'城市二',id:'12'}
-              ]
-            },
-            {name:'区域二',showSearch:true,nextShow:true,id:'2',children:[{name:'城市三',id:'11'},{name:'城市四',id:'12'}]}, 
-            {name:'区域三',showSearch:true,nextShow:true,id:'3'} 
-          ]
+          optionsData:[],   
+          treeData:[]
         }
     },
     methods:{
@@ -133,17 +120,20 @@ export default {
             }
             return false
         },
+        ArrayContainIndex(arr,value){
+            return arr.indexOf(value)
+        },
         initOptions(){
-            if(this.mode=='normal'){
-                this.treeData = JSON.parse(JSON.stringify(this.options));
+            if(this.mode=='tree'){  
+                this.treeData = this.options;
                 this.treeData.forEach(item=>{
                     this.$set(item,'showSearch',true);
                     this.$set(item,'nextShow',true);
                 })
-            }else{
-                this.optionsData = JSON.parse(JSON.stringify(this.options));
+            }else{ 
+                this.optionsData = this.options;
             }
-        },
+        }, 
         isHasChild(childItem){
             if(childItem.children&&childItem.children.length>0){
                 return true
@@ -153,11 +143,23 @@ export default {
         //选中
         changeSelect(item){ 
             if(this.isHasChild(item)){
+               this.closeChilren();
                this.expandChilren(item)
             }else{
-               this.closeChilren()
-               this.selectId = item.id 
-               this.$emit('change',this.selectId)
+               if(this.mode=='tree'){
+                 this.closeChilren() 
+               } 
+               if(this.isMultiple){
+                 if(this.ArrayContain(this.selectId,item.id)){
+                    this.selectId.splice(this.ArrayContainIndex(this.selectId,item.id),1)
+                 }else{
+                    this.selectId.push(item.id);
+                 }
+               }else{
+                 this.selectId = item.id 
+               }
+               
+            //    this.$emit('change',this.selectId)
             } 
         },
         //关闭其他菜单
@@ -184,13 +186,15 @@ export default {
         inputSearch(e){
             if(this.searchName){
                 this.treeData.forEach(item => {
-                    if(item.name==this.searchName){
+                    console.log(item)
+                    console.log(this.isHasChild(item))
+                    if(item.name==this.searchName || item.name.indexOf(this.searchName)>-1){
                         this.$set(item,'showSearch',true)
                          console.log('parent',item.name)
                     }else if(this.isHasChild(item)){
                         let flag = false
                         item.children.forEach(childItem=>{
-                            if(childItem.name==this.searchName){
+                            if(childItem.name==this.searchName || childItem.name.indexOf(this.searchName)>-1){
                                 console.log('child',childItem.name)
                                 this.$set(item,'showSearch',true)
                                 flag = true;
@@ -228,7 +232,7 @@ export default {
 <style lang="less">
     .c_table_filter{
         background: #FFFFFF;
-        box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+        // box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
         border-radius: 4px;
         &_all{
             display: flex;
