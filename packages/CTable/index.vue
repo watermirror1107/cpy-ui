@@ -298,7 +298,7 @@ export default {
       localPagination: {
         current: 1,
         pageNo: 1,
-        pageSize: 10,
+        pageSize: 10, 
       },
       total: 0,
       slotArr: [],
