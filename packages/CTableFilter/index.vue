@@ -1,13 +1,13 @@
 <template>
    <div class="c_table_filter" :style="{width:width+'px'}">
      <template v-if="mode=='tree'">
-        <a-input v-model="searchName" placeholder="输入关键字搜索" @change="inputSearch">
+        <a-input v-model="searchName" :placeholder="$T('alarm.Pleaseenterakeywordtosearch')" @change="inputSearch">
             <a-icon slot="prefix" type="search" />
         </a-input>
         <div class="c_table_filter_tree">   
             <!-- 组件内只显示两级，更多级在expand组件中可做递归组件 -->
-            <div v-if="!empty" class="c_table_filter_all" :class="{'c_table_filter_all_active':selectId==''}"  @click="changeSelect({name:'全部',id:''})">
-                <span>全部</span>
+            <div v-if="!empty" class="c_table_filter_all" :class="{'c_table_filter_all_active':selectId==''}"  @click="changeSelect({name:$T('instance.All'),id:''})">
+                <span>{{$T('instance.All')}}</span>
                 <c-icon v-show="selectId==''" class="c_table_filter_all_icon"  style="font-size:10px" name="icon-xuanxiangka_gou"/>
             </div> 
             <template v-for="(item,index) in treeData" >
@@ -40,8 +40,8 @@
      </template>
      <template v-else>
         <div style="padding: 8px;">
-            <div v-if="!empty" class="c_table_filter_all" :class="{'c_table_filter_all_active':selectId==''}"  @click="changeSelect({name:'全部',id:''})">
-                <span>全部</span>
+            <div v-if="!empty" class="c_table_filter_all" :class="{'c_table_filter_all_active':selectId==''}"  @click="changeSelect({name:$T('instance.All'),id:''})">
+                <span>{{$T('instance.All')}}</span>
                 <c-icon v-show="selectId==''" class="c_table_filter_all_icon"  style="font-size:10px" name="icon-xuanxiangka_gou"/>
             </div>
             <div @click="changeSelect(item)" :class="{'c_table_filter_item_active':(isMultiple?ArrayContain(selectId,item.id):(selectId==item.id))}" class="c_table_filter_item" v-for="(item,index) in optionsData" :key="index">
@@ -70,6 +70,11 @@ export default {
         isMultiple:{type:Boolean,default:false}, //是否支持多选 
         width:{type:Number,default:200},
         options:{type:Array,default:()=>{return[]}}
+    },
+    beforeMount() {
+        if (!this.$T) {
+          this.$T = this.translateText;
+        }
     },
     mounted(){
         this.initOptions();
@@ -114,6 +119,14 @@ export default {
         }
     },
     methods:{
+        translateText(code) {
+            //console端没有字典翻译兼容
+            let textObj = {
+                "instance.All": "全部",
+                'alarm.Pleaseenterakeywordtosearch':'请输入关键字搜索'
+            };
+            return textObj[code] || code;
+        },
         ArrayContain(arr,value){
             if(Array.isArray(arr)&&arr.indexOf(value)>-1){
               return true;
