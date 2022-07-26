@@ -77,7 +77,7 @@ export default {
   }
 }
 </script>
-<style lang="stylus">
+<style lang="less">
 .noBorder{
   border:unset!important;
   .ant-input{
