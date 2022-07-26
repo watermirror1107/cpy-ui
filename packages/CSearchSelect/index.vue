@@ -40,12 +40,13 @@
         v-for="item in options"
         :key="item.id"
         :value="item.id">
-      <a-tooltip
+      <!-- <a-tooltip
           :getPopupContainer="(triggerNode)=>triggerNode.parentNode"
           placement="topLeft"
           :title="showId ? `${item.name}(${item.id})` : item.name">
         <div style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.name }} <span v-if="showId">({{item.id}})</span></div>
-      </a-tooltip>
+      </a-tooltip> -->
+      <div :title="showId ? `${item.name}(${item.id})` : item.name" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ item.name }} <span v-if="showId">({{item.id}})</span></div>
     </a-select-option>
     <a-select-option
         disabled
