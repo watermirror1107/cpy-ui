@@ -80,6 +80,13 @@ export default {
       currentPageSize: this.pageSize,
     }
   },
+  watch: {
+    current(nv) {
+      if(this.currentPage !== nv) {
+        this.currentPage = nv;
+      }
+    }
+  },
   computed: {
     allPages() {
       const allPage = Math.ceil(this.total / this.currentPageSize)
