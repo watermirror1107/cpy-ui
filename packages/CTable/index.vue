@@ -10,6 +10,7 @@
       <div class="c_table_header_right">
         <slot name="headerRight"></slot>
         <a-input
+            :style="{ width: (typeof searchWith === 'string') ? searchWith : `${searchWith}px` }"
             v-if="isShowSearch"
             size="large" 
             v-model="formData.queryName"
@@ -308,6 +309,7 @@ export default {
     };
   },
   props: {
+    searchWith: {type: [Number, String], default: 250},
     queryNamePlaceholder: {type: String, default: "placeholder"}, //是否可以设置表头
     isShowHeader: {type: Boolean, default: true}, //是否显示表格搜索头部等按钮
     isShowTag: {type: Boolean, default: true}, //是否显示过滤条件
