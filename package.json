@@ -1,6 +1,6 @@
 {
   "name": "cpy-ui",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "private": false,
   "main": "./lib/cpy-ui.min.js",
   "license": "MIT",
@@ -90,5 +90,8 @@
     "webpack-dev-server": "^4.3.1",
     "webpack-parallel-uglify-plugin": "^1.1.2",
     "yargs": "^17.2.1"
-  }
+  },
+  "keywords": [
+    "cpy-ui"
+  ]
 }
