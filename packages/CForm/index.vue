@@ -61,6 +61,19 @@
                 </a-select-option>
               </a-select>
             </template>
+            <template v-else-if="item.type==='checkBox'">
+              <a-checkbox-group
+                  :disabled="item.isDisabled"
+                  v-model="formData[item.key]">
+                <a-checkbox
+                    v-for="option in item.options"
+                    :disabled="option.disabled"
+                    :value="option.value"
+                    :key="option.value">
+                  {{ option.label }}
+                </a-checkbox>
+              </a-checkbox-group>
+            </template>
             <!-- 用于详情 -->
             <template v-else-if="item.type==='span'">
               <span>{{ formData[item.key]||'--' }}</span>

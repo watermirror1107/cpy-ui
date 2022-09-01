@@ -162,6 +162,7 @@
 import {debounce} from "@/utils";
 import axios from 'axios'
 import CButton from "../packages/CButton";
+import CForm from "../packages/CForm";
 import CTable from "../packages/CTable";
 import CBtnWrap from "../packages/CBtnWrap";
 import CTableBtn from "../packages/CTableBtn";
@@ -174,7 +175,7 @@ import CCard from "../packages/CCard";
 
 export default {
   components: {
-    CButton, CTable, CBtnWrap, CTableBtn, CSearchSelect, CTap, CRangePicker, CTabs, CTableForm, CCard
+    CButton, CTable,CForm ,CBtnWrap, CTableBtn, CSearchSelect, CTap, CRangePicker, CTabs, CTableForm, CCard
   },
   data() {
     return {
@@ -197,7 +198,8 @@ export default {
       formOptions1: [
         {key: 'account'},
         {key: 'age'},
-        {key: 'name'}
+        {key: 'name'},
+        {key: 'kkk',type:'checkBox',isDisabled:true,options:[{label:'test1',value:'test1',disabled:true},{label:'test2',value:'test2'}]}
       ],
       form: {
         account: 'kong',
