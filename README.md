@@ -1,10 +1,10 @@
 # cpy-ui
 
-## Branch
+## Version
 ```
-v0.2.21 适用于自用console
-v1.0.0 适用于portal
-v2.0.0 适用于自用admin-partner
+^v0.2.21 适用于自用console
+^v1.0.0 适用于portal
+^v2.0.0 适用于自用admin-partner
 ```
 ## Project setup
 ```

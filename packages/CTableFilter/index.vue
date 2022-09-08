@@ -4,32 +4,32 @@
         <a-input v-model="searchName" :placeholder="$T('alarm.Pleaseenterakeywordtosearch')" @change="inputSearch">
             <a-icon slot="prefix" type="search" />
         </a-input>
-        <div class="c_table_filter_tree">   
+        <div class="c_table_filter_tree">
             <!-- 组件内只显示两级，更多级在expand组件中可做递归组件 -->
             <div v-if="!empty" class="c_table_filter_all" :class="{'c_table_filter_all_active':selectId==''}"  @click="changeSelect({name:$T('instance.All'),id:''})">
                 <span>{{$T('instance.All')}}</span>
                 <c-icon v-show="selectId==''" class="c_table_filter_all_icon"  style="font-size:10px" name="icon-xuanxiangka_gou"/>
-            </div> 
+            </div>
             <template v-for="(item,index) in treeData" >
                 <div class="c_table_filter_tree_group" v-if="item.showSearch" :key="index">
                     <div class="c_table_filter_tree_group_title" @click="expandNextChildren(item)">
                         <span>
                             {{item.name}}({{item.children?item.children.length:0}})
                             <c-icon v-if="isHasChild(item)" :style="{transform:item.nextShow?'rotate(180deg)':'rotate(0deg)'}"  style="font-size:9px;margin-left:5px;transform: rotate(180deg)" name="icon-xialakuang_jiantou" />
-                        </span> 
+                        </span>
                     </div>
-                    <template v-if="item.children&&item.children.length>0&&item.nextShow"> 
-                        <div @click="changeSelect(childItem)" 
-                            :class="{'c_table_filter_tree_group_item_active':(isMultiple?ArrayContain(selectId,childItem.id):(selectId==childItem.id))}" 
-                            class="c_table_filter_tree_group_item" 
+                    <template v-if="item.children&&item.children.length>0&&item.nextShow">
+                        <div @click="changeSelect(childItem)"
+                            :class="{'c_table_filter_tree_group_item_active':(isMultiple?ArrayContain(selectId,childItem.id):(selectId==childItem.id))}"
+                            class="c_table_filter_tree_group_item"
                             v-for="(childItem,childIndex) in item.children" :key="childItem.id+childIndex">
-                            <span>{{childItem.name}}</span> 
+                            <span>{{childItem.name}}</span>
                             <c-icon v-show="isHasChild(childItem)" class="c_table_filter_tree_group_item_icon" name="icon-fanhui" style="transform: rotate(180deg)"/>
                             <c-icon v-show="!isHasChild(childItem)&&(isMultiple?ArrayContain(selectId,childItem.id):(selectId==childItem.id))" class="c_table_filter_tree_group_item_icon"  style="font-size:10px" name="icon-xuanxiangka_gou"/>
-                            <template v-if="isHasChild(childItem)&&childItem.showChilren">
-                                <CTableFilterExpand :isMultiple="isMultiple" v-model="selectId" :options="childItem.children" :width="width" :extraRight="10"/> 
+                            <template v-if="isHasChild(childItem)&&childItem.showChildren">
+                                <CTableFilterExpand :isMultiple="isMultiple" v-model="selectId" :options="childItem.children" :width="width" :extraRight="10"/>
                             </template>
-                        </div>    
+                        </div>
                     </template>
                 </div>
             </template>
@@ -60,14 +60,14 @@ import {Empty} from 'ant-design-vue'
 export default {
     name: "CTableFilter",
     components:{cIcon,CTableFilterExpand},
-    model: { 
+    model: {
        event: 'change',
        prop: 'value'
-    }, 
+    },
     props:{
         value:{type:[String,Number,Array]},
-        mode: {type: String, default: "normal"}, // tree 代表树形结构 normal 代表单级数据结构  
-        isMultiple:{type:Boolean,default:false}, //是否支持多选 
+        mode: {type: String, default: "normal"}, // tree 代表树形结构 normal 代表单级数据结构
+        isMultiple:{type:Boolean,default:false}, //是否支持多选
         width:{type:Number,default:200},
         options:{type:Array,default:()=>{return[]}}
     },
@@ -95,15 +95,15 @@ export default {
         handler(nv) {
            this.selectId = this.value;
         },
-      }, 
+      },
       selectId:{
         handler(nv) {
             if(nv!=undefined){
                 this.$emit('change',nv)
                 if(!this.isMultiple){
-                  this.$emit('confirm',nv); 
-                }  
-            } 
+                  this.$emit('confirm',nv);
+                }
+            }
         },
       }
     },
@@ -114,7 +114,7 @@ export default {
           selectId:'',
           multipleSelectIds:'',
           empty:false,
-          optionsData:[],   
+          optionsData:[],
           treeData:[]
         }
     },
@@ -137,31 +137,31 @@ export default {
             return arr.indexOf(value)
         },
         initOptions(){
-            if(this.mode=='tree'){  
+            if(this.mode=='tree'){
                 this.treeData = this.options;
                 this.treeData.forEach(item=>{
                     this.$set(item,'showSearch',true);
                     this.$set(item,'nextShow',true);
                 })
-            }else{ 
+            }else{
                 this.optionsData = this.options;
             }
-        }, 
+        },
         isHasChild(childItem){
             if(childItem.children&&childItem.children.length>0){
                 return true
             }
-            return false 
+            return false
         },
         //选中
-        changeSelect(item){ 
+        changeSelect(item){
             if(this.isHasChild(item)){
-               this.closeChilren();
-               this.expandChilren(item)
+               this.closeChildren();
+               this.expandChildren(item)
             }else{
                if(this.mode=='tree'){
-                 this.closeChilren() 
-               } 
+                 this.closeChildren()
+               }
                if(this.isMultiple){
                  if(this.ArrayContain(this.selectId,item.id)){
                     this.selectId.splice(this.ArrayContainIndex(this.selectId,item.id),1)
@@ -169,19 +169,19 @@ export default {
                     this.selectId.push(item.id);
                  }
                }else{
-                 this.selectId = item.id 
+                 this.selectId = item.id
                }
-               
+
             //    this.$emit('change',this.selectId)
-            } 
+            }
         },
         //关闭其他菜单
-        closeChilren(){
+        closeChildren(){
             this.treeData.forEach(item=>{
                 if(this.isHasChild(item)){
                     item.children.forEach(childItem=>{
-                        this.$set(childItem,'showChilren',false) 
-                    }) 
+                        this.$set(childItem,'showChildren',false)
+                    })
                 }
             })
         },
@@ -189,10 +189,10 @@ export default {
         expandNextChildren(item){
             this.$set(item,'nextShow',!item.nextShow)
         },
-        //展开更多级菜单 
-        expandChilren(childItem){
+        //展开更多级菜单
+        expandChildren(childItem){
             if(this.isHasChild(childItem)){
-                 this.$set(childItem,'showChilren',true)
+                 this.$set(childItem,'showChildren',true)
             }
         },
         //搜索
@@ -217,7 +217,7 @@ export default {
                              this.$set(item,'showSearch',false)
                         }
                     }else{
-                       this.$set(item,'showSearch',false) 
+                       this.$set(item,'showSearch',false)
                     }
                 });
                 let count = 0;
@@ -231,10 +231,10 @@ export default {
                 }else{
                     this.empty = false;
                 }
-            }else{ 
-                this.treeData.forEach(item => {  
+            }else{
+                this.treeData.forEach(item => {
                     this.$set(item,'showSearch',true)
-                });  
+                });
                 this.empty = false;
             }
         }
@@ -255,12 +255,12 @@ export default {
             padding: 0px 10px;
             &_active{
                 color: #0048ff;
-                background: #F7F9FC; 
+                background: #F7F9FC;
             }
         }
         &_tree{
             padding: 8px;
-           
+
             &_group{
                 &_title{
                     display: flex;
@@ -284,7 +284,7 @@ export default {
                     position: relative;
                     &_active{
                        color: #0048ff;
-                       background: #F7F9FC; 
+                       background: #F7F9FC;
                     }
                     &_icon{
                         font-size: 8px;
@@ -314,7 +314,7 @@ export default {
             }
             &_active{
                color: #0048ff;
-               background: #F7F9FC; 
+               background: #F7F9FC;
             }
         }
     }

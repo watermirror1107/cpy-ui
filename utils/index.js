@@ -36,3 +36,11 @@ export const colorRgb = function (color, alpha = 1) {
         return color;
     }
 };
+
+export const objectValueIsEmpty=function (obj){
+    let bol=true
+    for (const key in obj) {
+        if(obj[key])bol=false
+    }
+    return bol
+}
