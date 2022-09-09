@@ -8,7 +8,7 @@
       <div class="c_table_header_content" v-else>
         <c-table-input-search
             v-if="isShowSearch"
-            v-model="formData"
+            :formData.sync="formData"
             :columns="columns"
             @change="debounceFresh($event, () => {}, 'queryName')"
             :placeholder="queryNamePlaceholder"
@@ -166,7 +166,7 @@
             </a-select-option>
           </template>
         </a-select> -->
-        <template v-else>
+        <template v-else-if="column.searchType !== 'input'">
           <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
             <c-table-filter mode="tree" v-model="formData[column.searchKey || column.key]"
                             :options="column.filterOptionMethod(column.options)"
@@ -277,7 +277,9 @@ export default {
   name: "CTable",
   provide(){
     return {
-      refresh:this.refresh
+      refresh:this.refresh,
+      debounceFresh:this.debounceFresh,
+      resetFilter:this.resetFilter
     }
   },
   inheritAttrs: false,
@@ -296,7 +298,9 @@ export default {
   },
   data() {
     return {
-      formData:{},
+      formData:{
+        queryName:''
+      },
       showColumns: [],
       midColumns: [],
       isVisible: false,
@@ -520,6 +524,7 @@ export default {
      * @param Boolean bool
      */
     refresh(bool = false) {
+      console.log(JSON.stringify(this.formData))
       bool &&
       (this.localPagination = Object.assign({}, this.localPagination, {
         current: 1,
@@ -560,7 +565,7 @@ export default {
       this.loadData(params);
     },
     loadData: debounce(function (params = this.localPagination) {
-      this.data(this.localPagination)
+      this.data({...this.localPagination,...this.formData})
           .then((res) => {
             const {data} = res;
             this.localDataSource = data.payload || [];

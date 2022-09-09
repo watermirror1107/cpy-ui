@@ -423,9 +423,8 @@ export default {
             fixed: "left",
             banHide:true,
             width: 100,
-            searchType: "input",
+            searchType: "input",//input类型的不要添加filterDropdown
             scopedSlots: {
-              filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
               customRender: "id",
             },
@@ -507,47 +506,6 @@ export default {
             scopedSlots: {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
-            },
-            filterOptionMethod: (val, key = "regionName", key2 = "cityName") => {
-              let temp = [];
-              //区域名称提取
-              [...new Set(val.map(item => {
-                return item[key]
-              }))].forEach((item, index) => {
-                temp.push({
-                  name: item,
-                  id: item,
-                  children: []
-                })
-              });
-              //区域名称下城市集合
-              val.forEach(item => {
-                temp.forEach(tempItem => {
-                  if (item[key] == tempItem.name) {
-                    tempItem.children.push({
-                      name: item[key2],
-                      id: item[key2],
-                      children: []
-                    });
-                  }
-                })
-              });
-              //城市下集群的集合
-              val.forEach(item => {
-                temp.forEach(tempItem => {
-                  tempItem.children.forEach(childItem => {
-                    // debugger;
-                    if (childItem.name == item[key2]) {
-                      childItem.children.push({
-                        name: item.name,
-                        id: item.id
-                      })
-                    }
-                  })
-                })
-              })
-              // debugger
-              return temp;
             },
             options: [{id: 111, name: '111', cityName: '厦门1', regionName: '华东'}, {
               id: 112,

@@ -40,7 +40,11 @@ export const colorRgb = function (color, alpha = 1) {
 export const objectValueIsEmpty=function (obj){
     let bol=true
     for (const key in obj) {
-        if(obj[key])bol=false
+        if(obj[key] instanceof Array){
+            if(obj[key].length!==0)bol=false
+        }else{
+            if(obj[key])bol=false
+        }
     }
     return bol
 }

@@ -4,7 +4,7 @@
     <tag-list
         @close="refresh(true)"
         class="c_table_tags"
-        v-model="formData"
+        :formData="formData"
         :formOptions="getFormOptions()"
     ></tag-list>
     <div class="input">
@@ -19,7 +19,7 @@
           class="input_searchKey_select"
           :style="{top:selectTop+'px',left:selectLeft+'px'}">
         <!--        todo 过滤已经选择过的 即formData中有值-->
-        <li>{选择资源属性进行过滤</li>
+        <li>选择资源属性进行过滤</li>
         <li v-for="item in getOptions"
             @click="selectSearchKey(item.key)"
             :key="item.key"
@@ -28,11 +28,81 @@
           {{ item.title }}
         </li>
       </ul>
+      <template v-if="isShowFilterSelect">
+        <template v-if="getCurrentSearchType.searchType === 'selectMultiple'">
+          <div
+              class="input_searchKey_select"
+              :style="{top:selectTop+'px',left:selectLeft+'px'}"
+              v-if="getCurrentSearchType.filterOptionMethod&&typeof getCurrentSearchType.filterOptionMethod =='function'">
+            <c-table-filter :isMultiple="true" mode="tree"
+                            v-model="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
+                            :options="getCurrentSearchType.filterOptionMethod(getCurrentSearchType.options)"
+                            @confirm="debounceFresh($event, confirm, getCurrentSearchType.searchKey || getCurrentSearchType.key)">
+              >
+            </c-table-filter>
+          </div>
+          <template v-if="!getCurrentSearchType.filterOptionMethod">
+            <c-table-filter :isMultiple="true"
+                            v-model="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
+                            :options="getCurrentSearchType.options"
+                            @confirm="debounceFresh($event, confirm, getCurrentSearchType.searchKey || getCurrentSearchType.key)"></c-table-filter>
+          </template>
+          <!-- slot="dropdownRender" slot-scope="menu" -->
+          <div>
+            <!-- <v-nodes :vnodes="menu"/> -->
+            <a-divider style="margin: 4px 0"/>
+            <div
+                style="
+                padding: 7px 8px;
+                display: flex;
+                justify-content: space-between;
+              "
+                @mousedown="(e) => e.preventDefault()"
+            >
+              <a-button
+                  type="primary"
+                  @click="
+                  debounceFresh(
+                    formData[getCurrentSearchType.searchKey || getCurrentSearchType.key],
+                    confirm,
+                    getCurrentSearchType.searchKey || getCurrentSearchType.key
+                  )
+                "
+              >
+                确定
+              </a-button>
+              <a-button
+                  type="primary"
+                  ghost
+                  @click="resetFilter(getCurrentSearchType.searchKey || getCurrentSearchType.key, confirm)"
+              >
+                重置
+              </a-button>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <template
+              v-if="getCurrentSearchType.filterOptionMethod&&typeof getCurrentSearchType.filterOptionMethod =='function'">
+            <c-table-filter mode="tree" v-model="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
+                            :options="getCurrentSearchType.filterOptionMethod(getCurrentSearchType.options)"
+                            @confirm="debounceFresh($event, confirm, getCurrentSearchType.searchKey || getCurrentSearchType.key)">
+              >
+            </c-table-filter>
+          </template>
+          <template v-if="!getCurrentSearchType.filterOptionMethod">
+            <c-table-filter v-model="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
+                            :options="getCurrentSearchType.options"
+                            @confirm="debounceFresh($event, confirm, getCurrentSearchType.searchKey || getCurrentSearchType.key)"></c-table-filter>
+          </template>
+        </template>
+      </template>
     </div>
     <button v-show="inputValue!==''" class="searchBtn" @click="search">
       <icon name="icon-shilixiangqing_fanhui"></icon>
     </button>
-    <icon v-show="isShowDeleteIcon" name="icon-chuangjianshili_guanbi" class="deleteIcon"/>
+    <icon v-show="isShowDeleteIcon" name="icon-chuangjianshili_guanbi" class="deleteIcon"
+          @click.native="clearFormData"/>
   </div>
 </template>
 
@@ -43,7 +113,7 @@ import {objectValueIsEmpty} from '../../utils/index'
 
 export default {
   name: "index",
-  inject:['refresh'],
+  inject: ['refresh', 'debounceFresh'],
   model: {
     props: 'formData',
     event: 'change'
@@ -72,39 +142,56 @@ export default {
       selectLeft: 0,
       searchKey: undefined,
       inputValue: '',
-      isShowSearchKeySelect: false
+      isShowSearchKeySelect: false,
+      isShowFilterSelect: false
     }
   },
   mounted() {
-    document.addEventListener('click',this.closeSelect)
+    document.addEventListener('click', this.closeSelect)
   },
   beforeDestroy() {
-    document.removeEventListener('click',this.closeSelect)
+    document.removeEventListener('click', this.closeSelect)
   },
   computed: {
     /**
      * @description:是过滤条件的key值不为空时候展示删除按钮
      */
     isShowDeleteIcon() {
-      let obj = {}
-      this.getOptions.forEach(item => {//过滤掉不是用在表格过滤条件，但是又是表格过滤条件中必要的过滤条件
+      let obj = {queryName: this.formData.queryName}
+      this.columns.filter(i => i.searchType).forEach(item => {//过滤掉不是用在表格过滤条件，但是又是表格过滤条件中必要的过滤条件
         obj[item.searchKey || item.key] = this.formData[item.searchKey || item.key]
       })
       return !objectValueIsEmpty(obj)
     },
     /**
-     * @description:获取可用过滤的条件
+     * @description:获取可用过滤的条件,包括已经使用过的
      */
     getOptions() {
-      return this.columns.filter(i => i.searchType)
+      return this.columns.filter(i => {
+        const {searchType, searchKey, key} = i
+        if (searchType) {
+          if (this.formData[searchKey || key] instanceof Array && this.formData[searchKey || key].length === 0) {
+            return true
+          }
+          if (!this.formData[searchKey || key]) {
+            return true
+          }
+        }
+      })
+    },
+    /**
+     * @description:获取当前输入的类型是不是input
+     */
+    getCurrentSearchType() {
+      return this.columns.find(i => i.searchKey === this.searchKey || i.key === this.searchKey) || null
     }
   },
   methods: {
-    closeSelect(ev){
-      let that=this
-        if(!that.$refs.tableInputSearch.contains(ev.target)){
-          that.isShowSearchKeySelect=false
-        }
+    closeSelect(ev) {
+      let that = this
+      if (!that.$refs.tableInputSearch.contains(ev.target)) {
+        that.isShowSearchKeySelect = false
+      }
     },
     /**
      * @description:获取taglist需要的formoptions
@@ -113,16 +200,10 @@ export default {
       return this.columns.filter((i) => i.searchType);
     },
     /**
-     * @description:过滤掉已经有值的searchKey
-     */
-    filterSearchKey() {
-
-    },
-    /**
      * @description:展示searchKey的select,并且定位到当前input下面
      */
     showSearchKeySelect() {
-      if(this.isShowSearchKeySelect )return false
+      if (this.isShowSearchKeySelect || this.searchKey) return false
       this.searchKey = undefined;
       this.isShowSearchKeySelect = true;
       //定位下拉框的位置
@@ -131,12 +212,13 @@ export default {
     },
     handleInput() {
       //值为空让Input失去焦点
-      if(!this.inputValue){
+      if (!this.inputValue) {
         this.$refs.input.blur();
         this.searchKey = undefined;
         this.isShowSearchKeySelect = false;
       }
-      const selected = this.columns.find(i => i.searchKey === this.searchKey || i.key === this.searchKey)
+      const selected = this.getCurrentSearchType
+      //如果是input类型输入时候要隐藏下拉框，包括queryName
       if (selected && selected.searchType === 'input' || !selected) {
         this.isShowSearchKeySelect = false
       }
@@ -150,29 +232,54 @@ export default {
       this.inputValue = this.columns.find(i => i.searchKey === key || i.key === key).title + ':'
       this.$refs.input.focus()
       //todo 根据不同的searchType
+      if (this.getCurrentSearchType.searchType !== 'input') {
+        this.isShowFilterSelect = true;
+      }
     },
     search() {
+      //不是输入框类型并且不是queryName的不触发
       this.searchKey = this.searchKey || this.defaultSearchKey
-      let data = Object.assign({}, this.formData)
-      data[this.searchKey] = this.inputValue
-      this.inputValue=''
-      this.$refs.input.blur();
-      console.log('searchKey',this.searchKey)
-      this.$emit('update:formData',data)
-      console.log(this.formData)
+      if (this.getCurrentSearchType?.searchType === 'input' || this.searchKey === 'queryName') {
+        if (this.inputValue !== '') {
+          let data = Object.assign({}, this.formData)
+          data[this.searchKey] = this.splitKeyword()
+          this.inputValue = ''
+          this.$refs.input.blur();
+          this.searchKey = undefined
+          this.$emit('update:formData', data)
+          this.refresh()
+        }
+      }
     },
     /**
      * @description:分割搜索词
      */
     splitKeyword() {
       //判断是否带着:
-      let arr=this.searchKey.split(':')
-      if(arr.length===1){
-
-      }else{
-
+      let arr = this.inputValue.split(':')
+      if (arr.length === 1) {
+        return arr[0]
+      } else {
+        return arr[1]
       }
-    }
+    },
+    /**
+     * @description:清空所有过滤条件
+     */
+    clearFormData() {
+      let data = Object.assign({}, this.formData)
+      for (const key in data) {
+        if (data[key] instanceof Array) {
+          data[key] = []
+        } else {
+          data[key] = undefined
+        }
+      }
+      this.searchKey = undefined
+      this.inputValue = ''
+      this.$emit('update:formData', data)
+      this.refresh(true)
+    },
   }
 }
 </script>
