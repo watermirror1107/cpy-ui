@@ -267,7 +267,6 @@
 import {debounce} from "@/utils";
 import CTableInputSearch from "../CTableInputSearch";
 import Icon from "../CIcon";
-import TagList from "../CTagList";
 import Modal from "../CModal/index.vue";
 import CButton from "../CButton";
 import {Checkbox} from "ant-design-vue";
@@ -276,6 +275,11 @@ import CTableFilter from '../CTableFilter/index.vue';
 
 export default {
   name: "CTable",
+  provide(){
+    return {
+      refresh:this.refresh
+    }
+  },
   inheritAttrs: false,
   components: {
     Icon,
@@ -284,7 +288,6 @@ export default {
     Modal,
     CButton,
     CPage,
-    TagList,
     CTableFilter,
     VNodes: {
       functional: true,
@@ -293,6 +296,7 @@ export default {
   },
   data() {
     return {
+      formData:{},
       showColumns: [],
       midColumns: [],
       isVisible: false,
@@ -320,14 +324,9 @@ export default {
     isSetColumn: {type: Boolean, default: true}, //是否可以设置表头
     loopTime: {type: Number}, //轮询间隔,建议至少5秒以上
     data: {type: Function},
-    formData: {
-      type: Object,
-      default: () => {
-      },
-    },
-    tagFilterArr: {type: Array, default: () => ["queryName"]},
     dataSource: {type: Array, default: () => []},
     scroll: {default: () => ({x: 930}), type: Object},
+    expandParams: {default: () => ({}), type: Object},
   },
   watch: {
     dataSource(nv) {
@@ -358,6 +357,17 @@ export default {
     }
   },
   mounted() {
+    this.$attrs.columns.forEach(item=>{//自动收集需要搜索的字段
+      if(item.searchType){
+        let defaultValue=''
+        if(item.searchType==='selectMultiple'){
+          defaultValue=[]
+        }else if(item.searchType==='select'){
+          defaultValue=undefined
+        }
+        this.$set(this.formData,item.searchKey||item.key,defaultValue)
+      }
+    })
     if (window.tableTime) {
       clearTimeout(window.tableTime);
     }
@@ -416,12 +426,6 @@ export default {
           .$children[0].$children[1].$children[0].$children[0].$emit('select', 'removeAll')
     },
     /**
-     * @description:获取taglist需要的formoptions
-     */
-    getFormOptions() {
-      return this.$attrs.columns.filter((i) => i.options);
-    },
-    /**
      * @description:多选的下拉框中的重置按钮
      */
     resetFilter(key, confirm) {
@@ -455,7 +459,6 @@ export default {
               },
             }
           }
-          ;
           localStorage.custormColumnObject = JSON.stringify(obj);
         } else {
           localStorage.custormColumnObject = JSON.stringify({
@@ -705,10 +708,7 @@ export default {
     }
   }
 
-  &_tags {
-    margin-bottom: 16px;
-    padding: 0px 20px;
-  }
+
 
   .ant-table-expanded-row {
     td {

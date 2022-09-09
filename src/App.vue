@@ -96,7 +96,6 @@
     <!--      <c-table-filter mode="tree"/>-->
     <!--    </div>-->
     <c-table
-        :formData="formData"
         :formOptions="formOptions"
         ref="table"
         :rowSelection="{
@@ -313,11 +312,6 @@ export default {
       imageTypes: [{name: "one"}, {name: "two"}],
       month: 1,
       time: [],
-      formData: {
-        queryName: "",
-        createTime: undefined,
-        date: [],
-      },
       formOptions: [
         {
           key: "queryName",
@@ -429,7 +423,7 @@ export default {
             fixed: "left",
             banHide:true,
             width: 100,
-            searchType: "selectMultiple",
+            searchType: "input",
             scopedSlots: {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
@@ -509,6 +503,7 @@ export default {
             dataIndex: "content",
             key: "content",
             width: 200,
+            searchType: "selectMultiple",
             scopedSlots: {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
@@ -561,14 +556,9 @@ export default {
               regionName: '华东'
             }, {id: 222, name: '2222', cityName: '福州', regionName: '华西'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
-            onFilterDropdownVisibleChange: (visible) => {
-              if (visible) {
-
-              }
-            },
           },
           {
-            title: "createTime",
+            title: "创建时间",
             dataIndex: "createTime",
             key: "createTime",
             width: 140,
@@ -576,14 +566,9 @@ export default {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
             },
-            searchType: "selectMultiple",
+            searchType: "select",
             options: [{id: 111, name: '111'}, {id: 222, name: '222'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
-            onFilterDropdownVisibleChange: (visible) => {
-              if (visible) {
-
-              }
-            },
           },
           {
             title: "operate",
@@ -634,7 +619,6 @@ export default {
       return axios.get("/getoptions?ID=12345");
     },
     queryList(params) {
-      // const data = Object.assign({}, params, this.formData, result);
       return axios({
         url: "/getoptions",
         method: "get",
@@ -646,7 +630,6 @@ export default {
       console.log(i);
     }),
     handleSubmit() {
-      console.log(this.formData);
     },
     clickMore() {
       console.log("more");

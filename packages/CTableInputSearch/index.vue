@@ -1,10 +1,13 @@
 <template>
-  <div class="wrap">
-    <!--    todo 指令式点击外面关闭select-->
+  <div ref="tableInputSearch" class="tableInputSearch">
     <icon name="icon-shili_shousuo"/>
+    <tag-list
+        @close="refresh(true)"
+        class="c_table_tags"
+        v-model="formData"
+        :formOptions="getFormOptions()"
+    ></tag-list>
     <div class="input">
-      <!--    todo 展示选择的searchKey-->
-      <p v-show="searchKey">{{ columns.find(i => i.searchKey === searchKey || i.key === searchKey).title }}:</p>
       <input ref="input"
              placeholder="多个关键字用竖线“丨”分隔，多个过滤标签"
              v-model="inputValue"
@@ -12,10 +15,8 @@
              @click="showSearchKeySelect"
              @input="handleInput"
              @keydown.enter="search">
-      <!--      todo 编写一个自己的下拉框-->
-      <ul v-show="isShowSearchKey"
+      <ul v-show="isShowSearchKeySelect"
           class="input_searchKey_select"
-          @change="isShowSearchKey=false"
           :style="{top:selectTop+'px',left:selectLeft+'px'}">
         <!--        todo 过滤已经选择过的 即formData中有值-->
         <li>{选择资源属性进行过滤</li>
@@ -28,6 +29,9 @@
         </li>
       </ul>
     </div>
+    <button v-show="inputValue!==''" class="searchBtn" @click="search">
+      <icon name="icon-shilixiangqing_fanhui"></icon>
+    </button>
     <icon v-show="isShowDeleteIcon" name="icon-chuangjianshili_guanbi" class="deleteIcon"/>
   </div>
 </template>
@@ -39,18 +43,23 @@ import {objectValueIsEmpty} from '../../utils/index'
 
 export default {
   name: "index",
+  inject:['refresh'],
   model: {
     props: 'formData',
     event: 'change'
   },
   props: {
+    defaultSearchKey: {
+      default: 'queryName',
+      type: String
+    },
     columns: {
       type: Array,
       default: () => ([])
     },
     formData: {
-      type: Array,
-      default: () => ([])
+      type: Object,
+      default: () => ({})
     }
   },
   components: {
@@ -61,10 +70,16 @@ export default {
     return {
       selectTop: 0,
       selectLeft: 0,
-      searchKey: undefined,//没有默认queryName
+      searchKey: undefined,
       inputValue: '',
-      isShowSearchKey: false
+      isShowSearchKeySelect: false
     }
+  },
+  mounted() {
+    document.addEventListener('click',this.closeSelect)
+  },
+  beforeDestroy() {
+    document.removeEventListener('click',this.closeSelect)
   },
   computed: {
     /**
@@ -85,6 +100,18 @@ export default {
     }
   },
   methods: {
+    closeSelect(ev){
+      let that=this
+        if(!that.$refs.tableInputSearch.contains(ev.target)){
+          that.isShowSearchKeySelect=false
+        }
+    },
+    /**
+     * @description:获取taglist需要的formoptions
+     */
+    getFormOptions() {
+      return this.columns.filter((i) => i.searchType);
+    },
     /**
      * @description:过滤掉已经有值的searchKey
      */
@@ -95,36 +122,64 @@ export default {
      * @description:展示searchKey的select,并且定位到当前input下面
      */
     showSearchKeySelect() {
-      if (this.isShowSearchKey) return false
-      this.isShowSearchKey = true;
+      if(this.isShowSearchKeySelect )return false
       this.searchKey = undefined;
+      this.isShowSearchKeySelect = true;
+      //定位下拉框的位置
       this.selectTop = this.$refs.input.offsetTop + 45
       this.selectLeft = this.$refs.input.offsetLeft
     },
     handleInput() {
-      if (!this.isShowSearchKey) return false
-      //todo 如果过滤类型是select的时候输入不关闭select
-      this.isShowSearchKey = false
+      //值为空让Input失去焦点
+      if(!this.inputValue){
+        this.$refs.input.blur();
+        this.searchKey = undefined;
+        this.isShowSearchKeySelect = false;
+      }
+      const selected = this.columns.find(i => i.searchKey === this.searchKey || i.key === this.searchKey)
+      if (selected && selected.searchType === 'input' || !selected) {
+        this.isShowSearchKeySelect = false
+      }
     },
     /**
      * @description:选择searchKey
      */
     selectSearchKey(key) {
       this.searchKey = key
-      this.isShowSearchKey = false
-      //todo 没有再次获取到Input焦点
+      this.isShowSearchKeySelect = false
+      this.inputValue = this.columns.find(i => i.searchKey === key || i.key === key).title + ':'
+      this.$refs.input.focus()
+      //todo 根据不同的searchType
     },
     search() {
-      //todo
+      this.searchKey = this.searchKey || this.defaultSearchKey
+      let data = Object.assign({}, this.formData)
+      data[this.searchKey] = this.inputValue
+      this.inputValue=''
+      this.$refs.input.blur();
+      console.log('searchKey',this.searchKey)
+      this.$emit('update:formData',data)
+      console.log(this.formData)
+    },
+    /**
+     * @description:分割搜索词
+     */
+    splitKeyword() {
+      //判断是否带着:
+      let arr=this.searchKey.split(':')
+      if(arr.length===1){
+
+      }else{
+
+      }
     }
   }
 }
 </script>
 
-<style scoped lang="less">
-.wrap {
+<style lang="less">
+.tableInputSearch {
   padding: 0 8px;
-
   flex: 1;
   display: flex;
   align-items: center;
@@ -133,6 +188,23 @@ export default {
   border: 1px solid #CCD1DF;
   background-color: #fff;
   border-radius: 4px;
+
+  .searchBtn {
+    height: 24px;
+    width: 24px;
+    background-color: #216CFD;
+    color: #fff;
+    border: unset;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    .c_icon {
+      transform: rotateY(180deg);
+    }
+  }
 
   &:hover {
     border-color: #216CFD;
@@ -148,11 +220,13 @@ export default {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    >p{
+
+    > p {
       height: 38px;
       line-height: 38px;
       margin-bottom: 0;
     }
+
     &_searchKey_select {
       width: 200px;
       padding: 8px;

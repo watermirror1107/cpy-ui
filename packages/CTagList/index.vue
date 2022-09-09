@@ -75,6 +75,7 @@ export default {
 
 <style lang="less">
 .c_tag_list {
+  margin-bottom: 0!important;
   &:after {
     clear: both;
     content: '';
@@ -82,7 +83,7 @@ export default {
   }
 
   .ant-tag {
-    background-color: #E6E6E6;
+    background-color: #F7F9FC;
     height: 32px;
     padding: 0 9px;
     font-size: 14px;
