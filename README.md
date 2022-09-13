@@ -47,7 +47,9 @@ RangePicker日期范围选择
 SearchSelect搜索下拉框
 Table表格
 Table表格按钮
-TableForm表格过滤
+TableFilter表格过滤器
+TableForm表格的表单过滤
+TableInputSearch表格的输入框含表格过滤和表格操作
 Tabs选项卡
 Tap选项卡的UI升级版
 Page分页组件
