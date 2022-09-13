@@ -75,49 +75,22 @@
       <template v-slot:filterDropdown="{ confirm, column }">
         <template v-if="column.searchType === 'selectMultiple'">
           <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
-            <c-table-filter :isMultiple="true" mode="tree" v-model="formData[column.searchKey || column.key]"
+            <c-table-filter :isMultiple="true"
+                            mode="tree"
+                            :value="formData[column.searchKey || column.key]"
                             :options="column.filterOptionMethod(column.options)"
+                            @cancel="confirm"
                             @confirm="debounceFresh($event, confirm, column.searchKey || column.key)">>
             </c-table-filter>
           </template>
           <template v-if="!column.filterOptionMethod">
-            <c-table-filter :isMultiple="true" v-model="formData[column.searchKey || column.key]"
+            <c-table-filter :isMultiple="true"
+                            :value="formData[column.searchKey || column.key]"
                             :options="column.options"
+                            @cancel="confirm"
                             @confirm="debounceFresh($event, confirm, column.searchKey || column.key)"></c-table-filter>
           </template>
           <!-- slot="dropdownRender" slot-scope="menu" -->
-          <div>
-            <!-- <v-nodes :vnodes="menu"/> -->
-            <a-divider style="margin: 4px 0"/>
-            <div
-                style="
-                padding: 7px 8px;
-                display: flex;
-                justify-content: space-between;
-              "
-                @mousedown="(e) => e.preventDefault()"
-            >
-              <a-button
-                  type="primary"
-                  @click="
-                  debounceFresh(
-                    formData[column.searchKey || column.key],
-                    confirm,
-                    column.searchKey || column.key
-                  )
-                "
-              >
-                {{ $T("instance.Confirm") }}
-              </a-button>
-              <a-button
-                  type="primary"
-                  ghost
-                  @click="resetFilter(column.searchKey || column.key, confirm)"
-              >
-                {{ $T("instance.Reset") }}
-              </a-button>
-            </div>
-          </div>
         </template>
         <!-- <a-select
             v-if="column.searchType === 'selectMultiple'"
@@ -127,7 +100,7 @@
             :open="true"
             :showArrow="false"
             mode="multiple"
-            v-model="formData[column.searchKey || column.key]"
+            :value="formData[column.searchKey || column.key]"
             :getPopupContainer="(triggerNode) => triggerNode.parentNode"
             :filter-option="filterOption"
             :placeholder="column.placeholder || $T('public.search')"
@@ -168,13 +141,17 @@
         </a-select> -->
         <template v-else-if="column.searchType !== 'input'">
           <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
-            <c-table-filter mode="tree" v-model="formData[column.searchKey || column.key]"
+            <c-table-filter mode="tree"
+                            :value="formData[column.searchKey || column.key]"
                             :options="column.filterOptionMethod(column.options)"
+                            @cancel="confirm"
                             @confirm="debounceFresh($event, confirm, column.searchKey || column.key)">>
             </c-table-filter>
           </template>
           <template v-if="!column.filterOptionMethod">
-            <c-table-filter v-model="formData[column.searchKey || column.key]" :options="column.options"
+            <c-table-filter :value="formData[column.searchKey || column.key]"
+                            :options="column.options"
+                            @cancel="confirm"
                             @confirm="debounceFresh($event, confirm, column.searchKey || column.key)"></c-table-filter>
           </template>
         </template>
@@ -184,7 +161,7 @@
             :showArrow="false"
             allowClear
             autoFocus
-            v-model="formData[column.searchKey || column.key]"
+            :value="formData[column.searchKey || column.key]"
             :defaultOpen="true"
             :open="true"
             :getPopupContainer="(triggerNode) => triggerNode.parentNode"
@@ -337,7 +314,7 @@ export default {
       if (!this.data) {
         this.localDataSource = nv;
       }
-    },
+    }
   },
   computed:{
     columns(){
@@ -479,6 +456,7 @@ export default {
      */
     debounceFresh: debounce(function (val, confirm, key) {
       // debugger;
+      this.formData[key]=val
       confirm();
       this.refresh(true);
       this.$emit("filterChange", val, key);

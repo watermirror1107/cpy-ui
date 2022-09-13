@@ -2,7 +2,7 @@
   <div ref="tableInputSearch" class="tableInputSearch">
     <icon name="icon-shili_shousuo"/>
     <tag-list
-        @close="refresh(true)"
+        @close="deleteTags"
         class="c_table_tags"
         :formData="formData"
         :formOptions="getFormOptions()"
@@ -15,10 +15,9 @@
              @click="showSearchKeySelect"
              @input="handleInput"
              @keydown.enter="search">
-      <ul v-show="isShowSearchKeySelect"
+      <ul v-show="isShowSearchKeySelect&&getOptions.length>0"
           class="input_searchKey_select"
           :style="{top:selectTop+'px',left:selectLeft+'px'}">
-        <!--        todo 过滤已经选择过的 即formData中有值-->
         <li>选择资源属性进行过滤</li>
         <li v-for="item in getOptions"
             @click="selectSearchKey(item.key)"
@@ -33,68 +32,40 @@
           <div
               class="input_searchKey_select"
               :style="{top:selectTop+'px',left:selectLeft+'px'}"
-              v-if="getCurrentSearchType.filterOptionMethod&&typeof getCurrentSearchType.filterOptionMethod =='function'">
+              >
             <c-table-filter :isMultiple="true" mode="tree"
-                            v-model="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
+                            v-if="getCurrentSearchType.filterOptionMethod&&typeof getCurrentSearchType.filterOptionMethod =='function'"
+                            :value="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
                             :options="getCurrentSearchType.filterOptionMethod(getCurrentSearchType.options)"
-                            @confirm="debounceFresh($event, confirm, getCurrentSearchType.searchKey || getCurrentSearchType.key)">
-              >
+                            @cancel="confirmCloseSelect"
+                            @confirm="debounceFresh($event, confirmCloseSelect, getCurrentSearchType.searchKey || getCurrentSearchType.key)">
             </c-table-filter>
-          </div>
-          <template v-if="!getCurrentSearchType.filterOptionMethod">
             <c-table-filter :isMultiple="true"
-                            v-model="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
+                            v-if="!getCurrentSearchType.filterOptionMethod"
+                            :value="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
                             :options="getCurrentSearchType.options"
-                            @confirm="debounceFresh($event, confirm, getCurrentSearchType.searchKey || getCurrentSearchType.key)"></c-table-filter>
-          </template>
-          <!-- slot="dropdownRender" slot-scope="menu" -->
-          <div>
-            <!-- <v-nodes :vnodes="menu"/> -->
-            <a-divider style="margin: 4px 0"/>
-            <div
-                style="
-                padding: 7px 8px;
-                display: flex;
-                justify-content: space-between;
-              "
-                @mousedown="(e) => e.preventDefault()"
-            >
-              <a-button
-                  type="primary"
-                  @click="
-                  debounceFresh(
-                    formData[getCurrentSearchType.searchKey || getCurrentSearchType.key],
-                    confirm,
-                    getCurrentSearchType.searchKey || getCurrentSearchType.key
-                  )
-                "
-              >
-                确定
-              </a-button>
-              <a-button
-                  type="primary"
-                  ghost
-                  @click="resetFilter(getCurrentSearchType.searchKey || getCurrentSearchType.key, confirm)"
-              >
-                重置
-              </a-button>
-            </div>
+                            @cancel="confirmCloseSelect"
+                            @confirm="debounceFresh($event, confirmCloseSelect, getCurrentSearchType.searchKey || getCurrentSearchType.key)"></c-table-filter>
           </div>
         </template>
         <template v-else>
-          <template
+          <div
+              class="input_searchKey_select"
+              :style="{top:selectTop+'px',left:selectLeft+'px'}"
               v-if="getCurrentSearchType.filterOptionMethod&&typeof getCurrentSearchType.filterOptionMethod =='function'">
-            <c-table-filter mode="tree" v-model="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
+            <c-table-filter mode="tree" :value="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
                             :options="getCurrentSearchType.filterOptionMethod(getCurrentSearchType.options)"
-                            @confirm="debounceFresh($event, confirm, getCurrentSearchType.searchKey || getCurrentSearchType.key)">
-              >
+                            @confirm="debounceFresh($event, confirmCloseSelect, getCurrentSearchType.searchKey || getCurrentSearchType.key)">
             </c-table-filter>
-          </template>
-          <template v-if="!getCurrentSearchType.filterOptionMethod">
-            <c-table-filter v-model="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
+          </div>
+          <div
+              class="input_searchKey_select"
+              :style="{top:selectTop+'px',left:selectLeft+'px'}"
+              v-if="!getCurrentSearchType.filterOptionMethod">
+            <c-table-filter :value="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
                             :options="getCurrentSearchType.options"
-                            @confirm="debounceFresh($event, confirm, getCurrentSearchType.searchKey || getCurrentSearchType.key)"></c-table-filter>
-          </template>
+                            @confirm="debounceFresh($event, confirmCloseSelect, getCurrentSearchType.searchKey || getCurrentSearchType.key)"></c-table-filter>
+          </div>
         </template>
       </template>
     </div>
@@ -109,15 +80,12 @@
 <script>
 import TagList from "../CTagList";
 import Icon from '../CIcon'
+import CTableFilter from '../CTableFilter/index.vue';
 import {objectValueIsEmpty} from '../../utils/index'
 
 export default {
   name: "index",
-  inject: ['refresh', 'debounceFresh'],
-  model: {
-    props: 'formData',
-    event: 'change'
-  },
+  inject: ['refresh', 'debounceFresh','resetFilter'],
   props: {
     defaultSearchKey: {
       default: 'queryName',
@@ -134,6 +102,7 @@ export default {
   },
   components: {
     Icon,
+    CTableFilter,
     TagList
   },
   data() {
@@ -187,10 +156,26 @@ export default {
     }
   },
   methods: {
+    /**
+    * @description:确认关闭弹窗
+    */
+    confirmCloseSelect(){
+      // let data = Object.assign({}, this.formData)
+      // data[this.searchKey] =
+      this.inputValue=''
+      this.searchKey=undefined;
+      this.isShowFilterSelect=false;
+    },
+    /**
+    * @description:点击判断是否关闭弹窗
+    */
     closeSelect(ev) {
       let that = this
       if (!that.$refs.tableInputSearch.contains(ev.target)) {
         that.isShowSearchKeySelect = false
+        that.isShowFilterSelect = false
+        that.inputValue=''
+        that.searchKey=undefined
       }
     },
     /**
@@ -231,7 +216,6 @@ export default {
       this.isShowSearchKeySelect = false
       this.inputValue = this.columns.find(i => i.searchKey === key || i.key === key).title + ':'
       this.$refs.input.focus()
-      //todo 根据不同的searchType
       if (this.getCurrentSearchType.searchType !== 'input') {
         this.isShowFilterSelect = true;
       }
@@ -247,9 +231,22 @@ export default {
           this.$refs.input.blur();
           this.searchKey = undefined
           this.$emit('update:formData', data)
-          this.refresh()
+          this.refresh(true)
         }
       }
+    },
+    /**
+    * @description:删除标签
+    */
+    deleteTags(key){
+      // if(this.searchKey===key){ //todo
+      //   this.isShowFilterSelect=false
+      //   this.inputValue=''
+      // }
+      let data = Object.assign({}, this.formData)
+      data[key] = data[key] instanceof Array?[]:undefined
+      this.$emit('update:formData', data)
+      this.refresh(true)
     },
     /**
      * @description:分割搜索词
@@ -335,9 +332,11 @@ export default {
     }
 
     &_searchKey_select {
-      width: 200px;
+      //width: 200px;
       padding: 8px;
       position: absolute;
+      box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.15), 0px 4px 8px 0px rgba(0,0,0,0.1);
+      border: 1px solid #CCD1DF;
       z-index: 99999999999;
       margin-bottom: 0;
       background-color: #fff;

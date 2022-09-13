@@ -507,12 +507,12 @@ export default {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
             },
-            options: [{id: 111, name: '111', cityName: '厦门1', regionName: '华东'}, {
-              id: 112,
-              name: '113',
+            options: [{id: 1, name: '1', cityName: '厦门1', regionName: '华东'}, {
+              id: 2,
+              name: '2',
               cityName: '厦门2',
               regionName: '华东'
-            }, {id: 222, name: '2222', cityName: '福州', regionName: '华西'}],
+            }, {id: 3, name: '3', cityName: '福州', regionName: '华西'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
           },
           {

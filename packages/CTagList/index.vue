@@ -29,12 +29,7 @@ export default {
         props: {name: 'icon-chuangjianshili_guanbi'},
         nativeOn: {
           click: () => {
-            if (this.formData[key] instanceof Array) {
-              this.formData[key] = []
-            } else {
-              this.formData[key] = undefined
-            }
-            this.$emit('close')
+            this.$emit('close',key)
           }
         }
       }))
