@@ -96,16 +96,14 @@
     <!--      <c-table-filter mode="tree"/>-->
     <!--    </div>-->
     <c-table
-        :formOptions="formOptions"
         ref="table"
+        :columns="columns"
+        :data="queryList"
+        rowKey="id"
         :rowSelection="{
         selectedRowKeys: selectedRowKeys,
         onChange: onSelectChange,
       }"
-        :tagFilterArr="['queryName', 'date']"
-        :columns="columns"
-        :data="queryList"
-        rowKey="id"
     >
       <template #id="{ text, record }">
         <a-popover>

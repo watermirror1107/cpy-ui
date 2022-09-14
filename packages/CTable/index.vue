@@ -1,7 +1,7 @@
 <template>
   <div class="c_table">
     <div v-if="isShowHeader" class="c_table_header">
-      <div class="c_table_header_actionBar" v-if="$attrs.rowSelection.selectedRowKeys.length>0">
+      <div class="c_table_header_actionBar" v-if="isShowActionBar">
             <slot name="actionBar"></slot>
             <a-button @click="removeAll">取消选择</a-button>
       </div>
@@ -319,6 +319,9 @@ export default {
   computed:{
     columns(){
       return this.$attrs.columns.filter((column) => this.showColumns.includes(column.key))
+    },
+    isShowActionBar(){
+      return this.$attrs.rowSelection&&this.$attrs.rowSelection.selectedRowKeys.length>0
     }
   },
   created() {

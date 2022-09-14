@@ -40,7 +40,7 @@ export default {
     let keys = Object.keys(this.formData).filter(i => !this.tagFilterArr.includes(i))
     let children =[];
     keys.forEach(key => {
-      let selectItem = this.formOptions.find(i => (i.selectKey === key||i.key === key))
+      let selectItem = this.formOptions.find(i => (i.searchKey === key||i.key === key))
       let content = '';
       let title = 'queryName';
       let isVisible=false;
@@ -49,6 +49,7 @@ export default {
         //内容
         //如果不是input类型
         if(selectItem.searchType!=='input'){
+          // console.log(selectItem.options)
           if (this.formData[key] instanceof Array) {
             let options= selectItem.options.filter(i=>this.formData[key].includes(i.id)).map(i=>i.name)
             content = options.join(' | ')
