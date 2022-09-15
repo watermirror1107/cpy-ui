@@ -341,15 +341,15 @@ export default {
     }
   },
   mounted() {
-    this.$attrs.columns.forEach(item=>{//自动收集需要搜索的字段
-      if(item.searchType){
+    this.$attrs.columns.forEach(column=>{//自动收集需要搜索的字段
+      if(column.searchType){
         let defaultValue=''
-        if(item.searchType==='selectMultiple'){
+        if(column.searchType==='selectMultiple'){
           defaultValue=[]
-        }else if(item.searchType==='select'){
+        }else if(column.searchType==='select'){
           defaultValue=undefined
         }
-        this.$set(this.formData,item.searchKey||item.key,defaultValue)
+        this.$set(this.formData,column.searchKey||column.key,column.filterValue||defaultValue)
       }
     })
     if (window.tableTime) {
@@ -651,9 +651,14 @@ export default {
   border: 1px solid #e8e8e8;
   border-radius: 4px;
   background: white;
-
+  .ant-table-thead>tr>th{
+    color:#969696!important
+  }
+  .ant-table{
+    color: #323232;
+  }
   .ant-table-thead {
-    background-color: #e6e8f1 !important; //#f7f9fc !important;
+    background-color: #F2F5FC !important;
   }
 
   .ant-table-thead > tr:first-child > th:first-child {
