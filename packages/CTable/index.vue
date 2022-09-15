@@ -9,7 +9,7 @@
         <c-table-input-search
             v-if="isShowSearch"
             :formData.sync="formData"
-            :columns="columns"
+            :columns="$attrs.columns"
             @change="debounceFresh($event, () => {}, 'queryName')"
             :placeholder="queryNamePlaceholder"
         >
