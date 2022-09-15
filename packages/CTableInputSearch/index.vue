@@ -5,7 +5,7 @@
         @close="deleteTags"
         class="c_table_tags"
         :formData="formData"
-        :formOptions="getFormOptions()"
+        :filterColumns="getFilterColumns()"
     ></tag-list>
     <div class="input">
       <input ref="input"
@@ -181,7 +181,7 @@ export default {
     /**
      * @description:获取taglist需要的formoptions
      */
-    getFormOptions() {
+    getFilterColumns() {
       return this.columns.filter((i) => i.searchType);
     },
     /**

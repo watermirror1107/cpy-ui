@@ -10,7 +10,7 @@ export default {
       },
       type: Object
     },
-    formOptions: {
+    filterColumns: {
       default: () => [],
       type: Array
     },
@@ -20,19 +20,21 @@ export default {
     }
   },
   methods:{
-    pushTag(h, {content, title, key}){
+    pushTag(h, {content, title, key,canClearTag}){
       let tagChildren = []
       tagChildren.push(h('span', {style: {marginRight: '16px'}}, (title||'queryName') + ':'))
       tagChildren.push(h('span', content))
       //删除按钮
-      tagChildren.push(h(Icon, {
-        props: {name: 'icon-chuangjianshili_guanbi'},
-        nativeOn: {
-          click: () => {
-            this.$emit('close',key)
+      if(canClearTag===undefined||canClearTag){
+        tagChildren.push(h(Icon, {
+          props: {name: 'icon-chuangjianshili_guanbi'},
+          nativeOn: {
+            click: () => {
+              this.$emit('close',key)
+            }
           }
-        }
-      }))
+        }))
+      }
       return tagChildren
     }
   },
@@ -40,22 +42,22 @@ export default {
     let keys = Object.keys(this.formData).filter(i => !this.tagFilterArr.includes(i))
     let children =[];
     keys.forEach(key => {
-      let selectItem = this.formOptions.find(i => (i.searchKey === key||i.key === key))
+      let selectColumn = this.filterColumns.find(i => (i.searchKey === key||i.key === key))
       let content = '';
       let title = 'queryName';
       let isVisible=false;
-      if (selectItem) {//在列数据里面的
-        title=selectItem.title
+      if (selectColumn) {//在列数据里面的
+        title=selectColumn.title
         //内容
         //如果不是input类型
-        if(selectItem.searchType!=='input'){
-          // console.log(selectItem.options)
+        if(selectColumn.searchType!=='input'){
+          // console.log(selectColumn.options)
           if (this.formData[key] instanceof Array) {
-            let options= selectItem.options.filter(i=>this.formData[key].includes(i.id)).map(i=>i.name)
+            let options= selectColumn.options.filter(i=>this.formData[key].includes(i.id)).map(i=>i.name)
             content = options.join(' | ')
             isVisible=this.formData[key].length>0
           } else {
-            content = selectItem.options.find(i => i.id == this.formData[key])?.name
+            content = selectColumn.options.find(i => i.id == this.formData[key])?.name
             isVisible=(!!this.formData[key]) && this.formData[key] !== ''
           }
         }else{
@@ -72,7 +74,7 @@ export default {
           closable: true,
           visible: isVisible
         }
-      }, this.pushTag(h, {content, title,key})))
+      }, this.pushTag(h, {content, title,key,canClearTag:selectColumn?.canClearTag})))
     })
     return h('ul', {
       class: 'c_tag_list',

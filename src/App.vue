@@ -422,6 +422,8 @@ export default {
             banHide:true,
             width: 100,
             searchType: "input",//input类型的不要添加filterDropdown
+            noAllOption:true,//searchType是select并且是单选才用,不展示全部选项
+            canClearTag:false,
             scopedSlots: {
               filterIcon: "filterIcon",
               customRender: "id",
@@ -439,6 +441,7 @@ export default {
             key: "name",
             width: 100,
             searchType: "selectMultiple",
+            canClearTag:true,
             scopedSlots: {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
