@@ -5,20 +5,20 @@
         <div class="c_table_action_bar">
           <slot name="actionBar"></slot>
         </div>
-        
+
       </div>
       <div class="c_table_header_right">
         <slot name="headerRight"></slot>
         <a-input
             :style="{ width: (typeof searchWith === 'string') ? searchWith : `${searchWith}px` }"
             v-if="isShowSearch"
-            size="large" 
+            size="large"
             v-model="formData.queryName"
             @change="debounceFresh($event, () => {}, 'queryName')"
             :placeholder="queryNamePlaceholder"
         >
           <icon slot="suffix" name="icon-shili_shousuo"/>
-        </a-input> 
+        </a-input>
         <c-button
             class="c_table_header_right_refresh"
             size="large"
@@ -88,44 +88,12 @@
       <template v-slot:filterDropdown="{ confirm, column }">
         <template  v-if="column.type === 'selectMultiple'">
           <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
-            <c-table-filter :isMultiple="true" mode="tree" v-model="formData[column.selectKey || column.key]" :options="column.filterOptionMethod(column.options)" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)">></c-table-filter>
-          </template> 
+            <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)" :isMultiple="true" mode="tree" :value="formData[column.selectKey || column.key]" :options="column.filterOptionMethod(column.options)" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)">></c-table-filter>
+          </template>
           <template v-if="!column.filterOptionMethod">
-            <c-table-filter :isMultiple="true" v-model="formData[column.selectKey || column.key]" :options="column.options" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)"></c-table-filter>
-          </template> 
+            <c-table-filter  @restFilter="resetFilter(column.selectKey || column.key,confirm)" :isMultiple="true" :value="formData[column.selectKey || column.key]" :options="column.options" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)"></c-table-filter>
+          </template>
           <!-- slot="dropdownRender" slot-scope="menu" -->
-          <div> 
-            <!-- <v-nodes :vnodes="menu"/> -->
-            <a-divider style="margin: 4px 0"/>
-            <div
-                style="
-                padding: 7px 8px;
-                display: flex;
-                justify-content: space-between;
-              "
-                @mousedown="(e) => e.preventDefault()"
-            >
-              <a-button
-                  type="primary"
-                  @click="
-                  debounceFresh(
-                    formData[column.selectKey || column.key],
-                    confirm,
-                    column.selectKey || column.key
-                  )
-                "
-              >
-                {{ $T("instance.Confirm") }}
-              </a-button>
-              <a-button
-                  type="primary"
-                  ghost
-                  @click="resetFilter(column.selectKey || column.key, confirm)"
-              >
-                {{ $T("instance.Reset") }}
-              </a-button>
-            </div>
-          </div>
         </template>
         <!-- <a-select
             v-if="column.type === 'selectMultiple'"
@@ -171,17 +139,17 @@
                 :key="option.id"
             >
               {{ option.name }}
-            </a-select-option> 
+            </a-select-option>
           </template>
-          
+
         </a-select> -->
         <template v-else>
             <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
-              <c-table-filter mode="tree" v-model="formData[column.selectKey || column.key]" :options="column.filterOptionMethod(column.options)" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)">></c-table-filter>
-            </template>  
+              <c-table-filter  @restFilter="resetFilter(column.selectKey || column.key,confirm)" mode="tree" :value="formData[column.selectKey || column.key]" :options="column.filterOptionMethod(column.options)" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)">></c-table-filter>
+            </template>
             <template v-if="!column.filterOptionMethod">
-              <c-table-filter v-model="formData[column.selectKey || column.key]" :options="column.options" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)"></c-table-filter>
-            </template> 
+              <c-table-filter  @restFilter="resetFilter(column.selectKey || column.key,confirm)" :value="formData[column.selectKey || column.key]" :options="column.options" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)"></c-table-filter>
+            </template>
         </template>
         <!-- <a-select
             v-else
@@ -255,7 +223,7 @@
             :key="index"
             class="column-checkbox"
             :value="item.key"
-        > 
+        >
           {{ item.title }}
         </checkbox>
       </a-checkbox-group>
@@ -299,7 +267,7 @@ export default {
       localPagination: {
         current: 1,
         pageNo: 1,
-        pageSize: 10, 
+        pageSize: 10,
       },
       total: 0,
       slotArr: [],
@@ -448,7 +416,7 @@ export default {
             [userId]: {
               [this.$route.path]: this.showColumns.join(","),
             },
-          }); 
+          });
         }
       }
       this.isVisible = false;
@@ -457,8 +425,9 @@ export default {
      * @description:延迟刷新
      */
     debounceFresh: debounce(function (val, confirm, key) {
-      // debugger; 
+      // debugger;
       confirm();
+      this.formData[key]=val;
       this.refresh(true);
       this.$emit("filterChange", val, key);
     }),
@@ -679,7 +648,7 @@ export default {
     margin: 16px 0;
     padding: 0px 20px;
     &_left {
-      
+
     }
     &_right{
       display: flex;

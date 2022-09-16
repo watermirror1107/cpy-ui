@@ -4,11 +4,11 @@
         <span>{{item.name}}</span>
         <c-icon v-show="isHasChild(item)" class="c_table_filter_expand_item_icon" name="icon-fanhui"/>
         <c-icon v-show="!isHasChild(item)&&(isMultiple?ArrayContain(selectId,item.id):(selectId==item.id))" class="c_table_filter_expand_item_icon_yes" style="font-size:10px" name="icon-xuanxiangka_gou"/>
-        <template v-if="isHasChild(item)&&item.showChilren">
-            <CTableFilterExpand :isMultiple="isMultiple" v-model="selectId"  :options="item.children" :width="width"/> 
+        <template v-if="isHasChild(item)&&item.showChildren">
+            <CTableFilterExpand :isMultiple="isMultiple" v-model="selectId"  :options="item.children" :width="width"/>
         </template>
     </div>
-  </div> 
+  </div>
 </template>
 
 <script>
@@ -16,11 +16,11 @@ import cIcon from "../CIcon/index.vue";
 export default {
     name:'CTableFilterExpand',
     components:{cIcon},
-    model: { 
+    model: {
         event: 'change',
         prop: 'value'
-    }, 
-    props:{   
+    },
+    props:{
       options:{
         type:Array,
         default:()=>{
@@ -56,7 +56,7 @@ export default {
         handler(nv) {
           if(nv!=undefined){
             this.$emit('change',this.selectId)
-          } 
+          }
         },
       }
     },
@@ -71,7 +71,7 @@ export default {
             return true;
           }
           return false
-      }, 
+      },
       ArrayContainIndex(arr,value){
           return arr.indexOf(value)
       },
@@ -80,10 +80,10 @@ export default {
               return true
           }
           return false
-      }, 
+      },
       changeSelect(item){
         if(this.isHasChild(item)){
-          this.$set(item,'showChilren',true)
+          this.$set(item,'showChildren',true)
         }else{
           if(this.isMultiple){
             if(this.ArrayContain(this.selectId,item.id)){
@@ -91,10 +91,10 @@ export default {
             }else{
               this.selectId.push(item.id);
             }
-          }else{ 
-            this.selectId = item.id 
+          }else{
+            this.selectId = item.id
           }
-        } 
+        }
       }
     }
 }
@@ -129,7 +129,7 @@ export default {
       }
       &_active{
           color: #0048ff;
-          background: #F7F9FC; 
+          background: #F7F9FC;
       }
   }
 }
