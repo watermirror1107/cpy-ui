@@ -69,11 +69,11 @@
         </template>
       </template>
     </div>
+    <icon v-show="isShowDeleteIcon" name="icon-chuangjianshili_guanbi" class="deleteIcon"
+          @click.native="clearFormData"/>
     <button v-show="inputValue!==''" class="searchBtn" @click="search">
       <icon name="icon-shilixiangqing_fanhui"></icon>
     </button>
-    <icon v-show="isShowDeleteIcon" name="icon-chuangjianshili_guanbi" class="deleteIcon"
-          @click.native="clearFormData"/>
   </div>
 </template>
 
@@ -196,8 +196,8 @@ export default {
       this.selectLeft = this.$refs.input.offsetLeft
     },
     handleInput() {
-      //值为空让Input失去焦点
-      if (!this.inputValue) {
+      //值为空并且是选择了searchKey的时候让Input失去焦点 参考kcp
+      if (!this.inputValue&&this.searchKey) {
         this.$refs.input.blur();
         this.searchKey = undefined;
         this.isShowSearchKeySelect = false;
