@@ -101,10 +101,6 @@ import {Empty} from 'ant-design-vue'
 export default {
   name: "CTableFilter",
   components: {cIcon, CTableFilterExpand},
-  model: {
-    event: 'change',
-    prop: 'value'
-  },
   props: {
     value: {type: [String, Number, Array]},
     mode: {type: String, default: "normal"}, // tree 代表树形结构 normal 代表单级数据结构
@@ -124,30 +120,27 @@ export default {
   mounted() {
     this.initOptions();
     if (this.isMultiple) {
-      this.selectId = Array.isArray(this.value) ? Object.assign({},this.value) : []
+      this.selectId = Array.isArray(this.value) ? Object.assign({}, this.value) : []
     } else {
       this.selectId = this.value || '';
     }
   },
   watch: {
     options: {
-      handler(nv) {
+      handler() {
         this.initOptions();
       },
       deep: true
     },
     value: {
       handler(nv) {
-        this.selectId = Object.assign({},this.value);
+        this.selectId = nv
       },
     },
     selectId: {
       handler(nv) {
-        if (nv != undefined) {
-          this.$emit('change', nv)
-          if (!this.isMultiple) {
-            this.$emit('confirm', nv);
-          }
+        if (nv != undefined && !this.isMultiple) {
+          this.$emit('confirm', nv);
         }
       },
     }
@@ -157,7 +150,6 @@ export default {
       searchName: '',
       singleImage: Empty.PRESENTED_IMAGE_SIMPLE,
       selectId: '',
-      multipleSelectIds: '',
       empty: false,
       optionsData: [],
       treeData: []
@@ -218,8 +210,6 @@ export default {
         } else {
           this.selectId = item.id
         }
-
-        //    this.$emit('change',this.selectId)
       }
     },
     //关闭其他菜单
