@@ -44,7 +44,7 @@ export default {
     keys.forEach(key => {
       let selectColumn = this.filterColumns.find(i => (i.searchKey === key||i.key === key))
       let content = '';
-      let title = 'queryName';
+      let title = '搜索';
       let isVisible=false;
       if (selectColumn) {//在列数据里面的
         title=selectColumn.title

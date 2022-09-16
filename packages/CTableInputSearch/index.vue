@@ -9,7 +9,7 @@
     ></tag-list>
     <div class="input">
       <input ref="input"
-             placeholder="多个关键字用竖线“丨”分隔，多个过滤标签"
+             placeholder="输入关键字搜索"
              v-model="inputValue"
              type="text"
              @click="showSearchKeySelect"
