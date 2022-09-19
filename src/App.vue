@@ -527,7 +527,7 @@ export default {
             },
             searchType: "select",
             options: [{id: 111, name: '111'}, {id: 222, name: '222'}],
-            filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
+            filteredValue: [111] ,
           },
           {
             title: "operate",

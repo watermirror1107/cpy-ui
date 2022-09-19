@@ -74,9 +74,12 @@
       <icon v-show="isShowDeleteIcon" name="icon-chuangjianshili_guanbi" class="deleteIcon"
             @click.native="clearFormData"/>
     </a-popover>
-    <button v-show="inputValue!==''" class="searchBtn" @click="search">
-      <icon name="icon-jiantou"></icon>
-    </button>
+    <a-popover  overlayClassName="inputClearTip" placement="top">
+      <p slot="content" class="content_text">搜索</p>
+      <button v-show="inputValue!==''" class="searchBtn" @click="search">
+        <icon name="icon-jiantou"></icon>
+      </button>
+    </a-popover>
   </div>
 </template>
 

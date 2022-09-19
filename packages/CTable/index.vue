@@ -2,8 +2,8 @@
   <div class="c_table">
     <div v-if="isShowHeader" class="c_table_header">
       <div class="c_table_header_actionBar" v-if="isShowActionBar">
-            <slot name="actionBar"></slot>
-            <a-button @click="removeAll">取消选择</a-button>
+        <slot name="actionBar"></slot>
+        <a-button @click="removeAll">取消选择</a-button>
       </div>
       <div class="c_table_header_content" v-else>
         <c-table-input-search
@@ -224,7 +224,9 @@
       <p class="modal_title">自定义列表字段</p>
       <p class="modal_alert">
         <icon name="icon-a-gongxiangwenjian_"></icon>
-        <span>请选择您想显示的列表详细信息，最多选择{{$attrs.columns.length}}个字段,已勾选:{{midColumns.length}}个</span>
+        <span>请选择您想显示的列表详细信息，最多选择{{ $attrs.columns.length }}个字段,已勾选:{{
+            midColumns.length
+          }}个</span>
       </p>
       <a-checkbox-group style="width: 100%" v-model="midColumns">
         <checkbox
@@ -252,11 +254,11 @@ import CTableFilter from '../CTableFilter/index.vue';
 
 export default {
   name: "CTable",
-  provide(){
+  provide() {
     return {
-      refresh:this.refresh,
-      debounceFresh:this.debounceFresh,
-      resetFilter:this.resetFilter
+      refresh: this.refresh,
+      debounceFresh: this.debounceFresh,
+      resetFilter: this.resetFilter
     }
   },
   inheritAttrs: false,
@@ -275,8 +277,8 @@ export default {
   },
   data() {
     return {
-      formData:{
-        queryName:''
+      formData: {
+        queryName: ''
       },
       showColumns: [],
       midColumns: [],
@@ -314,14 +316,28 @@ export default {
       if (!this.data) {
         this.localDataSource = nv;
       }
+    },
+    formData: {
+      handler(nv, ov) {
+        let keys=[]
+        Object.keys(nv).forEach(key => {
+          if (nv[key] instanceof Array && nv[key].length > 0) {
+            keys.push(key)
+          } else if (!(nv[key] instanceof Array) && nv[key]) {
+            keys.push(key)
+          }
+        })
+        this.setSelectedColumnStyle(keys)
+      },
+      deep: true
     }
   },
-  computed:{
-    columns(){
+  computed: {
+    columns() {
       return this.$attrs.columns.filter((column) => this.showColumns.includes(column.key))
     },
-    isShowActionBar(){
-      return this.$attrs.rowSelection&&this.$attrs.rowSelection.selectedRowKeys.length>0
+    isShowActionBar() {
+      return this.$attrs.rowSelection && this.$attrs.rowSelection.selectedRowKeys.length > 0
     }
   },
   created() {
@@ -341,15 +357,15 @@ export default {
     }
   },
   mounted() {
-    this.$attrs.columns.forEach(column=>{//自动收集需要搜索的字段
-      if(column.searchType){
-        let defaultValue=''
-        if(column.searchType==='selectMultiple'){
-          defaultValue=[]
-        }else if(column.searchType==='select'){
-          defaultValue=undefined
+    this.$attrs.columns.forEach(column => {//自动收集需要搜索的字段
+      if (column.searchType) {
+        let defaultValue = ''
+        if (column.searchType === 'selectMultiple') {
+          defaultValue = []
+        } else if (column.searchType === 'select') {
+          defaultValue = undefined
         }
-        this.$set(this.formData,column.searchKey||column.key,column.filterValue||defaultValue)
+        this.$set(this.formData, column.searchKey || column.key, column.defaultValue || defaultValue)
       }
     })
     if (window.tableTime) {
@@ -402,6 +418,26 @@ export default {
     }
   },
   methods: {
+    /**
+     * @description:设置表头被选中的样式
+     */
+    setSelectedColumnStyle(keys) {
+      // 需要设置表头样式的列
+      let indexs =[];
+      this.showColumns.forEach((item,index) => {
+        if(keys.includes(item)){
+          index = index + (this.$attrs.rowSelection ? 1 : 0)//这里序列要根据是否有this.$attrs.rowSelection
+          indexs.push(index)
+        }
+      })
+      let els = document.querySelectorAll('.c_table .ant-table-thead th')
+      for (const el of els) {
+        el.classList.remove('selectColumn')
+      }
+      for (const index of indexs) {
+        els[index].classList.add('selectColumn')
+      }
+    },
     /**
      * @description:移除所有的选项
      */
@@ -459,7 +495,7 @@ export default {
      */
     debounceFresh: debounce(function (val, confirm, key) {
       // debugger;
-      this.formData[key]=val
+      this.formData[key] = val
       confirm();
       this.refresh(true);
       this.$emit("filterChange", val, key);
@@ -505,7 +541,6 @@ export default {
      * @param Boolean bool
      */
     refresh(bool = false) {
-      console.log(JSON.stringify(this.formData))
       bool &&
       (this.localPagination = Object.assign({}, this.localPagination, {
         current: 1,
@@ -546,7 +581,7 @@ export default {
       this.loadData(params);
     },
     loadData: debounce(function (params = this.localPagination) {
-      this.data({...this.localPagination,...this.formData})
+      this.data({...this.localPagination, ...this.formData})
           .then((res) => {
             const {data} = res;
             this.localDataSource = data.payload || [];
@@ -626,7 +661,8 @@ export default {
 .multipleOptions.ant-select-dropdown-menu-item-selected i {
   background-color: #0048ff;
 }
-.modal_title{
+
+.modal_title {
   padding-bottom: 19px;
   line-height: 20px;
   font-size: 14px;
@@ -635,7 +671,8 @@ export default {
   border-bottom: 1px solid #CCD1DF;
   margin-bottom: 11px;
 }
-.modal_alert{
+
+.modal_alert {
   font-size: 14px;
   font-weight: 400;
   color: #216CFD;
@@ -645,34 +682,53 @@ export default {
   padding: 12px 16px;
   display: flex;
   align-items: flex-start;
-  .c_icon{
+
+  .c_icon {
     margin-right: 8px;
     margin-top: 3px;
   }
 }
+
 .c_table {
-  padding: 10px 0  0  0 ;
+  padding: 10px 0 0 0;
   border: 1px solid #e8e8e8;
   background: white;
-  .ant-table-thead>tr>th{
-    color:#969696!important
+
+  .ant-table-thead > tr > th {
+    color: #969696 !important
   }
-  .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters{
-    &:hover{
-      color: #868687!important;
-      .ant-table-filter-icon{
-        background-color: unset!important;
+
+  .ant-table-thead > tr > th.selectColumn {
+    color: #323232 !important;
+
+    .ant-table-filter-icon {
+      color: #323232 !important;
+    }
+  }
+
+  .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters {
+    &:hover {
+      color: #323232 !important;
+
+      .ant-table-filter-icon {
+        background-color: unset !important;
+
+        &:hover {
+          color: #323232 !important;
+        }
       }
     }
 
-    .ant-table-filter-open{
-      background-color: unset!important;
+    .ant-table-filter-open {
+      background-color: unset !important;
     }
 
   }
-  .ant-table{
+
+  .ant-table {
     color: #323232;
   }
+
   .ant-table-thead {
     background-color: #F2F5FC !important;
   }
@@ -698,26 +754,30 @@ export default {
     margin: 16px 0;
     padding: 0 20px;
     width: 100%;
-    &_actionBar{
+
+    &_actionBar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: inherit;
     }
-    &_content{
+
+    &_content {
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: inherit;
-      >.c_button{
+
+      > .c_button {
         margin-left: 16px;
       }
     }
   }
-  .c_table_right_setColumn:hover{
-    color:#323232!important;
-    border: 1px solid #CCD1DF!important;
-    background: #F1F2F3!important;
+
+  .c_table_right_setColumn:hover {
+    color: #323232 !important;
+    border: 1px solid #CCD1DF !important;
+    background: #F1F2F3 !important;
   }
 
 
