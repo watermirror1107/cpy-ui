@@ -26,7 +26,7 @@
         </c-button>
         <c-button
             type="text"
-            class="c_table_header_right_refresh"
+            class="c_table_header_right_refresh c_table_right_setColumn"
             v-if="isSetColumn"
             size="large"
             @click="setColumns"
@@ -600,7 +600,9 @@ export default {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin-bottom: 29px !important;
+  margin-bottom: 16px !important;
+  height: 20px;
+  line-height: 20px;
 }
 
 .filterGroupItem {
@@ -631,11 +633,13 @@ export default {
   font-weight: 600;
   color: #323232;
   border-bottom: 1px solid #CCD1DF;
+  margin-bottom: 11px;
 }
 .modal_alert{
   font-size: 14px;
   font-weight: 400;
   color: #216CFD;
+  margin-bottom: 17px;
   line-height: 20px;
   background-color: #D3E2FF;
   padding: 12px 16px;
@@ -647,12 +651,24 @@ export default {
   }
 }
 .c_table {
-  padding: 10px 0px 0px 0px;
+  padding: 10px 0  0  0 ;
   border: 1px solid #e8e8e8;
-  border-radius: 4px;
   background: white;
   .ant-table-thead>tr>th{
     color:#969696!important
+  }
+  .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters{
+    &:hover{
+      color: #868687!important;
+      .ant-table-filter-icon{
+        background-color: unset!important;
+      }
+    }
+
+    .ant-table-filter-open{
+      background-color: unset!important;
+    }
+
   }
   .ant-table{
     color: #323232;
@@ -698,7 +714,11 @@ export default {
       }
     }
   }
-
+  .c_table_right_setColumn:hover{
+    color:#323232!important;
+    border: 1px solid #CCD1DF!important;
+    background: #F1F2F3!important;
+  }
 
 
   .ant-table-expanded-row {

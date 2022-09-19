@@ -1,6 +1,6 @@
 <template>
   <div ref="tableInputSearch" class="tableInputSearch">
-    <icon name="icon-shili_shousuo"/>
+    <icon name="icon-shili_shousuo" style="transform: rotateY(180deg);color: #323232;"/>
     <tag-list
         @close="deleteTags"
         class="c_table_tags"
@@ -69,10 +69,13 @@
         </template>
       </template>
     </div>
-    <icon v-show="isShowDeleteIcon" name="icon-chuangjianshili_guanbi" class="deleteIcon"
-          @click.native="clearFormData"/>
+    <a-popover  overlayClassName="inputClearTip" placement="top">
+      <p slot="content" class="content_text">清空</p>
+      <icon v-show="isShowDeleteIcon" name="icon-chuangjianshili_guanbi" class="deleteIcon"
+            @click.native="clearFormData"/>
+    </a-popover>
     <button v-show="inputValue!==''" class="searchBtn" @click="search">
-      <icon name="icon-shilixiangqing_fanhui"></icon>
+      <icon name="icon-jiantou"></icon>
     </button>
   </div>
 </template>
@@ -282,6 +285,23 @@ export default {
 </script>
 
 <style lang="less">
+.inputClearTip{
+  .ant-popover-arrow{
+    display: none;
+  }
+  .ant-popover-inner{
+    height: 0;
+    >div{
+      position: relative;
+      top: -25px;
+    }
+  }
+  .content_text{
+    padding:5px 6px;color:#fff;background-color:rgba(0,0,0,.6);border-radius: 4px;
+    margin-bottom: 0;
+  }
+
+}
 .tableInputSearch {
   padding: 0 8px;
   flex: 1;
@@ -304,10 +324,6 @@ export default {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-
-    .c_icon {
-      transform: rotateY(180deg);
-    }
   }
 
   &:hover {
@@ -379,6 +395,9 @@ export default {
       line-height: 38px;
       border: unset;
       outline: none;
+      &::-webkit-input-placeholder{
+        color: #C8C8C8;
+      }
     }
   }
 
