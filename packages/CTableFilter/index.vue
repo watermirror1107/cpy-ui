@@ -118,12 +118,18 @@ export default {
     }
   },
   mounted() {
+    // 首次加载赋值，不需要刷新
+    this.isInitTime = true
+
     this.initOptions();
     if (this.isMultiple) {
       this.selectId = Array.isArray(this.value) ? Object.assign({}, this.value) : []
     } else {
       this.selectId = this.value || '';
     }
+    setTimeout(() => {
+      this.isInitTime = false
+    }, 20);
   },
   watch: {
     options: {
@@ -139,7 +145,7 @@ export default {
     },
     selectId: {
       handler(nv) {
-        if (nv != undefined && !this.isMultiple) {
+        if (nv != undefined && !this.isMultiple && !this.isInitTime) {
           this.$emit('confirm', nv);
         }
       },
