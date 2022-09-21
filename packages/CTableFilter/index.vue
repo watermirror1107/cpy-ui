@@ -120,10 +120,9 @@ export default {
   mounted() {
     // 首次加载赋值，不需要刷新
     this.isInitTime = true
-
     this.initOptions();
     if (this.isMultiple) {
-      this.selectId = Array.isArray(this.value) ? Object.assign({}, this.value) : []
+      this.selectId = Array.isArray(this.value) ? JSON.parse(JSON.stringify(this.value))  : []
     } else {
       this.selectId = this.value || '';
     }
@@ -201,11 +200,11 @@ export default {
     //选中
     changeSelect(item) {
       if (this.isHasChild(item)) {
-        this.closeChilren();
-        this.expandChilren(item)
+        this.closeChildren();
+        this.expandChildren(item)
       } else {
         if (this.mode === 'tree') {
-          this.closeChilren()
+          this.closeChildren()
         }
         if (this.isMultiple) {
           if (this.ArrayContain(this.selectId, item.id)) {
@@ -219,7 +218,7 @@ export default {
       }
     },
     //关闭其他菜单
-    closeChilren() {
+    closeChildren() {
       this.treeData.forEach(item => {
         if (this.isHasChild(item)) {
           item.children.forEach(childItem => {
@@ -233,7 +232,7 @@ export default {
       this.$set(item, 'nextShow', !item.nextShow)
     },
     //展开更多级菜单
-    expandChilren(childItem) {
+    expandChildren(childItem) {
       if (this.isHasChild(childItem)) {
         this.$set(childItem, 'showChildren', true)
       }

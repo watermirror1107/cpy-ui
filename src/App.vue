@@ -109,7 +109,7 @@
       rowKey="id"
     >
       <template #headerRight>
-       
+
       </template>
       <template #id="{ text, record }">
         <a-popover>
@@ -211,7 +211,7 @@ import axios from "axios";
 export default {
   components: {
     // CButton,
-    // CIcon, 
+    // CIcon,
     // CTable,
     // CBtnWrap,
     // CTableBtn,
@@ -319,7 +319,8 @@ export default {
       time: [],
       formData: {
         queryName: "",
-        createTime: undefined,
+        id:1,
+        createTime: [111],
         date: [],
       },
       formOptions: [
@@ -432,7 +433,8 @@ export default {
             key: "id",
             fixed: "left",
             width: 100,
-            type: "selectMultiple",
+            type: "select",
+            options:[{id:1,name:'name1'},{id:2,name:'name2'}],
             scopedSlots: {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
@@ -522,7 +524,7 @@ export default {
                   id:item,
                   children:[]
                 })
-              }); 
+              });
               //区域名称下城市集合
               val.forEach(item=>{
                 temp.forEach(tempItem=>{
@@ -534,7 +536,7 @@ export default {
                     });
                   }
                 })
-              }); 
+              });
               //城市下集群的集合
               val.forEach(item=>{
                 temp.forEach(tempItem=>{
@@ -548,7 +550,7 @@ export default {
                     }
                   })
                 })
-              }) 
+              })
               // debugger
               return temp;
             },
