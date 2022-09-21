@@ -428,7 +428,7 @@ export default {
               filterIcon: "filterIcon",
               customRender: "id",
             },
-            filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
+            defaultValue: '123',
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
 
@@ -525,9 +525,9 @@ export default {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
             },
-            searchType: "select",
+            searchType: "selectMultiple",
             options: [{id: 111, name: '111'}, {id: 222, name: '222'}],
-            filteredValue: [111] ,
+            defaultValue: [111] ,
           },
           {
             title: "operate",

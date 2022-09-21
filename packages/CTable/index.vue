@@ -541,6 +541,7 @@ export default {
      * @param Boolean bool
      */
     refresh(bool = false) {
+      // console.log(JSON.stringify(this.formData))
       bool &&
       (this.localPagination = Object.assign({}, this.localPagination, {
         current: 1,

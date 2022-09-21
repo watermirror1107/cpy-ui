@@ -154,13 +154,6 @@ export default {
         }
       },
     },
-    selectId: {
-      handler(nv) {
-        if (nv != undefined && !this.isMultiple) {
-          this.$emit('confirm', nv);
-        }
-      },
-    }
   },
   data() {
     return {
@@ -249,6 +242,9 @@ export default {
           }
         } else {
           this.selectId = item.id
+          if (this.selectId != undefined)   {
+            this.$emit('confirm', this.selectId);
+          }
         }
       }
     },
