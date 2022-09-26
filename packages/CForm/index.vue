@@ -45,6 +45,7 @@
               <a-input-number
                   :placeholder="item.placeholder"
                   :min="item.min"
+                  :max="item.max"
                   :disabled="item.isDisabled"
                   v-model="formData[item.key]"></a-input-number>
             </template>
