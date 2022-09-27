@@ -14,7 +14,7 @@
             v-if="isShowSearch"
             size="large"
             v-model="formData.queryName"
-            @change="debounceFresh($event, () => {}, 'queryName')"
+            @change="debounceFresh($event.target.value, () => {}, 'queryName')"
             :placeholder="queryNamePlaceholder"
         >
           <icon slot="suffix" name="icon-shili_shousuo"/>
@@ -428,6 +428,7 @@ export default {
       // debugger;
       confirm();
       this.formData[key]=val;
+      console.log(this.formData)
       this.refresh(true);
       this.$emit("filterChange", val, key);
     }),
