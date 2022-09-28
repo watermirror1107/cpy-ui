@@ -2,9 +2,10 @@
 
 ## Version
 ```
-^v0.2.21 适用于自用console
+^v0.2.0 console
 ^v1.0.0 适用于portal
 ^v2.0.0 适用于自用admin-partner
+^v3.0.0 适用于自用mita-portal
 ```
 ## Project setup
 ```
