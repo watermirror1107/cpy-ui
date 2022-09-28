@@ -4,8 +4,10 @@
       <div class="c_table_header_left">
         <div class="c_table_action_bar">
           <slot name="actionBar"></slot>
+          <span v-if="$attrs.rowSelection&&$attrs.rowSelection.selectedRowKeys.length>0">
+          已选中{{$attrs.rowSelection.selectedRowKeys.length}}
+          </span>
         </div>
-
       </div>
       <div class="c_table_header_right">
         <slot name="headerRight"></slot>
@@ -647,7 +649,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin: 16px 0;
-    padding: 0px 20px;
+    padding: 0 20px;
     &_left {
 
     }
@@ -694,8 +696,16 @@ export default {
 
   &_action_bar {
     float: left;
-    //margin-left: 70px;
-
+    display: flex;
+    align-items: center;
+    >span{
+      flex:1;
+      white-space: nowrap;
+      display: inline-block;
+      line-height: 32px;
+      height: 32px;
+      background: #F1F3F5;
+    }
     .ant-btn {
       margin-right: 16px;
 
