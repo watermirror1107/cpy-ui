@@ -131,18 +131,22 @@ export default {
     .c_table_btn {
       margin-bottom: 8px;
       border-bottom: unset !important;
+      &:last-child{
+        margin-bottom: 0;
+      }
       &[disabled='disabled']{
         background-color: #f5f5f5!important;
         opacity: 0.8;
+        color:#e6e6e6!important;
       }
       &:not([disabled='disabled']){
-        color: #404960;
         &:hover  {
-          color: @--main-blue;
           background-color: #F1F3F5;
         }
       }
-
+    }
+    .c_table_btn[class$='_g'][disabled='disabled']{
+      background-color: #f5f5f5!important;
     }
   }
 }

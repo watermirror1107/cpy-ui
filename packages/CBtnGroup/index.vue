@@ -149,25 +149,29 @@ export default {
     line-height: 36px;
     height: 36px;
     margin-bottom: 8px;
+    &:last-child{
+      margin-bottom: 0;
+    }
     .c_button{
-      border-bottom: unset;
+      margin-right: 0;
+      justify-content: flex-start;
+      text-align: left;
+      box-shadow: none;
+      width: 100%;
+      border: none;
+      border-radius: 0;
+      height: 36px;
+      line-height: 36px;
       &:not([disabled='disabled'])  {
-        color: #252B3A;
-        text-align: left;
-        box-shadow: none;
-        width: 100%;
-        justify-content: flex-start;
-        border: none;
-        border-radius: 0;
-        height: 36px;
-        line-height: 36px;
-        margin-right: 0;
         &:hover {
           border-color: #eee;
           background-color: #F1F3F5!important;
           opacity: 1;
         }
       }
+    }
+    .c_button[class$='_g'][disabled='disabled']{
+      background-color: #f5f5f5!important;
     }
   }
 }

@@ -123,6 +123,7 @@
       <template #operate="{ record, index }">
         <c-btn-wrap>
           <c-table-btn
+              type="link"
               :disabled="isClick"
               text="click1"
               @click="clickHandler1"
@@ -133,21 +134,25 @@
           <c-table-btn text="click5" @click="clickHandler5"></c-table-btn>
           <c-table-btn text="click6" @click="clickHandler6"></c-table-btn>
           <c-table-btn text="click7" @click="clickHandler7"></c-table-btn>
-          <c-table-btn text="click8" @click="clickHandler8"></c-table-btn>
+          <c-table-btn type="danger" text="click8" @click="clickHandler8"></c-table-btn>
+          <c-table-btn type="danger" disabled text="click8" @click="clickHandler8"></c-table-btn>
           <c-table-btn disabled text="click9" @click="clickHandler9"></c-table-btn>
           <c-table-btn text="click10" @click="clickHandler10(index)"></c-table-btn>
         </c-btn-wrap>
       </template>
       <template #actionBar>
         <c-btn-group>
-          <c-button type="primary" disabled size="small">添加</c-button>
+          <c-button type="primary"  disabled size="small">添加</c-button>
           <c-button disabled icon="icon-kaiji" :size="'large'"> 123</c-button>
+          <c-button type="warning" icon="icon-kaiji"> 123</c-button>
+          <c-button type="warning" disabled="" icon="icon-kaiji"> 123</c-button>
+          <c-button type="success" icon="icon-kaiji"> 123</c-button>
+          <c-button type="success" disabled="" icon="icon-kaiji"> 123</c-button>
           <c-button icon="icon-kaiji"> 123</c-button>
-          <c-button icon="icon-kaiji"> 123</c-button>
-          <c-button icon="icon-kaiji"> 123</c-button>
-          <c-button disabled > 123</c-button>
+          <c-button disabled> 123</c-button>
           <c-button icon="icon-kaiji" :size="'large'"> 123</c-button>
-          <c-button  icon="icon-kaiji" type="danger" size="large" ghost> 123</c-button>
+          <c-button icon="icon-kaiji" type="danger" size="large" ghost> 123</c-button>
+          <c-button icon="icon-kaiji" disabled type="danger" ghost> 123</c-button>
         </c-btn-group>
       </template>
     </c-table>

@@ -50,10 +50,12 @@ export default {
 </script>
 
 <style lang="less">
-.c_table_btn:hover {
-  //background-color: #f5f5f5 !important
+.c_table_btn:hover:not([disabled='disabled']) {
+  background-color: #f5f5f5 !important
 }
-
+.c_table_btn:hover:not([class*='-danger']){
+  color: @--main-blue;
+}
 .c_table_btn.ant-btn {
   border: none;
   box-shadow: none;
