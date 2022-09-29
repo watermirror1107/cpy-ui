@@ -106,12 +106,12 @@ export default {
     translateText(key,total) {
       let textObj = {
         'en_US': {
-          page: '/page',
+          page: '',
           total:`Total ${total} items`
         },
         'zh_CN': {
-          page: '条/页',
-          total: `总共${total}条`
+          page: '',
+          total: `总条数: ${total}`
         },
       }
       return textObj[localStorage.CPY_PORTAL_LANGUAGE||'zh_CN'][key]
@@ -220,11 +220,19 @@ export default {
 .cpage-pagesize {
   float: left;
   display: flex;
-  margin-right: 24px;
-  line-height: 34px;
-
+  margin-right: 12px;
+  line-height: 24px;
+  height: 24px;
+  padding: 0 10px;
+  border: 1px solid #ADB0B8;
+  border-radius: 4px;
+  box-sizing: border-box;
   .sizelink {
-    color: #646464;
+    color: #252B3A;
+    line-height: 24px;
+    >i{
+      margin-left: 13px;
+    }
   }
 
   .unit {
@@ -245,9 +253,9 @@ export default {
   overflow: hidden;
 
   .btn-item {
-    height: 32px;
+    height: 22px;
     width: 32px;
-    line-height: 32px;
+    line-height: 22px;
     text-align: center;
     border-right: 1px solid #d1dae3;
     background: #f7f9fc;
@@ -271,10 +279,10 @@ export default {
     border: none;
     outline: none;
     width: 48px;
-    height: 32px;
+    height: 22px;
     border-right: 1px solid #d1dae3;
     text-align: center;
-    line-height: 32px;
+    line-height: 22px;
   }
 
   .btn-total-num {

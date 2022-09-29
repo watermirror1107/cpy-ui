@@ -21,9 +21,13 @@ export default {
       default: "top",
       type: String,
     },
+    size: {
+      default: "default",
+      type: String,
+    },
   },
   render(h) {
-    let children = [h("div", this.$slots.default)];
+    let children = [h("span", {class: 'c_button_text'}, this.$slots.default)];
     if (this.icon) {
       let icon = h(Icon, {
         class: {c_button_iconSvg: this.$slots.default},
@@ -52,8 +56,12 @@ export default {
     let vnode = h(
         "a-button",
         {
+          style: {
+            verticalAlign: 'middle',
+            // lineHeight: this.size==='default'?'32px':this.size==='small'?'24px':'40px'
+          },
           class: classNameList,
-          props: this.$attrs,
+          props: {...this.$attrs, size: this.size},
           on: this.$listeners,
         },
         children
@@ -82,10 +90,11 @@ export default {
   font-size: 14px;
   line-height: 14px;
   cursor: pointer;
-
+  border-radius: 2px!important;
   &_iconSvg {
     margin-right: 8px;
   }
+
 }
 
 .c_button_tip_content {
@@ -112,13 +121,13 @@ export default {
   }
 
   &:hover {
-    border-color: @--main-blue;
-    color: @--main-blue;
+    border-color: @--main-blue!important;
+    color: @--main-blue!important;
   }
 
   &:focus {
     border-color: #e6e6e6;
-    color: @--main-blue;
+    color: @--main-blue!important;
   }
 }
 

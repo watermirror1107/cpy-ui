@@ -10,6 +10,9 @@ export default {
     },
     placement: {//更多菜单内容张开的位置
       type: String, default: 'bottom'
+    },
+    showNum: {
+      type: Number, default: 0
     }
   },
   methods: {
@@ -33,30 +36,30 @@ export default {
       })
     }
     if (children.length > 0) {
-      let width = 0;//获取父容器宽度，如果父容器没有宽度会出现排版问题
-      if (this.$parent.$el) {
-        width = parseInt(window.getComputedStyle(this.$parent.$el, null).width) - 16 - 20//减16是因为td的padding8 margin-left:-20px 为了对齐
-      } else if (this.$parent.$options.propsData.column.width) {//dataSource的是容器初始宽度会为0；如果column中没给width也会为0
-        width = this.$parent.$options.propsData.column.width
-      }
-      let showNum = Math.floor(width / 80)//c-table-btn的最大宽度为80,计算最多能展示几个
+      // let width = 0;//获取父容器宽度，如果父容器没有宽度会出现排版问题
+      // if (this.$parent.$el) {
+      //   width = parseInt(window.getComputedStyle(this.$parent.$el, null).width) - 16 - 20//减16是因为td的padding8 margin-left:-20px 为了对齐
+      // } else if (this.$parent.$options.propsData.column.width) {//dataSource的是容器初始宽度会为0；如果column中没给width也会为0
+      //   width = this.$parent.$options.propsData.column.width
+      // }
+      // let showNum = Math.floor(width / 80)//c-table-btn的最大宽度为80,计算最多能展示几个
       //超过的截取放到更多按钮里面
       children.forEach(btn => {
         btn.componentOptions.propsData.show_type = 'vertical'//切换成竖直排列因为宽度被调整之后变成水平按钮模式要改回原来的
       })
-      if (showNum < children.length || (showNum === 0 && width >= 80)) {//最多显示一个的时候显示更多
+      if (this.showNum < children.length) {//最多显示一个的时候显示更多
         //前面不需要隐藏的
-        let midIndex = showNum === 0 ? 0 : (showNum - 1)
-        let showChildren = children.slice(0, midIndex).map(btn => {//给展示在外面的按钮添加一个有边框
+        let showChildren = children.slice(0, this.showNum).map(btn => {//给展示在外面的按钮添加一个有边框
           btn.componentOptions.propsData.isShowDivision = true
           return btn
         })
-        let hiddenChildren = children.slice(midIndex)
+        let hiddenChildren = children.slice(this.showNum)
         hiddenChildren.forEach(btn => {
           btn.componentOptions.propsData.show_type = 'horizontal'//切换成水平排列
         })
         let moreNode = h('a-popover', {
               props: {
+                getPopupContainer: (triggerNode) => triggerNode.parentNode,
                 trigger: this.trigger,
                 placement: this.placement
               }
@@ -64,9 +67,12 @@ export default {
             [
               h('template', {slot: 'content'}, hiddenChildren),
               h(CTableBtn, {
+                style: {
+                  color: '#404960'
+                },
                 props: {
-                  // icon: 'icon-gengduo',
-                  text: this.$T('instance.More')
+                  icon: 'icon-genduo',
+                  text: ''
                 }
               })
             ]
@@ -100,10 +106,38 @@ export default {
   min-width: 92px; //最小宽度可以显示一个按钮
   overflow: hidden;
   margin-left: -20px;
+
   &::after {
     clear: both;
     display: block;
     content: '';
   }
+
+  .ant-popover {
+    padding: 0;
+  }
+
+  .ant-popover-content {
+
+    .ant-popover-arrow {
+      display: none !important;
+    }
+
+    .ant-popover-inner-content {
+      padding: 8px;
+    }
+
+    .c_table_btn {
+      margin-bottom: 8px;
+      border-bottom: unset !important;
+      color: #404960;
+
+      &:hover {
+        color: @--main-blue;
+        background-color: #F1F3F5;
+      }
+    }
+  }
+
 }
 </style>

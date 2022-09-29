@@ -55,6 +55,7 @@ export default {
             "a-popover",
             {
               props: {
+                getPopupContainer: (triggerNode)=>triggerNode.parentNode,
                 trigger: this.trigger,
                 placement: this.placement,
               },
@@ -76,10 +77,6 @@ export default {
               h(
                   Button,
                   {
-                    style:{
-                      height:'40px',
-                      lineHeight:'40px'
-                    },
                     props: {
                       icon: "icon-xuanzekuanxia",
                     },
@@ -134,29 +131,45 @@ export default {
   }
 
   .c_btn_group_more_btn {
+    display: flex;
     flex-direction: row-reverse;
 
     .c_button_iconSvg {
       font-size: 10px;
-      margin: 0px 0px 0px 10px;
+      margin: 0 0 0 10px;
+    }
+  }
+  .ant-popover-arrow{
+    opacity: 0;
+  }
+  .ant-popover-inner{
+    overflow: hidden;
+  }
+  .c_btn_group_more_item {
+    line-height: 36px;
+    height: 36px;
+    margin: 8px;
+    .c_button {
+      color: #252B3A;
+      text-align: left;
+      box-shadow: none;
+      width: 100%;
+      justify-content: flex-start;
+      border: none;
+      border-radius: 0;
+      height: 36px;
+      line-height: 36px;
+      margin-right: 0;
+      &:hover {
+        border-color: #eee;
+        background-color: #F1F3F5!important;
+        opacity: 1;
+      }
     }
   }
 }
 
-.c_btn_group_more_item {
-  width: 108px;
 
-  .c_button {
-    width: 100%;
-    justify-content: center;
-    border: none;
-    border-radius: 0px;
-    border-bottom: 1px solid #eee;
 
-    &:hover {
-      border-color: #eee;
-      background-color: #f5f5f5;
-    }
-  }
-}
+
 </style>

@@ -92,21 +92,21 @@
     <!--                     style="width:320px;margin: 0 auto;">-->
     <!--    </c-search-select>-->
     <div style="display:flex">
-    <c-table-filter />
-    <c-table-filter mode="tree"/>
+      <c-table-filter/>
+      <c-table-filter mode="tree"/>
     </div>
     <c-table
-      :formData="formData"
-      :formOptions="formOptions"
-      ref="table"
-      :rowSelection="{
+        :formData="formData"
+        :formOptions="formOptions"
+        ref="table"
+        :rowSelection="{
         selectedRowKeys: selectedRowKeys,
         onChange: onSelectChange,
       }"
-      :tagFilterArr="['queryName', 'date']"
-      :columns="columns"
-      :data="queryList"
-      rowKey="id"
+        :tagFilterArr="['queryName', 'date']"
+        :columns="columns"
+        :data="queryList"
+        rowKey="id"
     >
       <template #headerRight>
 
@@ -122,51 +122,49 @@
       <template #operate="{ record, index }">
         <c-btn-wrap>
           <c-table-btn
-            :disabled="isClick"
-            text="click1"
-            @click="clickHandler1"
+              :disabled="isClick"
+              text="click1"
+              @click="clickHandler1"
           ></c-table-btn>
-          <c-table-btn text="click2" @click="clickHandler2"> </c-table-btn>
-          <c-table-btn text="click3" @click="clickHandler3"> </c-table-btn>
-          <c-table-btn text="click4" @click="clickHandler4"> </c-table-btn>
-          <c-table-btn text="click5" @click="clickHandler5"> </c-table-btn>
-          <c-table-btn text="click6" @click="clickHandler6"> </c-table-btn>
-          <c-table-btn text="click7" @click="clickHandler7"> </c-table-btn>
-          <c-table-btn text="click8" @click="clickHandler8"> </c-table-btn>
-          <c-table-btn :disabled="isClick" text="click9" @click="clickHandler9">
-          </c-table-btn>
-          <c-table-btn text="click10" @click="clickHandler10(index)">
-          </c-table-btn>
+          <c-table-btn text="click2" @click="clickHandler2"></c-table-btn>
+          <c-table-btn text="click3" @click="clickHandler3"></c-table-btn>
+          <c-table-btn text="click4" @click="clickHandler4"></c-table-btn>
+          <c-table-btn text="click5" @click="clickHandler5"></c-table-btn>
+          <c-table-btn text="click6" @click="clickHandler6"></c-table-btn>
+          <c-table-btn text="click7" @click="clickHandler7"></c-table-btn>
+          <c-table-btn text="click8" @click="clickHandler8"></c-table-btn>
+          <c-table-btn :disabled="isClick" text="click9" @click="clickHandler9"></c-table-btn>
+          <c-table-btn text="click10" @click="clickHandler10(index)"></c-table-btn>
         </c-btn-wrap>
       </template>
       <template #actionBar>
         <c-btn-group>
-           <c-button size="large" type="primary">添加</c-button>
-          <c-button disabled icon="icon-kaiji" size="large"> 123 </c-button>
-          <c-button icon="icon-kaiji" size="large"> 123 </c-button>
-          <c-button icon="icon-kaiji" size="large"> 123 </c-button>
-          <c-button icon="icon-kaiji" size="large"> 123 </c-button>
-          <c-button icon="icon-kaiji" size="large"> 123 </c-button>
-          <c-button icon="icon-kaiji" size="large"> 123 </c-button>
-          <c-button icon="icon-kaiji" size="large"> 123 </c-button>
+          <c-button type="primary"  size="small">添加</c-button>
+          <c-button disabled icon="icon-kaiji" :size="'large'"> 123</c-button>
+          <c-button icon="icon-kaiji"> 123</c-button>
+          <c-button icon="icon-kaiji"> 123</c-button>
+          <c-button icon="icon-kaiji"> 123</c-button>
+          <c-button> 123</c-button>
+          <c-button icon="icon-kaiji" :size="'large'"> 123</c-button>
+          <c-button  icon="icon-kaiji" type="danger" size="large" ghost> 123</c-button>
         </c-btn-group>
       </template>
     </c-table>
-  <!-- <c-collapse :activeKey="['c']">
-      <c-collapse-panel :key="'a'">
-        <p name="header">title1</p>
-      </c-collapse-panel>
-      <c-collapse-panel :key="'b'" header="title2">2</c-collapse-panel>
-      <c-collapse-panel :key="'c'" :disabled="true" header="title3"
-        >3</c-collapse-panel
-      >
-      <c-collapse-panel :key="'d'">
-        <template #header>giao</template>
-        <template #extra>extra</template>
-        <p>giao1</p>
-        <p>giao2</p>
-      </c-collapse-panel>
-    </c-collapse> -->
+    <!-- <c-collapse :activeKey="['c']">
+        <c-collapse-panel :key="'a'">
+          <p name="header">title1</p>
+        </c-collapse-panel>
+        <c-collapse-panel :key="'b'" header="title2">2</c-collapse-panel>
+        <c-collapse-panel :key="'c'" :disabled="true" header="title3"
+          >3</c-collapse-panel
+        >
+        <c-collapse-panel :key="'d'">
+          <template #header>giao</template>
+          <template #extra>extra</template>
+          <p>giao1</p>
+          <p>giao2</p>
+        </c-collapse-panel>
+      </c-collapse> -->
 
     <!-- <a-collapse :activeKey="['b']">
       <a-collapse-panel key="a" header="This is panel header 1">
@@ -187,8 +185,7 @@
 </template>
 
 <script>
-import { Collapse } from "ant-design-vue";
-import { debounce } from "@/utils";
+import {debounce} from "@/utils";
 import axios from "axios";
 // import CButton from "../packages/CButton";
 // import CTable from "../packages/CTable";
@@ -269,7 +266,7 @@ export default {
       ],
       selectedRowKeys: [], // 勾选的key
       selectedRows: [], // 选中的行数据
-      formOptions1: [{ key: "account" }, { key: "age" }, { key: "name" }],
+      formOptions1: [{key: "account"}, {key: "age"}, {key: "name"}],
       form: {
         account: "kong",
         age: 1,
@@ -314,12 +311,12 @@ export default {
       ],
       tabIndex: undefined,
       tabIndex2: [],
-      imageTypes: [{ name: "one" }, { name: "two" }],
+      imageTypes: [{name: "one"}, {name: "two"}],
       month: 1,
       time: [],
       formData: {
         queryName: "",
-        id:1,
+        id: 1,
         createTime: [111],
         date: [],
       },
@@ -333,8 +330,8 @@ export default {
           key: "name",
           placeholder: "placeholder",
           options: [
-            { id: 1, name: "one" },
-            { id: 2, name: "two" },
+            {id: 1, name: "one"},
+            {id: 2, name: "two"},
           ],
         },
         {
@@ -342,8 +339,8 @@ export default {
           // type: 'select',
           placeholder: "placeholder",
           options: [
-            { id: 1, name: "one" },
-            { id: 2, name: "two" },
+            {id: 1, name: "one"},
+            {id: 2, name: "two"},
           ],
         },
         {
@@ -358,8 +355,8 @@ export default {
       type: 1,
       text: "text",
       dateOptions: [
-        { id: 1, name: "10-20" },
-        { id: 2, name: "30-40" },
+        {id: 1, name: "10-20"},
+        {id: 2, name: "30-40"},
       ],
       dataFilterValue: "",
       // columns: [
@@ -434,7 +431,7 @@ export default {
             fixed: "left",
             width: 100,
             type: "select",
-            options:[{id:1,name:'name1'},{id:2,name:'name2'}],
+            options: [{id: 1, name: 'name1'}, {id: 2, name: 'name2'}],
             scopedSlots: {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
@@ -457,38 +454,38 @@ export default {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
             },
-            filterOptionMethod:(val,key="regionName",key2="cityName")=>{
+            filterOptionMethod: (val, key = "regionName", key2 = "cityName") => {
               let temp = [];
               //区域名称提取
-              [...new Set(val.map(item=>{
+              [...new Set(val.map(item => {
                 return item[key]
-              }))].forEach((item,index)=>{
+              }))].forEach((item, index) => {
                 temp.push({
-                  name:item,
-                  id:item,
-                  children:[]
+                  name: item,
+                  id: item,
+                  children: []
                 })
               })
               //区域名称下城市集合
-              val.forEach(item=>{
-                temp.forEach(tempItem=>{
-                  if(item[key]==tempItem.name){
+              val.forEach(item => {
+                temp.forEach(tempItem => {
+                  if (item[key] == tempItem.name) {
                     tempItem.children.push({
-                      name:item[key2],
-                      id:item[key2],
-                      children:[]
+                      name: item[key2],
+                      id: item[key2],
+                      children: []
                     });
                   }
                 })
               })
               //城市下集群的集合
-              val.forEach(item=>{
-                temp.forEach(tempItem=>{
-                  tempItem.children.forEach(childItem=>{
-                    if(childItem.name==item[key2]){
+              val.forEach(item => {
+                temp.forEach(tempItem => {
+                  tempItem.children.forEach(childItem => {
+                    if (childItem.name == item[key2]) {
                       childItem.children.push({
-                        name:item.name,
-                        id:item.id
+                        name: item.name,
+                        id: item.id
                       })
                     }
                   })
@@ -496,7 +493,12 @@ export default {
               })
               return temp;
             },
-            options:[{id:111,name:'111',cityName:'厦门1',regionName:'华东'},{id:112,name:'113',cityName:'厦门2',regionName:'华东'},{id:222,name:'2222',cityName:'福州',regionName:'华西'}],
+            options: [{id: 111, name: '111', cityName: '厦门1', regionName: '华东'}, {
+              id: 112,
+              name: '113',
+              cityName: '厦门2',
+              regionName: '华东'
+            }, {id: 222, name: '2222', cityName: '福州', regionName: '华西'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
@@ -513,39 +515,39 @@ export default {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
             },
-            filterOptionMethod:(val,key="regionName",key2="cityName")=>{
+            filterOptionMethod: (val, key = "regionName", key2 = "cityName") => {
               let temp = [];
               //区域名称提取
-              [...new Set(val.map(item=>{
+              [...new Set(val.map(item => {
                 return item[key]
-              }))].forEach((item,index)=>{
+              }))].forEach((item, index) => {
                 temp.push({
-                  name:item,
-                  id:item,
-                  children:[]
+                  name: item,
+                  id: item,
+                  children: []
                 })
               });
               //区域名称下城市集合
-              val.forEach(item=>{
-                temp.forEach(tempItem=>{
-                  if(item[key]==tempItem.name){
+              val.forEach(item => {
+                temp.forEach(tempItem => {
+                  if (item[key] == tempItem.name) {
                     tempItem.children.push({
-                      name:item[key2],
-                      id:item[key2],
-                      children:[]
+                      name: item[key2],
+                      id: item[key2],
+                      children: []
                     });
                   }
                 })
               });
               //城市下集群的集合
-              val.forEach(item=>{
-                temp.forEach(tempItem=>{
-                  tempItem.children.forEach(childItem=>{
+              val.forEach(item => {
+                temp.forEach(tempItem => {
+                  tempItem.children.forEach(childItem => {
                     // debugger;
-                    if(childItem.name==item[key2]){
+                    if (childItem.name == item[key2]) {
                       childItem.children.push({
-                        name:item.name,
-                        id:item.id
+                        name: item.name,
+                        id: item.id
                       })
                     }
                   })
@@ -554,7 +556,12 @@ export default {
               // debugger
               return temp;
             },
-            options:[{id:111,name:'111',cityName:'厦门1',regionName:'华东'},{id:112,name:'113',cityName:'厦门2',regionName:'华东'},{id:222,name:'2222',cityName:'福州',regionName:'华西'}],
+            options: [{id: 111, name: '111', cityName: '厦门1', regionName: '华东'}, {
+              id: 112,
+              name: '113',
+              cityName: '厦门2',
+              regionName: '华东'
+            }, {id: 222, name: '2222', cityName: '福州', regionName: '华西'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
@@ -571,8 +578,8 @@ export default {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
             },
-             type: "selectMultiple",
-            options:[{id:111,name:'111'},{id:222,name:'222'}],
+            type: "selectMultiple",
+            options: [{id: 111, name: '111'}, {id: 222, name: '222'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
@@ -584,7 +591,7 @@ export default {
             title: "operate",
             key: "operate",
             width: 300,
-            scopedSlots: { customRender: "operate" },
+            scopedSlots: {customRender: "operate"},
           },
         ];
       }

@@ -4,26 +4,25 @@
       <div class="c_table_header_left">
         <div class="c_table_action_bar">
           <slot name="actionBar"></slot>
-          <span v-if="$attrs.rowSelection&&$attrs.rowSelection.selectedRowKeys.length>0">
-          已选中{{$attrs.rowSelection.selectedRowKeys.length}}
-          </span>
         </div>
+        <span v-if="$attrs.rowSelection&&$attrs.rowSelection.selectedRowKeys.length>0">
+          已选中{{ $attrs.rowSelection.selectedRowKeys.length }}
+          </span>
       </div>
       <div class="c_table_header_right">
         <slot name="headerRight"></slot>
         <a-input
             :style="{ width: (typeof searchWith === 'string') ? searchWith : `${searchWith}px` }"
+            class="c_table_header_right_searchInput"
             v-if="isShowSearch"
-            size="large"
             v-model="formData.queryName"
             @change="debounceFresh($event.target.value, () => {}, 'queryName')"
             :placeholder="queryNamePlaceholder"
         >
-          <icon slot="suffix" name="icon-shili_shousuo"/>
+          <icon slot="prefix" name="icon-shili_shousuo"/>
         </a-input>
         <c-button
             class="c_table_header_right_refresh"
-            size="large"
             :disabled="isLocalLoading"
             type="text"
             @click="refresh"
@@ -34,7 +33,6 @@
             type="text"
             class="c_table_header_right_refresh"
             v-if="isSetColumn"
-            size="large"
             @click="setColumns"
         >
           <icon name="icon-shili_shezhi"></icon>
@@ -88,12 +86,18 @@
       </template>
       <!--      表头过滤-->
       <template v-slot:filterDropdown="{ confirm, column }">
-        <template  v-if="column.type === 'selectMultiple'">
+        <template v-if="column.type === 'selectMultiple'">
           <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
-            <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)" :isMultiple="true" mode="tree" :value="formData[column.selectKey || column.key]" :options="column.filterOptionMethod(column.options)" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)">></c-table-filter>
+            <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)" :isMultiple="true"
+                            mode="tree" :value="formData[column.selectKey || column.key]"
+                            :options="column.filterOptionMethod(column.options)"
+                            @confirm="debounceFresh($event, confirm, column.selectKey || column.key)">>
+            </c-table-filter>
           </template>
           <template v-if="!column.filterOptionMethod">
-            <c-table-filter  @restFilter="resetFilter(column.selectKey || column.key,confirm)" :isMultiple="true" :value="formData[column.selectKey || column.key]" :options="column.options" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)"></c-table-filter>
+            <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)" :isMultiple="true"
+                            :value="formData[column.selectKey || column.key]" :options="column.options"
+                            @confirm="debounceFresh($event, confirm, column.selectKey || column.key)"></c-table-filter>
           </template>
           <!-- slot="dropdownRender" slot-scope="menu" -->
         </template>
@@ -146,12 +150,18 @@
 
         </a-select> -->
         <template v-else>
-            <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
-              <c-table-filter  @restFilter="resetFilter(column.selectKey || column.key,confirm)" mode="tree" :value="formData[column.selectKey || column.key]" :options="column.filterOptionMethod(column.options)" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)">></c-table-filter>
-            </template>
-            <template v-if="!column.filterOptionMethod">
-              <c-table-filter  @restFilter="resetFilter(column.selectKey || column.key,confirm)" :value="formData[column.selectKey || column.key]" :options="column.options" @confirm="debounceFresh($event, confirm, column.selectKey || column.key)"></c-table-filter>
-            </template>
+          <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
+            <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)" mode="tree"
+                            :value="formData[column.selectKey || column.key]"
+                            :options="column.filterOptionMethod(column.options)"
+                            @confirm="debounceFresh($event, confirm, column.selectKey || column.key)">>
+            </c-table-filter>
+          </template>
+          <template v-if="!column.filterOptionMethod">
+            <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)"
+                            :value="formData[column.selectKey || column.key]" :options="column.options"
+                            @confirm="debounceFresh($event, confirm, column.selectKey || column.key)"></c-table-filter>
+          </template>
         </template>
         <!-- <a-select
             v-else
@@ -429,8 +439,7 @@ export default {
     debounceFresh: debounce(function (val, confirm, key) {
       // debugger;
       confirm();
-      this.formData[key]=val;
-      console.log(this.formData)
+      this.formData[key] = val;
       this.refresh(true);
       this.$emit("filterChange", val, key);
     }),
@@ -447,20 +456,6 @@ export default {
         "instance.Cancel": "取消",
       };
       return textObj[code] || code;
-    },
-    /**
-     * @description:展示数据总数
-     */
-    showTotal(total, range) {
-      if (
-          this.$store &&
-          this.$store.state &&
-          this.$store.state.language === "en_US"
-      ) {
-        return `Total ${total}`;
-      } else {
-        return `共 ${total} 条`;
-      }
     },
     /**
      * @description: 计算底部全选按钮位置
@@ -566,15 +561,15 @@ export default {
           });
     }),
     filterOption(input, option) {
-      if (option.tag.indexOf("ASelectOptGroup")>-1) {
+      if (option.tag.indexOf("ASelectOptGroup") > -1) {
         //如果分组名称匹配到就直接完成匹配过滤
-        let groupName=option.componentOptions.children[0].children[0].text
-        if(groupName.toLowerCase().indexOf(input.toLowerCase()) >= 0){
+        let groupName = option.componentOptions.children[0].children[0].text
+        if (groupName.toLowerCase().indexOf(input.toLowerCase()) >= 0) {
           return true
         }
         //分组名称没匹配到获取分组的子节点(根据tag过滤)
-        const children=option.componentOptions.children.filter(child=>child.tag&&child.tag.indexOf('ASelectOption')>-1)
-        return children.every(child=>{//这里需要所有的子节点都满足匹配分组才出现
+        const children = option.componentOptions.children.filter(child => child.tag && child.tag.indexOf('ASelectOption') > -1)
+        return children.every(child => {//这里需要所有的子节点都满足匹配分组才出现
           return child.componentOptions.children[0].text
               .toLowerCase()
               .indexOf(input.toLowerCase()) >= 0
@@ -624,15 +619,17 @@ export default {
   border: 1px solid #e8e8e8;
   border-radius: 4px;
   background: white;
+
   .ant-table-thead {
-    background-color: #e6e8f1!important;//#f7f9fc !important;
-  }
-  .ant-table-thead > tr:first-child > th:first-child{
-    border-radius: 0px!important;
+    background-color: #e6e8f1 !important; //#f7f9fc !important;
   }
 
-  .ant-table-thead > tr:last-child > th:last-child{
-    border-radius: 0px!important;
+  .ant-table-thead > tr:first-child > th:first-child {
+    border-radius: 0px !important;
+  }
+
+  .ant-table-thead > tr:last-child > th:last-child {
+    border-radius: 0px !important;
   }
 
   .ant-table-tbody {
@@ -650,29 +647,62 @@ export default {
     align-items: center;
     margin: 16px 0;
     padding: 0 20px;
-    &_left {
 
-    }
-    &_right{
+    &_left {
       display: flex;
-      .ant-input-affix-wrapper {
-        width: 240px;
-        margin-left: 16px;
-        // float: left;
+      align-items: center;
+
+      > span {
+        white-space: nowrap;
+        display: inline-block;
+        line-height: 16px;
+        padding: 8px;
+        height: 32px;
+        background: #F1F3F5;
+        font-size: 12px;
+        font-weight: 400;
+        color: #252B3A;
+      }
+    }
+
+    &_right {
+      display: flex;
+
+      .c_table_header_right_searchInput {
+        .ant-input:focus {
+          border-color: @--main-blue;
+        }
+
+        &:hover .ant-input:not(.ant-input-disabled) {
+          border-color: @--main-blue;
+        }
+
+        .ant-input:not(:first-child) {
+          padding-left: 40px;
+        }
+
+        .ant-input-prefix {
+          left: 15px;
+        }
+
       }
 
       &_refresh {
         margin-left: 16px;
         float: left;
-        //border-color:#E6E6E6!important;
-        //color: #646464!important;
+        width: 44px;
+
+        &:hover,&:focus {
+          border-color: @--main-blue;
+          color: @--main-blue;
+        }
       }
     }
   }
 
   &_tags {
     margin-bottom: 16px;
-    padding:0px 20px;
+    padding: 0 20px;
   }
 
   .ant-table-expanded-row {
@@ -695,17 +725,7 @@ export default {
   }
 
   &_action_bar {
-    float: left;
-    display: flex;
-    align-items: center;
-    >span{
-      flex:1;
-      white-space: nowrap;
-      display: inline-block;
-      line-height: 32px;
-      height: 32px;
-      background: #F1F3F5;
-    }
+
     .ant-btn {
       margin-right: 16px;
 
