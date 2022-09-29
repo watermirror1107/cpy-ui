@@ -59,7 +59,8 @@ export default {
         })
         let moreNode = h('a-popover', {
               props: {
-                getPopupContainer: (triggerNode) => triggerNode.parentNode,
+                overlayClassName:'c_btn_wrap_popover',
+                // getPopupContainer: (triggerNode) => triggerNode.parentNode,
                 trigger: this.trigger,
                 placement: this.placement
               }
@@ -113,10 +114,10 @@ export default {
     content: '';
   }
 
-  .ant-popover {
-    padding: 0;
-  }
+}
 
+.c_btn_wrap_popover {
+  padding: 0;
   .ant-popover-content {
 
     .ant-popover-arrow {
@@ -130,14 +131,19 @@ export default {
     .c_table_btn {
       margin-bottom: 8px;
       border-bottom: unset !important;
-      color: #404960;
-
-      &:hover {
-        color: @--main-blue;
-        background-color: #F1F3F5;
+      &[disabled='disabled']{
+        background-color: #f5f5f5!important;
+        opacity: 0.8;
       }
+      &:not([disabled='disabled']){
+        color: #404960;
+        &:hover  {
+          color: @--main-blue;
+          background-color: #F1F3F5;
+        }
+      }
+
     }
   }
-
 }
 </style>

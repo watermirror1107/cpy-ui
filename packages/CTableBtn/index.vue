@@ -107,7 +107,6 @@ export default {
 .c_table_btn_horizontal {
   width: 100%;
   max-width: 200px;
-  height: 48px;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #eee !important;

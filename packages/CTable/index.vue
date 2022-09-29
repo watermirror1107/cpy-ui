@@ -6,7 +6,7 @@
           <slot name="actionBar"></slot>
         </div>
         <span v-if="$attrs.rowSelection&&$attrs.rowSelection.selectedRowKeys.length>0">
-          已选中{{ $attrs.rowSelection.selectedRowKeys.length }}
+          {{this.showSelectedText}}
           </span>
       </div>
       <div class="c_table_header_right">
@@ -290,6 +290,7 @@ export default {
   },
   props: {
     searchWith: {type: [Number, String], default: 250},
+    selectedRowText: {type: String, default: ""}, //选择后的提示信息
     queryNamePlaceholder: {type: String, default: "placeholder"}, //是否可以设置表头
     isShowHeader: {type: Boolean, default: true}, //是否显示表格搜索头部等按钮
     isShowTag: {type: Boolean, default: true}, //是否显示过滤条件
@@ -313,6 +314,12 @@ export default {
         this.localDataSource = nv;
       }
     },
+  },
+  computed:{
+    showSelectedText(){
+      if(!this.selectedRowText)return `已选中${this.$attrs.rowSelection.selectedRowKeys.length}个`
+      return this.selectedRowText.replace(/\%t\%/,this.localDataSource.length).replace(/\%s\%/,this.$attrs.rowSelection.selectedRowKeys.length)
+    }
   },
   created() {
     // 读取当前用户设置的列，如果没有则取默认

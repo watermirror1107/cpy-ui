@@ -98,6 +98,7 @@
     <c-table
         :formData="formData"
         :formOptions="formOptions"
+        selectedRowText="总共%t%个，选中%s%个"
         ref="table"
         :rowSelection="{
         selectedRowKeys: selectedRowKeys,
@@ -133,18 +134,18 @@
           <c-table-btn text="click6" @click="clickHandler6"></c-table-btn>
           <c-table-btn text="click7" @click="clickHandler7"></c-table-btn>
           <c-table-btn text="click8" @click="clickHandler8"></c-table-btn>
-          <c-table-btn :disabled="isClick" text="click9" @click="clickHandler9"></c-table-btn>
+          <c-table-btn disabled text="click9" @click="clickHandler9"></c-table-btn>
           <c-table-btn text="click10" @click="clickHandler10(index)"></c-table-btn>
         </c-btn-wrap>
       </template>
       <template #actionBar>
         <c-btn-group>
-          <c-button type="primary"  size="small">添加</c-button>
+          <c-button type="primary" disabled size="small">添加</c-button>
           <c-button disabled icon="icon-kaiji" :size="'large'"> 123</c-button>
           <c-button icon="icon-kaiji"> 123</c-button>
           <c-button icon="icon-kaiji"> 123</c-button>
           <c-button icon="icon-kaiji"> 123</c-button>
-          <c-button> 123</c-button>
+          <c-button disabled > 123</c-button>
           <c-button icon="icon-kaiji" :size="'large'"> 123</c-button>
           <c-button  icon="icon-kaiji" type="danger" size="large" ghost> 123</c-button>
         </c-btn-group>

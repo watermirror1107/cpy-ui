@@ -110,17 +110,10 @@ export default {
   font-size: 14px;
 
   &[disabled] {
-    // background: #fff;
-    // color: #aac0fe;
     opacity: 0.8;
-
-    &:hover {
-      // color: #ccdaff;
-      // background: #fff;
-    }
   }
 
-  &:hover {
+  &:hover:not([disabled='disabled']) {
     border-color: @--main-blue!important;
     color: @--main-blue!important;
   }
@@ -141,7 +134,7 @@ export default {
   background-color: @--main-yellow !important;
 }
 
-.c_button_warning:hover {
+.c_button_warning:hover:not([disabled='disabled']) {
   opacity: 0.8;
 }
 
@@ -151,7 +144,7 @@ export default {
   background-color: transparent !important;
 }
 
-.c_button_warning_g:hover {
+.c_button_warning_g:hover:not([disabled='disabled']) {
   opacity: 0.6;
 }
 
@@ -161,7 +154,7 @@ export default {
   background-color: @--main-green !important;
 }
 
-.c_button_success:hover {
+.c_button_success:hover:not([disabled='disabled']) {
   opacity: 0.8;
 }
 
@@ -171,7 +164,7 @@ export default {
   background-color: transparent !important;
 }
 
-.c_button_success_g:hover {
+.c_button_success_g:hover:not([disabled='disabled']) {
   opacity: 0.6;
 }
 
@@ -181,7 +174,7 @@ export default {
   background-color: transparent !important;
 }
 
-.c_button_danger_g:hover {
+.c_button_danger_g:hover:not([disabled='disabled']) {
   opacity: 0.6;
 }
 

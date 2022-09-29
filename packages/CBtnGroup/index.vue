@@ -143,27 +143,30 @@ export default {
     opacity: 0;
   }
   .ant-popover-inner{
-    overflow: hidden;
+    padding: 8px;
   }
   .c_btn_group_more_item {
     line-height: 36px;
     height: 36px;
-    margin: 8px;
-    .c_button {
-      color: #252B3A;
-      text-align: left;
-      box-shadow: none;
-      width: 100%;
-      justify-content: flex-start;
-      border: none;
-      border-radius: 0;
-      height: 36px;
-      line-height: 36px;
-      margin-right: 0;
-      &:hover {
-        border-color: #eee;
-        background-color: #F1F3F5!important;
-        opacity: 1;
+    margin-bottom: 8px;
+    .c_button{
+      border-bottom: unset;
+      &:not([disabled='disabled'])  {
+        color: #252B3A;
+        text-align: left;
+        box-shadow: none;
+        width: 100%;
+        justify-content: flex-start;
+        border: none;
+        border-radius: 0;
+        height: 36px;
+        line-height: 36px;
+        margin-right: 0;
+        &:hover {
+          border-color: #eee;
+          background-color: #F1F3F5!important;
+          opacity: 1;
+        }
       }
     }
   }
