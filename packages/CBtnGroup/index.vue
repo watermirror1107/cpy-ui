@@ -146,8 +146,8 @@ export default {
     padding: 8px;
   }
   .c_btn_group_more_item {
-    line-height: 36px;
-    height: 36px;
+    line-height: 32px;
+    height: 32px;
     margin-bottom: 8px;
     &:last-child{
       margin-bottom: 0;
@@ -160,8 +160,6 @@ export default {
       width: 100%;
       border: none;
       border-radius: 0;
-      height: 36px;
-      line-height: 36px;
       &:not([disabled='disabled'])  {
         &:hover {
           border-color: #eee;
@@ -169,14 +167,14 @@ export default {
           opacity: 1;
         }
       }
+      &[disabled]{
+        color: rgba(0,0,0,.25) !important;
+      }
     }
     .c_button[class$='_g'][disabled='disabled']{
       background-color: #f5f5f5!important;
     }
   }
 }
-
-
-
 
 </style>

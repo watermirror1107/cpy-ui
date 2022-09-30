@@ -12,7 +12,7 @@ export default {
       type: String, default: 'bottom'
     },
     showNum: {
-      type: Number, default: 0
+      type: Number, default: 1
     }
   },
   methods: {
@@ -49,11 +49,11 @@ export default {
       })
       if (this.showNum < children.length) {//最多显示一个的时候显示更多
         //前面不需要隐藏的
-        let showChildren = children.slice(0, this.showNum).map(btn => {//给展示在外面的按钮添加一个有边框
+        let showChildren = children.slice(0, this.showNum-1).map(btn => {//给展示在外面的按钮添加一个有边框
           btn.componentOptions.propsData.isShowDivision = true
           return btn
         })
-        let hiddenChildren = children.slice(this.showNum)
+        let hiddenChildren = children.slice(this.showNum-1)
         hiddenChildren.forEach(btn => {
           btn.componentOptions.propsData.show_type = 'horizontal'//切换成水平排列
         })
@@ -141,7 +141,7 @@ export default {
       }
       &:not([disabled='disabled']){
         &:hover  {
-          background-color: #F1F3F5;
+          background-color: #f5f5f5 !important;
         }
       }
     }

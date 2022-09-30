@@ -121,9 +121,8 @@
         </a-popover>
       </template>
       <template #operate="{ record, index }">
-        <c-btn-wrap>
+        <c-btn-wrap :showNum="5">
           <c-table-btn
-              type="link"
               :disabled="isClick"
               text="click1"
               @click="clickHandler1"
@@ -143,10 +142,10 @@
       <template #actionBar>
         <c-btn-group>
           <c-button type="primary"  disabled size="small">添加</c-button>
-          <c-button disabled icon="icon-kaiji" :size="'large'"> 123</c-button>
+          <c-button disabled icon="icon-kaiji" :size="'large'">1234</c-button>
           <c-button type="warning" icon="icon-kaiji"> 123</c-button>
           <c-button type="warning" disabled="" icon="icon-kaiji"> 123</c-button>
-          <c-button type="success" icon="icon-kaiji"> 123</c-button>
+          <c-button type="success"  disabled icon="icon-kaiji"> 123</c-button>
           <c-button type="success" disabled="" icon="icon-kaiji"> 123</c-button>
           <c-button icon="icon-kaiji"> 123</c-button>
           <c-button disabled> 123</c-button>

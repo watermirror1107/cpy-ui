@@ -50,9 +50,6 @@ export default {
 </script>
 
 <style lang="less">
-.c_table_btn:hover:not([disabled='disabled']) {
-  background-color: #f5f5f5 !important
-}
 .c_table_btn:hover:not([class*='-danger']){
   color: @--main-blue;
 }
@@ -65,6 +62,9 @@ export default {
 .c_table_btn {
   color: var(--main-blue);
   position: relative;
+  &:focus{
+    color: var(--main-blue);
+  }
   &_text {
     margin-bottom: 0;
   }

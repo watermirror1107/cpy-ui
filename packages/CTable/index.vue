@@ -632,7 +632,7 @@ export default {
   }
 
   .ant-table-thead > tr:first-child > th:first-child {
-    border-radius: 0px !important;
+    border-radius: 0 !important;
   }
 
   .ant-table-thead > tr:last-child > th:last-child {
