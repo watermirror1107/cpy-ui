@@ -161,14 +161,11 @@ export default {
       border: none;
       border-radius: 0;
       &:not([disabled='disabled'])  {
-        &:hover {
+        &:hover[class$='_g'] {
           border-color: #eee;
           background-color: #F1F3F5!important;
           opacity: 1;
         }
-      }
-      &[disabled]{
-        color: rgba(0,0,0,.25) !important;
       }
     }
     .c_button[class$='_g'][disabled='disabled']{

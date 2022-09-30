@@ -60,7 +60,6 @@ export default {
 }
 
 .c_table_btn {
-  color: var(--main-blue);
   position: relative;
   &:focus{
     color: var(--main-blue);

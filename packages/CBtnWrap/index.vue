@@ -138,6 +138,9 @@ export default {
         background-color: #f5f5f5!important;
         opacity: 0.8;
         color:#e6e6e6!important;
+        &[class*='ant-btn-danger']{
+          color: rgba(255,0,0,30%)!important;
+        }
       }
       &:not([disabled='disabled']){
         &:hover  {

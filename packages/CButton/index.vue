@@ -106,7 +106,6 @@ export default {
 .c_button_default {
   background: #ffffff;
   border: 1px solid #e6e6e6;
-  color: #0048ff;
   font-size: 14px;
 
   &[disabled] {
@@ -124,8 +123,14 @@ export default {
   }
 }
 
-.c_button.ant-btn-primary:focus {
-  background-color: @--main-blue;
+.c_button.ant-btn-primary {
+  &:focus{
+    background-color: @--main-blue;
+  }
+}
+.ant-btn-primary.ant-btn-background-ghost.c_button{
+  border-color:  @--main-blue;
+  color:  @--main-blue;;
 }
 
 .c_button_warning {
@@ -166,6 +171,16 @@ export default {
 
 .c_button_success_g:hover:not([disabled='disabled']) {
   opacity: 0.6;
+}
+
+.c_button_danger {
+  border-color: @--main-red !important;
+  color: white !important;
+  background-color: @--main-red !important;
+}
+
+.c_button_danger:hover:not([disabled='disabled']) {
+  opacity: 0.8;
 }
 
 .c_button_danger_g {

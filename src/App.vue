@@ -141,17 +141,21 @@
       </template>
       <template #actionBar>
         <c-btn-group>
-          <c-button type="primary"  disabled size="small">添加</c-button>
-          <c-button disabled icon="icon-kaiji" :size="'large'">1234</c-button>
+          <c-button type="primary" size="small">添加</c-button>
+          <c-button icon="icon-kaiji" :size="'large'">1234</c-button>
+          <c-button type="warning" icon="icon-kaiji"> 123</c-button>
           <c-button type="warning" icon="icon-kaiji"> 123</c-button>
           <c-button type="warning" disabled="" icon="icon-kaiji"> 123</c-button>
-          <c-button type="success"  disabled icon="icon-kaiji"> 123</c-button>
-          <c-button type="success" disabled="" icon="icon-kaiji"> 123</c-button>
-          <c-button icon="icon-kaiji"> 123</c-button>
-          <c-button disabled> 123</c-button>
-          <c-button icon="icon-kaiji" :size="'large'"> 123</c-button>
-          <c-button icon="icon-kaiji" type="danger" size="large" ghost> 123</c-button>
-          <c-button icon="icon-kaiji" disabled type="danger" ghost> 123</c-button>
+          <c-button type="warning" ghost icon="icon-kaiji"> 123</c-button>
+          <c-button type="warning" disabled ghost icon="icon-kaiji"> 123</c-button>
+          <c-button type="success" icon="icon-kaiji"> 123</c-button>
+          <c-button type="success" disabled icon="icon-kaiji"> 123</c-button>
+          <c-button type="success" ghost icon="icon-kaiji"> 123</c-button>
+          <c-button type="success" disabled ghost icon="icon-kaiji"> 123</c-button>
+          <c-button icon="icon-kaiji" type="danger"> 123</c-button>
+          <c-button icon="icon-kaiji" type="danger" disabled=""> 123</c-button>
+          <c-button icon="icon-kaiji" type="danger" ghost> 123</c-button>
+          <c-button icon="icon-kaiji" type="danger" disabled ghost> 123</c-button>
         </c-btn-group>
       </template>
     </c-table>

@@ -75,19 +75,19 @@
               "
           @mousedown="(e) => e.preventDefault()"
       >
-        <a-button
+        <c-button
             type="primary"
             @click="selectId&&$emit('confirm',selectId)"
         >
           {{ $T("instance.Confirm") }}
-        </a-button>
-        <a-button
+        </c-button>
+        <c-button
             type="primary"
             ghost
             @click="$emit('restFilter')"
         >
           {{ $T("instance.Reset") }}
-        </a-button>
+        </c-button>
       </div>
     </div>
   </div>
@@ -295,7 +295,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     height: 40px;
-    padding: 0px 10px;
+    padding: 0 10px;
 
     &_active {
       color: #0048ff;
