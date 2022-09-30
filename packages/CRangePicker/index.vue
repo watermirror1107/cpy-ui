@@ -1,9 +1,9 @@
 <template>
   <div class="range-pick-wrap">
-    <div class="left-input">
+    <div class="left-input" :style="{height:size==='large'?'40px':size==='small'?'22px':'32px'}">
       <icon class="icon-box" name="icon-shijianxuanz_shijian"></icon>
       <a-range-picker
-          size="large"
+          :size="size"
           :allowClear="false"
           :value="dateValue"
           :disabledDate="disabledDate"
@@ -14,7 +14,11 @@
           @change="onChange"
       />
     </div>
-    <ul class="right-btn" v-if="isShowQuick">
+    <ul class="right-btn" :class="{
+     'right-btn_s':size==='small',
+     'right-btn_l':size==='large',
+     'right-btn_d':size!=='large'&&size!=='small',
+    }" v-if="isShowQuick">
       <!--      <li-->
       <!--        :class="{activated:type===0}"-->
       <!--        @click="type=0">实时-->
@@ -91,12 +95,13 @@ export default {
       loop: null // 轮询
     }
   },
-  model: { 
+  model: {
     event: 'change',
     prop: 'value'
   },
   props: {
     value: {type: Array, default: () => ([moment().subtract(1, 'days'), moment()])},
+    size: {type: String, default: 'default'},//size
     gap: {type: Number, default: 3},// 实时刷新的时间间隙,单位为秒
     currentType: {type: Number, default: 1},
     separator: {type: String, default: '-'},//分隔符
@@ -104,7 +109,7 @@ export default {
     defaultType:{type:Number,default:2},//默认type类型
     arrValue:{type:Array,default:()=>([{
         type:1
-      },{ 
+      },{
         type:3
       },{
         type:7
@@ -115,7 +120,7 @@ export default {
         return current && current > Date.now();
       }
     }
-  }, 
+  },
   created() {
     if (!this.$T) {
       this.$T = this.translateText
@@ -257,7 +262,6 @@ export default {
     display: flex;
     align-items: center;
     width: 352px;
-    height: 40px;
     border: 1px solid #E6E6E6;
     border-radius: 4px;
     overflow: hidden;
@@ -292,10 +296,8 @@ export default {
     overflow: hidden;
     background: #fff;
     li {
-      height: 38px;
       width: 64px;
       font-size: 14px;
-      line-height: 38px;
       text-align: center;
       border-right: 1px solid #E6E6E6;
       cursor: pointer;
@@ -307,6 +309,18 @@ export default {
         background: #0048FF;
         color: #fff;
       }
+    }
+    &_s{
+      height: 20px;
+      line-height:20px;
+    }
+    &_l{
+      height: 38px;
+      line-height:38px;
+    }
+    &_d{
+      height: 30px;
+      line-height:30px;
     }
   }
 }
