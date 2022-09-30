@@ -2854,15 +2854,6 @@ cosmiconfig@^7.0.0:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
-cpy-ui@^0.3.29:
-  version "0.3.29"
-  resolved "https://registry.yarnpkg.com/cpy-ui/-/cpy-ui-0.3.29.tgz#e7a118170ddea6628d31f17d02f0935de68bb007"
-  integrity sha512-H6b4MfztagkzyQen+tVuKvakAxyMnperDlH0CjqVWAqtsH5kgzXuPSEoGMxvrHZpAxKiIce8MhipJf3w2AFlhw==
-  dependencies:
-    ant-design-vue "^1.6.5"
-    moment "^2.29.1"
-    vue "^2.6.12"
-
 create-ecdh@^4.0.0:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/create-ecdh/-/create-ecdh-4.0.4.tgz#d6e7f4bffa66736085a0762fd3a632684dabcc4e"

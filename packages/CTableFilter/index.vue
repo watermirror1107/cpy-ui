@@ -328,6 +328,7 @@ export default {
         align-items: center;
         height: 40px;
         padding: 0px 20px;
+        margin-top:5px;
         position: relative;
 
         &_active {
@@ -359,7 +360,7 @@ export default {
     align-items: center;
     height: 32px;
     padding: 0px 10px;
-
+    margin-top:5px;
     &:hover {
       color: #0048ff;
       cursor: pointer;

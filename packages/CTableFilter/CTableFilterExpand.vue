@@ -114,6 +114,10 @@ export default {
       align-items: center;
       height: 32px;
       padding: 0px 10px;
+      &:not(:first-child){
+        margin-top:8px;
+      }
+      
        &_icon{
           font-size: 8px;
           transform: rotate(180deg);
