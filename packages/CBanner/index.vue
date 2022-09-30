@@ -32,8 +32,8 @@ export default {
   font-size: 16px;
   font-family: Source Han Sans CN;
   color: #323232;
-  line-height: 44px;
-  min-height: 44px;
+  line-height: 30px;
+  min-height: 30px;
   padding: 0 24px;
   text-align: left;
   background-color: #fff;
@@ -44,7 +44,6 @@ export default {
     cursor: pointer;
     font-size: 20px;
     vertical-align: -2px;
-    margin-top: 11px;
   }
   &_content {
     display: inline-block;

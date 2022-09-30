@@ -5,6 +5,10 @@
         v-if="type==1">
       <li
           class="c_duration_list_item"
+          :style="{
+              height: size==='small'?'22px':size==='large'?'40px':'32px',
+              lineHeight: size==='small'?'22px':size==='large'?'40px':'32px',
+          }"
           v-for="item in duration_middle_list"
           :class="{c_duration_list_item_selected:item.id==duration,c_duration_list_item_disabled:disabled}"
           :key="item.id"
@@ -21,7 +25,7 @@
             :class="{selected:mDuration}"
             v-model="mDuration"
             @change="selectMore"
-            size="large">
+            :size="size">
           <a-icon slot="suffixIcon" style="color: #646464" type="caret-down"/>
           <a-select-option value="">
             {{ $T('public.Moretime') }}
@@ -40,7 +44,7 @@
     </ul>
     <a-select
         v-else
-        size="large"
+        :size="size"
         :disabled="disabled"
         v-model="duration"
         style="width: 120px">
@@ -70,6 +74,7 @@ export default {
   props: {
     disabled: {type: [Boolean], default: false},
     value: {type: [Number, String]},
+    size: {type: String, default: 'default'},
     type: {default: 1},
     moreList: {
       type: Array,
@@ -279,13 +284,12 @@ ul {
 
     &_item {
       float: left;
-      height: 40px;
       width: 90px;
       text-align: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      line-height: 40px;
+
       margin: 0;
       border: 1px solid #E6E6E6;
       border-collapse: collapse;
