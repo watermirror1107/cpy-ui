@@ -106,7 +106,6 @@ export default {
   height: 100%;
   min-width: 92px; //最小宽度可以显示一个按钮
   overflow: hidden;
-  margin-left: -20px;
 
   &::after {
     clear: both;

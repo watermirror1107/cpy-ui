@@ -41,10 +41,10 @@
     <!--  <c-input label="asdf"  v-model="text"></c-input>-->
     <!--    <c-empty></c-empty>-->
     <!-- <c-input-number v-model="num" unit="MBBB" size="small"></c-input-number> -->
-    <!--    <c-radio-group v-model="num">-->
-    <!--      <c-radio value="one">one</c-radio>-->
-    <!--      <c-radio value="two">two</c-radio>-->
-    <!--    </c-radio-group>-->
+        <c-radio-group v-model="num">
+          <c-radio value="one">one</c-radio>
+          <c-radio value="two">two</c-radio>
+        </c-radio-group>
     <!--    <c-nav-header>-->
     <!--      <template #left>left</template>-->
     <!--      <template #right>righ</template>-->

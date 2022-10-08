@@ -119,7 +119,7 @@ export default {
 
   &:focus {
     border-color: #e6e6e6;
-    color: @--main-blue!important;
+    color: currentColor!important;
   }
 }
 
