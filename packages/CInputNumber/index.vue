@@ -67,8 +67,8 @@ export default {
     max: {default: 4096, type: Number},
     min: {default: 1, type: Number},
     unit: {default: "", type: String},
-    size: {default: "large", type: String},
-    value: {default: "large", type: [String, Number]},
+    size: {default: "default", type: String},
+    value: {default: "", type: [String, Number]},
   },
   model: {
     event: "valChange",
