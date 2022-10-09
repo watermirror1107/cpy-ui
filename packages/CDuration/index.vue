@@ -284,6 +284,7 @@ ul {
     }
 
     &_item {
+      box-sizing: content-box;
       float: left;
       width: 90px;
       text-align: center;
