@@ -292,18 +292,13 @@ export default {
   line-height: 40px;
 }
 
-.c_inputNumber_small {
+.c_inputNumber_default {
   height: 32px;
   line-height: 32px;
 }
 
-.c_inputNumber_large {
-  height: 40px;
-  line-height: 40px;
-}
-
 .c_inputNumber_small {
-  height: 32px;
-  line-height: 32px;
+  height: 28px;
+  line-height: 28px;
 }
 </style>
