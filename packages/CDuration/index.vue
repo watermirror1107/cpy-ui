@@ -2,6 +2,9 @@
   <div class="c_duration">
     <ul
         class="c_duration_list"
+        :style="{
+              height: size==='small'?'22px':size==='large'?'40px':'32px',
+          }"
         v-if="type==1">
       <li
           class="c_duration_list_item"
@@ -256,8 +259,6 @@ ul {
   }
 
   &_list {
-    border: 1px solid #eeeeee;
-    height: 40px;
     display: inline-block;
 
     .ant-select {
@@ -289,7 +290,6 @@ ul {
       display: flex;
       align-items: center;
       justify-content: center;
-
       margin: 0;
       border: 1px solid #E6E6E6;
       border-collapse: collapse;
