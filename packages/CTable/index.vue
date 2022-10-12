@@ -88,16 +88,17 @@
       <template v-slot:filterDropdown="{ confirm, column }">
         <template v-if="column.type === 'selectMultiple'">
           <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
+            <!-- formData[column.selectKey || column.key] -->
             <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)" :isMultiple="true"
-                            mode="tree" :value="formData[column.selectKey || column.key]"
+                            mode="tree" :value="filterValue(formData,column)"
                             :options="column.filterOptionMethod(column.options)"
-                            @confirm="debounceFresh($event, confirm, column.selectKey || column.key)">
+                            @confirm="(val,type)=>{debounceFresh(val, confirm,type || column.selectKey || column.key,column)}">
             </c-table-filter>
           </template>
           <template v-if="!column.filterOptionMethod">
             <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)" :isMultiple="true"
-                            :value="formData[column.selectKey || column.key]" :options="column.options"
-                            @confirm="debounceFresh($event, confirm, column.selectKey || column.key)"></c-table-filter>
+                            :value="filterValue(formData,column)" :options="column.options"
+                            @confirm="(val,type)=>{debounceFresh(val, confirm,type || column.selectKey || column.key,column)}"></c-table-filter>
           </template>
           <!-- slot="dropdownRender" slot-scope="menu" -->
         </template>
@@ -152,16 +153,16 @@
         <template v-else>
           <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
             <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)" mode="tree"
-                            :value="formData[column.selectKey || column.key]"
+                            :value="filterValue(formData,column)"
                             :options="column.filterOptionMethod(column.options)"
-                            @confirm="debounceFresh($event, confirm, column.selectKey || column.key)">>
+                            @confirm="(val,type)=>{debounceFresh(val, confirm,type || column.selectKey || column.key,column)}">>
             </c-table-filter>
           </template>
           <template v-if="!column.filterOptionMethod">
             <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)"
-                            :value="formData[column.selectKey || column.key]" :options="column.options"
-                            @confirm="debounceFresh($event, confirm, column.selectKey || column.key)"></c-table-filter>
-          </template>
+                            :value="filterValue(formData,column)" :options="column.options"
+                            @confirm="(val,type)=>{debounceFresh(val, confirm,type || column.selectKey || column.key,column)}"></c-table-filter>
+          </template> 
         </template>
         <!-- <a-select
             v-else
@@ -218,7 +219,7 @@
           total: this.total,
         }"
           @change="paginationChange"
-          @showSizeChange="onShowSizeChange"
+          @showSizeChange="onShowSizeChange" 
       ></c-page>
     </div>
     <modal
@@ -319,7 +320,7 @@ export default {
     showSelectedText(){
       if(!this.selectedRowText)return `已选中${this.$attrs.rowSelection.selectedRowKeys.length}个`
       return this.selectedRowText.replace(/\%t\%/,this.localDataSource.length).replace(/\%s\%/,this.$attrs.rowSelection.selectedRowKeys.length)
-    }
+    },
   },
   created() {
     // 读取当前用户设置的列，如果没有则取默认
@@ -402,6 +403,20 @@ export default {
       confirm();
       this.refresh(true);
     },
+    filterValue(value,column){
+      // debugger;
+      let temp = '';
+      if(column.selectKeys&&Array.isArray(column.selectKeys)){
+        column.selectKeys.forEach(item=>{ 
+          if(value[item]){ 
+           temp = value[item] // eg:cityId-1 regionId-1
+          }
+        })
+      }else{
+        temp = value[column.selectKey || column.key]
+      }
+      return temp;
+    },
     /**
      * @description:打开设置表头弹窗
      */
@@ -443,12 +458,26 @@ export default {
     /**
      * @description:延迟刷新
      */
-    debounceFresh: debounce(function (val, confirm, key) {
+    debounceFresh: debounce(function (val, confirm, key,column) {
       // debugger;
-      confirm();
-      this.formData[key] = val;
-      this.refresh(true);
-      this.$emit("filterChange", val, key);
+      if(column&&column.selectKeys&&Array.isArray(column.selectKeys)){
+        confirm()
+        column.selectKeys.forEach(item=>{
+          //赋值Key给值 其他置空
+          if(item==key){
+            this.formData[key] = val; 
+          }else{
+            delete this.formData[item] 
+          }
+        })
+        this.refresh(true);
+        this.$emit("filterChange", val, key);
+      }else{
+        confirm();
+        this.formData[key] = val; 
+        this.refresh(true);
+        this.$emit("filterChange", val, key);
+      } 
     }),
     /**
      * @description:兼容处理

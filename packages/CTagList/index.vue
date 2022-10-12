@@ -28,7 +28,7 @@ export default {
     let children =[];
     keys.forEach(key => {
       let tagChildren = []
-      let selectItem = this.formOptions.find(i => (i.selectKey === key||i.key === key))
+      let selectItem = this.formOptions.find(i => ((i.selectKeys&&i.selectKeys.includes(key)) || i.selectKey === key||i.key === key))
       if (selectItem) {
         //name
         tagChildren.push(h('span', {style: {marginRight: '16px'}}, selectItem?.title + ':'))
@@ -39,11 +39,16 @@ export default {
           let options= selectItem.options.filter(i=>this.formData[key].includes(i.id)).map(i=>i.name)
           content = options.join(' | ')
           isVisible=this.formData[key].length>0
-        } else {
-          content = selectItem.options.find(i => i.id == this.formData[key])?.name
-          isVisible=(!!this.formData[key]) && this.formData[key] !== ''
+        } else { 
+          if(selectItem.selectKeys){
+            content = selectItem.options.find(i => (key+'-'+i[key]) == this.formData[key])?.[key.slice(0,key.length-2)+'Name']
+            isVisible=(!!this.formData[key]) && this.formData[key] !== ''
+          }else{ 
+            content = selectItem.options.find(i => i.id == this.formData[key])?.name
+            isVisible=(!!this.formData[key]) && this.formData[key] !== ''
+          }  
         }
-        tagChildren.push(h('span', content))
+        tagChildren.push(h('span', content)) 
         //删除按钮
         tagChildren.push(h(Icon, {
           props: {name: 'icon-chuangjianshili_guanbi'},

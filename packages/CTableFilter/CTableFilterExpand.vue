@@ -5,7 +5,7 @@
         <c-icon v-show="isHasChild(item)" class="c_table_filter_expand_item_icon" name="icon-fanhui"/>
         <c-icon v-show="!isHasChild(item)&&(isMultiple?ArrayContain(selectId,item.id):(selectId==item.id))" class="c_table_filter_expand_item_icon_yes" style="font-size:10px" name="icon-xuanxiangka_gou"/>
         <template v-if="isHasChild(item)&&item.showChildren">
-            <CTableFilterExpand :isMultiple="isMultiple" v-model="selectId"  :options="item.children" :width="width"/>
+            <CTableFilterExpand :isMultiple="isMultiple" v-model="selectId" @valueChange="valueChange" :options="item.children" :width="width"/>
         </template>
     </div>
   </div>
@@ -56,13 +56,21 @@ export default {
         handler(nv) {
           if(nv!=undefined){
             this.$emit('change',this.selectId)
+            if(this.selectKeyType){
+              this.$emit('valueChange',{
+                selectId:this.selectId,
+                selectKeyType:this.selectKeyType || ''
+              })
+            }
           }
         },
       }
     },
     data(){
         return{
-          selectId:''
+          selectId:'',
+          //用来定位选择的是哪一级的数据 
+          selectKeyType:'',
         }
     },
     methods:{
@@ -92,10 +100,14 @@ export default {
               this.selectId.push(item.id);
             }
           }else{
+            this.selectKeyType = item.selectKeyType
             this.selectId = item.id
           }
         }
       }
+    },
+    valueChange(val){
+      this.$emit('valueChange',val)
     }
 }
 </script>

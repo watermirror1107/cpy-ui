@@ -449,14 +449,15 @@ export default {
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
-
+                
               }
             },
           },
           {
             title: "name",
             dataIndex: "name",
-            key: "name",
+            key: "name", 
+            selectKeys:['regionId','cityId','clusterId'],
             width: 100,
             type: "select",
             scopedSlots: {
@@ -469,12 +470,14 @@ export default {
               [...new Set(val.map(item => {
                 return item[key]
               }))].forEach((item, index) => {
+                let tempId = val.find(valitem=>{
+                    return valitem.regionName == item
+                  })
                 temp.push({
                   name: item,
-                  id: val.find(valitem=>{
-                    return valitem.regionName == item
-                  }).regionId,
-                  children: [] 
+                  id: 'regionId-'+tempId.regionId,
+                  selectKeyType:'regionId',
+                  children: []  
                 })
               })
               //区域名称下城市集合
@@ -483,7 +486,8 @@ export default {
                   if (item[key] == tempItem.name) {
                     tempItem.children.push({
                       name: item[key2],
-                      id: item.cityId,
+                      id: 'cityId-'+item.cityId,
+                      selectKeyType:'cityId',
                       children: []
                     });
                   }
@@ -496,7 +500,8 @@ export default {
                     if (childItem.name == item[key2]) {
                       childItem.children.push({
                         name: item.name,
-                        id: item.id
+                        id: 'clusterId-'+item.id,
+                        selectKeyType:'clusterId'
                       })
                     }
                   })
@@ -648,8 +653,10 @@ export default {
       return axios.get("/getoptions?ID=12345");
     },
     queryList(params) {
+      // console.log(params);
+      console.log('formData',this.formData)
       // const data = Object.assign({}, params, this.formData, result);
-      return axios({
+      return axios({ 
         url: "/getoptions",
         method: "get",
         params,

@@ -38,7 +38,7 @@
                     v-show="!isHasChild(childItem)&&(isMultiple?ArrayContain(selectId,childItem.id):(selectId==childItem.id))"
                     class="c_table_filter_tree_group_item_icon" style="font-size:10px" name="icon-xuanxiangka_gou"/>
                 <template v-if="isHasChild(childItem)&&childItem.showChildren">
-                  <CTableFilterExpand :isMultiple="isMultiple" v-model="selectId" :options="childItem.children"
+                  <CTableFilterExpand :isMultiple="isMultiple" v-model="selectId" @valueChange="valueChange" :options="childItem.children"
                                       :width="width" :extraRight="10"/>
                 </template>
               </div>
@@ -148,17 +148,18 @@ export default {
     selectId: {
       handler(nv) {
         if (nv != undefined && !this.isMultiple && !this.isInitTime) {
-          console.log('selectId',nv)
-          this.$emit('confirm', nv);
+          this.$emit('confirm', nv,this.selectKeyType);
         }
       },
-    }
+    } 
   },
   data() {
     return {
       searchName: '',
       singleImage: Empty.PRESENTED_IMAGE_SIMPLE,
       selectId: '',
+      //用来定位选择的是哪一级的数据 
+      selectKeyType:'',
       empty: false,
       optionsData: [],
       treeData: []
@@ -201,6 +202,9 @@ export default {
       }
       return false
     },
+    valueChange(item){
+      this.selectKeyType = item.selectKeyType
+    },
     //选中  flag为true标识直接赋值 不进行下层操作
     changeSelect(item,flag = false) { 
       if(flag){
@@ -211,6 +215,7 @@ export default {
             this.selectId.push(item.id);
           }
         } else {
+          this.selectKeyType = item.selectKeyType
           this.selectId = item.id
         }
       }else{
@@ -228,6 +233,7 @@ export default {
               this.selectId.push(item.id);
             }
           } else {
+            this.selectKeyType = item.selectKeyType
             this.selectId = item.id
           }
         }
