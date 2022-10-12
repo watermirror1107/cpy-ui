@@ -3,6 +3,9 @@
       class="c_radio_wrap"
       :disabled="$attrs.disabled"
       :class="{
+        c_radio_wrap_large:size==='large',
+        c_radio_wrap_small:size==='small',
+        c_radio_wrap_default:size!=='large'&&size!=='small',
         c_radio_wrap_selected: $parent.value == value&&!$attrs.disabled,
         c_radio_wrap_blue:$parent.value == value &&Number($parent.selectedType)==1&&!$attrs.disabled
       }"
@@ -32,7 +35,8 @@ export default {
     Icon
   },
   props: {
-    value: {required: true}
+    value: {required: true},
+    size: {default: 'default',type:String}
   },
   inject: ['setGroupValue'],
   methods: {
@@ -48,9 +52,7 @@ export default {
 .c_radio_wrap {
   position: relative;
   display: inline-block;
-  min-width: 120px;
-  min-height: 40px;
-  padding: 0 24px;
+  padding: 0 15px;
   text-align: center;
   color: #0048FF;
   font-size: 14px;
@@ -58,12 +60,11 @@ export default {
   font-weight: bold;
   border: 1px solid #e6e6e6;
   border-radius: 4px;
-  line-height: 40px;
   cursor: pointer;
   transition: all 0.2s ease-out;
   user-select: none;
   margin-right: 16px;
-
+  box-sizing: border-box;
 
   &_button_selected {
     transition: all 0.2s ease-out;
@@ -91,7 +92,18 @@ export default {
       font-size: 14px;
     }
   }
-
+  &_default{
+    height: 32px;
+    line-height: 32px;
+  }
+  &_large{
+    height: 40px;
+    line-height: 40px;
+  }
+  &_small{
+    height: 28px;
+    line-height: 28px;
+  }
 }
 
 .c_radio_wrap[disabled='disabled'] {

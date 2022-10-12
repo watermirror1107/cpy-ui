@@ -67,8 +67,8 @@ export default {
     max: {default: 4096, type: Number},
     min: {default: 1, type: Number},
     unit: {default: "", type: String},
-    size: {default: "large", type: String},
-    value: {default: "large", type: [String, Number]},
+    size: {default: "default", type: String},
+    value: {default: "", type: [String, Number]},
   },
   model: {
     event: "valChange",
@@ -292,18 +292,13 @@ export default {
   line-height: 40px;
 }
 
-.c_inputNumber_small {
+.c_inputNumber_default {
   height: 32px;
   line-height: 32px;
 }
 
-.c_inputNumber_large {
-  height: 40px;
-  line-height: 40px;
-}
-
 .c_inputNumber_small {
-  height: 32px;
-  line-height: 32px;
+  height: 28px;
+  line-height: 28px;
 }
 </style>
