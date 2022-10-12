@@ -83,7 +83,7 @@
       </template>
       <template v-for="nativeTable in nativeTableSlotArr" v-slot:[nativeTable]>
         <slot :name="nativeTable"></slot>
-      </template>
+      </template> 
       <!--      表头过滤-->
       <template v-slot:filterDropdown="{ confirm, column }">
         <template v-if="column.type === 'selectMultiple'">
@@ -91,7 +91,7 @@
             <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)" :isMultiple="true"
                             mode="tree" :value="formData[column.selectKey || column.key]"
                             :options="column.filterOptionMethod(column.options)"
-                            @confirm="debounceFresh($event, confirm, column.selectKey || column.key)">>
+                            @confirm="debounceFresh($event, confirm, column.selectKey || column.key)">
             </c-table-filter>
           </template>
           <template v-if="!column.filterOptionMethod">

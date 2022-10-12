@@ -48,7 +48,7 @@ export default {
     },
     watch:{
       value:{
-        handler(nv) {
+        handler(nv) { 
            this.selectId = this.value;
         },
       },

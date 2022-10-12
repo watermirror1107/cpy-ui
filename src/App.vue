@@ -471,8 +471,10 @@ export default {
               }))].forEach((item, index) => {
                 temp.push({
                   name: item,
-                  id: item,
-                  children: []
+                  id: val.find(valitem=>{
+                    return valitem.regionName == item
+                  }).regionId,
+                  children: [] 
                 })
               })
               //区域名称下城市集合
@@ -481,7 +483,7 @@ export default {
                   if (item[key] == tempItem.name) {
                     tempItem.children.push({
                       name: item[key2],
-                      id: item[key2],
+                      id: item.cityId,
                       children: []
                     });
                   }
@@ -502,12 +504,13 @@ export default {
               })
               return temp;
             },
-            options: [{id: 111, name: '111', cityName: '厦门1', regionName: '华东'}, {
+            options: [{id: 111, name: '111', cityName: '厦门1', regionName: '华东',regionId:'r1',cityId:'1'}, {
               id: 112,
               name: '113',
               cityName: '厦门1',
-              regionName: '华东'
-            }, {id: 222, name: '2222', cityName: '福州', regionName: '华西'}],
+              regionName: '华东',
+              regionId:'r1',cityId:'1'
+            }, {id: 222, name: '2222', cityName: '福州', regionName: '华西',regionId:'r2',cityId:'2'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {

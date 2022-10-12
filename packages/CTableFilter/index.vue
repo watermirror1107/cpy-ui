@@ -12,26 +12,29 @@
           <c-icon v-show="selectId==''" class="c_table_filter_all_icon" style="font-size:10px"
                   name="icon-xuanxiangka_gou"/>
         </div>
-        <template v-for="(item,index) in treeData">
+        <template v-for="(item,index) in treeData"> 
           <div class="c_table_filter_tree_group" v-if="item.showSearch" :key="index">
-            <div class="c_table_filter_tree_group_title" @click="expandNextChildren(item)">
-                        <span>
-                            {{ item.name }}({{ item.children ? item.children.length : 0 }})
-                            <c-icon v-if="isHasChild(item)"
-                                    :style="{transform:item.nextShow?'rotate(180deg)':'rotate(0deg)'}"
-                                    style="font-size:9px;margin-left:5px;transform: rotate(180deg)"
-                                    name="icon-xialakuang_jiantou"/>
-                        </span>
+            <div class="c_table_filter_tree_group_title" 
+                 :class="{'c_table_filter_tree_group_title_active':(isMultiple?ArrayContain(selectId,item.id):(selectId==item.id))}"
+                 @click="changeSelect(item,true)"> 
+                <span>
+                    {{ item.name }}({{ item.children ? item.children.length : 0 }})
+                    <c-icon v-if="isHasChild(item)"
+                            @click.native.stop="expandNextChildren(item)"
+                            :style="{transform:item.nextShow?'rotate(180deg)':'rotate(0deg)'}"
+                            style="font-size:9px;margin-left:5px;transform: rotate(180deg)"
+                            name="icon-xialakuang_jiantou"/> 
+                </span> 
             </div>
             <template v-if="item.children&&item.children.length>0&&item.nextShow">
-              <div @click="changeSelect(childItem)"
+              <div @click="changeSelect(childItem,true)"
                    :class="{'c_table_filter_tree_group_item_active':(isMultiple?ArrayContain(selectId,childItem.id):(selectId==childItem.id))}"
                    class="c_table_filter_tree_group_item"
                    v-for="(childItem,childIndex) in item.children" :key="childItem.id+childIndex">
                 <span>{{ childItem.name }}</span>
-                <c-icon v-show="isHasChild(childItem)" class="c_table_filter_tree_group_item_icon" name="icon-fanhui"
+                <c-icon @click.native.stop="changeSelect(childItem)" v-show="isHasChild(childItem)" class="c_table_filter_tree_group_item_icon" name="icon-fanhui"
                         style="transform: rotate(180deg)"/>
-                <c-icon
+                <c-icon 
                     v-show="!isHasChild(childItem)&&(isMultiple?ArrayContain(selectId,childItem.id):(selectId==childItem.id))"
                     class="c_table_filter_tree_group_item_icon" style="font-size:10px" name="icon-xuanxiangka_gou"/>
                 <template v-if="isHasChild(childItem)&&childItem.showChildren">
@@ -145,6 +148,7 @@ export default {
     selectId: {
       handler(nv) {
         if (nv != undefined && !this.isMultiple && !this.isInitTime) {
+          console.log('selectId',nv)
           this.$emit('confirm', nv);
         }
       },
@@ -197,15 +201,9 @@ export default {
       }
       return false
     },
-    //选中
-    changeSelect(item) {
-      if (this.isHasChild(item)) {
-        this.closeChildren();
-        this.expandChildren(item)
-      } else {
-        if (this.mode === 'tree') {
-          this.closeChildren()
-        }
+    //选中  flag为true标识直接赋值 不进行下层操作
+    changeSelect(item,flag = false) { 
+      if(flag){
         if (this.isMultiple) {
           if (this.ArrayContain(this.selectId, item.id)) {
             this.selectId.splice(this.ArrayContainIndex(this.selectId, item.id), 1)
@@ -215,7 +213,26 @@ export default {
         } else {
           this.selectId = item.id
         }
+      }else{
+        if (this.isHasChild(item)) {
+          this.closeChildren();
+          this.expandChildren(item)
+        } else {
+          if (this.mode === 'tree') {
+            this.closeChildren()
+          }
+          if (this.isMultiple) {
+            if (this.ArrayContain(this.selectId, item.id)) {
+              this.selectId.splice(this.ArrayContainIndex(this.selectId, item.id), 1)
+            } else {
+              this.selectId.push(item.id);
+            }
+          } else {
+            this.selectId = item.id
+          }
+        }
       }
+      
     },
     //关闭其他菜单
     closeChildren() {
@@ -241,16 +258,16 @@ export default {
     inputSearch(e) {
       if (this.searchName) {
         this.treeData.forEach(item => {
-          console.log(item)
-          console.log(this.isHasChild(item))
+          // console.log(item)
+          // console.log(this.isHasChild(item))
           if (item.name == this.searchName || item.name.indexOf(this.searchName) > -1) {
             this.$set(item, 'showSearch', true)
-            console.log('parent', item.name)
+            // console.log('parent', item.name)
           } else if (this.isHasChild(item)) {
             let flag = false
             item.children.forEach(childItem => {
               if (childItem.name == this.searchName || childItem.name.indexOf(this.searchName) > -1) {
-                console.log('child', childItem.name)
+                // console.log('child', childItem.name)
                 this.$set(item, 'showSearch', true)
                 flag = true;
               }
@@ -314,6 +331,10 @@ export default {
         height: 40px;
         padding: 0px 10px;
         color: #969696;
+        &_active {
+          color: #0048ff;
+          background: #F7F9FC;
+        }
 
         &:hover {
           //   color: #0048ff;
