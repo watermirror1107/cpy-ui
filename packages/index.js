@@ -1,10 +1,8 @@
 //先导入UI字体库
-import './font/font_2142578_45182ujwnjc.js'
-import './font/font_2631791_umj4vo54h.js'
 import './font/font_3379171_aznauuqpx0g.js'
 //导入第三方UI库
 import '../ant-design-vue/index'
-
+ 
 const components = []
 //导入组件
 const req = require.context('./', true, /\.vue$/); 
@@ -23,8 +21,8 @@ function install(Vue) {
 if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue)
 }
-
+ 
 export default {
     install,
-    version: '0.2.22'
+    version: '0.2.23'
 }

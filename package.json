@@ -1,12 +1,12 @@
 {
   "name": "cpy-ui",
-  "version": "0.2.22",
+  "version": "0.2.23",
   "private": false,
   "main": "./lib/cpy-ui.min.js",
   "license": "MIT",
   "files": [
-    "lib"
-  ],
+    "lib" 
+  ], 
   "scripts": {
     "serve": "webpack-dev-server --config webpack/dev.config.js --mode development",
     "lib": "webpack --config webpack/build.config.js",
