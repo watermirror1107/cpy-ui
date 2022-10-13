@@ -14,8 +14,9 @@
     <!--    <c-button type="text" disabled>CTMD</c-button>-->
     <!--    <c-button type="text" ghost>CTMD</c-button>-->
     <!--    <c-button type="text" ghost disabled>CTMD</c-button>-->
-    <!--    <c-icon name="icon-shijian"></c-icon>-->
-    <!--        <c-card  title="click" @more="clickMore">-->
+       <c-icon name="icon-shijian"></c-icon>
+       <c-icon name="icon-zonglan_wendang"></c-icon>
+    <!--        <c-card  title="click" @more="clickMore">--> 
     <!--          <template #more>-->
     <!--            <p style="font-size: 20px;">more</p>-->
     <!--          </template>-->
@@ -161,21 +162,21 @@
 <script>
 import {debounce} from "@/utils";
 import axios from 'axios'
-import CButton from "../packages/CButton";
-import CForm from "../packages/CForm";
-import CTable from "../packages/CTable";
-import CBtnWrap from "../packages/CBtnWrap";
-import CTableBtn from "../packages/CTableBtn";
-import CSearchSelect from "../packages/CSearchSelect";
-import CTap from "../packages/CTap";
-import CRangePicker from "../packages/CRangePicker";
-import CTabs from "../packages/CTabs";
-import CTableForm from "../packages/CTableForm";
-import CCard from "../packages/CCard";
+// import CButton from "../packages/CButton";
+// import CForm from "../packages/CForm";
+// import CTable from "../packages/CTable";
+// import CBtnWrap from "../packages/CBtnWrap";
+// import CTableBtn from "../packages/CTableBtn";
+// import CSearchSelect from "../packages/CSearchSelect";
+// import CTap from "../packages/CTap";
+// import CRangePicker from "../packages/CRangePicker";
+// import CTabs from "../packages/CTabs";
+// import CTableForm from "../packages/CTableForm";
+// import CCard from "../packages/CCard";
 
 export default {
   components: {
-    CButton, CTable,CForm ,CBtnWrap, CTableBtn, CSearchSelect, CTap, CRangePicker, CTabs, CTableForm, CCard
+    // CButton, CTable,CForm ,CBtnWrap, CTableBtn, CSearchSelect, CTap, CRangePicker, CTabs, CTableForm, CCard
   },
   data() {
     return {
