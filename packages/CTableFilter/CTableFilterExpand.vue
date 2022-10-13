@@ -5,9 +5,9 @@
         <c-icon v-show="isHasChild(item)" class="c_table_filter_expand_item_icon" name="icon-fanhui"/>
         <c-icon v-show="!isHasChild(item)&&(isMultiple?ArrayContain(selectId,item.id):(selectId==item.id))" class="c_table_filter_expand_item_icon_yes" style="font-size:10px" name="icon-xuanxiangka_gou"/>
         <template v-if="isHasChild(item)&&item.showChildren">
-            <CTableFilterExpand :isMultiple="isMultiple" v-model="selectId" @valueChange="valueChange" :options="item.children" :width="width"/>
+            <CTableFilterExpand :isMultiple="isMultiple" v-model="selectId" :parentSelectKeyType.sync="selectKeyType"  :options="item.children" :width="width"/>
         </template>
-    </div>
+    </div> 
   </div>
 </template>
 
@@ -16,7 +16,7 @@ import cIcon from "../CIcon/index.vue";
 export default {
     name:'CTableFilterExpand',
     components:{cIcon},
-    model: {
+    model: { 
         event: 'change',
         prop: 'value'
     },
@@ -41,10 +41,15 @@ export default {
       isMultiple:{
         type:Boolean,
         default:false
+      },
+      parentSelectKeyType:{
+        type:String,
+        default:''
       }
     },
     mounted(){
       this.selectId = this.value;
+      this.selectKeyType = this.parentSelectKeyType;
     },
     watch:{
       value:{
@@ -56,14 +61,18 @@ export default {
         handler(nv) {
           if(nv!=undefined){
             this.$emit('change',this.selectId)
-            if(this.selectKeyType){
-              this.$emit('valueChange',{
-                selectId:this.selectId,
-                selectKeyType:this.selectKeyType || ''
-              })
-            }
           }
         },
+      },
+      parentSelectKeyType:{
+        handler(nv) {
+          this.selectKeyType = nv;
+        }
+      },
+      selectKeyType:{
+        handler(nv) {
+          this.$emit('update:parentSelectKeyType',nv)
+        }
       }
     },
     data(){
@@ -96,9 +105,21 @@ export default {
           if(this.isMultiple){
             if(this.ArrayContain(this.selectId,item.id)){
               this.selectId.splice(this.ArrayContainIndex(this.selectId,item.id),1)
+              if(this.selectId.length==0){
+                this.selectKeyType = '';
+              }
             }else{
-              this.selectId.push(item.id);
-            }
+              // this.selectId.push(item.id);
+              //只有同级，第一次才允许放置
+              if(!this.selectKeyType){   
+                this.selectId.push(item.id);
+                this.selectKeyType = item.selectKeyType
+              }else if(this.selectKeyType&&this.selectKeyType==item.selectKeyType){
+                this.selectId.push(item.id);
+                this.selectKeyType = item.selectKeyType
+              }
+            } 
+            
           }else{
             this.selectKeyType = item.selectKeyType
             this.selectId = item.id

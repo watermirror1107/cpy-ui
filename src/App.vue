@@ -457,9 +457,14 @@ export default {
             title: "name",
             dataIndex: "name",
             key: "name", 
-            selectKeys:['regionId','cityId','clusterId'],
             width: 100,
-            type: "select",
+            //只有第三级单选的的时候不需要前缀拼接ID  也不用selectKeyType
+            // type: "select",
+            // selectKey:'name',
+            //多选
+            // type: "select",
+            type: "selectMultiple",
+            selectKeys:['regionId','cityId','clusterId'],
             scopedSlots: {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
@@ -509,17 +514,19 @@ export default {
               })
               return temp;
             },
-            options: [{id: 111, name: '111', cityName: '厦门1', regionName: '华东',regionId:'r1',cityId:'1'}, {
-              id: 112,
+            options: [{id: 111, clusterId:111,clusterName:'111',name: '111', cityName: '厦门1', regionName: '华东',regionId:'r1',cityId:'1'}, {
+              id: 112, 
+              clusterId:112,
               name: '113',
+              clusterName:'111',
               cityName: '厦门1',
               regionName: '华东',
-              regionId:'r1',cityId:'1'
-            }, {id: 222, name: '2222', cityName: '福州', regionName: '华西',regionId:'r2',cityId:'2'}],
+              regionId:'r1',cityId:'1' 
+            }, {id: 222,clusterId:222,clusterName:'111', name: '2222', cityName: '福州', regionName: '华西',regionId:'r2',cityId:'2'}],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
-              if (visible) {
-
+              if (visible) { 
+ 
               }
             },
           },

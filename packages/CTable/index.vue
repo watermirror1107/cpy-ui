@@ -74,7 +74,7 @@
           v-slot:expandedRowRender="record, index, indent, expanded"
       >
         <slot
-            name="expandedRowRender"
+            name="expandedRowRender" 
             :record="record"
             :index="index"
             :indent="indent"
@@ -92,12 +92,14 @@
             <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)" :isMultiple="true"
                             mode="tree" :value="filterValue(formData,column)"
                             :options="column.filterOptionMethod(column.options)"
+                            :column="column"
                             @confirm="(val,type)=>{debounceFresh(val, confirm,type || column.selectKey || column.key,column)}">
             </c-table-filter>
           </template>
           <template v-if="!column.filterOptionMethod">
             <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)" :isMultiple="true"
                             :value="filterValue(formData,column)" :options="column.options"
+                            :column="column"
                             @confirm="(val,type)=>{debounceFresh(val, confirm,type || column.selectKey || column.key,column)}"></c-table-filter>
           </template>
           <!-- slot="dropdownRender" slot-scope="menu" -->
@@ -155,12 +157,14 @@
             <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)" mode="tree"
                             :value="filterValue(formData,column)"
                             :options="column.filterOptionMethod(column.options)"
+                            :column="column"
                             @confirm="(val,type)=>{debounceFresh(val, confirm,type || column.selectKey || column.key,column)}">>
             </c-table-filter>
           </template>
           <template v-if="!column.filterOptionMethod">
             <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)"
                             :value="filterValue(formData,column)" :options="column.options"
+                            :column="column"
                             @confirm="(val,type)=>{debounceFresh(val, confirm,type || column.selectKey || column.key,column)}"></c-table-filter>
           </template> 
         </template>
@@ -393,7 +397,7 @@ export default {
      * @description:获取taglist需要的formoptions
      */
     getFormOptions() {
-      return this.$attrs.columns.filter((i) => i.options);
+      return this.$attrs.columns.filter((i) => i.options); 
     },
     /**
      * @description:多选的下拉框中的重置按钮
@@ -589,7 +593,7 @@ export default {
               window.tableTime = window.setTimeout(this.loadData, this.loopTime);
             }
           })
-          .catch((e) => {
+          .catch((e) => { 
             console.log(e);
           })
           .finally(() => {

@@ -36,14 +36,24 @@ export default {
         let content = '';
         let isVisible=false;
         if (this.formData[key] instanceof Array) {
-          let options= selectItem.options.filter(i=>this.formData[key].includes(i.id)).map(i=>i.name)
-          content = options.join(' | ')
-          isVisible=this.formData[key].length>0
+          if(selectItem.selectKeys){  
+            let options= selectItem.options.filter(i=>{
+              return this.formData[key].includes(key+'-'+i[key])
+            }).map(i=>i[key.slice(0,key.length-2)+'Name'])
+            content = options.join(' | ')
+            isVisible=this.formData[key].length>0 
+          }else{
+            let options= selectItem.options.filter(i=>this.formData[key].includes(i.id)).map(i=>i.name)
+            content = options.join(' | ')
+            isVisible=this.formData[key].length>0
+          }
+           
         } else { 
+          //单选多选options数据需要带前缀区分，第三级单选不用 eg: cityId:'cityId-111',cityId:'111'
           if(selectItem.selectKeys){
             content = selectItem.options.find(i => (key+'-'+i[key]) == this.formData[key])?.[key.slice(0,key.length-2)+'Name']
             isVisible=(!!this.formData[key]) && this.formData[key] !== ''
-          }else{ 
+          }else{  
             content = selectItem.options.find(i => i.id == this.formData[key])?.name
             isVisible=(!!this.formData[key]) && this.formData[key] !== ''
           }  

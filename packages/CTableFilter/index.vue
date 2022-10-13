@@ -1,6 +1,7 @@
 <template>
   <div class="c_table_filter" :style="{width:width+'px'}">
     <template v-if="mode==='tree'">
+      <!-- <div>{{selectId}}{{selectKeyType}}</div> -->
       <a-input v-model="searchName" :placeholder="$T('alarm.Pleaseenterakeywordtosearch')" @change="inputSearch">
         <a-icon slot="prefix" type="search"/>
       </a-input>
@@ -16,8 +17,8 @@
           <div class="c_table_filter_tree_group" v-if="item.showSearch" :key="index">
             <div class="c_table_filter_tree_group_title" 
                  :class="{'c_table_filter_tree_group_title_active':(isMultiple?ArrayContain(selectId,item.id):(selectId==item.id))}"
-                 @click="changeSelect(item,true)"> 
-                <span>
+                 @click="changeSelect(item,column.selectKeys?true:false)"> 
+                <span> 
                     {{ item.name }}({{ item.children ? item.children.length : 0 }})
                     <c-icon v-if="isHasChild(item)"
                             @click.native.stop="expandNextChildren(item)"
@@ -27,7 +28,7 @@
                 </span> 
             </div>
             <template v-if="item.children&&item.children.length>0&&item.nextShow">
-              <div @click="changeSelect(childItem,true)"
+              <div @click="changeSelect(childItem,column.selectKeys?true:false)"
                    :class="{'c_table_filter_tree_group_item_active':(isMultiple?ArrayContain(selectId,childItem.id):(selectId==childItem.id))}"
                    class="c_table_filter_tree_group_item"
                    v-for="(childItem,childIndex) in item.children" :key="childItem.id+childIndex">
@@ -38,9 +39,9 @@
                     v-show="!isHasChild(childItem)&&(isMultiple?ArrayContain(selectId,childItem.id):(selectId==childItem.id))"
                     class="c_table_filter_tree_group_item_icon" style="font-size:10px" name="icon-xuanxiangka_gou"/>
                 <template v-if="isHasChild(childItem)&&childItem.showChildren">
-                  <CTableFilterExpand :isMultiple="isMultiple" v-model="selectId" @valueChange="valueChange" :options="childItem.children"
+                  <CTableFilterExpand :isMultiple="isMultiple" v-model="selectId" :parentSelectKeyType.sync="selectKeyType" :options="childItem.children"
                                       :width="width" :extraRight="10"/>
-                </template>
+                </template> 
               </div>
             </template>
           </div>
@@ -64,9 +65,9 @@
           <span>{{ item.name }}</span>
           <c-icon v-show="(isMultiple?ArrayContain(selectId,item.id):(selectId==item.id))" name="icon-xuanxiangka_gou"
                   style="font-size:10px"/>
-        </div>
+        </div> 
       </div>
-    </template>
+    </template> 
     <div v-if="isMultiple">
       <!-- <v-nodes :vnodes="menu"/> -->
       <a-divider style="margin: 4px 0"/>
@@ -80,7 +81,7 @@
       >
         <c-button
             type="primary"
-            @click="selectId&&$emit('confirm',selectId)"
+            @click="selectId&&$emit('confirm',selectId,selectKeyType)" 
         >
           {{ $T("instance.Confirm") }}
         </c-button>
@@ -108,6 +109,9 @@ export default {
     value: {type: [String, Number, Array]},
     mode: {type: String, default: "normal"}, // tree 代表树形结构 normal 代表单级数据结构
     isMultiple: {type: Boolean, default: false}, //是否支持多选
+    column:{type:Object,default:()=>{
+      return {}
+    }},
     width: {type: Number, default: 200},
     options: {
       type: Array, default: () => {
@@ -202,20 +206,28 @@ export default {
       }
       return false
     },
-    valueChange(item){
-      this.selectKeyType = item.selectKeyType
-    },
     //选中  flag为true标识直接赋值 不进行下层操作
-    changeSelect(item,flag = false) { 
+    changeSelect(item,flag = false) {  
+      // debugger;
       if(flag){
-        if (this.isMultiple) {
+        if (this.isMultiple) { 
           if (this.ArrayContain(this.selectId, item.id)) {
             this.selectId.splice(this.ArrayContainIndex(this.selectId, item.id), 1)
+            if(this.selectId.length==0){
+              this.selectKeyType = '';
+            }
           } else {
-            this.selectId.push(item.id);
-          }
+            //只有同级，第一次才允许放置
+            if(!this.selectKeyType){
+              this.selectId.push(item.id);
+              this.selectKeyType = item.selectKeyType
+            }else if(this.selectKeyType&&this.selectKeyType==item.selectKeyType){
+              this.selectId.push(item.id);
+              this.selectKeyType = item.selectKeyType
+            }
+          } 
         } else {
-          this.selectKeyType = item.selectKeyType
+          this.selectKeyType = item.selectKeyType 
           this.selectId = item.id
         }
       }else{
@@ -229,9 +241,20 @@ export default {
           if (this.isMultiple) {
             if (this.ArrayContain(this.selectId, item.id)) {
               this.selectId.splice(this.ArrayContainIndex(this.selectId, item.id), 1)
+              if(this.selectId.length==0){
+                this.selectKeyType = '';
+              }
             } else {
-              this.selectId.push(item.id);
+              //只有同级，第一次才允许放置
+              if(!this.selectKeyType){
+                this.selectId.push(item.id);
+                this.selectKeyType = item.selectKeyType
+              }else if(this.selectKeyType&&this.selectKeyType==item.selectKeyType){
+                this.selectId.push(item.id);
+                this.selectKeyType = item.selectKeyType
+              }
             }
+            
           } else {
             this.selectKeyType = item.selectKeyType
             this.selectId = item.id
