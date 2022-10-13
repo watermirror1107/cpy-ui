@@ -152,6 +152,7 @@ export default {
     selectId: {
       handler(nv) {
         if (nv != undefined && !this.isMultiple && !this.isInitTime) {
+          // console.log(nv,this.selectKeyType)
           this.$emit('confirm', nv,this.selectKeyType);
         }
       },

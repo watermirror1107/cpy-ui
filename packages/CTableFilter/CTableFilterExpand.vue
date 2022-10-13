@@ -104,25 +104,33 @@ export default {
         }else{
           if(this.isMultiple){
             if(this.ArrayContain(this.selectId,item.id)){
-              this.selectId.splice(this.ArrayContainIndex(this.selectId,item.id),1)
               if(this.selectId.length==0){
                 this.selectKeyType = '';
               }
+              this.$nextTick(()=>{
+                this.selectId.splice(this.ArrayContainIndex(this.selectId,item.id),1)
+              })
             }else{
               // this.selectId.push(item.id);
               //只有同级，第一次才允许放置
               if(!this.selectKeyType){   
-                this.selectId.push(item.id);
                 this.selectKeyType = item.selectKeyType
+                this.$nextTick(()=>{
+                  this.selectId.push(item.id);
+                })
               }else if(this.selectKeyType&&this.selectKeyType==item.selectKeyType){
-                this.selectId.push(item.id);
                 this.selectKeyType = item.selectKeyType
+                this.$nextTick(()=>{
+                  this.selectId.push(item.id);
+                }) 
               }
             } 
             
           }else{
             this.selectKeyType = item.selectKeyType
-            this.selectId = item.id
+            this.$nextTick(()=>{
+              this.selectId = item.id
+            }) 
           }
         }
       }

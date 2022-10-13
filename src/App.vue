@@ -462,8 +462,8 @@ export default {
             // type: "select",
             // selectKey:'name',
             //多选
-            // type: "select",
-            type: "selectMultiple",
+            type: "select",
+            // type: "selectMultiple",
             selectKeys:['regionId','cityId','clusterId'],
             scopedSlots: {
               filterDropdown: "filterDropdown",
@@ -493,7 +493,7 @@ export default {
                       name: item[key2],
                       id: 'cityId-'+item.cityId,
                       selectKeyType:'cityId',
-                      children: []
+                      children: [] 
                     });
                   }
                 })
@@ -514,7 +514,7 @@ export default {
               })
               return temp;
             },
-            options: [{id: 111, clusterId:111,clusterName:'111',name: '111', cityName: '厦门1', regionName: '华东',regionId:'r1',cityId:'1'}, {
+            options: [ {
               id: 112, 
               clusterId:112,
               name: '113',
@@ -522,7 +522,16 @@ export default {
               cityName: '厦门1',
               regionName: '华东',
               regionId:'r1',cityId:'1' 
-            }, {id: 222,clusterId:222,clusterName:'111', name: '2222', cityName: '福州', regionName: '华西',regionId:'r2',cityId:'2'}],
+            }, {id: 222,clusterId:222,clusterName:'111', name: '2222', cityName: '福州', regionName: '华西',regionId:'r2',cityId:'3'},{
+              cityId: 1,
+              cityName: "常州", 
+              clusterId: 27,
+              clusterName: "测试机房", 
+              id: 27,
+              name: "测试机房",
+              regionId: 1,
+              regionName: "华东",
+            }],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) { 

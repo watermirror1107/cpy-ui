@@ -406,7 +406,7 @@ export default {
       this.formData[key] = [];
       confirm();
       this.refresh(true);
-    },
+    }, 
     filterValue(value,column){
       // debugger;
       let temp = '';
