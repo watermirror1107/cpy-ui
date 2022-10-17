@@ -16,6 +16,10 @@
     <!--    <c-button type="text" ghost disabled>CTMD</c-button>-->
        <c-icon name="icon-shijian"></c-icon>
        <c-icon name="icon-zonglan_wendang"></c-icon> 
+        <!--  --> 
+       <c-icon name="icon-yujingguangli"></c-icon> 
+       <c-icon name="icon-shengqingbiaodan"></c-icon> 
+       <c-icon name="icon-cipan"></c-icon> 
     <!--        <c-card  title="click" @more="clickMore">--> 
     <!--          <template #more>-->
     <!--            <p style="font-size: 20px;">more</p>-->
