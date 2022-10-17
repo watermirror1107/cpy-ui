@@ -28,7 +28,7 @@ export default {
     let children =[];
     keys.forEach(key => {
       let tagChildren = []
-      let selectItem = this.formOptions.find(i => (i.selectKey === key||i.key === key))
+      let selectItem = this.formOptions.find(i => ((i.selectKeys&&i.selectKeys.includes(key)) || i.selectKey === key||i.key === key))
       if (selectItem) {
         //name
         tagChildren.push(h('span', {style: {marginRight: '16px'}}, selectItem?.title + ':'))
@@ -36,14 +36,29 @@ export default {
         let content = '';
         let isVisible=false;
         if (this.formData[key] instanceof Array) {
-          let options= selectItem.options.filter(i=>this.formData[key].includes(i.id)).map(i=>i.name)
-          content = options.join(' | ')
-          isVisible=this.formData[key].length>0
-        } else {
-          content = selectItem.options.find(i => i.id == this.formData[key])?.name
-          isVisible=(!!this.formData[key]) && this.formData[key] !== ''
+          if(selectItem.selectKeys){  
+            let options= selectItem.options.filter(i=>{
+              return this.formData[key].includes(key+'-'+i[key])
+            }).map(i=>i[key.slice(0,key.length-2)+'Name'])
+            content = options.join(' | ')
+            isVisible=this.formData[key].length>0 
+          }else{
+            let options= selectItem.options.filter(i=>this.formData[key].includes(i.id)).map(i=>i.name)
+            content = options.join(' | ')
+            isVisible=this.formData[key].length>0
+          }
+           
+        } else { 
+          //单选多选options数据需要带前缀区分，第三级单选不用 eg: cityId:'cityId-111',cityId:'111'
+          if(selectItem.selectKeys){
+            content = selectItem.options.find(i => (key+'-'+i[key]) == this.formData[key])?.[key.slice(0,key.length-2)+'Name']
+            isVisible=(!!this.formData[key]) && this.formData[key] !== ''
+          }else{  
+            content = selectItem.options.find(i => i.id == this.formData[key])?.name
+            isVisible=(!!this.formData[key]) && this.formData[key] !== ''
+          }  
         }
-        tagChildren.push(h('span', content))
+        tagChildren.push(h('span', content)) 
         //删除按钮
         tagChildren.push(h(Icon, {
           props: {name: 'icon-chuangjianshili_guanbi'},
@@ -79,13 +94,13 @@ export default {
     clear: both;
     content: '';
     display: block;
-  }
-
+  } 
+ 
   .ant-tag {
     background-color: #E6E6E6;
     height: 32px;
     padding: 0 9px;
-    font-size: 14px;
+    font-size: 14px; 
     line-height: 32px;
     color: #646464;
     border: unset;

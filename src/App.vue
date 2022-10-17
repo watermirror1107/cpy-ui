@@ -452,7 +452,14 @@ export default {
             dataIndex: "name",
             key: "name",
             width: 100,
-            type: "selectMultiple",
+             //只有第三级单选的的时候不需要前缀拼接ID  也不用selectKeyType
+            // type: "select",
+            // selectKey:'name',
+            //多选
+            type: "select",
+            // type: "selectMultiple",
+            selectKeys:['regionId','cityId','clusterId'],
+            // type: "selectMultiple",
             scopedSlots: {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
@@ -463,10 +470,14 @@ export default {
               [...new Set(val.map(item=>{
                 return item[key]
               }))].forEach((item,index)=>{
+                let tempId = val.find(valitem=>{
+                    return valitem.regionName == item
+                  })
                 temp.push({
                   name:item,
-                  id:item,
-                  children:[]
+                  id: 'regionId-'+tempId.regionId,
+                  selectKeyType:'regionId',
+                  children: []  
                 })
               })
               //区域名称下城市集合
@@ -475,8 +486,9 @@ export default {
                   if(item[key]==tempItem.name){
                     tempItem.children.push({
                       name:item[key2],
-                      id:item[key2],
-                      children:[]
+                      id: 'cityId-'+item.cityId,
+                      selectKeyType:'cityId',
+                      children: [] 
                     });
                   }
                 })
@@ -488,7 +500,8 @@ export default {
                     if(childItem.name==item[key2]){
                       childItem.children.push({
                         name:item.name,
-                        id:item.id
+                        id: 'clusterId-'+item.id,
+                        selectKeyType:'clusterId' 
                       })
                     }
                   })
@@ -496,7 +509,24 @@ export default {
               })
               return temp;
             },
-            options:[{id:111,name:'111',cityName:'厦门1',regionName:'华东'},{id:112,name:'113',cityName:'厦门2',regionName:'华东'},{id:222,name:'2222',cityName:'福州',regionName:'华西'}],
+            options: [ {
+              id: 112, 
+              clusterId:112,
+              name: '113',
+              clusterName:'111',
+              cityName: '厦门1',
+              regionName: '华东',
+              regionId:'r1',cityId:'1' 
+            }, {id: 222,clusterId:222,clusterName:'111', name: '2222', cityName: '福州', regionName: '华西',regionId:'r2',cityId:'3'},{
+              cityId: 1,
+              cityName: "常州", 
+              clusterId: 27,
+              clusterName: "测试机房", 
+              id: 27,
+              name: "测试机房",
+              regionId: 1,
+              regionName: "华东",
+            }],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
             onFilterDropdownVisibleChange: (visible) => {
               if (visible) {
