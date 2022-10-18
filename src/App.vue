@@ -100,6 +100,7 @@
         :formOptions="formOptions"
         selectedRowText="总共%t%个，选中%s%个"
         ref="table"
+        :loopTime="10000"
         :rowSelection="{
         selectedRowKeys: selectedRowKeys,
         onChange: onSelectChange,
