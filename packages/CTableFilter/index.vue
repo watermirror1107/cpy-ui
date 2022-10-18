@@ -20,11 +20,13 @@
                  @click="changeSelect(item,column.selectKeys?true:false)"> 
                 <span> 
                     {{ item.name }}({{ item.children ? item.children.length : 0 }})
-                    <c-icon v-if="isHasChild(item)"
-                            @click.native.stop="expandNextChildren(item)"
-                            :style="{transform:item.nextShow?'rotate(180deg)':'rotate(0deg)'}"
-                            style="font-size:9px;margin-left:5px;transform: rotate(180deg)"
+                    <span v-if="isHasChild(item)"
+                          @click.stop="expandNextChildren(item)"
+                          style="height: 100%;width:30px;display: inline-block;;text-align: center;line-height: 20px;">
+                    <c-icon :style="{transform:item.nextShow?'rotate(180deg)':'rotate(0deg)'}"
+                            style="font-size:10px;transform: rotate(180deg)"
                             name="icon-xialakuang_jiantou"/> 
+                    </span>
                 </span> 
             </div>
             <template v-if="item.children&&item.children.length>0&&item.nextShow">
@@ -33,8 +35,10 @@
                    class="c_table_filter_tree_group_item"
                    v-for="(childItem,childIndex) in item.children" :key="childItem.id+childIndex">
                 <span>{{ childItem.name }}</span>
-                <c-icon @click.native.stop="changeSelect(childItem)" v-show="isHasChild(childItem)" class="c_table_filter_tree_group_item_icon" name="icon-fanhui"
-                        style="transform: rotate(180deg)"/>
+                <span  @click.stop="changeSelect(childItem)" v-show="isHasChild(childItem)" style="margin-right:-13px;height: 100%;width:30px;display: flex;justify-content: center;align-items: center;">
+                <c-icon class="c_table_filter_tree_group_item_icon" name="icon-fanhui" 
+                        style="transform: rotate(180deg);font-size: 10px;margin-right: 3"/>
+                </span>
                 <c-icon 
                     v-show="!isHasChild(childItem)&&(isMultiple?ArrayContain(selectId,childItem.id):(selectId==childItem.id))"
                     class="c_table_filter_tree_group_item_icon" style="font-size:10px" name="icon-xuanxiangka_gou"/>
@@ -140,7 +144,9 @@ export default {
   watch: {
     options: {
       handler() {
-        this.initOptions();
+        if(!this.searchName){
+          this.initOptions();
+        }
       },
       deep: true
     },
