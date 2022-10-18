@@ -1,6 +1,6 @@
 {
   "name": "cpy-ui",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "private": false,
   "main": "./lib/cpy-ui.min.js",
   "license": "MIT",
@@ -16,12 +16,12 @@
   "peerDependencies": {
     "ant-design-vue": "^1.6.5",
     "moment": "^2.29.1",
-    "vue": "^2.6.12"
+    "vue": "~2.6.12"
   },
   "dependencies": {
     "ant-design-vue": "^1.6.5",
     "moment": "^2.29.1",
-    "vue": "^2.6.12"
+    "vue": "~2.6.12"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
@@ -84,7 +84,7 @@
     "url-loader": "^4.1.1",
     "v-viewer": "^1.6.4",
     "vue-loader": "^15.9.8",
-    "vue-template-compiler": "^2.6.14",
+    "vue-template-compiler": "~2.6.12",
     "webpack": "^5.58.0",
     "webpack-cli": "^4.9.0",
     "webpack-dev-server": "^4.3.1",
