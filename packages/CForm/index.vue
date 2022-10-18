@@ -149,12 +149,23 @@ export default {
       return textObj[code] || code
     },
     validate() {
-      return this.$refs.form.validate();
+      return this.$refs.form.validate().then((isPassed)=>{
+        if(isPassed){
+          return Promise.resolve(isPassed)
+        }else{
+          return Promise.reject(isPassed)
+        }
+      });
     },
     validateField(props, callback) {
-      return this.$refs.form.validateField(props, callback);
+      return this.$refs.form.validateField(props, callback).then((isPassed)=>{
+        if(isPassed){
+          return Promise.resolve(isPassed)
+        }else{
+          return Promise.reject(isPassed)
+        }
+      });
     },
-
     resetFields() {
       this.$refs.form.resetFields();
     },
