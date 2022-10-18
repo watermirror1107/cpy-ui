@@ -10,7 +10,6 @@ module.exports = {
             style: 'css'
         }],
         [require('@babel/plugin-proposal-decorators'), {legacy: true}],
-        '@babel/plugin-syntax-dynamic-import',
-        '@babel/plugin-transform-runtime'
+        '@babel/plugin-syntax-dynamic-import'
     ]
 }
