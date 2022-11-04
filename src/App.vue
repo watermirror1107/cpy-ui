@@ -441,7 +441,7 @@ export default {
             fixed: "left",
             width: 100,
             type: "select",
-            options: [{id: 1, name: 'name1'}, {id: 2, name: 'name2'}],
+            options: [{id: 1, name: 'name1'}, {id: 2, name: 'name2'},{id: 1, name: 'name1'},{id: 1, name: 'name1'},{id: 1, name: 'name1'},{id: 1, name: 'name1'},{id: 1, name: 'name1'},{id: 1, name: 'name1'},{id: 1, name: 'name1'},{id: 1, name: 'name1'},{id: 1, name: 'name1'},{id: 1, name: 'name1'},],
             scopedSlots: {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",

@@ -57,7 +57,7 @@
       </div>
     </template>
     <template v-else>
-      <div style="padding: 8px;">
+      <div class="c_table_filter_srcoll" style="padding: 8px 2px 8px 8px;">
         <div v-if="!empty" class="c_table_filter_all" :class="{'c_table_filter_all_active':selectId==''}"
              @click="changeSelect({name:$T('instance.All'),id:''})">
           <span>{{ $T('instance.All') }}</span>
@@ -339,11 +339,39 @@ export default {
 </script>
 
 <style lang="less">
+
+.c_table_filter_srcoll{
+  max-height: 70vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    /* 滚动条整体样式 */
+    width: 5px;
+    /* 高宽分别对应横竖滚动条的尺寸 */
+    height: 5px;
+    border-radius: 6px;
+  } 
+
+
+  &::-webkit-scrollbar-thumb:vertical {
+    height: 1px;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    /* 滚动条里面小方块 */
+    background: #c8c8c8; //@--main-blue;
+  }
+
+  &::-webkit-scrollbar-track {
+    /* 滚动条里面轨道 */
+    background: transparent;
+  }
+
+}
 .c_table_filter {
   background: #FFFFFF;
   // box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
   border-radius: 4px;
-
   &_all {
     display: flex;
     justify-content: space-between;
