@@ -20,11 +20,11 @@ function install(Vue) {
         Vue.prototype.$CModal=CModal
     }
 }
-
+ 
 if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue)
 }
 export default {
     install,
-    version: '1.1.12'
+    version: '1.1.13'
 }
