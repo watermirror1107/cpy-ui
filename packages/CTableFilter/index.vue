@@ -55,6 +55,11 @@
         </template>
       </div>
     </template>
+    <template v-if="mode==='cascader'">
+      <div style="position:relative">
+       <a-cascader :getPopupContainer="(triggerNode)=>triggerNode.parentNode" :popupVisible="true" ref="cascader" autoFocus :options="optionsData" @change="cascaderChange" />
+      </div>
+    </template>
     <template v-else>
       <div class="c_table_filter_srcoll" style="padding: 8px 2px 8px 8px;">
         <div v-if="!empty" class="c_table_filter_all" :class="{'c_table_filter_all_active':selectId==''}"
@@ -141,7 +146,7 @@ export default {
       this.isInitTime = false
     }, 20);
   },
-  watch: {
+  watch: { 
     options: {
       handler() {
         if(!this.searchName){
@@ -158,7 +163,7 @@ export default {
     selectId: {
       handler(nv) {
         if (nv != undefined && !this.isMultiple && !this.isInitTime) {
-          // console.log(nv,this.selectKeyType)
+          // console.log(nv,this.selectKeyType) 
           this.$emit('confirm', nv,this.selectKeyType);
         }
       },
@@ -212,6 +217,11 @@ export default {
         return true
       }
       return false
+    },
+    cascaderChange(val){
+      // console.log(val)
+      this.selectKeyType = undefined
+      this.selectId = val
     },
     //选中  flag为true标识直接赋值 不进行下层操作
     changeSelect(item,flag = false) {  
@@ -337,7 +347,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .c_table_filter_srcoll{
   max-height: 70vh;
   overflow-y: scroll;
@@ -370,6 +380,14 @@ export default {
   background: #FFFFFF;
   // box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
   border-radius: 4px;
+
+  /deep/ .ant-cascader-picker{
+    display: none;
+  }
+  /deep/ .ant-cascader-menus{
+    left: 50%!important;
+    top: 0px!important;
+  }
 
   &_all {
     display: flex;
