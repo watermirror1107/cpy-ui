@@ -56,6 +56,11 @@
         </template>
       </div>
     </template>
+    <template v-if="mode==='cascader'">
+      <div style="position:relative" class="c_table_filter_cascader">
+       <a-cascader :getPopupContainer="(triggerNode)=>triggerNode.parentNode" :popupVisible="true" ref="cascader" autoFocus :options="optionsData" @change="cascaderChange" />
+      </div>
+    </template>
     <template v-else>
       <div class="c_table_filter_srcoll" style="padding: 8px 2px 8px 8px;">
         <div v-if="!empty" class="c_table_filter_all" :class="{'c_table_filter_all_active':selectId==''}"
@@ -214,6 +219,11 @@ export default {
       }
       return false
     },
+    cascaderChange(val){
+      // console.log(val)
+      this.selectKeyType = undefined
+      this.selectId = val
+    },
     //选中  flag为true标识直接赋值 不进行下层操作
     changeSelect(item,flag = false) {  
       // debugger;
@@ -338,7 +348,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 
 .c_table_filter_srcoll{
   max-height: 70vh;
@@ -372,6 +382,23 @@ export default {
   background: #FFFFFF;
   // box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
   border-radius: 4px;
+  &_cascader{
+    /deep/ .ant-cascader-menu-item-active:not(.ant-cascader-menu-item-disabled), .ant-cascader-menu-item-active:not(.ant-cascader-menu-item-disabled):hover{
+      background: #f7f9fc;
+      color: #0048ff;
+      font-weight: normal;
+    }
+  }
+
+  /deep/ .ant-cascader-picker{
+    display: none;
+  }
+  /deep/ .ant-cascader-menus{
+    left: 50%!important;
+    top: 0px!important;
+  }
+
+
   &_all {
     display: flex;
     justify-content: space-between;

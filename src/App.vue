@@ -455,6 +455,28 @@ export default {
             },
           },
           {
+            title: "id2",
+            dataIndex: "id2",
+            key: "id2",
+            fixed: "left",
+            width: 100,
+            type: "select",
+            selectKeys:['type1','type2'],
+            mode:'cascader',
+            options:[{value:1,label:'name1',children:[{value:3,label:'name1-name3'}]},{value:2,label:'name2',children:[{value:4,label:'name2-name4'},{value:5,label:'name2-name5'}]}],
+            scopedSlots: {
+              filterDropdown: "filterDropdown", 
+              filterIcon: "filterIcon",
+              customRender: "id",
+            },
+            filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
+            onFilterDropdownVisibleChange: (visible) => {
+              if (visible) {
+
+              }
+            },
+          },
+          {
             title: "name",
             dataIndex: "name",
             key: "name", 

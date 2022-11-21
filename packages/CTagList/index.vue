@@ -26,6 +26,19 @@ export default {
   render(h, context) {
     let keys = Object.keys(this.formData).filter(i => !this.tagFilterArr.includes(i))
     let children =[];
+    let cascaderName = [];
+    let filterContent = (options,value)=>{
+      options.forEach(item=>{
+        if(item.value==value){
+          if(cascaderName.indexOf(item.label)<0){
+            cascaderName.push(item.label)
+          } 
+        }
+        if(item.children&&Array.isArray(item.children)){
+          filterContent(item.children,value)
+        } 
+      })
+    }
     keys.forEach(key => {
       let tagChildren = []
       let selectItem = this.formOptions.find(i => ((i.selectKeys&&i.selectKeys.includes(key)) || i.selectKey === key||i.key === key))
@@ -51,8 +64,20 @@ export default {
         } else { 
           //单选多选options数据需要带前缀区分，第三级单选不用 eg: cityId:'cityId-111',cityId:'111'
           if(selectItem.selectKeys){
-            content = selectItem.options.find(i => (key+'-'+i[key]) == this.formData[key])?.[key.slice(0,key.length-2)+'Name']
-            isVisible=(!!this.formData[key]) && this.formData[key] !== ''
+            if(selectItem.mode=="cascader"){
+              if(selectItem.selectKeys.indexOf(key)!==(selectItem.selectKeys.length-1)){
+                filterContent(selectItem.options,this.formData[key]);
+                content = ''  
+                isVisible=false
+              }else{
+                filterContent(selectItem.options,this.formData[key])
+                content = cascaderName.join('-')
+                isVisible=(!!this.formData[key]) && this.formData[key] !== ''
+              }
+            }else{
+              content = selectItem.options.find(i => (key+'-'+i[key]) == this.formData[key])?.[key.slice(0,key.length-2)+'Name']
+              isVisible=(!!this.formData[key]) && this.formData[key] !== ''
+            } 
           }else{  
             content = selectItem.options.find(i => i.id == this.formData[key])?.name
             isVisible=(!!this.formData[key]) && this.formData[key] !== ''
@@ -67,7 +92,13 @@ export default {
               if (this.formData[key] instanceof Array) {
                 this.formData[key] = []
               } else {
-                this.formData[key] = undefined
+                if(selectItem.mode==='cascader'){
+                  selectItem.selectKeys.forEach(item=>{
+                    this.formData[item] = undefined
+                  })
+                }else{
+                  this.formData[key] = undefined
+                } 
               }
               this.$emit('close')
             }

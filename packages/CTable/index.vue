@@ -163,6 +163,7 @@
           </template>
           <template v-if="!column.filterOptionMethod">
             <c-table-filter @restFilter="resetFilter(column.selectKey || column.key,confirm)"
+                            :mode="column.mode || 'normal'"
                             :value="filterValue(formData,column)" :options="column.options"
                             :column="column"
                             @confirm="(val,type)=>{debounceFresh(val, confirm,type || column.selectKey || column.key,column)}"></c-table-filter>
@@ -464,7 +465,7 @@ export default {
      */
     debounceFresh: debounce(function (val, confirm, key,column) {
       // debugger;
-      if(column&&column.selectKeys&&Array.isArray(column.selectKeys)){
+      if(column&&column.selectKeys&&Array.isArray(column.selectKeys)&&column.mode!='cascader'){
         confirm()
         column.selectKeys.forEach(item=>{
           //赋值Key给值 其他置空
@@ -476,6 +477,15 @@ export default {
         })
         this.refresh(true);
         this.$emit("filterChange", val, key);
+      }else if(column.mode=='cascader'){
+        if(Array.isArray(val)){ 
+          confirm()
+          val.forEach((item,index)=>{
+            this.formData[column.selectKeys[index]] = item;
+          }) 
+          this.refresh(true);
+          this.$emit("filterChange", val, key);
+        } 
       }else{
         confirm();
         this.formData[key] = val; 
