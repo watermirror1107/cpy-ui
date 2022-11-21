@@ -56,7 +56,7 @@
       </div>
     </template>
     <template v-if="mode==='cascader'">
-      <div style="position:relative">
+      <div style="position:relative" class="c_table_filter_cascader">
        <a-cascader :getPopupContainer="(triggerNode)=>triggerNode.parentNode" :popupVisible="true" ref="cascader" autoFocus :options="optionsData" @change="cascaderChange" />
       </div>
     </template>
@@ -380,7 +380,13 @@ export default {
   background: #FFFFFF;
   // box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
   border-radius: 4px;
-
+  &_cascader{
+    /deep/ .ant-cascader-menu-item-active:not(.ant-cascader-menu-item-disabled), .ant-cascader-menu-item-active:not(.ant-cascader-menu-item-disabled):hover{
+      background: #f7f9fc;
+      color: #0048ff;
+      font-weight: normal;
+    }
+  }
   /deep/ .ant-cascader-picker{
     display: none;
   }
