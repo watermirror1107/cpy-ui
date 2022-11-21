@@ -30,7 +30,9 @@ export default {
     let filterContent = (options,value)=>{
       options.forEach(item=>{
         if(item.value==value){
-          cascaderName.push(item.label)
+          if(cascaderName.indexOf(item.label)<0){
+            cascaderName.push(item.label)
+          }  
         }
         if(item.children&&Array.isArray(item.children)){
           filterContent(item.children,value)
@@ -90,9 +92,15 @@ export default {
               if (this.formData[key] instanceof Array) {
                 this.formData[key] = []
               } else {
-                this.formData[key] = undefined
+                if(selectItem.mode==='cascader'){
+                  selectItem.selectKeys.forEach(item=>{
+                    this.formData[item] = undefined
+                  })
+                }else{
+                  this.formData[key] = undefined
+                } 
               }
-              this.$emit('close')
+              this.$emit('close') 
             }
           }
         }))
