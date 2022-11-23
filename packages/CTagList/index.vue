@@ -72,7 +72,7 @@ export default {
               }else{
                 filterContent(selectItem.options,this.formData[key])
                 content = cascaderName.join('-')
-                isVisible=(!!this.formData[key]) && this.formData[key] !== ''
+                isVisible= cascaderName.length>1 
               }
             }else{
               content = selectItem.options.find(i => (key+'-'+i[key]) == this.formData[key])?.[key.slice(0,key.length-2)+'Name']

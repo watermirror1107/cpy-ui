@@ -409,14 +409,19 @@ export default {
     filterValue(value,column){
       // debugger;
       let temp = '';
-      if(column.selectKeys&&Array.isArray(column.selectKeys)){
+      if(column.selectKeys&&Array.isArray(column.selectKeys)&&column.mode!='cascader'){
         column.selectKeys.forEach(item=>{ 
           if(value[item]){ 
            temp = value[item] // eg:cityId-1 regionId-1
           }
         })
-      }else{
-        temp = value[column.selectKey || column.key]
+      }else if(column.mode=='cascader'){
+        temp = [];
+        column.selectKeys.forEach(item=>{ 
+           temp.push(value[item]) // eg:cityId-1 regionId-1
+        })
+      } else{
+        temp = value[column.selectKey || column.key] || ''
       }
       return temp;
     },
@@ -478,6 +483,9 @@ export default {
       }else if(column.mode=='cascader'){
         if(Array.isArray(val)){
           confirm()
+          column.selectKeys.forEach(item=>{
+              delete this.formData[item]
+          })
           val.forEach((item,index)=>{
             this.formData[column.selectKeys[index]] = item;
           }) 

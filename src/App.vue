@@ -456,7 +456,7 @@ export default {
             type: "select",
             selectKeys:['type1','type2'],
             mode:'cascader',
-            options:[{value:1,label:'name1',children:[{value:3,label:'name1-name3'}]},{value:2,label:'name2',children:[{value:4,label:'name2-name4'},{value:5,label:'name2-name5'}]}],
+            options:[{value:'',label:'全部'},{value:1,label:'name1',children:[{value:'',label:'全部'},{value:3,label:'name1-name3'}]},{value:2,label:'name2',children:[{value:'',label:'全部'},{value:4,label:'name2-name4'},{value:5,label:'name2-name5'}]}],
             scopedSlots: {
               filterDropdown: "filterDropdown", 
               filterIcon: "filterIcon",
