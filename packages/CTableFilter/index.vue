@@ -5,20 +5,20 @@
       <a-input v-model="searchName" :placeholder="$T('alarm.Pleaseenterakeywordtosearch')" @change="inputSearch">
         <a-icon slot="prefix" type="search"/>
       </a-input>
-      <div class="c_table_filter_tree">
+      <div class="c_table_filter_tree">  
         <!-- 组件内只显示两级，更多级在expand组件中可做递归组件 -->
         <div v-if="!empty" class="c_table_filter_all" :class="{'c_table_filter_all_active':selectId==''}"
              @click="changeSelect({name:$T('instance.All'),id:''})">
           <span>{{ $T('instance.All') }}</span>
           <c-icon v-show="selectId==''" class="c_table_filter_all_icon" style="font-size:10px"
                   name="icon-xuanxiangka_gou"/>
-        </div>
-        <template v-for="(item,index) in treeData"> 
+        </div> 
+        <template v-for="(item,index) in treeData">  
           <div class="c_table_filter_tree_group" v-if="item.showSearch" :key="index">
             <div class="c_table_filter_tree_group_title" 
                  :class="{'c_table_filter_tree_group_title_active':(isMultiple?ArrayContain(selectId,item.id):(selectId==item.id))}"
                  @click="changeSelect(item,column.selectKeys?true:false)"> 
-                <span> 
+                <span>  
                     {{ item.name }}({{ item.children ? item.children.length : 0 }})
                     <span v-if="isHasChild(item)"
                           @click.stop="expandNextChildren(item)"
@@ -56,7 +56,7 @@
         </template>
       </div>
     </template>
-    <template v-if="mode==='cascader'">
+    <template v-else-if="mode==='cascader'">
       <div style="position:relative" class="c_table_filter_cascader">
        <a-cascader v-model="selectId" :getPopupContainer="(triggerNode)=>triggerNode.parentNode"  :popupVisible="true" ref="cascader" autoFocus :options="optionsData" @change="cascaderChange" />
       </div>
@@ -158,8 +158,9 @@ export default {
     },
     value: {
       handler(nv) {
+        //cascader模式下 重新拼装数值值会导致数组地址与原先地址不同，无限循环，因此只做数值的判断
         if(Array.isArray(nv)&&Array.isArray(this.selectId)&&(this.selectId.join(',')==nv.join(','))&&(this.selectId!=nv)){
-          // this.selectId = nv 
+
         }else{
           this.selectId = nv
         }
@@ -214,7 +215,7 @@ export default {
           this.$set(item, 'showSearch', true);
           this.$set(item, 'nextShow', true);
         })
-      } else {
+      } else { 
         this.optionsData = this.options;
       }
     },
@@ -230,7 +231,6 @@ export default {
     },
     //选中  flag为true标识直接赋值 不进行下层操作
     changeSelect(item,flag = false) {  
-      // debugger;
       if(flag){
         if (this.isMultiple) { 
           if (this.ArrayContain(this.selectId, item.id)) {

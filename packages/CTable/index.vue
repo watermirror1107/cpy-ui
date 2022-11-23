@@ -419,7 +419,7 @@ export default {
           }
         })
       }else if(column.mode=='cascader'){
-        temp = [];
+        temp = []; 
         column.selectKeys.forEach(item=>{ 
            temp.push(value[item]) // eg:cityId-1 regionId-1
         })
@@ -486,9 +486,12 @@ export default {
       }else if(column.mode=='cascader'){
         if(Array.isArray(val)){ 
           confirm()
+          column.selectKeys.forEach(item=>{
+            delete this.formData[item]
+          })
           val.forEach((item,index)=>{
             this.formData[column.selectKeys[index]] = item;
-          }) 
+          })  
           this.refresh(true);
           this.$emit("filterChange", val, key);
         } 
