@@ -58,7 +58,7 @@
     </template>
     <template v-if="mode==='cascader'">
       <div style="position:relative" class="c_table_filter_cascader">
-       <a-cascader :getPopupContainer="(triggerNode)=>triggerNode.parentNode" :popupVisible="true" ref="cascader" autoFocus :options="optionsData" @change="cascaderChange" />
+       <a-cascader v-model="selectId" :getPopupContainer="(triggerNode)=>triggerNode.parentNode"  :popupVisible="true" ref="cascader" autoFocus :options="optionsData" @change="cascaderChange" />
       </div>
     </template>
     <template v-else>
@@ -158,7 +158,12 @@ export default {
     },
     value: {
       handler(nv) {
-        this.selectId = nv
+        if(Array.isArray(nv)&&Array.isArray(this.selectId)&&(this.selectId.join(',')==nv.join(','))&&(this.selectId!=nv)){
+          // this.selectId = nv 
+        }else{
+          this.selectId = nv
+        }
+        
       },
     },
     selectId: {
@@ -174,7 +179,7 @@ export default {
     return {
       searchName: '',
       singleImage: Empty.PRESENTED_IMAGE_SIMPLE,
-      selectId: '',
+      selectId: null,
       //用来定位选择的是哪一级的数据 
       selectKeyType:'',
       empty: false,
@@ -220,7 +225,6 @@ export default {
       return false
     },
     cascaderChange(val){
-      // console.log(val)
       this.selectKeyType = undefined
       this.selectId = val
     },

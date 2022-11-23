@@ -411,14 +411,20 @@ export default {
     filterValue(value,column){
       // debugger;
       let temp = '';
-      if(column.selectKeys&&Array.isArray(column.selectKeys)){
+      // debugger;
+      if(column.selectKeys&&Array.isArray(column.selectKeys)&&column.mode!='cascader'){
         column.selectKeys.forEach(item=>{ 
           if(value[item]){ 
            temp = value[item] // eg:cityId-1 regionId-1
           }
         })
+      }else if(column.mode=='cascader'){
+        temp = [];
+        column.selectKeys.forEach(item=>{ 
+           temp.push(value[item]) // eg:cityId-1 regionId-1
+        })
       }else{
-        temp = value[column.selectKey || column.key]
+        temp = value[column.selectKey || column.key] || ''
       }
       return temp;
     },
