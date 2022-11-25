@@ -390,7 +390,26 @@ export default {
       background: #f7f9fc;
       color: #0048ff;
       font-weight: normal;
+      position: relative;
+      &::after{
+        display: inline-block;
+        content: '✓';
+        // right: 0px;
+        margin-left: 10px;
+        width: 10px;
+        text-align: center;
+        height: 10px;
+        line-height: 10px;
+        color: #0048ff;
+        transform: rotate(16deg);
+      }
     }
+    /deep/ .ant-cascader-menu-item-expand{
+      &::after{
+        display: none!important;
+      }
+    } 
+    
   }
   /deep/ .ant-cascader-picker{
     display: none;
