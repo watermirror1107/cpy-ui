@@ -39,7 +39,7 @@
                 <span  @click.stop="changeSelect(childItem)" v-show="isHasChild(childItem)" style="margin-right:-13px;height: 100%;width:30px;display: flex;justify-content: center;align-items: center;">
                 <c-icon class="c_table_filter_tree_group_item_icon" name="icon-fanhui"
                         style="transform: rotate(180deg);font-size: 10px;margin-right: 3px;"/> 
-                </span>
+                </span> 
                 <c-icon 
                     v-show="!isHasChild(childItem)&&(isMultiple?ArrayContain(selectId,childItem.id):(selectId==childItem.id))"
                     class="c_table_filter_tree_group_item_icon" style="font-size:10px" name="icon-xuanxiangka_gou"/>
@@ -58,7 +58,8 @@
     </template>
     <template v-else-if="mode==='cascader'">
       <div style="position:relative" class="c_table_filter_cascader">
-       <a-cascader v-model="selectId" :getPopupContainer="(triggerNode)=>triggerNode.parentNode"  :popupVisible="true" ref="cascader" autoFocus :options="optionsData" @change="cascaderChange" />
+       <a-cascader v-model="selectId" :getPopupContainer="(triggerNode)=>triggerNode.parentNode"  :popupVisible="true" ref="cascader" autoFocus :options="optionsData" @change="cascaderChange" >
+      </a-cascader>
       </div>
     </template>
     <template v-else>
@@ -391,6 +392,24 @@ export default {
       background: #f7f9fc;
       color: #0048ff;
       font-weight: normal;
+      position: relative;
+      &::after{
+        display: inline-block;
+        content: '✓';
+        // right: 0px;
+        margin-left: 10px;
+        width: 10px;
+        text-align: center;
+        height: 10px;
+        line-height: 10px;
+        color: #0048ff;
+        transform: rotate(16deg);
+      }
+    }
+    /deep/ .ant-cascader-menu-item-expand{
+      &::after{
+        display: none!important;
+      }
     }
   }
 

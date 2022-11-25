@@ -423,6 +423,9 @@ export default {
         column.selectKeys.forEach(item=>{ 
            temp.push(value[item]) // eg:cityId-1 regionId-1
         })
+        if(temp.length==2&&(temp[0]=='' || temp[0]==undefined)&&(temp[1]=='' || temp[1]==undefined)){
+          temp = ['']
+        }
       }else{
         temp = value[column.selectKey || column.key] || ''
       }

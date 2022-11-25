@@ -112,7 +112,7 @@ export default {
     isSlotFooter() {
       return Boolean(this.$slots.footer || this.$scopedSlots.footer);
     }
-  },
+  }, 
   methods: {
     /**
      * @description:关闭弹窗
