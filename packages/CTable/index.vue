@@ -29,28 +29,42 @@
         <slot :name="nativeTable"></slot>
       </template>
       <!--      表头过滤-->
-      <template v-slot:filterDropdown="{ confirm }">
-        <a-select
-            ref="searchInput"
-            style="width: 180px;"
-            show-search
-            :showArrow="false"
-            allowClear
-            autoFocus
-            :defaultOpen="true"
-            :open="true"
-            :getPopupContainer="(triggerNode)=>triggerNode.parentNode"
-            option-filter-prop="children"
-            :filter-option="(input, option) =>(option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0)"
-            :placeholder="$T('public.search')"
-            @change="$emit('filterChange',$event,confirm)"
-        >
-          <a-select-option
-              v-for="option in filterOptions"
-              :value="option.id"
-              :key="option.id">{{ option.name }}
-          </a-select-option>
-        </a-select>
+      <template v-slot:filterDropdown="{ confirm,column }">
+        <template v-if="column.mode=='cascader'">
+          <div class="c_table_cascader">
+            <a-cascader 
+              :getPopupContainer="(triggerNode)=>triggerNode.parentNode" 
+              :popupVisible="true" 
+              ref="cascader" 
+              autoFocus 
+              :options="filterOptions" 
+              @change="$emit('filterChange',$event,confirm)" />
+          </div>
+        </template> 
+        <template v-else>
+          <a-select
+              ref="searchInput"
+              style="width: 180px;"
+              show-search
+              :showArrow="false"
+              allowClear
+              autoFocus
+              :defaultOpen="true"
+              :open="true"
+              :getPopupContainer="(triggerNode)=>triggerNode.parentNode"
+              option-filter-prop="children"
+              :filter-option="(input, option) =>(option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0)"
+              :placeholder="$T('public.search')"
+              @change="$emit('filterChange',$event,confirm)"
+          >
+            <a-select-option
+                v-for="option in filterOptions"
+                :value="option.id"
+                :key="option.id">{{ option.name }}
+            </a-select-option>
+          </a-select>
+        </template>
+        
       </template>
     </a-table>
     <div
@@ -290,6 +304,25 @@ export default {
     }
   }
 
+  &_cascader{
+    position: relative;
+    .ant-cascader-menu-item-expand{
+      &::after{
+        display: none!important; 
+      }
+    } 
+    .ant-cascader-picker{
+      display: none;
+    }
+    .ant-cascader-menus{
+      left: 50%!important;
+      top: 0px!important;
+    }
+    
+  }
+
+
+    
   &_noBorder {
     .ant-table {
       border: unset !important;
