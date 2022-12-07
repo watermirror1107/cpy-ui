@@ -483,13 +483,13 @@ export default {
         })
         this.refresh(true);
         this.$emit("filterChange", val, key);
-      }else if(column.mode=='cascader'){
+      }else if(column&&column.mode=='cascader'){
         if(Array.isArray(val)){
           confirm()
           column.selectKeys.forEach(item=>{
               delete this.formData[item]
           })
-          val.forEach((item,index)=>{
+          val.forEach((item,index)=>{ 
             this.formData[column.selectKeys[index]] = item;
           }) 
           this.refresh(true);
