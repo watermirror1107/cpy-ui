@@ -43,11 +43,11 @@
     <!--      <template #right>righ</template>-->
     <!--    </c-nav-header>-->
     <!--        <c-range-picker v-model="time" :currentType="2"></c-range-picker>-->
-    <!--    <c-table-form-->
-    <!--        v-model="formData"-->
-    <!--        :formOptions="formOptions"-->
-    <!--        @submit="handleSubmit"-->
-    <!--    ></c-table-form>-->
+       <c-table-form
+           v-model="formData"
+           :formOptions="formOptions"
+           @submit="handleSubmit"
+       ></c-table-form>
     <!--    <c-duration v-model="month"></c-duration>-->
     <!--        <c-tabs-->
     <!--            :tabs="imageTypes"-->
@@ -77,14 +77,14 @@
 <!--    >-->
 <!--      <p slot='extraContent' style="text-align:center;" @click="clickHandler(1)">extraContent</p>-->
 <!--    </c-search-select>-->
-    <c-search-select :queryPromise="queryOptions"
+    <!-- <c-search-select :queryPromise="queryOptions"
                      :extraResult="[{id:'test',name:'test'}]"
                      mode="multiple"
                      :extraParams="{date:'2012'}"
                      placeholder="测试一下"
                      v-model="tabIndex2"
                      style="width:320px;margin: 0 auto;">
-    </c-search-select>
+    </c-search-select> -->
        <c-table
            :bordered="false"
            ref="table"
@@ -414,6 +414,7 @@ export default {
     }),
     handleSubmit() {
       console.log(this.formData)
+      this.$refs.table.refresh()
     },
     clickMore() {
       console.log('more')

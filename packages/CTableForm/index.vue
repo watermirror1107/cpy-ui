@@ -10,7 +10,7 @@
           :prop="item.key"
           :key="index">
         <slot
-            :name="item.key"
+            :name="item.key" 
             :scope="{value:formData[item.key]}">
           <a-input
               class="c_table_form_input"
@@ -45,16 +45,23 @@
         </slot>
       </a-form-model-item>
     </a-form-model>
+    <c-button
+        size="large"
+        class="c_table_refresh"
+        @click="handleSubmit"
+        icon="icon-chongzhi">
+    </c-button>
   </div>
 </template>
 
 <script>
 import icon from '../CIcon/index'
+import CButton from '../CButton/index'
 import {debounce} from "../../utils";
 
 export default {
   name: 'CTableForm',
-  components: {icon},
+  components: {icon,CButton},
   data() {
     this.handleSubmit = debounce(this.handleSubmit, this.delay)
     return {
@@ -103,7 +110,10 @@ export default {
 .c_table_form {
   display: flex;
   align-items: center;
-
+  .c_table_refresh{
+    display: inline-block;
+    margin-left:5px;
+  }
   &_input {
     width: 300px;
 
