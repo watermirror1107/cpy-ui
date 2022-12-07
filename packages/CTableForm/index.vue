@@ -45,14 +45,14 @@
            
         </slot>
       </a-form-model-item>
-      <a-form-mode-item> 
+      <a-form-model-item> 
         <c-button
           size="large"
           class="c_table_refresh"
           @click="handleSubmit" 
           icon="icon-chongzhi">
         </c-button>
-      </a-form-mode-item>
+      </a-form-model-item>
     </a-form-model>
   </div>
 </template>
@@ -114,7 +114,7 @@ export default {
   display: flex;
   align-items: center;
   .c_table_refresh{
-    display: inline-block;
+    display: inline-block; 
     margin-left:0px;
     width:46px!important;
   }
