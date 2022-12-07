@@ -486,7 +486,7 @@ export default {
         })
         this.refresh(true);
         this.$emit("filterChange", val, key);
-      }else if(column.mode=='cascader'){
+      }else if(column&&column.mode=='cascader'){
         if(Array.isArray(val)){ 
           confirm()
           column.selectKeys.forEach(item=>{
