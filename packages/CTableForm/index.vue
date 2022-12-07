@@ -6,7 +6,7 @@
         @submit="handleSubmit"
         @submit.native.prevent>
       <a-form-model-item
-          v-for="(item,index) in formOptions"
+          v-for="(item,index) in formDataOptions"
           :prop="item.key"
           :key="index">
         <slot
@@ -42,15 +42,17 @@
               :mode="item.mode||['date', 'date']"
               :placeholder="item.placeholder||['开始日期','结束日期']"
               @change="handleRangePickerChange(item.key, $event)"/>
+           <c-button
+              v-else-if="item.type === 'refresh'"
+              size="large"
+              class="c_table_refresh"
+              @click="handleSubmit" 
+              icon="icon-chongzhi">
+            </c-button>
         </slot>
       </a-form-model-item>
     </a-form-model>
-    <c-button
-        size="large"
-        class="c_table_refresh"
-        @click="handleSubmit"
-        icon="icon-chongzhi">
-    </c-button>
+   
   </div>
 </template>
 
@@ -65,7 +67,8 @@ export default {
   data() {
     this.handleSubmit = debounce(this.handleSubmit, this.delay)
     return {
-      formData: {}
+      formData: {},
+      formDataOptions:[]
     }
   },
   props: {
@@ -79,12 +82,23 @@ export default {
   },
   created() {
     this.formData = Object.assign({}, this.data);
+    this.formDataOptions = this.formOptions.concat({
+      key: 'refresh',type:'refresh'
+    });
   },
   watch: {
     formData: {
       handler(nv) {
         this.$emit('change', nv);
         this.handleSubmit();
+      },
+      deep: true
+    },
+    formOptions: {
+      handler(nv) {
+        this.formDataOptions = nv.concat({
+          key: 'refresh',type:'refresh'
+        });
       },
       deep: true
     }
@@ -113,6 +127,7 @@ export default {
   .c_table_refresh{
     display: inline-block;
     margin-left:5px;
+    width:46px!important;
   }
   &_input {
     width: 300px;
