@@ -517,9 +517,9 @@ export default {
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
           },
           {
-            title: "type1",
-            dataIndex: "type1",
-            key: "type1",
+            title: "type3",
+            dataIndex: "type3",
+            key: "type3",
             width: 200,
             searchType: "select",
             selectKeys:['type1','type2'],

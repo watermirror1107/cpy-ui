@@ -524,6 +524,7 @@ export default {
           val.forEach((item,index)=>{
             this.$set(this.formData,column.selectKeys[index],item)
           })  
+          delete this.formData[key]
           this.refresh(true);
           this.$emit("filterChange", val, key);
         }     

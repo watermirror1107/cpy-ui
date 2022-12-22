@@ -151,14 +151,24 @@ export default {
      */
     getOptions() {
       return this.columns.filter(i => {
-        const {searchType, searchKey, key} = i
+        const {searchType, searchKey, key,selectKeys} = i
         if (searchType) {
+          if(selectKeys){
+            let flag = true;
+            selectKeys.forEach(item=>{
+              if(this.formData[item]){
+                flag = false 
+              }
+            })
+            return flag
+          }
           if (this.formData[searchKey || key] instanceof Array && this.formData[searchKey || key].length === 0) {
             return true
           }
           if (!this.formData[searchKey || key]) {
             return true
           }
+         
         }
       })
     },
