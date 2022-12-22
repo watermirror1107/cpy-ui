@@ -528,7 +528,43 @@ export default {
               filterDropdown: "filterDropdown",
               filterIcon: "filterIcon",
             },
-            options: [{value:'',label:'全部'},{value:1,label:'name1',children:[{value:'',label:'全部'},{value:3,label:'name1-name3'}]},{value:2,label:'name2',children:[{value:'',label:'全部'},{value:4,label:'name2-name4'},{value:5,label:'name2-name5'}]}],
+            options: [
+            {
+          value: '',
+          label: '使用状态-全部'
+        },
+        {
+          value: 'used',
+          label: '已用',
+          children: [
+            { value: '', label: '全部' },
+            {
+              value: 'pre',
+              label: '预占用'
+            },
+            {
+              value: 'success',
+              label: '分配成功'
+            },
+            {
+              value: 'using',
+              label: '分配中'
+            },
+            {
+              value: 'ext_err',
+              label: '底层错误'
+            }
+          ]
+        }, {
+          value: 'unused',
+          label: '未用',
+          children: [
+            { value: '', label: '全部' },
+            { value: 'unavailable', label: '不可用' },
+            { value: 'available', label: '可用' }
+          ]
+        }
+            ],
             filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
           },
           {

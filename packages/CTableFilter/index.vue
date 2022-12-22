@@ -335,7 +335,7 @@ export default {
   &_cascader{
     .ant-cascader-menu-item-active:not(.ant-cascader-menu-item-disabled), .ant-cascader-menu-item-active:not(.ant-cascader-menu-item-disabled):hover{
       background: #f7f9fc;
-      color: #0048ff;
+      color: #0048ff!important;
       font-weight: normal;
       position: relative;
       // &::after{
@@ -344,7 +344,7 @@ export default {
       //   // right: 0px; 
       //   margin-left: 10px;
       //   width: 10px;
-      //   text-align: center;
+      //   text-align: center; 
       //   height: 10px;
       //   line-height: 10px;
       //   color: #0048ff;
@@ -358,6 +358,11 @@ export default {
     }
   }
 
+  .ant-cascader-menu-item{
+    color: #000000a6!important;
+    min-width: 200px;
+    text-align: left;
+  }
   .ant-cascader-picker{
    display: none;
   }

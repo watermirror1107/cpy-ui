@@ -424,6 +424,7 @@ export default {
         top: -10px!important;
         .ant-cascader-menu{
           min-width: 220px;
+          text-align: left;
         }
       }
     }
