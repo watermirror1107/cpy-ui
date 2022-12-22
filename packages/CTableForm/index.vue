@@ -11,7 +11,7 @@
           :key="index">
         <slot
             :name="item.key"
-            :scope="{value:formData[item.key]}">
+            :scope="{value:formData[item.key]}"> 
           <a-input
               class="c_table_form_input"
               v-if="item.type==='input'"
@@ -48,7 +48,7 @@
   </div>
 </template>
 
-<script>
+<script> 
 import icon from '../CIcon/index'
 import {debounce} from "../../utils";
 
@@ -85,7 +85,7 @@ export default {
   methods: {
     handleSubmit() {
       this.$emit('submit')
-    },
+    }, 
     /**
      * @description:日期范围选择回调
      */

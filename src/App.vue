@@ -499,6 +499,39 @@ export default {
             },
           },
           {
+            title: "content1",
+            dataIndex: "content1",
+            key: "content1",
+            width: 200,
+            searchType: "select",
+            scopedSlots: {
+              filterDropdown: "filterDropdown",
+              filterIcon: "filterIcon",
+            },
+            options: [{id: 1, name: '1', cityName: '厦门1', regionName: '华东'}, {
+              id: 2,
+              name: '2',
+              cityName: '厦门2',
+              regionName: '华东'
+            }, {id: 3, name: '3', cityName: '福州', regionName: '华西'}],
+            filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
+          },
+          {
+            title: "type1",
+            dataIndex: "type1",
+            key: "type1",
+            width: 200,
+            searchType: "select",
+            selectKeys:['type1','type2'],
+            mode:'cascader',
+            scopedSlots: {
+              filterDropdown: "filterDropdown",
+              filterIcon: "filterIcon",
+            },
+            options: [{value:'',label:'全部'},{value:1,label:'name1',children:[{value:'',label:'全部'},{value:3,label:'name1-name3'}]},{value:2,label:'name2',children:[{value:'',label:'全部'},{value:4,label:'name2-name4'},{value:5,label:'name2-name5'}]}],
+            filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
+          },
+          {
             title: "content",
             dataIndex: "content",
             key: "content",
@@ -578,6 +611,7 @@ export default {
       return axios.get("/getoptions?ID=12345");
     },
     queryList(params) {
+      console.log('----',params)
       return axios({
         url: "/getoptions",
         method: "get",

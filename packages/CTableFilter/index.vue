@@ -47,6 +47,12 @@
         </template>
       </div>
     </template>
+    <template v-else-if="mode==='cascader'">
+      <div style="position:relative" class="c_table_filter_cascader">
+       <a-cascader v-model="selectId" :getPopupContainer="(triggerNode)=>triggerNode.parentNode"  :popupVisible="true" ref="cascader" autoFocus :options="optionsData" @change="cascaderChange" >
+       </a-cascader>
+      </div>
+    </template>
     <template v-else>
       <div style="padding: 8px;">
         <template v-if="isMultiple">
@@ -121,6 +127,10 @@ export default {
     mode: {type: String, default: "normal"}, // tree 代表树形结构 normal 代表单级数据结构
     isMultiple: {type: Boolean, default: false}, //是否支持多选
     width: {type: Number, default: 200},
+    column:{type:Object,default:()=>{
+      return {}
+    }},
+
     options: {
       type: Array, default: () => {
         return []
@@ -134,7 +144,7 @@ export default {
     this.initOptions();
     if (this.isMultiple) {
       this.selectId = Array.isArray(this.value) ? JSON.parse(JSON.stringify(this.value)) : []//引用类型的值需要深拷贝
-    } else {
+    } else { 
       this.selectId = this.value || '';//普通类型的值不需要深拷贝
     }
   },
@@ -159,7 +169,7 @@ export default {
     return {
       searchName: '',
       singleImage: Empty.PRESENTED_IMAGE_SIMPLE,
-      selectId: '',
+      selectId: null,
       empty: false,
       indeterminate: false,
       checkAll: false,
@@ -224,6 +234,10 @@ export default {
         return true
       }
       return false
+    },
+    cascaderChange(val){
+      this.selectId = val
+      this.$emit('confirm', this.selectId);
     },
     //选中
     changeSelect(item) {
@@ -317,6 +331,41 @@ export default {
 .c_table_filter {
   background: #FFFFFF;
   border-radius: 4px;
+
+  &_cascader{
+    .ant-cascader-menu-item-active:not(.ant-cascader-menu-item-disabled), .ant-cascader-menu-item-active:not(.ant-cascader-menu-item-disabled):hover{
+      background: #f7f9fc;
+      color: #0048ff;
+      font-weight: normal;
+      position: relative;
+      // &::after{
+      //   display: inline-block;
+      //   content: '✓';
+      //   // right: 0px; 
+      //   margin-left: 10px;
+      //   width: 10px;
+      //   text-align: center;
+      //   height: 10px;
+      //   line-height: 10px;
+      //   color: #0048ff;
+      //   transform: rotate(16deg);
+      // }
+    }
+    .ant-cascader-menu-item-expand{
+      &::after{
+        display: none!important;
+      }
+    }
+  }
+
+  .ant-cascader-picker{
+   display: none;
+  }
+  .ant-cascader-menus{
+    left: 50%!important;
+    top: 0px!important;
+  }
+
 
   .ant-checkbox-group {
     width: 100%;

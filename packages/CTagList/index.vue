@@ -20,7 +20,7 @@ export default {
     }
   },
   methods:{
-    pushTag(h, {content, title, key,canClearTag}){
+    pushTag(h, {content, title, key,canClearTag,selectColumn}){
       let tagChildren = []
       tagChildren.push(h('span', {style: {marginRight: '16px'}}, (title||'queryName') + ':'))
       tagChildren.push(h('span', content))
@@ -30,7 +30,7 @@ export default {
           props: {name: 'icon-chuangjianshili_guanbi'},
           nativeOn: {
             click: () => {
-              this.$emit('close',key)
+              this.$emit('close',key,selectColumn)
             }
           }
         }))
@@ -41,24 +41,49 @@ export default {
   render(h, context) {
     let keys = Object.keys(this.formData).filter(i => !this.tagFilterArr.includes(i))
     let children =[];
+    let cascaderName = [];
+    let filterContent = (options,value)=>{
+      options.forEach(item=>{
+        if(item.value==value){
+          if(cascaderName.indexOf(item.label)<0){
+            cascaderName.push(item.label)
+          } 
+        }
+        if(item.children&&Array.isArray(item.children)){
+          filterContent(item.children,value)
+        } 
+      })
+    }
     keys.forEach(key => {
-      let selectColumn = this.filterColumns.find(i => (i.searchKey === key||i.key === key))
+      let selectColumn = this.filterColumns.find(i => ((i.selectKeys&&i.selectKeys.includes(key)) || i.searchKey === key||i.key === key))
       let content = '';
       let title = '搜索';
       let isVisible=false;
       if (selectColumn) {//在列数据里面的
         title=selectColumn.title
-        //内容
-        //如果不是input类型
+        //内容 
+        //如果不是input类型 
         if(selectColumn.searchType!=='input'){
           // console.log(selectColumn.options)
           if (this.formData[key] instanceof Array) {
             let options= selectColumn.options.filter(i=>this.formData[key].includes(i.id)).map(i=>i.name)
             content = options.join(' | ')
             isVisible=this.formData[key].length>0
-          } else {
-            content = selectColumn.options.find(i => i.id == this.formData[key])?.name
-            isVisible=(!!this.formData[key]) && this.formData[key] !== ''
+          } else { 
+            if(selectColumn.selectKeys){
+              if(selectColumn.selectKeys.indexOf(key)!==(selectColumn.selectKeys.length-1)){
+                  filterContent(selectColumn.options,this.formData[key]);
+                  content = ''
+                  isVisible = false
+                }else{ 
+                  filterContent(selectColumn.options,this.formData[key])
+                  content = cascaderName.join('-');
+                  isVisible = cascaderName.length>1 
+                }
+            }else{
+              content = selectColumn.options.find(i => i.id == this.formData[key])?.name
+              isVisible=(!!this.formData[key]) && this.formData[key] !== ''
+            }
           }
         }else{
           content =this.formData[key]
@@ -74,7 +99,7 @@ export default {
           closable: true,
           visible: isVisible
         }
-      }, this.pushTag(h, {content, title,key,canClearTag:selectColumn?.canClearTag})))
+      }, this.pushTag(h, {content, title,key,canClearTag:selectColumn?.canClearTag,selectColumn:selectColumn})))
     })
     return h('ul', {
       class: 'c_tag_list',

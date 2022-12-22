@@ -11,8 +11,8 @@
             :formData.sync="formData"
             :columns="$attrs.columns"
             @change="debounceFresh($event, () => {}, 'queryName')"
-            :placeholder="queryNamePlaceholder"
-        >
+            :placeholder="queryNamePlaceholder" 
+        > 
         </c-table-input-search>
         <c-button
             v-if="isShowFresh"
@@ -77,18 +77,21 @@
           <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
             <c-table-filter :isMultiple="true"
                             mode="tree"
-                            :value="formData[column.searchKey || column.key]"
+                            :value="filterValue(formData,column)"
                             :options="column.filterOptionMethod(column.options)"
                             @cancel="confirm"
-                            @confirm="debounceFresh($event, confirm, column.searchKey || column.key)">>
+                            @confirm="debounceFresh($event, confirm, column.searchKey || column.key,column)"
+                            :column="column">
             </c-table-filter>
           </template>
           <template v-if="!column.filterOptionMethod">
             <c-table-filter :isMultiple="true"
-                            :value="formData[column.searchKey || column.key]"
+                            :value="filterValue(formData,column)"
                             :options="column.options"
                             @cancel="confirm"
-                            @confirm="debounceFresh($event, confirm, column.searchKey || column.key)"></c-table-filter>
+                            :mode="column.mode || 'normal'"
+                            @confirm="debounceFresh($event, confirm, column.searchKey || column.key,column)"
+                            :column="column"></c-table-filter>
           </template>
           <!-- slot="dropdownRender" slot-scope="menu" -->
         </template>
@@ -142,17 +145,20 @@
         <template v-else-if="column.searchType !== 'input'">
           <template v-if="column.filterOptionMethod&&typeof column.filterOptionMethod =='function'">
             <c-table-filter mode="tree"
-                            :value="formData[column.searchKey || column.key]"
+                            :value="filterValue(formData,column)"
                             :options="column.filterOptionMethod(column.options)"
                             @cancel="confirm"
-                            @confirm="debounceFresh($event, confirm, column.searchKey || column.key)">>
+                            @confirm="debounceFresh($event, confirm, column.searchKey || column.key,column)"
+                            :column="column">
             </c-table-filter>
           </template>
           <template v-if="!column.filterOptionMethod">
-            <c-table-filter :value="formData[column.searchKey || column.key]"
+            <c-table-filter :value="filterValue(formData,column)"
                             :options="column.options"
                             @cancel="confirm"
-                            @confirm="debounceFresh($event, confirm, column.searchKey || column.key)"></c-table-filter>
+                            :mode="column.mode || 'normal'"
+                            @confirm="debounceFresh($event, confirm, column.searchKey || column.key,column)"
+                            :column="column"></c-table-filter>
           </template>
         </template>
         <!-- <a-select
@@ -163,7 +169,7 @@
             autoFocus
             :value="formData[column.searchKey || column.key]"
             :defaultOpen="true"
-            :open="true"
+            :open="true" 
             :getPopupContainer="(triggerNode) => triggerNode.parentNode"
             :filter-option="filterOption"
             :placeholder="column.placeholder || $T('public.search')"
@@ -490,15 +496,43 @@ export default {
       }
       this.isVisible = false;
     },
+    filterValue(value,column){
+      let temp = '';
+      if(column.mode=='cascader'){
+        temp = []; 
+        column.selectKeys.forEach(item=>{ 
+           temp.push(value[item]) // eg:cityId-1 regionId-1
+        })
+        if(temp.length==2&&(temp[0]=='' || temp[0]==undefined)&&(temp[1]=='' || temp[1]==undefined)){
+          temp = ['']
+        }
+      }else{
+        temp = value[column.searchKey || column.key] || ''
+      }
+      return temp;
+    },
     /**
      * @description:延迟刷新
      */
-    debounceFresh: debounce(function (val, confirm, key) {
-      // debugger;
-      this.formData[key] = val
-      confirm();
-      this.refresh(true);
-      this.$emit("filterChange", val, key);
+    debounceFresh: debounce(function (val, confirm, key,column) {
+      if(column&&column.mode=='cascader'){
+        if(Array.isArray(val)){ 
+          confirm()
+          column.selectKeys.forEach(item=>{
+            delete this.formData[item]
+          })
+          val.forEach((item,index)=>{
+            this.$set(this.formData,column.selectKeys[index],item)
+          })  
+          this.refresh(true);
+          this.$emit("filterChange", val, key);
+        }     
+      }else{
+        this.formData[key] = val
+        confirm();
+        this.refresh(true);
+        this.$emit("filterChange", val, key);
+      }
     }),
     /**
      * @description:兼容处理

@@ -35,17 +35,20 @@
               >
             <c-table-filter :isMultiple="true" mode="tree"
                             v-if="getCurrentSearchType.filterOptionMethod&&typeof getCurrentSearchType.filterOptionMethod =='function'"
-                            :value="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
+                            :value="filterValue(formData,getCurrentSearchType)"
                             :options="getCurrentSearchType.filterOptionMethod(getCurrentSearchType.options)"
                             @cancel="confirmCloseSelect"
-                            @confirm="debounceFresh($event, confirmCloseSelect, getCurrentSearchType.searchKey || getCurrentSearchType.key)">
+                            @confirm="debounceFresh($event, confirmCloseSelect, getCurrentSearchType.searchKey || getCurrentSearchType.key,getCurrentSearchType)"
+                            :column="getCurrentSearchType">
             </c-table-filter>
             <c-table-filter :isMultiple="true"
                             v-if="!getCurrentSearchType.filterOptionMethod"
-                            :value="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
+                            :value="filterValue(formData,getCurrentSearchType)"
                             :options="getCurrentSearchType.options"
                             @cancel="confirmCloseSelect"
-                            @confirm="debounceFresh($event, confirmCloseSelect, getCurrentSearchType.searchKey || getCurrentSearchType.key)"></c-table-filter>
+                            :mode="getCurrentSearchType.mode || 'normal'"
+                            @confirm="debounceFresh($event, confirmCloseSelect, getCurrentSearchType.searchKey || getCurrentSearchType.key,getCurrentSearchType)"
+                            :column="getCurrentSearchType"></c-table-filter>
           </div>
         </template>
         <template v-else>
@@ -53,18 +56,23 @@
               class="input_searchKey_select"
               :style="{top:selectTop+'px',left:selectLeft+'px'}"
               v-if="getCurrentSearchType.filterOptionMethod&&typeof getCurrentSearchType.filterOptionMethod =='function'">
-            <c-table-filter mode="tree" :value="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
+            <c-table-filter mode="tree" 
+                            :value="filterValue(formData,getCurrentSearchType)"
                             :options="getCurrentSearchType.filterOptionMethod(getCurrentSearchType.options)"
-                            @confirm="debounceFresh($event, confirmCloseSelect, getCurrentSearchType.searchKey || getCurrentSearchType.key)">
+                            @confirm="debounceFresh($event, confirmCloseSelect, getCurrentSearchType.searchKey || getCurrentSearchType.key,getCurrentSearchType)"
+                            :column="getCurrentSearchType">
             </c-table-filter>
           </div>
           <div
               class="input_searchKey_select"
               :style="{top:selectTop+'px',left:selectLeft+'px'}"
               v-if="!getCurrentSearchType.filterOptionMethod">
-            <c-table-filter :value="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]"
+              <!-- :value="formData[getCurrentSearchType.searchKey || getCurrentSearchType.key]" -->
+            <c-table-filter :value="filterValue(formData,getCurrentSearchType)"
                             :options="getCurrentSearchType.options"
-                            @confirm="debounceFresh($event, confirmCloseSelect, getCurrentSearchType.searchKey || getCurrentSearchType.key)"></c-table-filter>
+                            :mode="getCurrentSearchType.mode || 'normal'"
+                            @confirm="debounceFresh($event, confirmCloseSelect, getCurrentSearchType.searchKey || getCurrentSearchType.key,getCurrentSearchType)"
+                            :column="getCurrentSearchType"></c-table-filter>
           </div>
         </template>
       </template>
@@ -91,7 +99,7 @@ import {objectValueIsEmpty} from '../../utils/index'
 
 export default {
   name: "index",
-  inject: ['refresh', 'debounceFresh','resetFilter'],
+  inject: ['refresh', 'debounceFresh','resetFilter'], 
   props: {
     defaultSearchKey: {
       default: 'queryName',
@@ -214,6 +222,21 @@ export default {
         this.isShowSearchKeySelect = false
       }
     },
+    filterValue(value,column){ 
+      let temp = '';
+      if(column.mode=='cascader'){
+        temp = []; 
+        column.selectKeys.forEach(item=>{ 
+           temp.push(value[item]) // eg:cityId-1 regionId-1
+        })
+        if(temp.length==2&&(temp[0]=='' || temp[0]==undefined)&&(temp[1]=='' || temp[1]==undefined)){
+          temp = ['']
+        }
+      }else{
+        temp = value[column.searchKey || column.key] || ''
+      }
+      return temp;
+    },
     /**
      * @description:选择searchKey
      */
@@ -244,12 +267,17 @@ export default {
     /**
     * @description:删除标签
     */
-    deleteTags(key){
+    deleteTags(key,column){ 
       // if(this.searchKey===key){ //todo
       //   this.isShowFilterSelect=false
       //   this.inputValue=''
       // }
       let data = Object.assign({}, this.formData)
+      if(column.selectKeys&&Array.isArray(column.selectKeys)){ 
+        column.selectKeys.forEach(item=>{
+          data[item] = undefined
+        }) 
+      }
       data[key] = data[key] instanceof Array?[]:undefined
       this.$emit('update:formData', data)
       this.refresh(true)
@@ -358,7 +386,8 @@ export default {
       border: 1px solid #CCD1DF;
       z-index: 99999999999;
       margin-bottom: 0;
-      background-color: #fff;
+      background: transparent;
+      background-color: white;
 
       li {
         width: 100%;
@@ -388,6 +417,14 @@ export default {
 
       li:last-child {
         margin-bottom: 0;
+      }
+
+      .ant-cascader-menus{
+        left: -10px!important;
+        top: -10px!important;
+        .ant-cascader-menu{
+          min-width: 220px;
+        }
       }
     }
 
