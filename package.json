@@ -1,6 +1,6 @@
 {
   "name": "cpy-ui",
-  "version": "1.1.17",
+  "version": "1.1.18",
   "private": false,
   "main": "./lib/cpy-ui.min.js",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "ant-design-vue": "^1.6.5",
     "moment": "^2.29.1",
     "vue": "~2.6.12"
-  }, 
+  },
   "dependencies": {
     "ant-design-vue": "^1.6.5",
     "moment": "^2.29.1",
