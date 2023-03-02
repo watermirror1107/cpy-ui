@@ -5,6 +5,7 @@ import './font/font_ecp_3.0.js'//new
 //导入第三方UI库
 import '../ant-design-vue/index'
 import CModal from "./CModal/index.js";
+import './styles/common.less';
 const components = []
 //导入组件
 const req = require.context('./', true, /\.vue$/);

@@ -69,7 +69,7 @@ module.exports = {
         },
         antd: 'ant-design-vue',
         moment:'moment'
-    },
+    }, 
     optimization: {//分离压缩，test-min的才压缩
         minimize: true,
         minimizer: [

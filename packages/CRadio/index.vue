@@ -48,7 +48,7 @@ export default {
 };
 </script>
 <style lang="less">
-
+@import '../styles/color.less';
 .c_radio_wrap {
   position: relative;
   display: inline-block;
