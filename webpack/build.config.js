@@ -28,7 +28,8 @@ module.exports = {
                     loader: 'less-loader', options: {
                         additionalData: fs.readFileSync(path.resolve(__dirname, '../ant-design-vue/color.less'), {encoding: 'utf-8'}) +
                             fs.readFileSync(path.resolve(__dirname, '../ant-design-vue/theme.less'), {encoding: 'utf-8'}) +
-                            fs.readFileSync(path.resolve(__dirname, '../ant-design-vue/common.less'), {encoding: 'utf-8'})
+                            fs.readFileSync(path.resolve(__dirname, '../ant-design-vue/common.less'), {encoding: 'utf-8'})+
+                            fs.readFileSync(path.resolve(__dirname, '../ant-design-vue/mixin.less'), {encoding: 'utf-8'})
                     }
                 }]
             },

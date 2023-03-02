@@ -13,7 +13,7 @@
       style="width: 300px"
     ></c-select> -->
     <!--    <c-banner title="title"></c-banner>-->
-    <!--    <c-banner>123</c-banner>-->
+       <c-banner>123</c-banner>
     <!--    <c-banner>-->
     <!--      <p-->
     <!--          v-if="true"-->

@@ -162,14 +162,14 @@ export default {
       border-radius: 0;
       &:not([disabled='disabled'])  {
         &:hover[class$='_g'] {
-          border-color: #eee;
-          background-color: #F1F3F5!important;
+          border-color: @--main-gray;
+          background-color: @--cpy-gray-1!important;
           opacity: 1;
         }
       }
     }
     .c_button[class$='_g'][disabled='disabled']{
-      background-color: #f5f5f5!important;
+      background-color: @--cpy-gray-1!important;
     }
   }
 }

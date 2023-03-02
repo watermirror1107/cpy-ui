@@ -31,13 +31,13 @@ export default {
 .c_banner {
   font-size: 16px;
   font-family: Source Han Sans CN;
-  color: #323232;
+  color: @--cpy-font-color;
   line-height: 30px;
   min-height: 30px;
   padding: 0 24px;
   text-align: left;
-  background-color: #fff;
-  border-bottom: solid 1px #e6e6e6;  
+  background-color: @--cpy-white;
+  border-bottom: 1px solid @--cpy-gray;  
   >.c_icon{
     display: inline-block;
     transform: rotate( 180deg );
@@ -48,7 +48,7 @@ export default {
   &_content {
     display: inline-block;
     margin-left: 8px;
-    color: #323232;
+    color: @--cpy-font-color;
   }
 }
 
