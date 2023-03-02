@@ -123,12 +123,12 @@ export default {
   .c_button {
     margin-right: 15px;
   }
-
-  &::after {
-    clear: both;
-    display: block;
-    content: "";
-  }
+  .clear_both();
+  // &::after {
+  //   clear: both;
+  //   display: block;
+  //   content: "";
+  // }
 
   .c_btn_group_more_btn {
     display: flex;

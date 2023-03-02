@@ -107,12 +107,8 @@ export default {
   min-width: 92px; //最小宽度可以显示一个按钮
   overflow: hidden;
 
-  &::after {
-    clear: both;
-    display: block;
-    content: '';
-  }
-
+  .clear_both()
+  
 }
 
 .c_btn_wrap_popover {
