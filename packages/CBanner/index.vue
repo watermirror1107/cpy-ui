@@ -10,7 +10,7 @@
           {{ title }}
       </span>
     </slot>
-  </div>
+  </div> 
 </template>
 <script>
 

@@ -2,7 +2,7 @@
 <template>
   <div
       class="c_input"
-      :class="{ 'c_input_focus': isEmpty || isFocus }"
+      :class="{ 'c_input_focus': isEmpty || isFocus,'c_input_disabled':disabled }"
       @click="triggerFocus">
     <div class="c_input_box">
       <span
@@ -15,6 +15,7 @@
           :placeholder="realPlaceholder"
           class="c_input_container"
           :value="localValue"
+          :disabled="disabled"
           @keydown.enter="$emit('pressEnter')"
           @change="handleChange"
           @input="handleInput"
@@ -47,6 +48,7 @@ export default {
     placeholder: {type: String, default: ''},
     label: {type: String, default: ''},
     type: {type: String, default: 'text'},
+    disabled:{type:Boolean,default:false}
   },
   watch: {
     value(nv) {
@@ -104,6 +106,13 @@ export default {
   border: 1px solid @--cpy-gray-5;
   border-radius: 3px;
   transition: all 0.2s ease-out;
+  &_disabled{
+    cursor: not-allowed;
+    border-color: @--cpy-gray-5!important;
+    input{
+      color: @--cpy-disabled-font-color2;
+    }
+  }
 
   &:hover {
     border: 1px solid @--cpy-black-3;

@@ -266,11 +266,11 @@ export default {
     }
 
     &.cpage-btn-disabled {
-      background-color: @--cpy-gray;
-      color: @--cpy-gray-7;
+      background-color:@--cpy-disabled-color;
+      color: @--cpy-disabled-font-color3;
 
       &:hover {
-        color: @--cpy-gray-7;
+        color: @--cpy-disabled-font-color3;
       }
     }
   }

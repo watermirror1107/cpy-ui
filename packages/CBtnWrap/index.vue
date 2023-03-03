@@ -130,7 +130,7 @@ export default {
         margin-bottom: 0;
       }
       &[disabled='disabled']{
-        background-color: @--cpy-gray-2!important;
+        background-color: @--cpy-disabled-color!important;
         opacity: 0.8;
         color:@--cpy-gray!important;
         &[class*='ant-btn-danger']{
@@ -139,12 +139,12 @@ export default {
       } 
       &:not([disabled='disabled']){
         &:hover  {
-          background-color: @--cpy-gray-2 !important;
+          background-color: @--cpy-disabled-color !important;
         }
       }
     }
     .c_table_btn[class$='_g'][disabled='disabled']{
-      background-color: @--cpy-gray-2!important;
+      background-color: @--cpy-disabled-color!important;
     }
   }
 }

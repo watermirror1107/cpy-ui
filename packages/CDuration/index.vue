@@ -315,8 +315,8 @@ ul {
       }
 
       &_disabled {
-        color: @--cpy-black-2 !important;
-        background-color: @--cpy-gray-2 !important;
+        color: @--cpy-black-2!important;
+        background-color:@--cpy-disabled-color !important;
         cursor: not-allowed;
       }
     }

@@ -12,7 +12,7 @@
       @popupScroll="popupScroll"
       @dropdownVisibleChange="dropdownVisibleChange"
       @change="valueChange"
-      :class="{empty:!value||value===''}"
+      :class="{empty:!value||value==='','c_search_select':true}"
   >
     <div
         slot="dropdownRender"

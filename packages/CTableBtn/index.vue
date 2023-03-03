@@ -137,7 +137,7 @@ export default {
 }
 
 .c_table_btn.ant-btn[disabled='disabled'] {
-  color: @--cpy-gray;
+  color: @--cpy-disabled-font-color;
 }
 
 .c_table_btn.ant-btn[disabled='disabled']:hover {

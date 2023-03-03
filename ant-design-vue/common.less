@@ -5,6 +5,11 @@
 .ant-table-thead>tr>th .anticon-filter {
   right: unset !important;
 }
+//下拉框禁用样式
+.ant-select-disabled{
+  background: @--cpy-disabled-color!important;
+  color:@--cpy-disabled-font-color2;
+}
 
 .ant-card-head {
   height: 48px;
@@ -56,10 +61,10 @@
 }
 
 .ant-btn-primary{
-  background-color: #2148FF;
-  border-color: #2148FF;
+  background-color: @--cpy-blue-3;
+  border-color: @--cpy-blue-3;
   &:hover{
-    background-color: rgba(9,109,217,0.83);
+    background-color: @--cpy-blue;
   }
 }
 

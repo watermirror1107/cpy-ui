@@ -161,10 +161,10 @@ export default {
           background-color: @--cpy-gray-1!important;
           opacity: 1;
         }
-      }
+      } 
     }
     .c_button[class$='_g'][disabled='disabled']{
-      background-color: @--cpy-gray-1!important;
+      background-color: @--cpy-disabled-color!important;
     }
   }
 }

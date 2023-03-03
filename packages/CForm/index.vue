@@ -167,10 +167,6 @@ export default {
 </script>
 
 <style lang="less">
-.h-lh-40 {
-  min-height: 40px;
-  line-height: 40px;
-}
 
 .c_form {
 

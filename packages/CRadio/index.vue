@@ -107,7 +107,7 @@ export default {
 
 .c_radio_wrap[disabled='disabled'] {
   // background-color: #dcdcd8;
-  background-color: @--cpy-gray-9;
+  background-color: @--cpy-disabled-color;
   cursor: not-allowed;
 }
 

@@ -178,7 +178,7 @@ export default {
   color: @--main-white !important;
   background-color: @--main-red !important;
 }
-
+ 
 .c_button_danger:hover:not([disabled='disabled']) {
   opacity: 0.8;
 }
@@ -195,5 +195,7 @@ export default {
 
 .c_button[disabled="disabled"] {
   opacity: 0.6;
+  background: @--cpy-disabled-color;
+  color:@--cpy-disabled-font-color2;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <!-- <c-btn-group>
+    <c-btn-group>
       <c-button class="3dawddw" disabled>开机</c-button>
       <c-button>关机</c-button>
       <c-button>重启</c-button>
@@ -8,10 +8,11 @@
       <c-button>测试</c-button>
     </c-btn-group>
     <c-select
+      disabled
       v-model="selectVal"
       :selectOptions="selectOptions"
       style="width: 300px"
-    ></c-select> -->
+    ></c-select> 
     <!--    <c-banner title="title"></c-banner>-->
        <c-banner>123</c-banner>
     <!--    <c-banner>-->
@@ -22,8 +23,8 @@
     <!--        <span style="color: #969696;">({{ 456}})</span>-->
     <!--      </p>-->
     <!--    </c-banner>-->
-    <!--    <c-button type="text">CTMD</c-button>-->
-    <!--    <c-button type="text" disabled>CTMD</c-button>-->
+       <c-button type="text">CTMD</c-button>
+       <c-button type="text" disabled>CTMD</c-button>
     <!--    <c-button type="text" ghost>CTMD</c-button>-->
     <!--    <c-button type="text" ghost disabled>CTMD</c-button>-->
     <!--    <c-icon name="icon-shijian"></c-icon>-->
@@ -36,11 +37,11 @@
     <!--        <c-card-item :data="{title:'h1',value:'vlaue'}"></c-card-item>-->
     <!--    <div style="width: 100px;margin-top: 100px;margin-left: 200px;">-->
     <!--      <c-ellipsis text="test test test test test test test test test test test test test test"></c-ellipsis>-->
-    <!--      <c-editable-cell emptyPlaceholder="emptyPlaceholder"></c-editable-cell>-->
+         <c-editable-cell isDisabled emptyPlaceholder="emptyPlaceholder"></c-editable-cell>
     <!--    </div>-->
     <!--  <c-input label="asdf"  v-model="text"></c-input>-->
     <!--    <c-empty></c-empty>-->
-    <!-- <c-input-number v-model="num" unit="MBBB" size="small"></c-input-number> -->
+    <c-input-number v-model="num" unit="MBBB" size="small"></c-input-number>
         <c-radio-group v-model="num">
           <c-radio value="one">one</c-radio>
           <c-radio value="two">two</c-radio>
@@ -55,7 +56,7 @@
     <!--            :formOptions="formOptions"-->
     <!--            @submit="handleSubmit"-->
     <!--        ></c-table-form>-->
-    <!--    <c-duration v-model="month"></c-duration>-->
+       <c-duration v-model="month"></c-duration>
     <!--        <c-tabs-->
     <!--            :tabs="imageTypes"-->
     <!--            v-model="tabIndex"></c-tabs>-->
@@ -64,26 +65,27 @@
     <!--            v-model="tabIndex"-->
     <!--            @select-item="changeType"-->
     <!--        ></c-tap>-->
-    <!--        <c-form-->
-    <!--            ref="form"-->
-    <!--            :formOptions="formOptions1"-->
-    <!--            v-model="form"-->
-    <!--        >-->
-    <!--          <template #account>-->
-    <!--            <c-input-->
-    <!--                label="account"-->
-    <!--                v-model="formData.account">-->
-    <!--            </c-input>-->
-    <!--          </template>-->
-    <!--        </c-form>-->
+           <c-form
+               ref="form"
+               :formOptions="formOptions1"
+               v-model="form"
+           >
+             <template #account>
+               <c-input
+                  
+                   label="account"
+                   v-model="form.account">
+               </c-input>
+             </template>
+           </c-form>
     <!--    <button @click="changeType(2)">test debounce</button>-->
-    <!--    <c-search-select :queryPromise="queryOptions"-->
-    <!--                     placeholder="测试一下"-->
-    <!--                     v-model="tabIndex"-->
-    <!--                     style="width:320px;margin: 0 auto;"-->
-    <!--    >-->
-    <!--      <p slot='extraContent' style="text-align:center;" @click="clickHandler(1)">extraContent</p>-->
-    <!--    </c-search-select>-->
+       <c-search-select disabled :queryPromise="queryOptions"
+                        placeholder="测试一下"
+                        v-model="tabIndex"
+                        style="width:320px;margin: 0 auto;"
+       >
+         <p slot='extraContent' style="text-align:center;" @click="clickHandler(1)">extraContent</p>
+       </c-search-select>
     <!--    <c-search-select :queryPromise="queryOptions"-->
     <!--                     mode="multiple"-->
     <!--                     :extraParams="{date:'2012'}"-->
@@ -276,9 +278,9 @@ export default {
       ],
       selectedRowKeys: [], // 勾选的key
       selectedRows: [], // 选中的行数据
-      formOptions1: [{key: "account"}, {key: "age"}, {key: "name"}],
+      formOptions1: [{key: "account",disabled:true}, {key: "age"}, {key: "name"}],
       form: {
-        account: "kong",
+        account: "kong11111111",
         age: 1,
         name: "jason",
       },
@@ -361,7 +363,7 @@ export default {
           format: "YYYY-MM-DD",
         },
       ],
-      num: "one",
+      num: "111",
       type: 1,
       text: "text",
       dateOptions: [
