@@ -262,11 +262,11 @@ export default {
     display: flex;
     align-items: center;
     width: 352px;
-    border: 1px solid #E6E6E6;
+    border: 1px solid @--cpy-gray;
     border-radius: 4px;
     overflow: hidden;
     margin-right: 16px;
-    background: #fff;
+    background: @--cpy-white;
     .icon-box {
       flex-shrink: 0;
       width: 16px;
@@ -291,23 +291,23 @@ export default {
   .right-btn {
     display: flex;
     align-items: center;
-    border: 1px solid #E6E6E6;
+    border: 1px solid @--cpy-gray;
     border-radius: 4px;
     overflow: hidden;
-    background: #fff;
+    background: @--cpy-white;
     li {
       width: 64px;
       font-size: 14px;
       text-align: center;
-      border-right: 1px solid #E6E6E6;
+      border-right: 1px solid @--cpy-gray;
       cursor: pointer;
-      color: #323232;
+      color: @--cpy-font-color;
       &:last-child {
         border-right: none;
       }
       &.activated {
-        background: #0048FF;
-        color: #fff;
+        background: @--cpy-blue-3;
+        color: @--cpy-white;
       }
     }
     &_s{

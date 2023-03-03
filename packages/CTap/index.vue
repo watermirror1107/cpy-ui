@@ -114,7 +114,7 @@ export default {
         font-size: 14px;
         font-family: Source Han Sans CN;
         font-weight: bold;
-        color: #323232;
+        color: @--cpy-font-color;
         line-height: 18px;
       }
     }

@@ -374,7 +374,7 @@ export default {
 
   &::-webkit-scrollbar-thumb {
     /* 滚动条里面小方块 */
-    background: #c8c8c8; //@--main-blue;
+    background: @--cpy-gray-7; //@--main-blue;
   }
 
   &::-webkit-scrollbar-track {
@@ -384,13 +384,13 @@ export default {
 
 }
 .c_table_filter {
-  background: #FFFFFF;
+  background: @--cpy-white;
   // box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
   border-radius: 4px;
   &_cascader{
     /deep/ .ant-cascader-menu-item-active:not(.ant-cascader-menu-item-disabled), .ant-cascader-menu-item-active:not(.ant-cascader-menu-item-disabled):hover{
-      background: #f7f9fc;
-      color: #0048ff;
+      background: @--cpy-gray-11;
+      color: @--cpy-blue-3;
       font-weight: normal;
       position: relative;
       &::after{
@@ -402,7 +402,7 @@ export default {
         text-align: center;
         height: 10px;
         line-height: 10px;
-        color: #0048ff;
+        color: @--cpy-blue-3;
         transform: rotate(16deg);
       }
     }
@@ -430,8 +430,8 @@ export default {
     padding: 0 10px;
 
     &_active {
-      color: #0048ff;
-      background: #F7F9FC;
+      color: @--cpy-blue-3;
+      background: @--cpy-gray-11;
     }
   }
 
@@ -445,16 +445,16 @@ export default {
         align-items: center;
         height: 40px;
         padding: 0px 10px;
-        color: #969696;
+        color: @--cpy-gray-3;
         &_active {
-          color: #0048ff;
-          background: #F7F9FC;
+          color: @--cpy-blue-3;
+          background: @--cpy-gray-11;
         }
 
         &:hover {
           //   color: #0048ff;
           cursor: pointer;
-          background: #F7F9FC;
+          background: @--cpy-gray-11;
         }
       }
 
@@ -468,8 +468,8 @@ export default {
         position: relative;
 
         &_active {
-          color: #0048ff;
-          background: #F7F9FC;
+          color: @--cpy-blue-3;
+          background: @--cpy-gray-11;
         }
 
         &_icon {
@@ -478,12 +478,12 @@ export default {
         }
 
         &:hover {
-          color: #0048ff;
+          color: @--cpy-blue-3;
           cursor: pointer;
-          background: #F7F9FC;
+          background: @--cpy-gray-11;
 
           .c_table_filter_expand {
-            color: black;
+            color: @--cpy-black-4;
           }
         }
       }
@@ -498,14 +498,14 @@ export default {
     padding: 0px 10px;
     margin-top:5px;
     &:hover {
-      color: #0048ff;
+      color: @--cpy-blue-3;
       cursor: pointer;
-      background: #F7F9FC;
+      background: @--cpy-gray-11;
     }
 
     &_active {
-      color: #0048ff;
-      background: #F7F9FC;
+      color: @--cpy-blue-3;
+      background: @--cpy-gray-11;
     }
   }
 }

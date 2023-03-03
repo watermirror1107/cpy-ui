@@ -81,7 +81,7 @@ export default {
     margin: auto;
     width: 1px;
     height: 16px;
-    background-color: #969696;
+    background-color: @--cpy-gray-3;
   }
 }
 
@@ -110,7 +110,7 @@ export default {
   max-width: 200px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #eee !important;
+  border-bottom: 1px solid @--main-gray !important;
   border-radius: 0;
 
   .c_icon {
@@ -137,7 +137,7 @@ export default {
 }
 
 .c_table_btn.ant-btn[disabled='disabled'] {
-  color: #e6e6e6;
+  color: @--cpy-gray;
 }
 
 .c_table_btn.ant-btn[disabled='disabled']:hover {

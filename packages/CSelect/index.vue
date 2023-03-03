@@ -89,16 +89,16 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="less">
 .dropdown-wrap .opt-icon {
   min-width: 32px;
-  color: #fff;
+  color: @--cpy-white;
   border-radius: 8px;
   padding: 0 4px;
   height: 16px;
   line-height: 16px;
   font-size: 14px;
-  background: #ff0000;
+  background: @--cpy-red-1; 
 }
 </style>
 <style lang="less" scoped>
@@ -106,7 +106,7 @@ export default {
   position: relative;
   display: inline-block;
   width: 120px;
-  background: #fff;
+  background: @--cpy-white;
   
   &.has-prefix {
     /deep/ .ant-select-selection__rendered {
@@ -143,18 +143,18 @@ export default {
     .sel-icon {
       cursor: pointer;
       min-width: 32px;
-      color: #fff;
+      color: @--cpy-white;
       border-radius: 8px;
       padding: 0 2px;
       height: 16px;
       line-height: 16px;
       font-size: 14px;
-      background: #ff0000;
+      background: @--cpy-red-1;
     }
   }
 
   /deep/ .ant-select-selection {
-    border: 1px solid #e6e6e6;
+    border: 1px solid @--cpy-gray;
     background: transparent;
 
     border-radius: 2px;

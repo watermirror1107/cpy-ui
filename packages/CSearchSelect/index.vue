@@ -232,6 +232,7 @@ export default {
 <style lang="less">
 .empty {
   background-color: transparent;
-  color: #bfbfbf;
+  // color: #bfbfbf;
+  color: #c8c8c8; 
 }
 </style>

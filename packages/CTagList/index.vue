@@ -121,19 +121,15 @@ export default {
 
 <style lang="less">
 .c_tag_list {
-  &:after {
-    clear: both;
-    content: '';
-    display: block;
-  }
+  .clear_both();
 
   .ant-tag {
-    background-color: #F1F3F5;
+    background-color: @--cpy-gray-1;
     height: 32px;
     padding: 0 9px;
     font-size: 14px;
     line-height: 32px;
-    color: #646464;
+    color: @--cpy-gray-4;
     border: unset;
     float: left;
 

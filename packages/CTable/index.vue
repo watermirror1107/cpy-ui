@@ -664,8 +664,8 @@ export default {
   text-align: left;
 
   i {
-    border: 1px solid #e6e6e6;
-    color: #fff !important;
+    border: 1px solid @--cpy-gray;
+    color: @--cpy-white !important;
     left: 22px;
     right: 0;
     width: 16px;
@@ -673,17 +673,17 @@ export default {
 }
 
 .multipleOptions.ant-select-dropdown-menu-item-selected i {
-  background-color: #0048ff;
+  background-color: @--cpy-blue-3;
 }
 
 .c_table {
   padding: 10px 0px 0px 0px;
-  border: 1px solid #e8e8e8;
+  border: 1px solid @--cpy-gray-12;
   border-radius: 4px;
-  background: white;
+  background: @--cpy-white;
 
   .ant-table-thead {
-    background-color: #e6e8f1 !important; //#f7f9fc !important;
+    background-color: @--cpy-gray-13 !important; //#f7f9fc !important;
   }
 
   .ant-table-thead > tr:first-child > th:first-child {
@@ -695,7 +695,7 @@ export default {
   }
 
   .ant-table-tbody {
-    background-color: #fff !important;
+    background-color: @--cpy-white !important;
   }
 
   .ant-table-wrapper .ant-table {
@@ -720,7 +720,7 @@ export default {
         line-height: 16px;
         padding: 8px;
         height: 32px;
-        background: #F1F3F5;
+        background: @--cpy-gray-1;
         font-size: 12px;
         font-weight: 400;
         color: #252B3A;
@@ -781,7 +781,7 @@ export default {
 
   &_pagination_box {
     padding: 16px 24px 16px 15px;
-    background-color: #fff;
+    background-color: @--cpy-white;
     // border: 1px solid #e8e8e8;
     border-top: 0;
   }

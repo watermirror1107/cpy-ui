@@ -146,7 +146,7 @@ export default {
   position: absolute;
   top: 0px;
   padding: 8px;
-  background: #FFFFFF;
+  background: @--cpy-white;
   box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
   border-radius: 4px;
   &_item{
@@ -165,16 +165,16 @@ export default {
           margin-right: -10px;
       }
       &:hover{
-        color: #0048ff;
+        color: @--cpy-blue-3;
         cursor: pointer;
-        background: #F7F9FC;
+        background: @--cpy-gray-11;
         .c_table_filter_expand{
           color: black;
         }
       }
       &_active{
-          color: #0048ff;
-          background: #F7F9FC;
+          color: @--cpy-blue-3;
+          background: @--cpy-gray-11;
       }
   }
 }
