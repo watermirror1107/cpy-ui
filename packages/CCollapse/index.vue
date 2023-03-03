@@ -67,7 +67,7 @@ export default {
     }
   }
   .ant-collapse-header {
-    background-color: #e6e6e6;
+    background-color: @--cpy-gray;
     text-align: left;
     height: 40px;
     line-height: 40px !important;

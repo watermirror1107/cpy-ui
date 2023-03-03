@@ -193,15 +193,15 @@ export default {
   },
 }
 </script>
-<style>
+<style lang="less">
 .dropdownc .ant-dropdown-menu-item:hover {
-  background-color: #0048ff !important;
-  color: #fff;
+  background-color:@--cpy-blue-3!important;
+  color: @--cpy-white;
 }
 
 .dropdownc .ant-dropdown-menu-item-selected {
-  background: #fafafa;
-  color: rgba(0, 0, 0, 0.65);
+  background: @--cpy-gray-9;
+  color: @--cpy-black-4;
   font-weight: 600;
 
 }
@@ -214,7 +214,7 @@ export default {
 }
 
 .cpage-total {
-  color: #969696;
+  color: @--cpy-gray-3;
 }
 
 .cpage-pagesize {
@@ -238,7 +238,7 @@ export default {
   .unit {
     display: inline-block;
     padding-left: 6px;
-    color: #969696;
+    color: @--cpy-gray-3;
     font-size: 14px;
   }
 }
@@ -247,8 +247,8 @@ export default {
   float: left;
   display: flex;
   align-items: center;
-  border: 1px solid #d1dae3;
-  color: #646464;
+  border: 1px solid @--cpy-gray-10;
+  color: 646464;
   border-radius: 4px;
   overflow: hidden;
 
@@ -257,20 +257,20 @@ export default {
     width: 32px;
     line-height: 22px;
     text-align: center;
-    border-right: 1px solid #d1dae3;
-    background: #f7f9fc;
+    border-right: 1px solid @--cpy-gray-10;
+    background: @--cpy-gray-11;
     cursor: pointer;
 
     &:hover {
-      color: #0048ff;
+      color: @--cpy-blue-3;
     }
 
     &.cpage-btn-disabled {
-      background-color: #E6E6E6;
-      color: #C8C8C8;
+      background-color: @--cpy-gray;
+      color: @--cpy-gray-7;
 
       &:hover {
-        color: #C8C8C8;
+        color: @--cpy-gray-7;
       }
     }
   }
@@ -280,7 +280,7 @@ export default {
     outline: none;
     width: 48px;
     height: 22px;
-    border-right: 1px solid #d1dae3;
+    border-right: 1px solid @--cpy-gray-10;
     text-align: center;
     line-height: 22px;
   }
@@ -289,7 +289,7 @@ export default {
     width: 48px;
 
     &:hover {
-      color: #646464;
+      color: @--cpy-gray-4;
     }
   }
 }

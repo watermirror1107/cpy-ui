@@ -145,11 +145,7 @@ export default {
   position: relative;
   width: 100%;
 
-  &:after {
-    clear: both;
-    display: block;
-    content: "";
-  }
+  .clear_both();
 
   &_box {
     display: flex;
@@ -165,7 +161,7 @@ export default {
     line-height: inherit;
     width: 40px;
     text-align: center;
-    color: #c8c8c8;
+    color: @--cpy-gray-7;
     position: absolute;
   }
 
@@ -183,11 +179,11 @@ export default {
     line-height: inherit;
     height: inherit;
     border-radius: 3px;
-    color: #323232;
+    color: @--cpy-black-3;
     font-size: 14px;
     width: 100%;
     box-sizing: border-box;
-    border: 1px solid #e6e6e6;
+    border: 1px solid @--cpy-gray;
     display: flex;
     align-items: center;
 
@@ -218,7 +214,7 @@ export default {
     }
 
     &_button {
-      color: #646464;
+      color: @--cpy-gray-4;
       font-size: 10px;
       text-align: center;
       cursor: pointer;
@@ -231,8 +227,8 @@ export default {
     }
 
     &_button[disabled] {
-      background-color: #e6e6e6;
-      color: #c8c8c8;
+      background-color: @--cpy-gray;
+      color: @--cpy-gray-7;
       cursor: not-allowed;
     }
   }
@@ -249,12 +245,12 @@ export default {
       align-items: center;
       right: 0;
       height: 50%;
-      border-left: 1px solid #e6e6e6;
+      border-left: 1px solid @--cpy-gray;
     }
 
     .c_inputNumber_container_button_add {
       box-sizing: border-box;
-      border-bottom: 1px solid #e6e6e6;
+      border-bottom: 1px solid @--cpy-gray;
       top: 0;
     }
 
@@ -273,12 +269,12 @@ export default {
 
     .c_inputNumber_container_button_cut {
       flex-shrink: 0;
-      border-right: 1px solid #e6e6e6;
+      border-right: 1px solid @--cpy-gray;
     }
 
     .c_inputNumber_container_button_add {
       flex-shrink: 0;
-      border-left: 1px solid #e6e6e6;
+      border-left: 1px solid @--cpy-gray;
     }
   }
 

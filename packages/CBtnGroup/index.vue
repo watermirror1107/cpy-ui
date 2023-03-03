@@ -124,12 +124,7 @@ export default {
     margin-right: 15px;
   }
   .clear_both();
-  // &::after {
-  //   clear: both;
-  //   display: block;
-  //   content: "";
-  // }
-
+  
   .c_btn_group_more_btn {
     display: flex;
     flex-direction: row-reverse;

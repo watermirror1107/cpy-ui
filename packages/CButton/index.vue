@@ -104,8 +104,8 @@ export default {
 }
 
 .c_button_default {
-  background: #ffffff;
-  border: 1px solid #e6e6e6;
+  background: @--main-white;
+  border: 1px solid @--cpy-gray;
   font-size: 14px;
 
   &[disabled] {
@@ -118,7 +118,7 @@ export default {
   }
 
   &:focus {
-    border-color: #e6e6e6;
+    border-color: @--cpy-gray;
     color: currentColor!important;
   }
 }
@@ -135,7 +135,7 @@ export default {
 
 .c_button_warning {
   border-color: @--main-yellow !important;
-  color: white !important;
+  color: @--main-white !important;
   background-color: @--main-yellow !important;
 }
 
@@ -155,7 +155,7 @@ export default {
 
 .c_button_success {
   border-color: @--main-green !important;
-  color: white !important;
+  color: @--main-white !important;
   background-color: @--main-green !important;
 }
 
@@ -175,7 +175,7 @@ export default {
 
 .c_button_danger {
   border-color: @--main-red !important;
-  color: white !important;
+  color: @--main-white !important;
   background-color: @--main-red !important;
 }
 

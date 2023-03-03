@@ -36,7 +36,7 @@ export default {
   line-height: 40px;
 
   &_title {
-    color: #969696;
+    color: @--cpy-gray-3;
   }
 
   &_content {

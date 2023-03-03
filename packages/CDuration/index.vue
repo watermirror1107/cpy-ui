@@ -247,7 +247,7 @@ ul {
 .c_duration {
   &_discount {
     display: inline-block;
-    color: #fff;
+    color: @--cpy-white;
     line-height: 16px;
     font-size: 12px;
     width: 32px;
@@ -266,9 +266,9 @@ ul {
     }
 
     .ant-select-selection.selected {
-      border-color: #1279F8;
-      color: #1279F8;
-      background-color: #D0E4FE;
+      border-color: @--cpy-blue-1;
+      color: @--cpy-blue-1;
+      background-color: @--cpy-blue-2;
     }
 
     .ant-select-selection__rendered {
@@ -292,7 +292,7 @@ ul {
       align-items: center;
       justify-content: center;
       margin: 0;
-      border: 1px solid #E6E6E6;
+      border: 1px solid @--cpy-gray;
       border-collapse: collapse;
       cursor: pointer;
 
@@ -309,14 +309,14 @@ ul {
       }
 
       &_selected {
-        border-color: #1279F8;
-        color: #1279F8;
-        background-color: #D0E4FE
+        border-color: @--cpy-blue-1;
+        color: @--cpy-blue-1;
+        background-color: @--cpy-blue-2;
       }
 
       &_disabled {
-        color: rgba(0, 0, 0, .25) !important;
-        background-color: rgb(245, 245, 245) !important;
+        color: @--cpy-black-2 !important;
+        background-color: @--cpy-gray-2 !important;
         cursor: not-allowed;
       }
     }

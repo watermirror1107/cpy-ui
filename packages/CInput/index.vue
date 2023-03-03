@@ -101,16 +101,16 @@ export default {
   position: relative;
   width: 360px;
   height: 48px;
-  border: 1px solid #D9D9D9;
+  border: 1px solid @--cpy-gray-5;
   border-radius: 3px;
   transition: all 0.2s ease-out;
 
   &:hover {
-    border: 1px solid #333333;
+    border: 1px solid @--cpy-black-3;
   }
 
   &_icon {
-    color: #D9D9D9;
+    color: @--cpy-gray-5;
   }
 
   &_box {
@@ -124,7 +124,7 @@ export default {
     flex-shrink: 0;
     margin-left: 16px;
     font-size: 16px;
-    color: #999999;
+    color: @--cpy-gray-3;
     transition: all 0.2s ease-out;
   }
 
@@ -132,9 +132,9 @@ export default {
     position: absolute;
     padding: 0 5px;
     font-size: 14px;
-    color: #255AA8;
+    color: @--cpy-blue;
     transform: translateY(-18px);
-    background: #fff;
+    background: @--cpy-white;
     line-height: 14px;
   }
 
@@ -142,21 +142,21 @@ export default {
     height: 24px;
     font-size: 14px;
     padding: 0 16px;
-    color: #CCCCCC;
+    color: @--cpy-gray-6;
     border: none;
     outline: none;
     margin-top: 10px;
   }
 
   &_container:-webkit-autofill { //解决自动填充Input的背景色
-    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-box-shadow: 0 0 0 1000px @--cpy-white inset !important;
   }
 
   &_container_focus {
     margin-top: 0;
     width: 100%;
     font-size: 16px;
-    color: #333333;
+    color: @--cpy-black-3;
   }
 }
 

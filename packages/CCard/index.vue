@@ -74,12 +74,12 @@ export default {
 <style lang="less">
 .c_card {
   width: 100%;
-  background-color: #ffffff;
-  box-shadow: 0 0 4px rgba(37, 90, 168, 0.1), 0 4px 8px rgba(37, 90, 168, 0.05);
+  background-color: @--main-white;
+  box-shadow: 0 0 4px @--cpy-black, 0 4px 8px @--cpy-black-1;
   padding-bottom: 16px;
   margin-bottom: 24px;
   .borderBottom {
-    border-bottom: 1px solid #E6E6E6;
+    border-bottom: 1px solid @--cpy-gray;
   }
 
   &_header {
@@ -98,7 +98,7 @@ export default {
     cursor: pointer;
 
     &:hover {
-      color: #255AA8;
+      color: @--cpy-blue;
     }
 
     .icon {

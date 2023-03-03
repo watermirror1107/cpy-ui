@@ -129,7 +129,7 @@ export default {
 .c_modal {
   &_title {
     text-align: center;
-    color: #323232;
+    color: @--cpy-font-color;
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 25px;
@@ -139,7 +139,7 @@ export default {
   }
 
   &_content {
-    color: #646464;
+    color: @--cpy-gray-4;
     text-align: center;
   }
 
@@ -149,14 +149,14 @@ export default {
     justify-content: center;
 
     &_cancel {
-      color: #646464;
+      color: @--cpy-gray-4;
       margin-right: 12px;
       border: unset;
-      background-color: #F1F2F6;
+      background-color: @--cpy-gray-8;
 
       &:hover {
-        background-color: #eee;
-        color: #333333;
+        background-color: @--main-gray;
+        color: @--cpy-black-3;
       }
     }
   }

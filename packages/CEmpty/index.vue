@@ -34,7 +34,7 @@ export default {
 <style lang="less">
 .c_empty {
   font-size: 14px;
-  color: #646464;
+  color: @--cpy-gray-4;
   letter-spacing: 0.5px;
   // font-family: "Source Han Sans CN";
   .c_empty_image {

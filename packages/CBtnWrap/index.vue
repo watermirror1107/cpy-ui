@@ -130,21 +130,21 @@ export default {
         margin-bottom: 0;
       }
       &[disabled='disabled']{
-        background-color: #f5f5f5!important;
+        background-color: @--cpy-gray-2!important;
         opacity: 0.8;
-        color:#e6e6e6!important;
+        color:@--cpy-gray!important;
         &[class*='ant-btn-danger']{
-          color: rgba(255,0,0,30%)!important;
+          color: @--cpy-red!important;
         }
-      }
+      } 
       &:not([disabled='disabled']){
         &:hover  {
-          background-color: #f5f5f5 !important;
+          background-color: @--cpy-gray-2 !important;
         }
       }
     }
     .c_table_btn[class$='_g'][disabled='disabled']{
-      background-color: #f5f5f5!important;
+      background-color: @--cpy-gray-2!important;
     }
   }
 }

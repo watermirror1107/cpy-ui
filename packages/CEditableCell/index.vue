@@ -157,7 +157,7 @@ export default {
   }
 
   &_content_isDisabled {
-    color: #969696 !important;
+    color: @--cpy-gray-3 !important;
   }
 }
 </style>
