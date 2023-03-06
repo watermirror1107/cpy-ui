@@ -673,7 +673,7 @@ export default {
 }
 
 .multipleOptions.ant-select-dropdown-menu-item-selected i {
-  background-color: @--cpy-blue-3;
+  background-color: @--cpy-theme-color;
 }
 
 .c_table {
@@ -683,7 +683,7 @@ export default {
   background: @--cpy-white;
 
   .ant-table-thead {
-    background-color: @--cpy-gray-13 !important; //#f7f9fc !important;
+    background-color: @--cpy-thead-color !important; //#f7f9fc !important;
   }
 
   .ant-table-thead > tr:first-child > th:first-child {
@@ -732,11 +732,11 @@ export default {
 
       .c_table_header_right_searchInput {
         .ant-input:focus {
-          border-color: @--main-blue;
+          border-color:@--cpy-theme-color;
         }
 
         &:hover .ant-input:not(.ant-input-disabled) {
-          border-color: @--main-blue;
+          border-color:@--cpy-theme-color;
         }
 
         .ant-input:not(:first-child) {
@@ -755,8 +755,8 @@ export default {
         width: 44px;
 
         &:hover,&:focus {
-          border-color: @--main-blue;
-          color: @--main-blue;
+          border-color: @--cpy-theme-color;
+          color: @--cpy-theme-color;
         }
       }
     }

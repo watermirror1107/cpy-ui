@@ -152,7 +152,7 @@ export default {
   }
 
   &_content_isHasHover:hover {
-    border-color: @--main-blue;
+    border-color: @--cpy-theme-color;
     cursor: pointer;
   }
 

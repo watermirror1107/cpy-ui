@@ -21,7 +21,7 @@
         <span v-if="item.discount>0"
               class="c_duration_discount">{{ translate(item.discount) }}{{ $T('public.discount') }}</span>
       </li>
-      <li class="c_duration_list_item">
+      <li class="c_duration_list_item" :class="{c_duration_list_item_select:mDuration}">
         <a-select
             :disabled="disabled"
             class="c_duration_list_item_more"
@@ -55,7 +55,7 @@
       <a-select-option
           v-for="item in [...duration_middle_list,...more_middle_list].sort((a,b)=>{return a.id>b.id?1:-1})"
           :value="item.id"
-          :key="item.id">
+          :key="item.id"> 
         {{ item.name }}
         <span v-if="item.discount>0"
               class="c_duration_discount">{{ translate(item.discount) }}{{ $T('public.discount') }}</span>
@@ -265,10 +265,10 @@ ul {
       width: 100%;
     }
 
-    .ant-select-selection.selected {
-      border-color: @--cpy-blue-1;
-      color: @--cpy-blue-1;
-      background-color: @--cpy-blue-2;
+    .ant-select.selected {
+      // border-color: @--cpy-theme-color;
+      color: @--cpy-theme-color;
+      // background-color: @--cpy-theme-color-2;
     }
 
     .ant-select-selection__rendered {
@@ -296,6 +296,15 @@ ul {
       border-collapse: collapse;
       cursor: pointer;
 
+      &_select{
+        border-color: @--cpy-theme-color;
+        color: @--cpy-theme-color;
+        background-color: @--cpy-theme-color-2;
+        .ant-select-selection{
+          background: transparent;
+        }
+      }
+
       &:last-child {
         width: 120px;
       }
@@ -309,9 +318,9 @@ ul {
       }
 
       &_selected {
-        border-color: @--cpy-blue-1;
-        color: @--cpy-blue-1;
-        background-color: @--cpy-blue-2;
+        border-color: @--cpy-theme-color;
+        color: @--cpy-theme-color;
+        background-color: @--cpy-theme-color-2;
       }
 
       &_disabled {

@@ -48,6 +48,10 @@ export default {
       classNameList.push(
           `c_button_danger${this.$attrs.ghost !== undefined ? "_g" : ""}`
       );
+    } else if (this.$attrs.type === "text") {
+      classNameList.push(
+          `c_button_txt${this.$attrs.ghost !== undefined ? "_g" : ""}`
+      );
     } else if (!this.$attrs.type) {
       classNameList.push(
           `c_button_default${this.$attrs.ghost !== undefined ? "_g" : ""}`
@@ -94,7 +98,6 @@ export default {
   &_iconSvg {
     margin-right: 8px;
   }
-
 }
 
 .c_button_tip_content {
@@ -113,8 +116,8 @@ export default {
   }
 
   &:hover:not([disabled='disabled']) {
-    border-color: @--main-blue!important;
-    color: @--main-blue!important;
+    border-color:@--cpy-theme-color!important;
+    color: @--cpy-theme-color!important;
   }
 
   &:focus {
@@ -125,12 +128,25 @@ export default {
 
 .c_button.ant-btn-primary {
   &:focus{
-    background-color: @--main-blue;
+    background-color:@--cpy-theme-color;
   }
 }
 .ant-btn-primary.ant-btn-background-ghost.c_button{
-  border-color:  @--main-blue;
-  color:  @--main-blue;;
+  border-color:  @--cpy-theme-color;
+  color: @--cpy-theme-color;
+}
+
+
+.c_button_txt:hover:not([disabled='disabled']) {
+  opacity: 0.8;
+  border-color: @--cpy-theme-color !important;
+  color: @--cpy-theme-color !important;
+}
+
+.c_button_txt_g:hover:not([disabled='disabled']) {
+  opacity: 0.6;
+  border-color: @--cpy-theme-color !important;
+  color: @--cpy-theme-color !important;
 }
 
 .c_button_warning {

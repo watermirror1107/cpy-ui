@@ -1,4 +1,4 @@
-
+//常用色系
 @--main-blue: #0048FF;
 @--main-blue-10:#000B4D;
 @--main-blue-9: #001679;
@@ -35,7 +35,6 @@
 @--main-white: #fff;
 @--main-gray: #eee;
 
-
 @--cpy-white:#fff;
 
 @--cpy-gray:#e6e6e6;
@@ -62,17 +61,22 @@
 @--cpy-black-3:#333333;
 @--cpy-black-4:#000000;
 
-
- 
 @--cpy-blue:#255AA8;
 @--cpy-blue-1:#1279F8;
 @--cpy-blue-2:#D0E4FE;
 @--cpy-blue-3:#0048ff;
 
+//主题颜色
+@--cpy-theme-color:@--cpy-blue-3; //自定义主题颜色
+@--cpy-theme-color-1:@--cpy-blue-1; //主题色二 暂时废弃 没用到
+@--cpy-theme-color-2:@--cpy-blue-2;//常用于背景
+@--cpy-theme-color-3:@--cpy-blue;//用的最少 hover 字体时候用
+@primary-color: @--cpy-blue-3;//#1279F8; // 全局主色 覆盖ant-design-vue
+@link-color:@--cpy-blue-3; //覆盖ant-design-vue
 // 字体颜色
 @--cpy-font-color:#323232; 
-//按钮禁用颜色 
-@--cpy-disabled-color:@--cpy-gray-2;
+//禁用颜色 
+@--cpy-disabled-color:@--cpy-gray-2;//一般用于背景颜色
 @--cpy-disabled-font-color:@--cpy-gray; //暗淡
 @--cpy-disabled-font-color2:@--cpy-gray-3; //亮一点
 @--cpy-disabled-font-color3:@--cpy-gray-7;//适中
@@ -80,6 +84,10 @@
 @--cpy-border-style:1px solid @--cpy-gray; //按钮输入框颜色
 @--cpy-border-style-2:1px solid @--cpy-gray-5; //比较深一点
 @--cpy-border-style-3:1px solid @--cpy-gray-12; //table 边框颜色
+//阴影颜色
+// @--cpy-shadow-color:
+//表头颜色
+@--cpy-thead-color: @--cpy-gray-1;
 
 :root {
     --main-blue: @--main-blue;

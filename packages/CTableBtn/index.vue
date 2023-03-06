@@ -51,7 +51,7 @@ export default {
 
 <style lang="less">
 .c_table_btn:hover:not([class*='-danger']){
-  color: @--main-blue;
+  color:@--cpy-theme-color;
 }
 .c_table_btn.ant-btn {
   border: none;

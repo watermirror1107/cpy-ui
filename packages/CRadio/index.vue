@@ -53,7 +53,7 @@ export default {
   display: inline-block;
   padding: 0 15px;
   text-align: center;
-  color: @--cpy-blue-3;
+  color: @--cpy-theme-color;
   font-size: 14px;
   font-family: Source Han Sans CN;
   font-weight: bold;
@@ -79,7 +79,7 @@ export default {
     border-top: unset;
     border-left: unset;
     border-right-width: 30px;
-    border-right-color: @--main-blue;
+    border-right-color: @--cpy-theme-color;
     border-bottom-width: 30px;
     border-bottom-color: transparent;
 
@@ -121,7 +121,7 @@ export default {
 
 
 .c_radio_wrap_selected {
-  border: 1px solid @--main-blue;
+  border: 1px solid @--cpy-theme-color;
   background: @--cpy-white;
   box-shadow: 0 8px 16px 0 #2150970a, 0 4px 8px 0 #21509714, 0 2px 4px 0 #2150971f;
 }
@@ -129,7 +129,7 @@ export default {
 
 .c_radio_wrap_blue{
   color: @--cpy-white;
-  background-color: @--cpy-blue-3;
+  background-color: @--cpy-theme-color;
 }
 
 .c_radio_wrap_b2{

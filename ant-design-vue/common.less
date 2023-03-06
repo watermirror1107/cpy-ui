@@ -62,10 +62,10 @@
 }
 
 .ant-btn-primary{
-  background-color: @--cpy-blue-3;
-  border-color: @--cpy-blue-3;
+  background-color: @--cpy-theme-color;
+  border-color: @--cpy-theme-color;
   &:hover{
-    background-color: @--cpy-blue;
+    background-color: @--cpy-theme-color;
   }
 }
 
@@ -110,6 +110,11 @@ input::-webkit-inner-spin-button {
   }
 }
 .ant-select-selection:focus {
-  border-color: @--main-blue;
+  border-color:@--cpy-theme-color;
   box-shadow: unset;
+}
+
+.ant-select-selection:hover {
+  border-color:@--cpy-theme-color!important;
+  color:@--cpy-theme-color!important;
 }

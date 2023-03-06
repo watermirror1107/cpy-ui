@@ -31,8 +31,16 @@ export default {
   }
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .ant-tabs-bar {
   margin: 0;
+}
+/deep/ .ant-tabs-nav{
+  .ant-tabs-tab-active{
+    color: @--cpy-theme-color;
+  }
+}
+/deep/ .ant-tabs-ink-bar{
+  background-color: @--cpy-theme-color;
 }
 </style>

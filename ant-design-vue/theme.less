@@ -1,5 +1,4 @@
 // 覆写样式
-@primary-color: #1279F8; // 全局主色
 @table-row-hover-bg: #ffffff; // 悬浮行背景色
 @table-selected-row-bg: #EAF1FB; // 选中行背景色
 @layout-body-background: rgba(246, 248, 251, 1);
@@ -65,7 +64,7 @@
         margin: 0;
 
         .ant-table-thead {
-          background: #FAFAFA; // 表头背景色
+          background: @--cpy-thead-color; // 表头背景色
         }
 
       }
@@ -132,7 +131,7 @@
   }
 
   thead.ant-table-thead {
-    background: #fafafa;
+    background: @--cpy-thead-color;
   }
 }
 

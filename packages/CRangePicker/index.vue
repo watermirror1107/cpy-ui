@@ -306,7 +306,7 @@ export default {
         border-right: none;
       }
       &.activated {
-        background: @--cpy-blue-3;
+        background: @--cpy-theme-color;
         color: @--cpy-white;
       }
     }

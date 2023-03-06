@@ -22,18 +22,18 @@
     <!--        123-->
     <!--        <span style="color: #969696;">({{ 456}})</span>-->
     <!--      </p>-->
-    <!--    </c-banner>-->
+    <!--    </c-banner>-->  
        <c-button type="text">CTMD</c-button>
        <c-button type="text" disabled>CTMD</c-button>
     <!--    <c-button type="text" ghost>CTMD</c-button>-->
     <!--    <c-button type="text" ghost disabled>CTMD</c-button>-->
     <!--    <c-icon name="icon-shijian"></c-icon>-->
-    <!--        <c-card  title="click" @more="clickMore">-->
-    <!--          <template #more>-->
-    <!--            <p style="font-size: 20px;">more</p>-->
-    <!--          </template>-->
-    <!--          content-->
-    <!--        </c-card>-->
+           <c-card  title="click" @more="clickMore">
+             <template #more>
+               <p style="font-size: 20px;">more</p>
+             </template>
+             content
+           </c-card>
     <!--        <c-card-item :data="{title:'h1',value:'vlaue'}"></c-card-item>-->
     <!--    <div style="width: 100px;margin-top: 100px;margin-left: 200px;">-->
     <!--      <c-ellipsis text="test test test test test test test test test test test test test test"></c-ellipsis>-->
@@ -57,14 +57,15 @@
     <!--            @submit="handleSubmit"-->
     <!--        ></c-table-form>-->
        <c-duration v-model="month"></c-duration>
-    <!--        <c-tabs-->
-    <!--            :tabs="imageTypes"-->
-    <!--            v-model="tabIndex"></c-tabs>-->
-    <!--        <c-tap-->
-    <!--            :list="typeList"-->
-    <!--            v-model="tabIndex"-->
-    <!--            @select-item="changeType"-->
-    <!--        ></c-tap>-->
+       <c-duration type="2" v-model="month"></c-duration>
+           <c-tabs
+               :tabs="imageTypes"
+               v-model="tabIndex"></c-tabs>
+           <c-tap
+               :list="typeList"
+               v-model="tabIndex"
+               @select-item="changeType"
+           ></c-tap>
            <c-form
                ref="form"
                :formOptions="formOptions1"
@@ -249,8 +250,8 @@ export default {
         {
           val: 1, //
           text: "1个月",
-          // preIcon: "icon-win_blue",
-          // hotText: "9折",
+          preIcon: "icon-win_blue",
+          hotText: "9折",
         },
       ],
       dataSource: [

@@ -195,7 +195,7 @@ export default {
 </script>
 <style lang="less">
 .dropdownc .ant-dropdown-menu-item:hover {
-  background-color:@--cpy-blue-3!important;
+  background-color:@--cpy-theme-color!important;
   color: @--cpy-white;
 }
 
@@ -262,7 +262,7 @@ export default {
     cursor: pointer;
 
     &:hover {
-      color: @--cpy-blue-3;
+      color: @--cpy-theme-color;
     }
 
     &.cpage-btn-disabled {

@@ -375,7 +375,7 @@ export default {
   &::-webkit-scrollbar-thumb {
     /* 滚动条里面小方块 */
     background: @--cpy-gray-7; //@--main-blue;
-  }
+  } 
 
   &::-webkit-scrollbar-track {
     /* 滚动条里面轨道 */
@@ -390,21 +390,38 @@ export default {
   &_cascader{
     /deep/ .ant-cascader-menu-item-active:not(.ant-cascader-menu-item-disabled), .ant-cascader-menu-item-active:not(.ant-cascader-menu-item-disabled):hover{
       background: @--cpy-gray-11;
-      color: @--cpy-blue-3;
+      color:@--cpy-theme-color;
       font-weight: normal;
       position: relative;
+      // &::after{
+      //   display: inline-block;
+      //   content: '✓';
+      //   // right: 0px;
+      //   margin-left: 10px;
+      //   width: 10px;
+      //   text-align: center;
+      //   height: 10px;
+      //   line-height: 10px;
+      //   color: @--cpy-theme-color;
+      //   transform: rotate(16deg);
+      // }
       &::after{
-        display: inline-block;
-        content: '✓';
-        // right: 0px;
-        margin-left: 10px;
-        width: 10px;
-        text-align: center;
-        height: 10px;
-        line-height: 10px;
-        color: @--cpy-blue-3;
-        transform: rotate(16deg);
-      }
+          display: inline-block;
+          content: ''!important;
+          width: 9px!important;
+          height: 5px!important;
+          border-width: 0 0 1.6px 1.6px;
+          overflow: hidden;
+          border-color: @--cpy-theme-color;
+          border-style: solid;
+          -webkit-transform: rotate(-45deg)!important;
+          transform: rotate(-45deg)!important;
+          position: relative;
+          margin-left: 10px;
+          line-height: 10px;
+          text-align: center;
+          top: -3px;
+      } 
     }
     /deep/ .ant-cascader-menu-item-expand{
       &::after{
@@ -430,7 +447,7 @@ export default {
     padding: 0 10px;
 
     &_active {
-      color: @--cpy-blue-3;
+      color: @--cpy-theme-color;
       background: @--cpy-gray-11;
     }
   }
@@ -447,7 +464,7 @@ export default {
         padding: 0px 10px;
         color: @--cpy-gray-3;
         &_active {
-          color: @--cpy-blue-3;
+          color: @--cpy-theme-color;
           background: @--cpy-gray-11;
         }
 
@@ -468,7 +485,7 @@ export default {
         position: relative;
 
         &_active {
-          color: @--cpy-blue-3;
+          color: @--cpy-theme-color;
           background: @--cpy-gray-11;
         }
 
@@ -478,7 +495,7 @@ export default {
         }
 
         &:hover {
-          color: @--cpy-blue-3;
+          color:@--cpy-theme-color;
           cursor: pointer;
           background: @--cpy-gray-11;
 
@@ -498,13 +515,13 @@ export default {
     padding: 0px 10px;
     margin-top:5px;
     &:hover {
-      color: @--cpy-blue-3;
+      color: @--cpy-theme-color;
       cursor: pointer;
       background: @--cpy-gray-11;
     }
 
     &_active {
-      color: @--cpy-blue-3;
+      color: @--cpy-theme-color;
       background: @--cpy-gray-11;
     }
   }

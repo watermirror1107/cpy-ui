@@ -141,7 +141,7 @@ export default {
     position: absolute;
     padding: 0 5px;
     font-size: 14px;
-    color: @--cpy-blue;
+    color: @--cpy-theme-color;
     transform: translateY(-18px);
     background: @--cpy-white;
     line-height: 14px;

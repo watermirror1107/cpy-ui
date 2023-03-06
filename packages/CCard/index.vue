@@ -75,11 +75,11 @@ export default {
 .c_card {
   width: 100%;
   background-color: @--main-white;
-  box-shadow: 0 0 4px @--cpy-black, 0 4px 8px @--cpy-black-1;
+  box-shadow: 0 0 4px @--cpy-black, 0 4px 8px @--cpy-black;
   padding-bottom: 16px;
   margin-bottom: 24px;
   .borderBottom {
-    border-bottom: 1px solid @--cpy-gray;
+    border-bottom: @--cpy-border-style;
   }
 
   &_header {
@@ -94,11 +94,11 @@ export default {
     display: flex;
     align-items: center;
     font-size: 14px;
-    color: @--main-blue;
+    color: @--cpy-theme-color;
     cursor: pointer;
 
     &:hover {
-      color: @--cpy-blue;
+      color: @--cpy-theme-color-3;
     }
 
     .icon {

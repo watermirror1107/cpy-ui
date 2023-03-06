@@ -165,7 +165,7 @@ export default {
           margin-right: -10px;
       }
       &:hover{
-        color: @--cpy-blue-3;
+        color:@--cpy-theme-color;
         cursor: pointer;
         background: @--cpy-gray-11;
         .c_table_filter_expand{
@@ -173,7 +173,7 @@ export default {
         }
       }
       &_active{
-          color: @--cpy-blue-3;
+          color: @--cpy-theme-color;
           background: @--cpy-gray-11;
       }
   }
