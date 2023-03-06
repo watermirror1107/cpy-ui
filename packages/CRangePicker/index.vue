@@ -262,7 +262,7 @@ export default {
     display: flex;
     align-items: center;
     width: 352px;
-    border: 1px solid @--cpy-gray;
+    border: @--cpy-border-style;
     border-radius: 4px;
     overflow: hidden;
     margin-right: 16px;
@@ -291,7 +291,7 @@ export default {
   .right-btn {
     display: flex;
     align-items: center;
-    border: 1px solid @--cpy-gray;
+    border: @--cpy-border-style;
     border-radius: 4px;
     overflow: hidden;
     background: @--cpy-white;
@@ -299,7 +299,7 @@ export default {
       width: 64px;
       font-size: 14px;
       text-align: center;
-      border-right: 1px solid @--cpy-gray;
+      border-right: @--cpy-border-style;
       cursor: pointer;
       color: @--cpy-font-color;
       &:last-child {

@@ -105,7 +105,7 @@ export default {
 
 .c_button_default {
   background: @--main-white;
-  border: 1px solid @--cpy-gray;
+  border: @--cpy-border-style;
   font-size: 14px;
 
   &[disabled] {

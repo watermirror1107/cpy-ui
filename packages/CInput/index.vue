@@ -103,7 +103,7 @@ export default {
   position: relative;
   width: 360px;
   height: 48px;
-  border: 1px solid @--cpy-gray-5;
+  border: @--cpy-border-style-2;
   border-radius: 3px;
   transition: all 0.2s ease-out;
   &_disabled{
@@ -115,7 +115,7 @@ export default {
   }
 
   &:hover {
-    border: 1px solid @--cpy-black-3;
+    border: @--cpy-border-style-2;
   }
 
   &_icon {

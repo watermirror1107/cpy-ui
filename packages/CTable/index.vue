@@ -664,7 +664,7 @@ export default {
   text-align: left;
 
   i {
-    border: 1px solid @--cpy-gray;
+    border: @--cpy-border-style;
     color: @--cpy-white !important;
     left: 22px;
     right: 0;
@@ -678,7 +678,7 @@ export default {
 
 .c_table {
   padding: 10px 0px 0px 0px;
-  border: 1px solid @--cpy-gray-12;
+  border: @--cpy-border-style-3;
   border-radius: 4px;
   background: @--cpy-white;
 

@@ -183,12 +183,13 @@ export default {
     font-size: 14px;
     width: 100%;
     box-sizing: border-box;
-    border: 1px solid @--cpy-gray;
+    border: @--cpy-border-style-2;
     display: flex;
     align-items: center;
 
     &_input[disabled] {
       cursor: not-allowed;
+      
     }
 
     &_input[type="number"]::-webkit-inner-spin-button,
@@ -245,12 +246,12 @@ export default {
       align-items: center;
       right: 0;
       height: 50%;
-      border-left: 1px solid @--cpy-gray;
+      border-left:@--cpy-border-style-2;
     }
 
     .c_inputNumber_container_button_add {
       box-sizing: border-box;
-      border-bottom: 1px solid @--cpy-gray;
+      border-bottom:@--cpy-border-style-2;
       top: 0;
     }
 
@@ -269,17 +270,19 @@ export default {
 
     .c_inputNumber_container_button_cut {
       flex-shrink: 0;
-      border-right: 1px solid @--cpy-gray;
+      border-right: @--cpy-border-style-2;
     }
 
     .c_inputNumber_container_button_add {
       flex-shrink: 0;
-      border-left: 1px solid @--cpy-gray;
+      border-left:@--cpy-border-style-2;
     }
   }
 
   &_container_disabled {
-    opacity: 0.5;
+    // opacity: 0.5;
+    background-color: @--cpy-gray-2; 
+    // border: @--cpy-border-style-2;
   }
 }
 

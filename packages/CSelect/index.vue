@@ -154,9 +154,9 @@ export default {
   }
 
   /deep/ .ant-select-selection {
-    border: 1px solid @--cpy-gray;
+    border: @--cpy-border-style-2;
     background: transparent;
-
+    
     border-radius: 2px;
     &:focus {
       box-shadow: none;

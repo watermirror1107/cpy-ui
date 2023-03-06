@@ -292,7 +292,7 @@ ul {
       align-items: center;
       justify-content: center;
       margin: 0;
-      border: 1px solid @--cpy-gray;
+      border: @--cpy-border-style;
       border-collapse: collapse;
       cursor: pointer;
 

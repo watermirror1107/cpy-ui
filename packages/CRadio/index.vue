@@ -57,7 +57,7 @@ export default {
   font-size: 14px;
   font-family: Source Han Sans CN;
   font-weight: bold;
-  border: 1px solid @--cpy-gray;
+  border: @--cpy-border-style;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s ease-out;

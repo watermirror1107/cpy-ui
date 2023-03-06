@@ -37,7 +37,7 @@ export default {
   padding: 0 24px;
   text-align: left;
   background-color: @--cpy-white;
-  border-bottom: 1px solid @--cpy-gray;  
+  border-bottom: @--cpy-border-style;  
   >.c_icon{
     display: inline-block;
     transform: rotate( 180deg );

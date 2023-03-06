@@ -8,11 +8,11 @@
       <c-button>测试</c-button>
     </c-btn-group>
     <c-select
-      disabled
       v-model="selectVal"
       :selectOptions="selectOptions"
       style="width: 300px"
     ></c-select> 
+    <c-page :total="100"></c-page>
     <!--    <c-banner title="title"></c-banner>-->
        <c-banner>123</c-banner>
     <!--    <c-banner>-->
@@ -50,7 +50,7 @@
     <!--      <template #left>left</template>-->
     <!--      <template #right>righ</template>-->
     <!--    </c-nav-header>-->
-    <!--        <c-range-picker v-model="time" :currentType="2"></c-range-picker>-->
+           <c-range-picker v-model="time" :currentType="2"></c-range-picker>
     <!--        <c-table-form-->
     <!--            v-model="formData"-->
     <!--            :formOptions="formOptions"-->
@@ -79,7 +79,7 @@
              </template>
            </c-form>
     <!--    <button @click="changeType(2)">test debounce</button>-->
-       <c-search-select disabled :queryPromise="queryOptions"
+       <c-search-select :queryPromise="queryOptions"
                         placeholder="测试一下"
                         v-model="tabIndex"
                         style="width:320px;margin: 0 auto;"
@@ -249,8 +249,8 @@ export default {
         {
           val: 1, //
           text: "1个月",
-          preIcon: "icon-win_blue",
-          hotText: "9折",
+          // preIcon: "icon-win_blue",
+          // hotText: "9折",
         },
       ],
       dataSource: [

@@ -224,7 +224,7 @@ export default {
   line-height: 24px;
   height: 24px;
   padding: 0 10px;
-  border: 1px solid #ADB0B8;
+  border: @--cpy-border-style-2;
   border-radius: 4px;
   box-sizing: border-box;
   .sizelink {
@@ -247,7 +247,7 @@ export default {
   float: left;
   display: flex;
   align-items: center;
-  border: 1px solid @--cpy-gray-10;
+  border: @--cpy-border-style-2;
   color: 646464;
   border-radius: 4px;
   overflow: hidden;
@@ -257,7 +257,7 @@ export default {
     width: 32px;
     line-height: 22px;
     text-align: center;
-    border-right: 1px solid @--cpy-gray-10;
+    border-right:@--cpy-border-style-2;
     background: @--cpy-gray-11;
     cursor: pointer;
 
@@ -280,7 +280,7 @@ export default {
     outline: none;
     width: 48px;
     height: 22px;
-    border-right: 1px solid @--cpy-gray-10;
+    border-right: @--cpy-border-style-2;
     text-align: center;
     line-height: 22px;
   }
