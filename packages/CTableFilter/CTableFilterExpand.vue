@@ -147,7 +147,7 @@ export default {
   top: 0px;
   padding: 8px;
   background: @--cpy-white;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+  box-shadow:@--cpy-shadow-down;
   border-radius: 4px;
   &_item{
       display: flex;

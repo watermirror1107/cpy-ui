@@ -75,7 +75,7 @@ export default {
 .c_card {
   width: 100%;
   background-color: @--main-white;
-  box-shadow: 0 0 4px @--cpy-black, 0 4px 8px @--cpy-black;
+  box-shadow: @--cpy-shadow-around, @--cpy-shadow-down;
   padding-bottom: 16px;
   margin-bottom: 24px;
   .borderBottom {

@@ -77,15 +77,15 @@
 }
 
 .ant-table-tbody tr.ant-table-row-hover:not(.ant-table-row-selected)>td {
-  background-color: #F1F2F6 !important;
+  background-color: @--cpy-row-hover-color !important;
 }
 
 .ant-table-tbody tr.ant-table-row-selected>td {
-  background-color: #DEE4EB !important;
+  background-color: @--cpy-row-select-color !important;
 }
 
 .ant-layout {
-  background-color: #f6f8fb;
+  background-color: @--cpy-gray-15;
 }
 
 .ant-card-head {
@@ -104,8 +104,8 @@
 }
 
 .ant-card {
-  box-shadow: 0 0 4px rgba(37, 90, 168, 0.1), 0 4px 8px rgba(37, 90, 168, 0.05);
-}
+  box-shadow:@--cpy-shadow-around,@--cpy-shadow-down;
+} 
 
 .ant-table-thead {
   line-height: 24px;
@@ -127,7 +127,7 @@
 
 .ant-table-fixed-right {
   .ant-table-tbody {
-    background: #fff;
+    background: @--cpy-white;
   }
 
   thead.ant-table-thead {

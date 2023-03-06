@@ -480,6 +480,48 @@ export default {
             },
           },
           {
+            title: "id2",
+            dataIndex: "id2",
+            key: "id2",
+            width: 800,
+            type: "select",
+            selectKeys:['type1','type2'],
+            mode:'cascader',
+            options:[{value:'',label:'全部'},{value:1,label:'name1',children:[{value:'',label:'全部'},{value:3,label:'name1-name3'}]},{value:2,label:'name2',children:[{value:'',label:'全部'},{value:4,label:'name2-name4'},{value:5,label:'name2-name5'}]}],
+            scopedSlots: { 
+              filterDropdown: "filterDropdown", 
+              filterIcon: "filterIcon", 
+              customRender: "id",
+            },
+            filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
+            onFilterDropdownVisibleChange: (visible) => {
+              if (visible) {
+
+              }
+            },
+          },
+           {
+            title: "id2",
+            dataIndex: "id2",
+            key: "id2",
+            width: 300,
+            type: "select",
+            selectKeys:['type1','type2'],
+            mode:'cascader',
+            options:[{value:'',label:'全部'},{value:1,label:'name1',children:[{value:'',label:'全部'},{value:3,label:'name1-name3'}]},{value:2,label:'name2',children:[{value:'',label:'全部'},{value:4,label:'name2-name4'},{value:5,label:'name2-name5'}]}],
+            scopedSlots: { 
+              filterDropdown: "filterDropdown", 
+              filterIcon: "filterIcon", 
+              customRender: "id",
+            },
+            filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
+            onFilterDropdownVisibleChange: (visible) => {
+              if (visible) {
+
+              }
+            },
+          },
+          {
             title: "name",
             dataIndex: "name",
             key: "name", 
@@ -647,6 +689,7 @@ export default {
             },
           },
           {
+            fixed:'right',
             title: "operate",
             key: "operate",
             width: 300,

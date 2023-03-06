@@ -123,7 +123,7 @@ export default {
 .c_radio_wrap_selected {
   border: 1px solid @--cpy-theme-color;
   background: @--cpy-white;
-  box-shadow: 0 8px 16px 0 #2150970a, 0 4px 8px 0 #21509714, 0 2px 4px 0 #2150971f;
+  box-shadow: @--cpy-shadow-down-1, @--cpy-shadow-down-2, @--cpy-shadow-down-3;
 }
 
 
