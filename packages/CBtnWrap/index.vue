@@ -37,8 +37,8 @@ export default {
       if (this.$parent.$el) {
         width = parseInt(window.getComputedStyle(this.$parent.$el, null).width) - 16//减16是因为td的padding8
       } else if (this.$parent.$options.propsData.column.width) {//dataSource的是容器初始宽度会为0；如果column中没给width也会为0
-        width = this.$parent.$options.propsData.column.width
-      }
+        width = parseInt(this.$parent.$options.propsData.column.width)
+      } 
       let showNum = Math.floor(width / 90)//c-table-btn的最大宽度为90,计算最多能展示几个
       //超过的截取放到更多按钮里面
       children.forEach(btn => {

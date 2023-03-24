@@ -293,25 +293,25 @@ export default {
           dataIndex: 'id',
           key: 'id',
           scopedSlots: {customRender: 'id'},
-          width: 100
+          // width: '100px'
         },
         {
           title: 'name',
           dataIndex: 'name',
           key: 'name',
-          width: 100
+          // width: '100px'
         },
         {
           title: 'content',
           dataIndex: 'content',
           key: 'content',
-          width: 100
+          // width: '100px'
         },
         {
           title: 'casder',
           dataIndex: 'casder',
           key: 'casder',
-          width: 140,
+          // width: 140,
           mode:'cascader',
           scopedSlots: {filterDropdown: 'filterDropdown'},
           // filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
@@ -358,7 +358,7 @@ export default {
           title: 'createTime',
           dataIndex: 'createTime',
           key: 'createTime',
-          width: 140,
+          // width: 140,
           scopedSlots: {filterDropdown: 'filterDropdown'},
           filteredValue: this.dataFilterValue ? [this.dataFilterValue] : null,
           onFilterDropdownVisibleChange: (visible) => {
@@ -370,7 +370,7 @@ export default {
         {
           title: 'operate',
           key: 'operate',
-          width: 300,
+          width: '240px',
           scopedSlots: {customRender: 'operate'}
         }
       ]
@@ -383,7 +383,7 @@ export default {
   },
   mounted() {
     // this.queryOptions()
-    this.$refs.table.refresh()
+    // this.$refs.table.refresh()
   },
   methods: {
     consoleRow() {

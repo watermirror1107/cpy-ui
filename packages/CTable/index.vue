@@ -56,7 +56,7 @@
               :filter-option="(input, option) =>(option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0)"
               :placeholder="$T('public.search')"
               @change="$emit('filterChange',$event,confirm)"
-          >
+          >  
             <a-select-option
                 v-for="option in filterOptions"
                 :value="option.id"
