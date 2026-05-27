@@ -1,8 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const CopyPlugin = require('copy-webpack-plugin')
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')// 全部webpack5废弃的Node-Polyfill包
 const fs = require('fs');
 const webpackConfig = {
@@ -20,7 +18,10 @@ const webpackConfig = {
         rules: [
             {
                 test: /\.vue$/,
-                loader: 'vue-loader'
+                loader: 'vue-loader',
+                options: {
+                    optimizeSSR: false
+                }
             },
             {
                 test: /\.(js|jsx)$/,
@@ -74,20 +75,7 @@ const webpackConfig = {
     },
     devtool: 'eval-cheap-source-map',
     plugins: [
-        new CopyPlugin({
-            patterns: [{
-                from: path.resolve(__dirname, 'template'),
-                to: path.resolve(__dirname, 'dist'),
-                filter: async (resourcePath) => {
-                    return resourcePath.indexOf('index.html') <= -1
-                }
-            }]
-        }),
         new VueLoaderPlugin(),
-        new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, 'template/index.html'),
-            title: 'ecp-portal'
-        }),
         new webpack.IgnorePlugin({resourceRegExp: /canvas/}),
         new NodePolyfillPlugin()
     ],
