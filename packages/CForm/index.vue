@@ -100,7 +100,7 @@ export default {
   },
   props: {
     value: {type: Object},
-    formOptions: {type: Array, default: []},
+    formOptions: {type: Array, default: () => []},
     rules: {type: Object},
     isValidateOnRuleChange: {type: Boolean, default: true},
     labelCol: {type: Number, default: 6},
