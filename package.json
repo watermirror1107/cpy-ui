@@ -10,7 +10,10 @@
   "scripts": {
     "serve": "webpack-dev-server --config webpack/dev.config.js --mode development",
     "lib": "webpack --config webpack/build.config.js",
-    "test:unit:all": "mochapack --webpack-config webpack/test.config.js --require test/setup.js test/**/*.spec.js"
+    "test:unit:all": "mochapack --webpack-config webpack/test.config.js --require test/setup.js test/**/*.spec.js",
+    "docs:dev": "npm --prefix docs run dev",
+    "docs:build": "npm --prefix docs run build",
+    "docs:preview": "npm --prefix docs run preview"
   },
   "peerDependencies": {
     "ant-design-vue": "^1.6.5",

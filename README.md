@@ -20,6 +20,16 @@ yarn lib
 yarn test:unit:all
 ```
 
+### Run documentation site
+```
+yarn docs:dev
+```
+
+### Build documentation site
+```
+yarn docs:build
+```
+
 ### Component List
 
 ```
