@@ -142,4 +142,173 @@ describe('CTable', () => {
     expect(wrapper.vm.localDataSource).to.deep.equal([])
     expect(wrapper.vm.isLocalLoading).to.equal(false)
   })
+
+  it('loads remote data when page size changes', async () => {
+    const calls = []
+    const wrapper = mount(CTable, {
+      propsData: {
+        data: params => {
+          calls.push({...params})
+          return Promise.resolve({
+            data: {
+              payload: [{id: 4}],
+              totalSize: 4
+            }
+          })
+        }
+      },
+      attrs: {
+        columns: []
+      },
+      stubs
+    })
+
+    wrapper.vm.onShowSizeChange(1, 50)
+    await wait(850)
+
+    expect(calls[0]).to.deep.equal({current: 1, pageNo: 1, pageSize: 50})
+    expect(wrapper.vm.localDataSource).to.deep.equal([{id: 4}])
+  })
+
+  it('reloads last available page when requested page exceeds total pages', async () => {
+    const calls = []
+    const wrapper = mount(CTable, {
+      propsData: {
+        data: params => {
+          calls.push({...params})
+          return Promise.resolve({
+            data: {
+              payload: [{id: calls.length}],
+              totalSize: 15
+            }
+          })
+        }
+      },
+      attrs: {
+        columns: []
+      },
+      stubs
+    })
+
+    wrapper.vm.paginationChange(3, 10)
+    await wait(1750)
+
+    expect(calls).to.have.lengthOf(2)
+    expect(wrapper.vm.localPagination.current).to.equal(2)
+    expect(wrapper.vm.localPagination.pageNo).to.equal(2)
+  })
+
+  it('stops loading when remote data rejects', async () => {
+    const error = new Error('load failed')
+    const originalLog = console.log
+    const logs = []
+    console.log = value => logs.push(value)
+    const wrapper = mount(CTable, {
+      propsData: {
+        data: () => Promise.reject(error)
+      },
+      attrs: {
+        columns: []
+      },
+      stubs
+    })
+
+    wrapper.vm.refresh()
+    await wait(850)
+    console.log = originalLog
+
+    expect(logs[0]).to.equal(error)
+    expect(wrapper.vm.isLocalLoading).to.equal(false)
+  })
+
+  it('sets polling timer only when loopTime is at least five seconds', async () => {
+    const wrapper = mount(CTable, {
+      propsData: {
+        loopTime: 5000,
+        data: () => Promise.resolve({
+          data: {
+            payload: [{id: 1}],
+            totalSize: 1
+          }
+        })
+      },
+      attrs: {
+        columns: []
+      },
+      stubs
+    })
+
+    wrapper.vm.refresh()
+    await wait(850)
+
+    expect(window.tableTime).to.not.equal(undefined)
+    clearTimeout(window.tableTime)
+    window.tableTime = undefined
+  })
+
+  it('calculates select-all position when selection column exists', async () => {
+    const wrapper = mount(CTable, {
+      propsData: {
+        dataSource: [{id: 1}]
+      },
+      attrs: {
+        columns: []
+      },
+      stubs,
+      attachTo: document.body
+    })
+    const table = wrapper.find('.a-table-stub')
+    table.element.innerHTML = `
+      <div class="ant-table-selection-column">
+        <span class="ant-table-header-column"></span>
+      </div>
+      <div class="ant-table-selection-column"></div>
+    `
+    const rowSelectionCell = wrapper.element.querySelectorAll('.ant-table-selection-column')[1]
+    Object.defineProperty(rowSelectionCell, 'clientWidth', {
+      configurable: true,
+      value: 40
+    })
+    rowSelectionCell.style.width = '40px'
+    rowSelectionCell.style.paddingLeft = '8px'
+    rowSelectionCell.style.paddingRight = '8px'
+
+    wrapper.vm.localDataSource = [{id: 1}]
+    wrapper.vm.calcSelectAllPosition()
+    await wrapper.vm.$nextTick()
+
+    const head = wrapper.element.querySelector('.ant-table-header-column')
+    expect(head.style.visibility).to.equal('visible')
+    expect(wrapper.find('.c_table_action_bar').element.style.paddingLeft).to.equal('40px')
+
+    wrapper.destroy()
+  })
+
+  it('hides select-all header when table is empty', async () => {
+    const wrapper = mount(CTable, {
+      propsData: {
+        dataSource: []
+      },
+      attrs: {
+        columns: []
+      },
+      stubs,
+      attachTo: document.body
+    })
+    const table = wrapper.find('.a-table-stub')
+    table.element.innerHTML = `
+      <div class="ant-table-selection-column">
+        <span class="ant-table-header-column"></span>
+      </div>
+      <div class="ant-table-selection-column"></div>
+    `
+
+    wrapper.vm.localDataSource = []
+    wrapper.vm.calcSelectAllPosition()
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.element.querySelector('.ant-table-header-column').style.visibility).to.equal('hidden')
+
+    wrapper.destroy()
+  })
 })

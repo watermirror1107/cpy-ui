@@ -30,25 +30,25 @@ describe('CForm', () => {
     const wrapper = mount(CForm, {
       propsData: {
         value: {
-          name: '实例',
+          name: 'instance',
           cpu: 2,
           type: 'vm',
           status: 'on',
           hidden: 'x'
         },
         formOptions: [
-          {type: 'input', key: 'name', label: '名称', suffix: '台'},
+          {type: 'input', key: 'name', label: 'Name', suffix: 'unit'},
           {type: 'inputNumber', key: 'cpu', label: 'CPU'},
-          {type: 'select', key: 'type', label: '类型', options: [{value: 'vm', label: '虚机'}]},
-          {type: 'span', key: 'status', label: '状态'},
-          {type: 'radio', key: 'hidden', label: '隐藏', isShow: false, options: [{value: 'x', label: 'X'}]}
+          {type: 'select', key: 'type', label: 'Type', options: [{value: 'vm', label: 'VM'}]},
+          {type: 'span', key: 'status', label: 'Status'},
+          {type: 'radio', key: 'hidden', label: 'Hidden', isShow: false, options: [{value: 'x', label: 'X'}]}
         ]
       },
       stubs
     })
 
-    expect(wrapper.text()).to.include('台')
-    expect(wrapper.text()).to.include('虚机')
+    expect(wrapper.text()).to.include('unit')
+    expect(wrapper.text()).to.include('VM')
     expect(wrapper.text()).to.include('on')
     expect(wrapper.findAll('.a-form-model-item-stub')).to.have.lengthOf(4)
   })
@@ -56,16 +56,30 @@ describe('CForm', () => {
   it('emits change when formData changes', async () => {
     const wrapper = mount(CForm, {
       propsData: {
-        value: {name: '旧名称'},
-        formOptions: [{type: 'input', key: 'name', label: '名称'}]
+        value: {name: 'old name'},
+        formOptions: [{type: 'input', key: 'name', label: 'Name'}]
       },
       stubs
     })
 
-    wrapper.vm.formData.name = '新名称'
+    wrapper.vm.formData.name = 'new name'
     await wrapper.vm.$nextTick()
 
-    expect(wrapper.emitted('change').pop()[0]).to.deep.equal({name: '新名称'})
+    expect(wrapper.emitted('change').pop()[0]).to.deep.equal({name: 'new name'})
+  })
+
+  it('syncs form data when value prop changes', async () => {
+    const wrapper = mount(CForm, {
+      propsData: {
+        value: {name: 'old'},
+        formOptions: [{type: 'input', key: 'name', label: 'Name'}]
+      },
+      stubs
+    })
+
+    await wrapper.setProps({value: {name: 'new'}})
+
+    expect(wrapper.vm.formData).to.deep.equal({name: 'new'})
   })
 
   it('proxies validation methods to form ref', () => {
@@ -90,8 +104,8 @@ describe('CForm', () => {
   it('renders named slot with value and option scope', () => {
     const wrapper = mount(CForm, {
       propsData: {
-        value: {custom: '插槽值'},
-        formOptions: [{type: 'input', key: 'custom', label: '自定义'}]
+        value: {custom: 'slot value'},
+        formOptions: [{type: 'input', key: 'custom', label: 'Custom'}]
       },
       scopedSlots: {
         custom: '<span class="custom-form-item">{{ props.scope.value }}-{{ props.scope.option.label }}</span>'
@@ -99,6 +113,29 @@ describe('CForm', () => {
       stubs
     })
 
-    expect(wrapper.find('.custom-form-item').text()).to.equal('插槽值-自定义')
+    expect(wrapper.find('.custom-form-item').text()).to.equal('slot value-Custom')
+  })
+
+  it('renders input save action and calls option handler', async () => {
+    const calls = []
+    const wrapper = mount(CForm, {
+      propsData: {
+        value: {name: 'demo'},
+        formOptions: [{
+          type: 'input',
+          key: 'name',
+          label: 'Name',
+          suffix: 'unit',
+          isShowSave: true,
+          saveHandler: key => calls.push(key)
+        }]
+      },
+      stubs
+    })
+
+    await wrapper.find('button').trigger('click')
+
+    expect(calls).to.deep.equal(['name'])
+    expect(wrapper.text()).to.include('unit')
   })
 })

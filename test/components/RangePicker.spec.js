@@ -68,4 +68,45 @@ describe('CRangePicker', () => {
     expect(wrapper.vm.dateValue).to.have.lengthOf(2)
     expect(wrapper.emitted('change')).to.not.equal(undefined)
   })
+
+  it('updates dateValue for all quick range types', async () => {
+    const wrapper = mount(CRangePicker, {
+      stubs
+    })
+
+    for (const type of [3, 4, 5, 6, 7, 8]) {
+      wrapper.vm.type = type
+      await wrapper.vm.$nextTick()
+
+      expect(wrapper.vm.dateValue).to.have.lengthOf(2)
+    }
+  })
+
+  it('starts and clears realtime refresh loop for type 0', async () => {
+    const wrapper = mount(CRangePicker, {
+      propsData: {
+        gap: 0.01
+      },
+      stubs
+    })
+
+    wrapper.vm.type = 0
+    await wait(50)
+
+    expect(wrapper.vm.loop).to.not.equal(null)
+    expect(wrapper.vm.dateValue).to.have.lengthOf(2)
+
+    wrapper.vm.clearTime()
+  })
+
+  it('syncs dateValue when value prop changes', async () => {
+    const wrapper = mount(CRangePicker, {
+      stubs
+    })
+    const value = [moment('2025-01-01'), moment('2025-01-03')]
+
+    await wrapper.setProps({value})
+
+    expect(wrapper.vm.dateValue).to.deep.equal(value)
+  })
 })

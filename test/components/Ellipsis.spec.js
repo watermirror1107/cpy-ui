@@ -3,6 +3,8 @@ import {mount} from '@vue/test-utils'
 import CEllipsis from '../../packages/CEllipsis/index.vue'
 import {APopoverStub} from './helpers'
 
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 describe('CEllipsis', () => {
   const mountEllipsis = options => mount(CEllipsis, {
     stubs: {
@@ -58,6 +60,29 @@ describe('CEllipsis', () => {
     })
 
     await wrapper.find('.c_textLine').trigger('mouseenter')
+
+    expect(wrapper.vm.isVisible).to.equal(false)
+  })
+
+  it('hides popover after mouse leaves', async () => {
+    const wrapper = mountEllipsis({
+      propsData: {
+        text: '瓒呭嚭鍐呭'
+      }
+    })
+
+    Object.defineProperty(wrapper.vm.$refs.main, 'clientHeight', {
+      configurable: true,
+      value: 20
+    })
+    Object.defineProperty(wrapper.vm.$refs.main, 'scrollHeight', {
+      configurable: true,
+      value: 40
+    })
+
+    await wrapper.find('.c_textLine').trigger('mouseenter')
+    await wrapper.find('.c_textLine').trigger('mouseleave')
+    await wait(180)
 
     expect(wrapper.vm.isVisible).to.equal(false)
   })

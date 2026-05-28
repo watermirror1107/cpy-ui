@@ -46,6 +46,37 @@ describe('CButton', () => {
     expect(wrapper.find('button').classes()).to.include('c_button_warning_g')
   })
 
+  it('renders icon before slot content', () => {
+    const wrapper = mountButton({
+      propsData: {
+        icon: 'icon-save'
+      },
+      slots: {
+        default: '<span class="button-text">淇濆瓨</span>'
+      }
+    })
+
+    expect(wrapper.find('.c_icon').exists()).to.equal(true)
+    expect(wrapper.find('.c_icon').classes()).to.include('c_button_iconSvg')
+  })
+
+  it('adds success and danger classes', () => {
+    const success = mountButton({
+      attrs: {
+        type: 'success'
+      }
+    })
+    const danger = mountButton({
+      attrs: {
+        type: 'danger',
+        ghost: true
+      }
+    })
+
+    expect(success.find('button').classes()).to.include('c_button_success')
+    expect(danger.find('button').classes()).to.include('c_button_danger_g')
+  })
+
   it('wraps button with tooltip when tip is provided', () => {
     const wrapper = mountButton({
       propsData: {

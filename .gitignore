@@ -3,4 +3,10 @@
 /todo/
 /yarn.lock
 /yarn-error.log
+/docs-dev*.log
+/dev-server*.log
 /lib/
+/coverage/
+/.nyc_output/
+/docs/.vitepress/cache/
+/docs/.vitepress/dist/

@@ -1,0 +1,24 @@
+:root {
+  --vp-c-brand-1: #205299;
+  --vp-c-brand-2: #255aa8;
+  --vp-c-brand-3: #1279f8;
+  --vp-c-bg-alt: #f6f8fb;
+}
+
+.vp-doc table {
+  display: table;
+  width: 100%;
+}
+
+.vp-doc th,
+.vp-doc td {
+  font-size: 14px;
+}
+
+.vp-doc code {
+  white-space: nowrap;
+}
+
+.VPSwitchAppearance {
+  display: none !important;
+}

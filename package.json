@@ -9,8 +9,29 @@
   ],
   "scripts": {
     "serve": "webpack-dev-server --config webpack/dev.config.js --mode development",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "lib": "webpack --config webpack/build.config.js",
-    "test:unit:all": "mochapack --webpack-config webpack/test.config.js --require test/setup.js test/**/*.spec.js"
+    "test:unit:all": "mochapack --webpack-config webpack/test.config.js --require test/setup.js test/**/*.spec.js",
+    "test:coverage": "nyc --reporter=text --reporter=html --reporter=lcov node test/run-coverage.js --webpack-config webpack/test.config.js --require test/setup.js test/**/*.spec.js"
+  },
+  "nyc": {
+    "all": true,
+    "cache": false,
+    "extension": [
+      ".js",
+      ".vue"
+    ],
+    "include": [
+      "packages/**/*.js",
+      "packages/**/*.vue"
+    ],
+    "exclude": [
+      "packages/font/**"
+    ],
+    "instrument": false,
+    "sourceMap": true
   },
   "peerDependencies": {
     "ant-design-vue": "^1.6.5",
@@ -43,6 +64,7 @@
     "babel-plugin-component": "^1.1.1",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-import": "^1.13.3",
+    "babel-plugin-istanbul": "^8.0.0",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.3.4",
     "clean-webpack-plugin": "^4.0.0",
@@ -80,6 +102,7 @@
     "terser-webpack-plugin": "^5.2.4",
     "url-loader": "^4.1.1",
     "v-viewer": "^1.6.4",
+    "vitepress": "^1.6.4",
     "vue-loader": "^15.9.8",
     "vue-template-compiler": "^2.6.14",
     "webpack": "^5.58.0",

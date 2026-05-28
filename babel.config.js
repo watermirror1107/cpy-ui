@@ -11,5 +11,26 @@ module.exports = {
     }],
     [require('@babel/plugin-proposal-decorators'), {legacy: true}],
     '@babel/plugin-syntax-dynamic-import'
-  ]
+  ],
+  env: {
+    coverage: {
+      plugins: [
+        [
+          'istanbul',
+          {
+            extension: ['.js', '.vue'],
+            include: [
+              'packages/**/*.js',
+              'packages/**/*.vue'
+            ],
+            exclude: [
+              'packages/font/**',
+              'test/**',
+              'node_modules/**'
+            ]
+          }
+        ]
+      ]
+    }
+  }
 }
