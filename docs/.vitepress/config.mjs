@@ -3,13 +3,15 @@ import { fileURLToPath } from 'node:url'
 
 const vitepressVue = fileURLToPath(new URL('../../node_modules/vitepress/node_modules/vue/dist/vue.runtime.esm-bundler.js', import.meta.url))
 const vitepressServerRenderer = fileURLToPath(new URL('../../node_modules/vitepress/node_modules/vue/server-renderer/index.js', import.meta.url))
+const base = process.env.VITEPRESS_BASE || '/'
 
 export default defineConfig({
   title: 'cpy-ui',
   description: 'Vue 2 + ant-design-vue component library',
   lang: 'zh-CN',
+  base,
   themeConfig: {
-    logo: '/logo.svg',
+    logo: `${base}logo.svg`,
     nav: [
       { text: '指南', link: '/guide/' },
       { text: '组件', link: '/components/' },
